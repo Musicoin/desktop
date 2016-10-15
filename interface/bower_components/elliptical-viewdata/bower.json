@@ -1,0 +1,45 @@
+{
+  "name": "elliptical-viewdata",
+  "description": "ViewData getter/setter",
+  "version":"1.0.3",
+  "main": "elliptical-viewdata.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "viewdata"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/viewdata",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+
+  }
+}

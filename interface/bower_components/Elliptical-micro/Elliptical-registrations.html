@@ -1,0 +1,61 @@
+<link rel="import" href="Elliptical-register.html">
+
+<script>
+    Elliptical.registrations=function(){
+        if(Elliptical._registrations) return;
+
+        var tagNames=['ui-container',
+            'ui-brand',
+            'ui-toggle',
+            'ui-overlay',
+            'ui-modal',
+            'ui-menu',
+            'ui-dropdown',
+            'ui-mega-dropdown',
+            'ui-media-object',
+            'ui-box',
+            'ui-breadcrumb',
+            'ui-badge',
+            'ui-tip',
+            'ui-columns',
+            'ui-social',
+            'ui-radio-list',
+            'ui-checkbox-list',
+            'ui-icons',
+            'menu-item',
+            'menu-item-dropdown',
+            'menu-item-search',
+            'menu-divider',
+            'grid-row',
+            'grid-columns',
+            'breadcrumb-item',
+            'flex-box',
+            'flex-list',
+            'flex-label',
+            'social-icon',
+            'screen-icon',
+            'touch-ui-drawer',
+            'touch-ui-menu',
+            'touch-ui-dropdown',
+            'touch-ui-toggle',
+            'touch-ui-brand',
+            'touch-icons',
+            'touch-icon',
+            'touch-drawer',
+            'touch-header',
+            'touch-section',
+            'touch-bar'
+        ];
+
+        tagNames.forEach(function(name){
+            Elliptical.register(name);
+        });
+
+        Elliptical._registrations=true;
+
+    };
+
+    Elliptical(function(){
+        Elliptical.registrations();
+    });
+</script>

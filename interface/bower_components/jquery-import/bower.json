@@ -1,0 +1,28 @@
+{
+  "name": "jquery-import",
+  "description": "reference jquery library using html imports",
+  "version": "1.0.3",
+  "main": "jquery-import.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "components",
+    "jquery",
+    "html imports"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/jquery-import",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.1"
+  }
+}

@@ -1,0 +1,234 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+<link rel="import" href="../elliptical-container/elliptical-container.html">
+<link rel="import" href="../Elliptical-micro/Elliptical-micro.html">
+<script>
+
+  //Base Component Behavior
+  Elliptical.ComponentBehavior={};
+  Elliptical.ComponentBehavior.properties={
+
+    service:{
+      type:String,
+      value:null
+    }
+
+  };
+
+  Object.assign(Elliptical.ComponentBehavior,elliptical.extensions.base);
+  Elliptical.ComponentBehavior._createDataStore=function(){
+    this._data={
+      _store:new Map(),
+      get:function(key){
+        return this._store.get(key);
+      },
+      set:function(key,val){
+        this._store.set(key,val);
+      },
+      click:'touchclick',
+      hover:'touchhover'
+    };
+
+    this._data.events=[];
+  };
+
+  Elliptical.ComponentBehavior._location=function(url){
+    if(window._location) window._location.href=url;
+    else location.href=url;
+  };
+
+  //use click-event instead of on-click to avoid conflicts
+  Elliptical.ComponentBehavior._delegateEventListener=function(){
+    this.element.on(this._data.click,'[click-event]',this._listenerCallback.bind(this));
+  };
+
+  Elliptical.ComponentBehavior._listenerCallback=function(event){
+    var target=$(event.currentTarget);
+    var fn=target.attr('click-event');
+    if(fn){
+      if(this[fn]){
+        this[fn](event);
+      }
+    }
+  };
+
+  Elliptical.ComponentBehavior._viewData=function(prop){
+    if(!window.__viewData) window.__viewData={};
+    return window.__viewData;
+  };
+
+  Elliptical.ComponentBehavior.__press=function(){
+    return ('ontouchend' in document) ? 'touchend' : 'click';
+  };
+
+  Elliptical.ComponentBehavior.__tap=function(){
+    return ('ontouchend' in document) ? 'tap' : 'click';
+  };
+
+  Elliptical.ComponentBehavior.__bindPressEvent=function(){
+    var self=this;
+    var data=this._data;
+    Object.defineProperty(data, 'press', {
+      get: function() { return self.__press(); },
+      enumerable: true,
+      configurable: true
+    });
+  };
+
+  Elliptical.ComponentBehavior.__bindTapEvent=function(){
+    var self=this;
+    var data=this._data;
+    Object.defineProperty(data, 'tap', {
+      get: function() { return self.__tap(); },
+      enumerable: true,
+      configurable: true
+    });
+  };
+
+  Elliptical.ComponentBehavior.__setElementProperties=function(){
+    var service=this.getAttribute('service');
+    if(service){
+      this.service=service;
+    }
+  };
+
+  Elliptical.ComponentBehavior._disposeEventListener=function(){
+    this.element.off(this._data.click,'[click-event]');
+  };
+
+
+  Elliptical.ComponentBehavior.$service=function(name){
+    if(name===undefined){
+      name=this.service;
+    }
+
+    return elliptical.container.getType(name);
+  };
+
+  Elliptical.ComponentBehavior.$serviceAsync=function(name,callback){
+    if(callback===undefined){
+      callback=name;
+      name=this.service;
+    }
+
+    elliptical.container.getTypeAsync(name,callback);
+  };
+
+
+  Elliptical.ComponentBehavior._bindPublicElementMethods=function(){
+    var self=this;
+    var node=this;
+    if(!node._show){
+      node._show=function(){};
+    }
+    if(!node._hide){
+      node._hide=function(){};
+    }
+    if(!node.show){
+      node.show=function(){
+        self._show();
+      };
+    }
+    if(!node.hide){
+      node.hide=function(){
+        self._hide();
+      };
+    }
+
+  };
+
+  Elliptical.ComponentBehavior._event=function (element, event, selector,callback) {
+    var obj = {};
+    obj.element = element;
+    obj.event = event;
+
+    //support 3-4 params
+    var length = arguments.length;
+    if (length === 3) {
+      callback = (typeof selector === 'function') ? selector : null;
+      selector = null;
+    }
+    obj.selector = selector;
+    obj.callback = callback;
+    var arr = this._data.events;
+    if ($.inArray(obj, arr) === -1) this._data.events.push(obj);
+    if (selector) {
+      element.on(event, selector, function () {
+        var args = [].slice.call(arguments);
+        if (callback) callback.apply(this, args);
+      });
+    } else {
+      element.on(event, function () {
+        var args = [].slice.call(arguments);
+        if (callback) callback.apply(this, args);
+      });
+    }
+
+  };
+
+  Elliptical.ComponentBehavior._unbindEvents=function () {
+    var events = this._data.events;
+    var length = events.length;
+    for (var i = 0; i < length; i++) {
+      var obj = events[i];
+      (obj.selector) ? obj.element.off(obj.event, obj.selector) : obj.element.off(obj.event);
+    }
+    events.length = 0;
+    this._onUnbindEvents();
+  };
+
+  Elliptical.ComponentBehavior._onUnbindEvents=function(){};
+
+  Elliptical.ComponentBehavior._dispose=function(){};
+
+  Elliptical.ComponentBehavior._deviceClickEvent=function(){
+    return ('ontouchend' in document) ? 'touchend' : 'click';
+  };
+
+  Elliptical.ComponentBehavior._isTouchDevice=function(){
+    return ('ontouchend' in document);
+  };
+
+  Elliptical.ComponentBehavior._setFingerEvents=function(){
+    if(!this._isTouchDevice()) return false;
+    if(!window._FINGER_EVENTS_COUNT) {
+      window._FINGER_EVENTS_COUNT=1;
+    }else window._FINGER_EVENTS_COUNT+=1;
+    window._FINGER_EVENTS=true;
+  };
+
+  Elliptical.ComponentBehavior._killFingerEvents=function(){
+    if(!this._isTouchDevice()) return false;
+    if(window._FINGER_EVENTS_COUNT) window._FINGER_EVENTS_COUNT-=1;
+    if(!window._FINGER_EVENTS_COUNT) window._FINGER_EVENTS=false;
+  };
+
+  Elliptical.ComponentBehavior.created=function(){
+    this.element=$(this);
+    this._createDataStore();
+    this._delegateEventListener();
+    this.__bindPressEvent();
+    this.__bindTapEvent();
+    this._setOptionsFromAttribute();
+    this.__setElementProperties();
+    this._setChildrenAttributes();
+    this._bindPublicElementMethods();
+  };
+
+  Elliptical.ComponentBehavior._destroy=function(){
+    this._disposeEventListener();
+    this._unbindEvents();
+    this._dispose();
+  };
+
+
+  Elliptical.ComponentBehavior.detached=function(){
+    this._destroy();
+    this._data._store=null;
+    this._data.events.length=0;
+  };
+
+  //Navigation Behavior
+  Elliptical.NavigationBehavior={};
+  Object.assign(Elliptical.NavigationBehavior,elliptical.extensions.drawer,elliptical.extensions.navigation);
+
+</script>

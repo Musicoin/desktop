@@ -1,0 +1,21 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+<link rel="import" href="../gsap-import/gsap-import.html">
+<script>
+
+  //Animation Behavior
+  Elliptical.AnimationBehavior = {};
+  Elliptical.AnimationBehavior.properties = {
+
+    _tl:{
+      type:Object,
+      value:null
+    }
+
+  };
+
+
+  Elliptical.AnimationBehavior._setTimeline = function () {
+     this._tl=new TimelineMax();
+  };
+
+</script>

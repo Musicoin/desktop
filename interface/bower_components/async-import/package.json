@@ -1,0 +1,11 @@
+{
+  "name": "async-import",
+  "description": "reference the async library using html imports",
+  "version": "1.0.1",
+  "author": "S. Francis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ellipticaljs/async-import.git"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "jquery-import",
+  "description": "reference jquery library using html imports",
+  "version": "1.0.3",
+  "author": "S. Francis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ellipticaljs/jquery-import.git"
+  }
+}

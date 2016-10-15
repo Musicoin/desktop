@@ -1,0 +1,11 @@
+[template]{
+    visibility:hidden !important;
+}
+
+[template].visible{
+    visibility:visible !important;
+}
+
+[empty-template]{
+    display:none;
+}

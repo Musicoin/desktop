@@ -1,0 +1,56 @@
+{
+  "name": "iron-swipeable-pages",
+  "version": "1.2.6",
+  "authors": [
+    "Pascal Gula aka MeTaNoV <pascal.gula@gmail.com>"
+  ],
+  "description": "[Polymer 1.x] Element that enables switching between different pages by swiping gesture.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "web",
+    "component",
+    "components",
+    "custom",
+    "element",
+    "polymer",
+    "iron",
+    "page",
+    "pages",
+    "swipe",
+    "swipeable",
+    "content",
+    "mobile"
+  ],
+  "main": "iron-swipeable-pages.html",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MeTaNoV/iron-swipeable-pages.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/MeTaNoV/iron-swipeable-pages/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0",
+    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^1.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^1.4.0"
+  },
+  "devDependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+    "web-component-tester": "^4.0.0",
+    "iron-component-page": "MeTaNoV/iron-component-page#multiple-demo",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^1.1.0",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.0",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.3.0",
+    "app-route": "PolymerElements/app-route#master",
+    "dom-repeat-n": "dom-repeat-n#^1.0.0"
+  }
+}

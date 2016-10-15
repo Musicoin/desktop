@@ -1,0 +1,11 @@
+npm-debug.log
+node_modules
+build
+cache
+components
+.DS_Store
+*.map
+deploy/assets/css/libraries.css
+deploy/assets/css/main.css
+deploy/assets/js/libraries.js
+deploy/assets/js/main.js

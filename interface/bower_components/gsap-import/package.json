@@ -1,0 +1,11 @@
+{
+  "name": "gsap-import",
+  "description": "reference the gsap library using html imports",
+  "version": "1.0.1",
+  "author": "S. Francis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ellipticaljs/gsap-import.git"
+  }
+}

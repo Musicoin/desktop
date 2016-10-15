@@ -1,0 +1,8 @@
+*.html text
+*.js text
+*.json text
+*.md text
+*.yml text
+.gitignore text
+.gitmodules text
+LICENSE*  text

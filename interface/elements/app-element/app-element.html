@@ -1,0 +1,118 @@
+<!-- <script src="web3-connector.js"></script>
+<script src="musicoin-connector.js"></script> -->
+
+<dom-module id="app-element">
+  <link rel="import" type="css" href="app-element-general.css">
+  <template>
+
+    <div id="trackDetailView" class="detailView">
+      <h1>{{artist}}: {{track}}</h1>
+      <paper-material class="track-detail-image" style="background-image: url('{{artworkUrl}}');">
+      </paper-material>
+
+      {{contractId}}
+    </div>
+
+    <div id="txDetailView" class="detailView">
+      <h1>Transaction History</h1>
+    </div>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed>
+      <!-- Drawer content -->
+      <app-drawer>
+        <div class="user">
+          <img class="user-img" src="../../images/user.png">
+          <div class="user-name">Johnny Appleseed</div>
+        </div>
+        <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
+					<h3 disabled class="drawer-menu-label">Categories</h3>
+					<paper-item menu-name="rel">New releases</paper-item>
+					<paper-item menu-name="cbr">Coinboard</paper-item>
+					<paper-item menu-name="myf">My Favorites</paper-item>
+					<h3 disabled class="drawer-menu-label">Playlist</h3>
+					<paper-item menu-name="mpl">My Playlists</paper-item>
+					<paper-item menu-name="col">Collection</paper-item>
+					<h3 disabled class="drawer-menu-label">Musician</h3>
+					<paper-item menu-name="myw">My Works</paper-item>
+					<paper-item menu-name="edi">Editor</paper-item>
+					<h3 disabled class="drawer-menu-label">Developer</h3>
+					<paper-item menu-name="uti">Utilities</paper-item>
+				</paper-menu>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+        <app-header shadow fixed condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <audio id="player" autoplay onended="clearCurrentTrack()"></audio>
+            <div class="audio-control-area">
+              <iron-image sizing="contain" id="miniImage" src="{{artworkUrl}}" on-tap="toggleTrackDetailView"></iron-image>
+              <paper-icon-button id="playButton" icon="av:play-arrow" on-tap="togglePlayState" class="action-button"></paper-icon-button>
+              <div class="audio-progress-area">
+                <div class="audio-info">{{artist}}</div>
+                <paper-progress id="progress" class="audio-progress"></paper-progress>
+                <div class="audio-info audio-info-track"><em>{{track}}</em></div>
+              </div>
+              <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="skipTrack" class="action-button"></paper-icon-button>
+              <div>
+                <paper-icon-button icon="icons:thumb-up" class="tip-button action-button" on-tap="sendTip"></paper-icon-button>
+                <div class="user-balance-label">tip</div>
+              </div>
+            </div>
+            <div class="user-balance-area">
+              <div class="user-balance" onclick="getMusicoin().toggleTxDetailView()">&#x266E;{{userBalance}}</div>
+              <div id=pendingLabel class="user-balance-label" onclick="getMusicoin().toggleTxDetailView()">&#x266E;{{pendingPayments}} pending</div>
+            </div>
+          </app-toolbar>
+        </app-header>
+        <div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+
+      </app-header-layout>
+    </app-drawer-layout>
+
+    <paper-dialog id="paymentApprovalDialog">
+      <h2>Confirm payment of &#x266E;{{amountToPay}}</h2>
+      <p>{{confirmationMessage}}</p>
+      <paper-input class="my-class" id="pwd" type=password label="password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+        <paper-button id="confirm" dialog-confirm autofocus on-tap="onPermissionGranted">Accept</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
+    <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
+  </template>
+
+  <script src="app-element.js"></script>
+</dom-module>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>iron-grid demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../iron-grid.html">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="colors.css" type="text/css">
+    <style>
+        html,
+        body {
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <iron-grid-container>
+        <iron-grid log>
+            <div class="xl0 s12 example blue">
+                <p>s12</p>
+            </div>
+            <div class="s12 m3 l2 example red">
+                <p>s12 m3 l2</p>
+            </div>
+            <div class="s12 m6 l8 example red">
+                <p>s12 m6 l8</p>
+            </div>
+            <div class="s12 m3 l2 example red">
+                <p>s12 m3 l2</p>
+            </div>
+            
+        </iron-grid>
+        <iron-grid>
+            <div class="s12 m6 l3 example purple">
+                <p>s12 m6 l3</p>               
+            </div>
+            <div class="s12 m6 l3 example purple">
+                <p>s12 m6 l3</p>
+            </div>
+            <div class="s12 m6 l3 example purple">
+                <p>s12 m6 l3</p>
+            </div>
+            <div class="s12 m6 l3 example purple">
+                <p>s12 m6 l3</p>
+            </div>
+        </iron-grid>
+        
+         <iron-grid>  
+            <div class="s12 nested example blue">
+                    <div class="s8 nested example blue">
+                       <div class="s4 nested example blue">
+                            <p>s4 of s8</p>
+                       </div>
+                       <div class="s4 example blue">
+                            <p>s4 of s8</p>
+                       </div>
+                        <div class="s4 example blue">
+                            <p>s4 of s8</p>
+                        </div>
+                    </div>
+             </div>    
+         </iron-grid>
+         <div>
+          for bug #12
+           <iron-grid log>  
+             <div class="m12 example blue">
+                <p>m12 example blue</p>
+            </div>
+            
+             <div class="s0 m12 example blue">
+                <p>s0 m12 example blue</p>
+            </div>
+            
+             <div class="s12 xl0 example blue">
+                <p>s12 xl0 example blue</p>
+            </div>
+          </div>
+            
+         </iron-grid>
+         
+        
+        <pre>
+            <code>
+                &lt;iron-grid-container&gt;
+                    &lt;iron-grid&gt;
+                        &lt;div class="s12 example blue">&lt;p&gt;s12&lt;/p&gt;&lt/div&gt;
+                        &lt;div class="s12 m3 l2 example red"&gt;&lt;p&gt;s12 m3 l2&lt;/p&gt;&lt;/div&gt;
+                        &lt;div class="s12 m6 l8 example red"&gt;&lt;p&gt;s12 m6 l8&lt;/p&gt;&lt;/div&gt;
+                        &lt;div class="s12 m3 l2 example red"&gt;&lt;p&gt;s12 m3 l2&lt;/p&gt;&lt;/div&gt;
+                    &lt;/iron-grid&gt;
+                    &lt;iron-grid&gt;
+                        &lt;div class="s12 m6 l3 example purple"&gt;&lt;p&gt;s12 m6 l3&lt;/p&gt;&lt;/div&gt;
+                        &lt;div class="s12 m6 l3 example purple">&lt;p&gt;s12 m6 l3&lt;/p&gt;&lt;/div&gt;
+                        &lt;div class="s12 m6 l3 example purple">&lt;p&gt;s12 m6 l3&lt;/p&gt;&lt;/div&gt;
+                        &lt;div class="s12 m6 l3 example purple">&lt;p&gt;s12 m6 l3&lt;/p&gt;&lt;/div&gt;
+                    &lt;/iron-grid&gt;
+                    
+                &lt;/iron-grid-container&gt;
+            </code>
+        </pre>
+    </iron-grid-container>
+</body>
+</html>

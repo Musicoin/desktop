@@ -1,0 +1,15 @@
+<dom-module id="app-login-view">
+  <link rel="import" type="css" href="app-login-view.css">
+  <template>
+    <div id=loginWindow class="login">
+      <div class="login-elements">
+        <div class="login-label">Musicoin</div>
+        <paper-input id="loginPwd" class="login-text-box" type="password" label="password" on-keydown="checkForEnter"></paper-input>
+        {{account}}
+        <br><br>
+        <a id="skipLoginButton" href="javascript:musicoin.hideLoginWindow()">skip</a>
+      </div>
+    </div>
+  </template>
+  <script src="app-login-view.js"></script>
+</dom-module>

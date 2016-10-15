@@ -1,0 +1,43 @@
+{
+  "name": "jquery-mutation-summary",
+  "version": "1.0.6",
+  "description": "A jQuery wrapper/plugin for mutation-summary",
+  "main": "dist/mutation.summary.js",
+  "authors": [
+    "Joel Purra",
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "mutation-summary"
+  ],
+  "homepage": "https://github.com/ellipticaljs/jquery-mutation-summary",
+  "moduleType": [],
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos"
+  ],
+  "dependencies": {
+    "jquery-extensions": "~1.0.7"
+  }
+}

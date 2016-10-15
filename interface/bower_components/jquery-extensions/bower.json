@@ -1,0 +1,38 @@
+{
+  "name": "jquery-extensions",
+  "description": "jquery extensions library",
+  "version": "1.0.15",
+  "main": "dist/jquery.extensions.js",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "extensions"
+  ],
+  "homepage": "https://github.com/ellipticaljs/jquery-extensions",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json"
+  ],
+  "dependencies": {
+    "jquery-import": "~1.0.2"
+  }
+}

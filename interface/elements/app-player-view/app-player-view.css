@@ -1,0 +1,65 @@
+ :host {
+    display: block;
+    height: inherit;
+    margin: 20px;
+    color: #aaa;
+}
+
+paper-input.my-class {
+    --paper-input-container-color: #333;
+}
+
+paper-card.recent {
+    max-width: 200px;
+    min-width: 100px;
+    cursor: pointer;
+    --paper-card-header-color: #fff;
+    --paper-card-background-color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+}
+
+h1 {
+    color: #4f4f4f;
+    font-weight: lighter;
+}
+
+.title {
+    display: inline-block;
+    margin: 5px;
+}
+
+.artist {
+    color: whitesmoke;
+}
+
+.album {
+    font-weight: lighter;
+    font-size: small;
+}
+
+.track {
+    font-weight: lighter;
+    font-size: small;
+}
+
+.title-details {
+    line-height: 90%;
+    -webkit-margin-before: 0.5em;
+}
+
+.recent-bg {
+    background-size: cover;
+    background-position: center;
+    width: 180px;
+    height: 180px
+}
+
+.show-off {
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    transform: rotate(10deg);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0)50%, rgba(255, 255, 255, 0.5)100%);
+}

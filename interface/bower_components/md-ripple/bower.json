@@ -1,0 +1,44 @@
+{
+  "name": "md-ripple",
+  "version": "1.0.1",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "Material design ripple effect",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design"
+  ],
+  "main": "md-ripple.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-ripple/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "jquery-ui-import": "~1.0.1"
+  }
+}

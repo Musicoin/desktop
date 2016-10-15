@@ -1,0 +1,14 @@
+{
+    "name": "Musicoin",
+    "node-main": "./hub/msc.js",
+    "main": "./interface/index.html",
+    "window": {
+        "frame": true,
+        "toolbar":true,
+        "width": 850,
+        "height": 650
+    },
+    "webkit": {
+      "plugin": true
+    }
+}

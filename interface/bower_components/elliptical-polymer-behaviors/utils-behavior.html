@@ -1,0 +1,21 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+
+<script>
+
+  //Service Behavior
+  Elliptical.UtilsBehavior = {};
+  Elliptical.UtilsBehavior.properties = {
+
+    _utils:{
+      type:Object,
+      value:null
+    }
+
+  };
+
+
+  Elliptical.UtilsBehavior._setUtils = function () {
+     this._utils=elliptical.utils;
+  };
+
+</script>

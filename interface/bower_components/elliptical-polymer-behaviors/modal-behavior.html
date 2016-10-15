@@ -1,0 +1,45 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+<link rel="import" href="../Elliptical-micro/Elliptical-micro.html">
+
+<script>
+
+  //Service Behavior
+  Elliptical.ModalBehavior = {};
+  Elliptical.ModalBehavior.properties = {
+
+    disableModal: {
+      type: Boolean,
+      value: false
+    },
+    modalBackground: {
+      type: String,
+      value: '#000'
+    },
+    modalOpacity: {
+      type: Number,
+      value: .5
+    },
+    modalZIndex: {
+      type: Number,
+      value: 2000
+    }
+
+
+  };
+
+  Elliptical.ModalBehavior._renderModal=function () {
+    if (!this.disableModal) {
+      var opts = {
+        zIndex: this.modalZIndex,
+        background: this.modalBackground,
+        opacity: this.modalOpacity
+      };
+      this._setModal(opts);
+    }
+  };
+
+  Elliptical.ModalBehavior._deleteModal=function () {
+    if (!this.disableModal) this._removeModal();
+  };
+
+</script>

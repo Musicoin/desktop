@@ -1,0 +1,90 @@
+---
+layout: example
+title: demo
+---
+<p>
+    A simple demo showing the results of any change in the console.
+</p>
+<p>
+    <button type="button" id="click-to-add">
+        Click to add a link to the homepage to the list below.
+    </button>
+</p>
+<h2>
+    Latest mutation
+</h2>
+<p>
+    <output id="output">
+    </output>
+</p>
+<h2>
+    List
+</h2>
+<ul id="list-with-links">
+    <li>
+        Clicking the button will add to this list.
+    </li>
+</ul>
+<!-- Load jQuery (and plugins) at the end of the page for efficiency -->
+<script src="../lib/mutation-summary/src/mutation-summary.js">
+</script>
+<script src="https://code.jquery.com/jquery-latest.js">
+</script>
+<script src="../src/jquery.mutation-summary.js">
+</script>
+<script>
+//<![CDATA[
+
+// This code won't be executed until jQuery has been loaded.
+$(function() {
+    var $listWithLinks = $("#list-with-links"),
+        $clickToAddButton = $("#click-to-add"),
+        $output = $("#output"),
+        links = ["http://joelpurra.github.com/jquery-mutation-summary", "http://joelpurra.github.com/", "http://www.google.com/", "http://stackoverflow.com/", "http://slashdot.org/", "http://joelpurra.se/", "http://joelpurra.com/"];
+
+    // The callback in this case will only print the result
+    // Connect mutation-summary
+    $listWithLinks.mutationSummary("connect", callback, [{
+        all: true
+    }]);
+
+    // TOOD: Disconnect when done listening
+    //$listWithLinks.mutationSummary("disconnect");
+
+    // Do something to trigger mutationSummary
+    $clickToAddButton.click(addLinkToList);
+
+    function getRandomLink() {
+        var index = Math.floor(Math.random() * links.length),
+            url = links[index];
+
+        return $("<a />", {
+            href: url
+        }).text(url);
+    }
+
+    function addLinkToList(evt) {
+        var rnd = Math.floor(Math.random() * 1000) + 1000,
+            $listItem = $("<li />").text("#" + rnd + ": "),
+            $link = getRandomLink();
+
+        $link.appendTo($listItem);
+        $listItem.appendTo($listWithLinks);
+
+        evt.preventDefault();
+        return false;
+    }
+
+    function callback(summaries) {
+        var firstSummary = summaries[0],
+            $firstElement = $(firstSummary.added[0]),
+            now = new Date($.now()),
+            nowFormatted = now.getHours() + ":" + now.getMinutes() + "." + now.getSeconds() + "." + now.getMilliseconds(),
+            message = nowFormatted + " Added tag of type " + ($firstElement.length > 0 ? $firstElement.get(0).tagName : "(unknown)") + " with " + $firstElement.children().length + " children and text \"" + $firstElement.text() + "\"";
+
+        $output.text(message);
+    }
+});
+
+//]]>
+</script>

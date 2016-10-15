@@ -1,0 +1,11 @@
+<link rel="import" href="Elliptical-bootstrap.html">
+<script>
+    Elliptical.registerElement=function(tag){
+        try{
+            document.registerElement(tag);
+        }catch(ex){
+
+        }
+    };
+    Elliptical.register=Elliptical.registerElement;
+</script>

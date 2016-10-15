@@ -1,0 +1,202 @@
+<link rel="import" href="../jquery-ui-import/widget.html">
+
+<script>
+
+    (function(){
+        function hexToRGB(hex){
+            var r = hex >> 16;
+            var g = hex >> 8 & 0xFF;
+            var b = hex & 0xFF;
+            return [r,g,b];
+        }
+
+        function hexToRGBA(hex,alpha){
+            var arr=hexToRGB(hex);
+            return 'rgba(' + arr[0].toString() + ',' + arr[1].toString() + ',' + arr[2].toString() + ',' + alpha.toString() + ')';
+        }
+
+        function hashCode(str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        }
+
+        function intToHex(i) {
+            var hex = ((i>>24)&0xFF).toString(16) +
+                    ((i>>16)&0xFF).toString(16) +
+                    ((i>>8)&0xFF).toString(16) +
+                    (i&0xFF).toString(16);
+            hex += '000000';
+            return hex.substring(0, 6);
+        }
+
+        document.addEventListener('WebComponentsReady', function () {
+
+            $.widget('md.ripple',{
+                _create:function(){
+                    this._data={};
+                    var x, y,limit,color,radius;
+                    var event=this.options.event;
+                    if(event===undefined){
+                        x=(this.options.x===undefined) ? 0 : this.options.x;
+                        y=(this.options.y===undefined) ? 0 : this.options.y;
+                    }
+                    limit=this.options.rippleLimit;
+                    color=this.options.rippleColor;
+                    radius=this.options.rippleRadius;
+                    this._setUp(event,x,y,limit,color,radius);
+                },
+
+                _setUp:function(e,x,y,limit,color,radius){
+                    // Get the limit for ripple effect
+                    var element=this.element;
+                    //var limit = element.attr( 'ripple-limit' );
+
+                    // Get custom color for ripple effect
+                    //var color = element.attr( 'ripple-color' );
+                    if( typeof color === 'undefined' ){
+                        color = 'rgba( 0, 0, 0, 0.3 )';
+                    }else if(color.toLowerCase()==='white'){
+                        color = 'rgba( 255, 255, 255, 0.3 )';
+                    }else if(color.toLowerCase()==='black') {
+                        color = 'rgba( 0, 0, 0, 0.3 )';
+                    }else if(color.indexOf('rgb')>-1){
+                        color=color.replace('rgb','rgba');
+                        color=color.replace(')','');
+                        color=color + ',.3)';
+                    }else{
+                        color=intToHex(hashCode(color));
+                        color=hexToRGBA(color,.3);
+                    }
+
+                    // Get ripple radius
+                    //var radius = element.attr( 'ripple-wrap-radius' );
+                    if( typeof radius == 'undefined' ){
+                        radius = 0;
+                    }
+
+                    // Get the clicked element and the click positions
+                    var element_limit;
+                    if( typeof limit == 'undefined' ){
+                        element_limit = element;
+                    } else {
+                        element_limit = element.closest( limit );
+                    }
+
+                    var element_offset = element_limit.offset();
+
+                    var click_x =(e!==undefined) ? e.pageX : x;
+                    var click_y =(e!==undefined) ? e.pageY : y;
+
+                    // Get the width and the height of clicked element
+                    var element_width = element_limit.outerWidth();
+                    var element_height = element_limit.outerHeight();
+
+                    // Draw the ripple effect wrap
+                    var ripple_effect_wrap = $('<span class="ripple-effect-wrap"></span>');
+                    ripple_effect_wrap.css({
+                        'width' 			: element_width,
+                        'height'			: element_height,
+                        'position' 			: 'absolute',
+                        'top'			 	: element_offset.top,
+                        'left'	 			: element_offset.left,
+                        'z-index' 			: 100,
+                        'overflow' 			: 'hidden',
+                        'background-clip'	: 'padding-box',
+                        '-webkit-border-radius' : radius,
+                        'border-radius'		: radius
+                    });
+
+                    // Adding custom class, it is sometimes needed for customization
+                    var ripple_effect_wrap_class = element.attr( 'ripple-wrap-class' );
+
+                    if( typeof ripple_effect_wrap_class !== 'undefined' ){
+                        ripple_effect_wrap.addClass( ripple_effect_wrap_class );
+                    }
+
+                    // Append the ripple effect wrap
+                    ripple_effect_wrap.appendTo('body');
+
+                    // Determine the position of the click relative to the clicked element
+                    var click_x_ripple = click_x - element_offset.left;
+                    var click_y_ripple = click_y - element_offset.top;
+                    var circular_width = 1000;
+
+                    // Draw the ripple effect
+                    var ripple = $('<span class="ripple"></span>');
+                    ripple.css({
+                        'width' 						: circular_width,
+                        'height'						: circular_width,
+                        'background'					: color,
+                        'position'						: 'absolute',
+                        'top'							: click_y_ripple - ( circular_width / 2 ),
+                        'left'							: click_x_ripple - ( circular_width / 2 ),
+                        'content'						: '',
+                        'background-clip' 				: 'padding-box',
+                        '-webkit-border-radius'     	: '50%',
+                        'border-radius'             	: '50%',
+                        '-webkit-animation-name'		: 'ripple-animation',
+                        'animation-name'              	: 'ripple-animation',
+                        '-webkit-animation-duration'  	: '2s',
+                        'animation-duration'          	: '2s',
+                        '-webkit-animation-fill-mode' 	: 'both',
+                        'animation-fill-mode'         	: 'both'
+                    });
+                    //$('.ripple-effect-wrap:last').append( ripple );
+                    ripple_effect_wrap.append(ripple);
+                    this._data.ripple=ripple_effect_wrap;
+                    // Remove rippling component after half second
+                    var self=this;
+                    setTimeout( function(){
+                        ripple_effect_wrap.transition({opacity:0},function(){
+                            self.destroy();
+                        });
+
+                    }, 500 );
+
+                    // Get the href
+                    var href = element.attr('href');
+
+                    // Safari appears to ignore all the effect if the clicked link is not prevented using preventDefault()
+                    // To overcome this, preventDefault any clicked link
+                    // If this isn't hash, redirect to the given link
+                    if( typeof href !== 'undefined' && href.substring(0, 1) !== '#' ){
+                        setTimeout( function(){
+                            window.location = href;
+                        }, 200 );
+                    }
+
+
+                },
+
+                _destroy:function(){
+                    var ripple=this._data.ripple;
+                    if(ripple){
+                        try{
+                            ripple.remove();
+                        }catch(ex){
+
+                        }
+                    }
+                }
+            });
+
+
+            $(document).on( 'touchclick', '[ripple]', function(event){
+                event.preventDefault();
+                var target=$(this);
+                var color=target.attr('ripple-color');
+                var radius=target.attr('ripple-radius');
+                var limit=target.attr('ripple-limit');
+                $(this).ripple({event:event,rippleColor:color,rippleRadius:radius,rippleLimit:limit});
+            });
+        });
+
+    })();
+
+
+</script>
+
+

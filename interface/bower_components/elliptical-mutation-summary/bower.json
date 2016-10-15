@@ -1,0 +1,45 @@
+{
+  "name": "elliptical-mutation-summary",
+  "description": "DOM Mutation Summary Observer",
+  "version": "1.0.2",
+  "main": "dist/elliptical.mutation.summary.js",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "DOM",
+    "mutation",
+    "summary",
+    "observer"
+  ],
+  "homepage": "https://github.com/ellipticaljs/mutation-summary",
+  "moduleType": [],
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos"
+
+  ],
+  "dependencies": {
+    "jquery-mutation-summary": "~1.0.1"
+  }
+}

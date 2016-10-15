@@ -1,0 +1,29 @@
+{
+  "name": "jquery-ui-import",
+  "description": "reference jquery ui widget,components and interactions using html imports",
+  "version": "1.0.1",
+  "main": "jquery-ui-import.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "components",
+    "jquery",
+    "html imports"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/jquery-ui-import",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-import": "~1.0.2",
+    "jquery-ui": "~1.11.4"
+  }
+}

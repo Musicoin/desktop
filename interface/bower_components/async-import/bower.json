@@ -1,0 +1,28 @@
+{
+  "name": "async-import",
+  "description": "reference the async library using html imports",
+  "version": "1.0.1",
+  "main": "async-import.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "components",
+    "async",
+    "html imports"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/async-import",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "async": "~1.5.2"
+  }
+}

@@ -1,0 +1,22 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+<link rel="import" href="../async-import/async-import.html">
+
+<script>
+
+  //Async Behavior
+  Elliptical.AsyncBehavior = {};
+  Elliptical.AsyncBehavior.properties = {
+
+    _viewData:{
+      type:Object,
+      value:null
+    }
+
+  };
+
+
+  Elliptical.AsyncBehavior._setAsync = function () {
+     this._async=window.async;
+  };
+
+</script>

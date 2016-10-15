@@ -1,0 +1,52 @@
+{
+  "name": "md-menu",
+  "version": "1.2.3",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "Material design menu component",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design",
+    "menu"
+  ],
+  "main": "md-menu.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-menu",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "sass-md-components":"~1.2.2",
+    "md-ripple": "~1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

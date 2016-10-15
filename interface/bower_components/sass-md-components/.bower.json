@@ -1,0 +1,60 @@
+{
+  "name": "sass-md-components",
+  "description": "Sass Material Design Components",
+  "version": "1.2.3",
+  "main": "dist/md.components.css",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "reponsive",
+    "web",
+    "components",
+    "css"
+  ],
+  "homepage": "https://github.com/ellipticaljs/sass-md-components",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "_settings.scss",
+    "bk",
+    "sassdoc",
+    "test.scss"
+  ],
+  "dependencies": {
+    "md-icons": "~2.0.0"
+  },
+  "_release": "1.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.3",
+    "commit": "35203ffb558ed29d49e2f83d358670ac6a48a867"
+  },
+  "_source": "https://github.com/ellipticaljs/sass-md-components.git",
+  "_target": "~1.2.2",
+  "_originalSource": "sass-md-components"
+}

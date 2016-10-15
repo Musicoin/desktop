@@ -1,0 +1,34 @@
+<dom-module id="app-player-view">
+  <link rel="import" type="css" href="app-player-view.css">
+  <template>
+        <paper-button on-tap="playAll">Play All</paper-button>
+        <template is="dom-repeat" items="{{contractGroups}}" as="contractGroup" style="position:relative">
+            <div>
+                <h3>{{contractGroup.name}}</h3>
+                <template is="dom-repeat" items="{{contractGroup.contracts}}" style="position:relative">
+                    <div class="title">
+                        <paper-card class="recent" animated="true" elevation="3" on-tap="playProvidedContract" contract-id="{{item.contractId}}">
+                            <div class="recent-bg" style="background-image: url('{{item.img}}');"></div>
+                            <paper-ripple fit></paper-ripple>
+                            <div class="show-off"></div>
+                        </paper-card>
+                        <p class="title-details">
+                            <span class="artist">{{item.artist}}</span><br>
+                            <span class="album">{{item.album}}</span><br>
+                            <span class="track">{{item.track}}</span><br>
+                        </p>
+                    </div>
+                </template>
+  </div>
+  </template>
+
+  <div class="card" hidden>
+    <paper-input class="my-class" id="contract_id" label="contract_id"></paper-input>
+    <paper-button raised on-tap="addCustomContract">Add</paper-button>
+    <paper-button raised on-tap="stopPlaying">Pause</paper-button>
+    <p>status: {{status}}</p>
+  </div>
+  </template>
+
+  <script src="app-player-view.js"></script>
+</dom-module>

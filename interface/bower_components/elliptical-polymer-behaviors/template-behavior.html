@@ -1,0 +1,290 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+<link rel="import" href="../elliptical-container/elliptical-container.html">
+<link rel="import" href="../elliptical-template-extensions/elliptical-template-extensions.html">
+<link rel="stylesheet" href="dist/template.css">
+<script>
+
+    //Template Component Behavior
+    Elliptical.TemplateBehavior={};
+    Elliptical.TemplateBehavior.properties={
+
+        _templateId:{
+            type:String,
+            value:null
+        },
+
+        _templateNode:{
+            type:Object,
+            value:null
+        },
+
+        _template:{
+            type:Object,
+            value:null
+        },
+
+        $scope:{
+            type:Object,
+            value:null
+        },
+
+        scope:{
+            type:String,
+            value:null
+        },
+
+        data:{
+            type:String,
+            value:null
+        },
+
+        objectAssign:{
+            type:Boolean,
+            value:false
+        },
+
+        directAssign:{
+            type:Boolean,
+            value:false
+        },
+
+        autoBind:{
+            type:Boolean,
+            value:false
+        }
+
+    };
+
+    Elliptical.TemplateBehavior.observers=[
+
+    ];
+
+    Elliptical.TemplateBehavior.__precompile=function(template,id){
+        if(elliptical.extensions.template.templateExists(id)) return;
+        template = template.replace(/&quot;/g,'"');
+        elliptical.extensions.template.precompile(template,id);
+    };
+
+    Elliptical.TemplateBehavior._precompileTemplate=function(node,templateId){
+        if(!node) return;
+        var html=node.innerHTML;
+        this.__precompile(html,templateId);
+    };
+
+    Elliptical.TemplateBehavior._verifyTemplateExists=function(templateId){
+        if(!elliptical.extensions.template.templateExists(templateId)){
+            console.warn('warning: template ' + templateId + ' does not exist');
+        }
+    };
+
+    Elliptical.TemplateBehavior._render=function(node,templateId,context,callback){
+        elliptical.extensions.template.render(node,templateId,context,callback);
+    };
+
+    Elliptical.TemplateBehavior._setTemplateId=function(node){
+      if(!node) return;
+      var id='tmpl-' + elliptical.utils.random.str(6);
+      node.setAttribute('template',id);
+      this._templateId=id;
+      return id;
+    };
+
+    Elliptical.TemplateBehavior._setTemplateExtensions=function(){
+      this._template=elliptical.extensions.template;
+    };
+
+    Elliptical.TemplateBehavior._onTemplateVisibility=function(){};
+
+    Elliptical.TemplateBehavior._setTemplateVisibility=function(){
+        var templateNode=this._templateNode;
+        if(templateNode){
+            templateNode.classList.add('visible');
+        }
+    };
+
+    Elliptical.TemplateBehavior._getTemplateNode=function(){
+        var template=this.querySelector('[template]');
+        if(template){
+            return template;
+        }else{
+            if(this.hasAttribute('template')) return this;
+            else return null;
+        }
+    };
+
+    Elliptical.TemplateBehavior._getTemplateId=function(){
+        var node=this._getTemplateNode();
+        if(node){
+            var attr=node.getAttribute('template');
+            if(attr==='') return null;
+            else{
+                return attr;
+            }
+        }else{
+            return null;
+        }
+    };
+
+    Elliptical.TemplateBehavior._bindTemplate=function(context){
+        if(!context) context=this.$scope;
+        var self=this;
+        var templateNode=this._templateNode;
+        var templateId=this._templateId;
+        if(!templateId && !templateNode){
+            templateNode=this._getTemplateNode();
+            this._templateNode=templateNode;
+            templateId=this._setTemplateId(templateNode);
+            this._templateId=templateId;
+        }else if(!templateId){
+            templateId=this._setTemplateId(templateNode);
+            this._templateId=templateId;
+        }else if(!templateNode){
+            templateNode=this._getTemplateNode();
+            this._templateNode=templateNode;
+        }
+        if(this._onTemplateBinding) this._onTemplateBinding();
+        this._precompileTemplate(templateNode,templateId);
+        this._render(templateNode,templateId,context,function(err,out){
+            self._setTemplateVisibility();
+        });
+    };
+
+
+    Elliptical.TemplateBehavior._rebind=function(){
+        var self=this;
+        var templateNode=this._templateNode;
+        var templateId=this._templateId;
+        if(!templateId || !templateNode) return;
+        this._render(templateNode,templateId,this.$scope,function(err,out){
+            self._setTemplateVisibility();
+        });
+    };
+
+    Elliptical.TemplateBehavior._autoBindTemplate=function(){
+        var INTERVAL_COUNT=8;
+        var INTERVAL_DELAY=250;
+        var count=0;
+        var self=this;
+        var intervalId=setInterval(function(){
+            if(self._isScopeReady()){
+                var templateId=self._getTemplateId();
+                if(templateId){
+                    self._templateId=templateId;
+                    clearInterval(intervalId);
+                    self._bindTemplate();
+                }else{
+                    var templateNode=self._getTemplateNode();
+                    if(templateNode){
+                        clearInterval(intervalId);
+                        self._templateNode=templateNode;
+                        self._bindTemplate();
+                    }else{
+                        if(count > INTERVAL_COUNT) clearInterval(intervalId);
+                        count++;
+                    }
+                }
+            }else{
+                if(count > INTERVAL_COUNT) clearInterval(intervalId);
+                count++;
+            }
+        },INTERVAL_DELAY);
+
+    };
+
+    Elliptical.TemplateBehavior.__isEmpty=function(obj){
+        return (!obj || elliptical.utils.object.isEmpty(obj));
+    };
+
+    Elliptical.TemplateBehavior._isScopeReady=function(){
+        return !(this.__isEmpty(this.$scope));
+    };
+
+    Elliptical.TemplateBehavior._scopeWatch=function(){
+        var INTERVAL_COUNT=5;
+        var INTERVAL_DELAY=250;
+        var count=0;
+        var self=this;
+        var intervalId=setInterval(function(){
+            if(count > INTERVAL_COUNT) clearInterval(intervalId);
+            var context=self._viewData();
+            if(!self.__isEmpty(context)) {
+                clearInterval(intervalId);
+                self._assignScope(context);
+            }
+            else count+=1;
+
+        },INTERVAL_DELAY);
+    };
+
+    Elliptical.TemplateBehavior._assignScope=function(context){
+        var scope=this.scope;
+        if(this.objectAssign) this.$scope=context[scope];
+        else{
+            this.$scope=this.$scope || {};
+            if(this.directAssign) this.$scope=context;
+            else this.$scope[scope]=context[scope];
+        }
+        if(this._onScopeBinding) this._onScopeBinding();
+    };
+
+    Elliptical.TemplateBehavior._setScope=function(){
+        var scope=this.scope;
+        if(!scope ) return;
+        var data=this.data;
+        var context;
+        if(data){
+            this.directAssign=true;
+            if(typeof data==='string') context=JSON.parse(data);
+            else context=data;
+            this._assignScope(context);
+        }else{
+            context=this._viewData();
+            if(this.__isEmpty(context))this._scopeWatch();
+            else this._assignScope(context);
+        }
+    };
+
+    Elliptical.TemplateBehavior.__getArrayProp=function(path){
+        var $scope=this.$scope;
+        return elliptical.utils.path.objectProperty($scope,path);
+    };
+
+    Elliptical.TemplateBehavior.__deleteRow=function(arr,index){
+        arr.splice(index,1);
+    };
+
+    Elliptical.TemplateBehavior._deleteRowById=function(id,path){
+        var arr=this.__getArrayProp(path);
+        var index=elliptical.utils.array.indexById(arr,id);
+        this.__deleteRow(arr,index);
+        this._rebind();
+    };
+
+    Elliptical.TemplateBehavior._deleteRow=function(index,path){
+        var arr=this.__getArrayProp(path);
+        this.__deleteRow(arr,index);
+        this._rebind();
+    };
+
+    Elliptical.TemplateBehavior._getRow=function(index,path){
+        var arr=this.__getArrayProp(path);
+        return arr[index];
+    };
+
+    Elliptical.TemplateBehavior._getRowById=function(id,path){
+        var arr=this.__getArrayProp(path);
+        var index=elliptical.utils.array.indexById(arr,id);
+        return arr[index];
+    };
+
+    Elliptical.TemplateBehavior._onComponentReady=function(){
+        this._setScope();
+        if(this.scope && this.autoBind) this._autoBindTemplate();
+    };
+
+    Elliptical.TemplateBehavior.$rebind=function(){
+        this._rebind();
+    };
+
+
+</script>

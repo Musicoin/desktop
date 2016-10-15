@@ -1,0 +1,45 @@
+{
+  "name": "Elliptical-micro",
+  "description": "Minimal function custom element sugar",
+  "version":"1.0.3",
+  "main": "Elliptical-micro.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "components"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/micro",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+
+  }
+}

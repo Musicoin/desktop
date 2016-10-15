@@ -1,0 +1,62 @@
+{
+  "name": "elliptical-polymer-behaviors",
+  "main": "component-behavior.html",
+  "version": "1.2.6",
+  "authors": [
+    "S. Francis"
+  ],
+  "homepage": "https://github.com/ellipticaljs/polymer-behaviors",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "component-extensions": "~1.1.0",
+    "elliptical-mutation-summary": "~1.0.1",
+    "elliptical-container": "~1.1.0",
+    "Elliptical-micro": "~1.0.0",
+    "elliptical-dust-helpers": "~1.0.1",
+    "elliptical-template-extensions": "~1.0.6",
+    "elliptical-viewdata": "~1.0.3",
+    "elliptical-utils": "~2.1.2",
+    "async-import": "~1.0.1",
+    "gsap-import": "~1.0.1"
+  },
+  "devDependencies": {
+    "paper-button": "PolymerElements/paper-button#^1.0.0",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.0.0"
+  },
+  "_release": "1.2.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.6",
+    "commit": "4a52aef630f5c535e26ad234460415d95f300fa9"
+  },
+  "_source": "https://github.com/ellipticaljs/polymer-behaviors.git",
+  "_target": "~1.2.0",
+  "_originalSource": "elliptical-polymer-behaviors"
+}

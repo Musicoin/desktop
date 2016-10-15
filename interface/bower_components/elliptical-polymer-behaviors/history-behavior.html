@@ -1,0 +1,118 @@
+<link rel="import" href="../component-extensions/component-extensions.html">
+
+<script>
+
+  //History Behavior
+  Elliptical.HistoryBehavior = {};
+  Elliptical.HistoryBehavior.properties = {
+    historyRequestEvent: {
+      type: String,
+      value: 'OnDocumentRequest'
+    },
+
+    historyInitEvent: {
+      type: String,
+      value: 'OnDocumentHistoryRequest'
+    },
+
+    historySelector: {
+      type: String,
+      value: 'a[history-enabled]'
+    },
+
+    historyDisableInitRedirect: {
+      type: Boolean,
+      value: false
+    },
+
+    historyInitDelay:{
+      type:Number,
+      value:100
+    }
+
+  };
+
+  Elliptical.HistoryBehavior.observers = [];
+
+  Elliptical.HistoryBehavior._historyInit = function () {
+    var self=this;
+    var delay=this.historyInitDelay;
+    setTimeout(function(){
+      self._historyStart();
+    },delay);
+  };
+
+  Elliptical.HistoryBehavior._historyStart = function () {
+    var disableInitRedirect = this.historyDisableInitRedirect;
+    var REQUEST_EVENT = this.historyInitEvent;
+    var DOCUMENT = $(document);
+
+    //trigger event to start applicable history-enabled app
+    DOCUMENT.trigger(REQUEST_EVENT, {
+      disableRedirectOnStart: disableInitRedirect
+    });
+
+    //listen for link selector click/taps
+    this._historyLinkListener();
+  };
+
+  Elliptical.HistoryBehavior._historyLinkListener = function () {
+    var EVENT = ('ontouchend' in document) ? 'touchend tap' : 'click';
+    var SELECTOR = this.historySelector;
+    var DOCUMENT = $(document);
+    DOCUMENT.on(EVENT, SELECTOR, this._onDocumentHistoryRequest.bind(this));
+  };
+
+  Elliptical.HistoryBehavior._onDocumentHistoryRequest = function (event) {
+    var REQUEST_EVENT = this.historyRequestEvent;
+    var DOCUMENT = $(document);
+    var target = $(event.currentTarget);
+    var href = target.attr('href');
+    if (href !== undefined && href !== '#') {
+      var propagation = target.attr('data-propagation');
+      if (propagation) event.stopPropagation();
+      event.preventDefault();
+      //create data object
+      var data = {
+        method: 'get',
+        href: href
+      };
+      $.each(target[0].attributes, function (i, att) {
+        data[att.name.toCamelCase()] = att.value;
+      });
+      data.route = href;
+
+      //trigger event for the history app listener
+      DOCUMENT.trigger(REQUEST_EVENT, data);
+    }
+  };
+
+  Elliptical.HistoryBehavior._historyTurnOff = function () {
+    //turn off link listener
+    var EVENT = ('ontouchend' in document) ? 'touchend tap' : 'click';
+    var SELECTOR=this.historySelector;
+    var DOCUMENT=$(document);
+    DOCUMENT.off(EVENT, SELECTOR, this._onDocumentHistoryRequest.bind(this));
+  };
+
+  Elliptical.HistoryBehavior._historyTurnOn = function () {
+    this._historyLinkListener();
+  };
+
+  Elliptical.HistoryBehavior.historyTurnOff = function () {
+    this._historyTurnOff();
+  };
+
+  Elliptical.HistoryBehavior.historyTurnOn = function () {
+    this._historyTurnOn();
+  };
+
+  Elliptical.HistoryBehavior.historyStart = function () {
+     this._historyStart();
+  };
+
+  Elliptical.HistoryBehavior.detached = function () {
+    this._historyTurnOff();
+  };
+
+</script>
