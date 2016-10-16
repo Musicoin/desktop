@@ -2,14 +2,6 @@ mscbuffer = require('./databuffer.js');
 locale = require('./locale.js');
 observable = require('./observable-factory.js');
 console = require('./console.log.js');
-// var console = (function(){
-//     var util = require('util');
-//     return {
-//         log:function(x){
-//             process.stdout.write(util.format.apply(util, arguments)+'\n');
-//         }
-//     }
-// })()
 
 var mschub = {
   data: {

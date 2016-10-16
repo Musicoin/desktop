@@ -1371,3 +1371,9 @@ Gtk-Message: Failed to load module "canberra-gtk-module"
 Gtk-Message: Failed to load module "pantheon-filechooser-module"
 Gtk-Message: Failed to load module "canberra-gtk-module"
 [21782:21810:1016/060506:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[21782:21782:1016/061458:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[17936:17936:1016/061632:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"

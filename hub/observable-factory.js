@@ -18,7 +18,7 @@ module.exports = function(obj,prop,initValue) {
         obj['__'+prop+'_binding'].push({elem:newValue.register,prop:newValue.prop});
         newValue.register.set(newValue.prop,obj['__'+prop]);
       } else {
-        obj['__'+prop] = (newValue.updatePolymer)?newValue.data:newValue;
+        if (newValue!='updatePolymer') obj['__'+prop] = newValue;
         if (obj['__'+prop+'_binding'] && obj['__'+prop+'_binding'].length>0) {
           for (var i = 0,binding; binding = obj['__'+prop+'_binding'][i]; i++) {
             binding.elem.set(binding.prop,obj['__'+prop]);
