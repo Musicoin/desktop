@@ -5,32 +5,10 @@
   <link rel="import" type="css" href="app-element-general.css">
   <template>
 
-    <div id="trackDetailView" class="detailView">
-      <h1>{{artist}}: {{track}}</h1>
-      <paper-material class="track-detail-image" style="background-image: url('{{artworkUrl}}');">
-      </paper-material>
-
-      {{contractId}}
-    </div>
-
-    <div id="txDetailView" class="detailView">
-      <h1>Transaction History</h1>
-    </div>
-
-    <app-location route="{{route}}"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
-
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer>
-        <div class="user">
-          <img class="user-img" src="../../images/user.png">
-          <div class="user-name">Johnny Appleseed</div>
-        </div>
+        <app-user-badge></app-user-badge>
         <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
 					<h3 disabled class="drawer-menu-label">Categories</h3>
 					<paper-item menu-name="rel">New releases</paper-item>

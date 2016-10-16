@@ -50,26 +50,6 @@ iron-pages {
   height: 100%
 }
 
-.user {
-  color: #7e7e7e;
-  width: 100%;
-}
-
-.user-img {
-  display: inline-flex;
-  margin-top: 10px;
-  margin-left: 10px;
-  width: 48px;
-  height: 48px;
-}
-
-.user-name {
-  display: inline-block;
-  position: relative;
-  left: 5px;
-  bottom: 20px;
-}
-
 .user-balance {
   display: block;
   color: #2176bd;

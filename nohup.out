@@ -1,0 +1,573 @@
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Created new window in existing browser session.
+Created new window in existing browser session.
+[31306:31306:1016/013449:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[31690:31690:1016/013506:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[31690:31690:1016/013506:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[32044:32064:1016/013506:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[32044:32064:1016/013507:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA cache_size=32
+[32044:32064:1016/013507:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR)
+[32044:32064:1016/013507:ERROR:login_database.cc(413)] Unable to create the meta table.
+[32044:32064:1016/013507:ERROR:password_store_default.cc(45)] Could not create/open login database.
+[32044:32044:1016/013512:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[32044:32044:1016/013512:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[32226:32226:1016/013519:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[32424:32444:1016/013519:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[32424:32424:1016/013524:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[32602:32622:1016/013525:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[32602:32602:1016/013620:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[32602:32602:1016/013620:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[1075:1094:1016/013621:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[1075:1075:1016/013626:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[1300:1320:1016/013626:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Created new window in existing browser session.
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+Created new window in existing browser session.
+[3173:3173:1016/013752:ERROR:broker_posix.cc(41)] Invalid node channel message
+[3181:3181:1016/013752:ERROR:broker_posix.cc(41)] Invalid node channel message
+[3049:3049:1016/013802:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[3049:3049:1016/013802:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[3398:3398:1016/013840:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[3398:3398:1016/013840:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4045:4064:1016/013841:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4045:4045:1016/013847:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4271:4293:1016/013847:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4271:4271:1016/013854:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4481:4501:1016/013854:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4481:4481:1016/013901:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[4481:4481:1016/013901:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4651:4671:1016/013901:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4651:4651:1016/013906:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4819:4836:1016/013907:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4819:4819:1016/013943:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[5428:5450:1016/013943:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[5428:5428:1016/014005:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[5826:5848:1016/014005:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[5826:5826:1016/014022:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[6171:6171:1016/014114:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[7058:7080:1016/014114:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[7058:7058:1016/014222:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[8156:8191:1016/014222:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[8156:8178:1016/014222:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[8156:8156:1016/014313:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[8982:8982:1016/014348:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[8982:8982:1016/014348:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[9592:9592:1016/014402:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[9892:9912:1016/014402:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[9892:9892:1016/014423:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[9892:9892:1016/014423:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[10296:10318:1016/014423:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[10296:10296:1016/014428:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[10296:10296:1016/014428:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[10471:10471:1016/014515:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[10471:10471:1016/014515:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[11244:11267:1016/014515:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[11244:11244:1016/014536:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[11244:11244:1016/014536:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[11632:11632:1016/014639:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[12698:12732:1016/014639:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[12698:12719:1016/014639:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[12698:12698:1016/014736:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[13632:13652:1016/014736:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[13632:13632:1016/014752:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[13967:13989:1016/014752:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[13967:13967:1016/014817:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[14413:14413:1016/014859:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[15098:15098:1016/014914:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[15415:15432:1016/014914:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[15415:15415:1016/014924:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[15675:15675:1016/014949:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[15675:15675:1016/014949:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[16200:16200:1016/015504:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[20707:20741:1016/015504:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[20707:20727:1016/015504:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[20707:20707:1016/015512:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[20707:20707:1016/015512:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[20906:20926:1016/015512:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[20906:20906:1016/015530:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[20906:20906:1016/015530:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[21265:21287:1016/015531:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[21265:21265:1016/015544:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[21265:21265:1016/015544:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[21566:21585:1016/015544:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[21566:21566:1016/015557:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[21860:21877:1016/015557:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:8
+  console.log(mscIntf.data);
+                     ^
+
+TypeError: Cannot read property 'data' of undefined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:8:22
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:79:3
+[21860:21860:1016/015640:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[21860:21860:1016/015640:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:8
+  console.log(mscIntf.data);
+                     ^
+
+TypeError: Cannot read property 'data' of undefined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:8:22
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:80:3
+[22579:22579:1016/015652:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[22856:22875:1016/015652:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9
+  console.log(mscIntf.data);
+                     ^
+
+TypeError: Cannot read property 'data' of undefined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9:22
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:80:3
+[22856:22856:1016/015718:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[22856:22856:1016/015718:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[23323:23342:1016/015718:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9
+  console.log(mscIntf.data);
+                     ^
+
+TypeError: Cannot read property 'data' of undefined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9:22
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:80:3
+[23323:23323:1016/015754:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[23931:23953:1016/015754:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9
+  console.log(mscIntf.data);
+                     ^
+
+TypeError: Cannot read property 'data' of undefined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:9:22
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:80:3
+[23931:23931:1016/015814:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[24302:24321:1016/015814:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[24302:24302:1016/015826:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[24578:24598:1016/015826:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[24578:24578:1016/015843:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[24939:24961:1016/015843:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+/home/mark/code/musicoin/client-reworked/hub/msc.js:7
+  userDetails:{
+  ^^^^^^^^^^^
+SyntaxError: Unexpected identifier
+    at Object.exports.runInThisContext (vm.js:76:16)
+    at Module._compile (module.js:537:28)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:482:32)
+    at tryModuleLoad (module.js:441:12)
+    at Function.Module._load (module.js:433:3)
+    at Function.Module.runMain (module.js:617:10)
+    at startup (bootstrap_node.js:80:16)
+    at bootstrap_node.js:475:3
+[24939:24939:1016/015928:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[24939:24939:1016/015928:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[25716:25738:1016/015929:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[25716:25716:1016/015957:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[26250:26272:1016/015957:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[26250:26250:1016/020014:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[26250:26250:1016/020014:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[26601:26621:1016/020015:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[26601:26601:1016/020026:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[26865:26885:1016/020026:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[26865:26865:1016/020116:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[26865:26865:1016/020116:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[27683:27703:1016/020116:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+[27683:27683:1016/020148:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[27683:27683:1016/020148:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[28261:28283:1016/020148:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:16
+  app.baseUrl = '/';
+              ^
+
+TypeError: Cannot set property 'baseUrl' of null
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:16:15
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:79:3
+[28261:28261:1016/020204:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[28261:28261:1016/020204:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[28598:28619:1016/020204:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+[28598:28598:1016/020245:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[28598:28598:1016/020245:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[29271:29293:1016/020245:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image || 'dummy.png'
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+[29271:29271:1016/020311:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[29751:29773:1016/020311:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image || 'dummy.png'
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:16
+  app.baseUrl = '/';
+              ^
+
+TypeError: Cannot set property 'baseUrl' of null
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:16:15
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/scripts/app.js:79:3
+[29751:29751:1016/020348:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[30404:30427:1016/020349:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6
+        value: mscIntf.userDetails.image || 'dummy.png'
+               ^
+
+ReferenceError: mscIntf is not defined
+    at chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:6:16
+[30404:30404:1016/020505:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[31589:31623:1016/020505:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[31589:31610:1016/020505:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[31589:31589:1016/020537:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[31589:31589:1016/020537:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[32134:32156:1016/020537:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[32134:32134:1016/020838:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[2616:2651:1016/020838:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[2616:2638:1016/020838:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[2616:2616:1016/020918:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[2616:2616:1016/020918:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[3490:3490:1016/020933:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[3797:3814:1016/020933:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[3797:3797:1016/020951:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[3797:3797:1016/020951:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4190:4214:1016/020951:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4190:4190:1016/021029:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[4834:4857:1016/021029:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[4834:4834:1016/021108:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[5524:5547:1016/021109:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[5524:5524:1016/021132:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[5968:5990:1016/021133:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[5968:5968:1016/021147:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[6294:6352:1016/021147:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[6294:6294:1016/021201:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+[6294:6294:1016/021201:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[6643:6663:1016/021201:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[6643:6643:1016/021240:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[7304:7326:1016/021240:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[7304:7304:1016/021350:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+[8406:8440:1016/021350:ERROR:connection.cc(1912)] History sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[8406:8427:1016/021350:ERROR:connection.cc(1912)] Passwords sqlite error 5, errno 0: database is locked, sql: PRAGMA journal_mode = TRUNCATE
+[8406:8406:1016/021424:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
+chrome-extension://lakgokcfcfakafnhbdenfbcolibojnce/interface/elements/app-subcomponents/app-user-badge/app-user-badge.js:14
+        value: mscIntf.toolSettings.userImagePath:'images/'
+                                                 ^
+
+SyntaxError: Unexpected token :
+[8999:8999:1016/021440:ERROR:zygote_communication_linux.cc(396)] Failed to send GetTerminationStatus message to zygote
+Gtk-Message: Failed to load module "pantheon-filechooser-module"
+Gtk-Message: Failed to load module "canberra-gtk-module"
