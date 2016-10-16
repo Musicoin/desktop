@@ -1,18 +1,12 @@
 Polymer({
     is: 'app-user-badge',
+    ready:function(){
+      mscIntf.userDetails = {register:this,prop:'userDetails'};
+      mscIntf.toolSettings.userImagePath = {register:this,prop:'userImageDir'};
+    },
     properties: {
-      badgeImage: {
-        type: String,
-        value: mscIntf.userDetails.image
-      },
-      badgeUsername: {
-        type: String,
-        value: mscIntf.userDetails.name
-      },
-      badgeDir: {
-        type: String,
-        value: mscIntf.toolSettings.userImagePath
-      },
+      userDetails: Object,
+      userImageDir: String,
     },
 
 })

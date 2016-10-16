@@ -1,8 +1,8 @@
 <dom-module id="app-user-badge">
   <link rel="import" type="css" href="app-user-badge.css">
   <template>
-    <img id="user-img" src$="[[badgeDir]][[badgeImage]]">
-    <div id="user-name">[[badgeUsername]]</div>
+    <img id="user-img" src$="[[userImageDir]][[userDetails.image]]">
+    <div id="user-name">[[userDetails.name]]</div>
   </template>
   <script src="app-user-badge.js"></script>
 </dom-module>

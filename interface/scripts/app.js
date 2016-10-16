@@ -5,7 +5,7 @@ require('nw.gui').Window.get().showDevTools();
   setTimeout(()=>{
     console.log(nw.process.mainModule);
   },1500)
-
+  console.log(mscIntf);
   var app = document.querySelector('#app');
 
   app.baseUrl = '/';

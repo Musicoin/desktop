@@ -1,14 +1,27 @@
 
     Polymer({
       is: 'app-element',
+      ready:function(){
+        mscIntf.locale = {register:this,prop:'locale'};
+      },
       properties: {
         selectedPage: {
           type: String,
           observer: '_pageChanged',
           value: "rel"
         },
+        lang:{
+          type: String,
+          observer: '_langChanged',
+          value: mscIntf.lang,
+        },
+        locale: Object,
       },
       _pageChanged:function(newValue) {
+        console.log(newValue);
+      },
+      _langChanged:function(newValue) {
+        this.locale = mscIntf.localeStrings
         console.log(newValue);
       }
 
