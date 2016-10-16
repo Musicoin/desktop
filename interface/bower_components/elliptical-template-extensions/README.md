@@ -1,2 +1,0 @@
-ELLIPTICAL TEMPLATE EXTENSIONS
-===========================

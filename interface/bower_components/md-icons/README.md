@@ -1,3 +1,0 @@
-Material Design Icons
-===========================
-

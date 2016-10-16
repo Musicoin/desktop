@@ -1,0 +1,6 @@
+interface/bower_components/
+nohup.out
+npm-debug.log
+runwatched.sh
+switchworkspace.sh
+node-modules/

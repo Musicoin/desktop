@@ -1,3 +1,0 @@
-DOM Mutation Summary Observer
-===============================
-

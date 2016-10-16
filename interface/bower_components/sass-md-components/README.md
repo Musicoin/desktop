@@ -1,5 +1,0 @@
-Sass Material Design Components
-===========================
-
-
-
