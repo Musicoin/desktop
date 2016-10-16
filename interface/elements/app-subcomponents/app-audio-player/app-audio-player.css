@@ -1,0 +1,31 @@
+:host {
+
+}
+.audio-progress-area {
+  flex-grow: 1;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.audio-control-area {
+  align-items: center;
+  display: flex;
+  flex-grow: 0.8;
+}
+
+.audio-info {
+  width: 100%;
+  color: #7e7e7e;
+  text-align: center;
+  font-size: small;
+  white-space: nowrap;
+}
+
+.audio-info-track {
+  font-style: italic;
+}
+.tip-button {
+  width: 2em;
+  height: 2em;
+  margin-top: 0.4em;
+}

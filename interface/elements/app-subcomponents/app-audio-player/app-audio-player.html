@@ -1,0 +1,21 @@
+<dom-module id="app-audio-player">
+  <link rel="import" type="css" href="app-audio-player.css">
+  <template>
+    <audio id="player" autoplay></audio>
+    <div class="audio-control-area">
+      <iron-image sizing="contain" id="miniImage" src="{{currentPlay.artwork}}" on-tap="toggleTrackDetailView"></iron-image>
+      <paper-icon-button id="playButton" icon="av:play-arrow" on-tap="togglePlayState" class="action-button"></paper-icon-button>
+      <div class="audio-progress-area">
+        <div class="audio-info">{{currentPlay.artist}}</div>
+        <paper-progress id="progress" class="audio-progress"></paper-progress>
+        <div class="audio-info audio-info-track"><em>{{currentPlay.track}}</em></div>
+      </div>
+      <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="skipTrack" class="action-button"></paper-icon-button>
+      <div>
+        <paper-icon-button icon="icons:thumb-up" class="tip-button action-button" on-tap="sendTip"></paper-icon-button>
+        <div class="user-balance-label">tip</div>
+      </div>
+    </div>
+  </template>
+  <script src="app-audio-player.js"></script>
+</dom-module>
