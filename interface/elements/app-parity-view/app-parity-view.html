@@ -1,0 +1,48 @@
+<dom-module id="app-parity-view">
+  <link rel="import" type="css" href="app-parity-view.css">
+  <template>
+    <div class="card">
+        <p>[[locale.parityView.defaultAccount]][[parityData.account]]</p>
+        <p>[[locale.parityView.allAccounts]][[parityData.accounts]]</p>
+        <p>[[locale.parityView.myBalanceIs]][[parityData.balance]]</p>
+        <p>
+            [[locale.parityView.mining]][[parityData.mining]]<br>
+            [[locale.parityView.myCoinbaseIs]][[parityData.coinbase]]<br>
+            [[locale.parityView.connected]][[parityData.connected]], [[locale.parityView.syncing]][[parityData.syncing]]
+        </p>
+    </div>
+
+    <div class="card">
+        <p>[[locale.parityView.status]][[parityData.status]]</p>
+        <paper-button raised on-tap="ready">[[locale.parityView.buttons.refreshStatus]]</paper-button>
+        <paper-button raised on-tap="clear">[[locale.parityView.buttons.clear]]</paper-button>
+    </div>
+
+    <div class="card">
+        <paper-input id="account" label="account"></paper-input>
+        <paper-button raised on-tap="checkBalance">[[locale.parityView.buttons.checkBalance]]</paper-button>
+        [[locale.parityView.balance]][[parityData.customBalance]]
+    </div>
+
+    <div class="card">
+        <paper-input id="newAccountPwd" type="password" label="pwd"></paper-input>
+        <paper-button raised on-tap="createAccount">[[locale.parityView.buttons.createAccount]]</paper-button>
+        <P>
+        [[newAccountId]]
+    </div>
+
+    <div class="card">
+        <paper-button raised on-tap="showMyMinedBlocks">[[locale.parityView.buttons.showMyMinedBlocks]]</paper-button>
+        <paper-button raised on-tap="showBlock">[[locale.parityView.buttons.showBlock]]</paper-button> <paper-input id="block" label="block"></paper-input>
+    </div>
+
+    <div class="card">
+        <paper-input id="tx" label="tx"></paper-input>
+        <paper-button raised on-tap="checkTransaction">[[locale.parityView.buttons.checkTransaction]]</paper-button>
+        <p>
+        [[locale.parityView.tx]][[parityData.transaction]]
+        [[locale.parityView.receipt]][[parityData.receipt]]
+    </div>
+  </template>
+  <script src="app-parity-view.js"></script>
+</dom-module>

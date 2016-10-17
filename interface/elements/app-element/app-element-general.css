@@ -3,6 +3,19 @@
   --app-secondary-color: white;
   display: block;
 }
+app-player-view, app-works-view, app-parity-view, app-contract-editor-view {
+  display: none;
+}
+
+:host[selected-page="rel"] app-player-view,
+:host[selected-page="cbr"] app-player-view,
+:host[selected-page="myf"] app-player-view,
+:host[selected-page="myw"] app-works-view,
+:host[selected-page="uti"] app-parity-view,
+:host[selected-page="edi"] app-contract-editor-view {
+  display: block;
+}
+
 
 body {
   background-color: #212121;
@@ -50,26 +63,7 @@ iron-pages {
   height: 100%
 }
 
-.user-balance {
-  display: block;
-  color: #2176bd;
-  font-size: 2em;
-  text-align: center;
-  line-height: 1;
-}
 
-.user-balance-area {
-  margin-right: 1em;
-  cursor: pointer;
-}
-
-.user-balance-label {
-  display: block;
-  color: #7e7e7e;
-  text-align: center;
-  font-size: small;
-  line-height: 1;
-}
 
 .drawer-list a.iron-selected {
   color: #eee;
@@ -201,4 +195,21 @@ paper-toast {
   font-style: italic;
   cursor: pointer;
   text-decoration: none;
+}
+.drawer-menu-label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+h3[disabled] {
+  margin: 0;
+  text-transform: uppercase;
+  padding: 0 16px;
+  margin-top: 16px;
+  pointer-events: none;
 }

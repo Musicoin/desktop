@@ -4,7 +4,6 @@
 <dom-module id="app-element">
   <link rel="import" type="css" href="app-element-general.css">
   <template>
-
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer>
@@ -31,48 +30,16 @@
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <app-audio-player></app-audio-player>
-            <div class="user-balance-area">
-              <div class="user-balance" onclick="getMusicoin().toggleTxDetailView()">&#x266E;{{userBalance}}</div>
-              <div id=pendingLabel class="user-balance-label" onclick="getMusicoin().toggleTxDetailView()">&#x266E;{{pendingPayments}} pending</div>
-            </div>
+            <app-user-balance></app-user-balance>
           </app-toolbar>
         </app-header>
-        <div>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-        </div>
-
+        <app-player-view></app-player-view>
+        <app-works-view></app-works-view>
+        <app-parity-view></app-parity-view>
+        <app-contract-editor-view></app-contract-editor-view>
       </app-header-layout>
     </app-drawer-layout>
-
-    <paper-dialog id="paymentApprovalDialog">
-      <h2>Confirm payment of &#x266E;{{amountToPay}}</h2>
-      <p>{{confirmationMessage}}</p>
-      <paper-input class="my-class" id="pwd" type=password label="password"></paper-input>
-      <div class="buttons">
-        <paper-button dialog-dismiss>Decline</paper-button>
-        <paper-button id="confirm" dialog-confirm autofocus on-tap="onPermissionGranted">Accept</paper-button>
-      </div>
-    </paper-dialog>
+    <app-payment-approval-dialog></app-payment-approval-dialog>
 
     <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
     <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>

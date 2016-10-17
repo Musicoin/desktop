@@ -1,6 +1,8 @@
 <dom-module id="app-user-balance">
   <link rel="import" type="css" href="app-user-balance.css">
   <template>
+    <div id="user-balance" class="user-balance" on-tap="onOpenTxDetails">&#x266E;{{userBalance}}</div>
+    <div id="pending-label" class="user-balance-label" on-tap="onOpenTxDetails">&#x266E;{{pendingPayments}} pending</div>
   </template>
   <script src="app-user-balance.js"></script>
 </dom-module>

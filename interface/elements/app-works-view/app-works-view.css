@@ -1,0 +1,56 @@
+:host {
+    display: block;
+    padding: 5px;
+    background-color: transparent;
+}
+
+.contributor-image {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.contributor-tag {
+display: inline-flex;
+flex-direction: row;
+background-color: whitesmoke;
+border: 5px solid transparent;
+margin: 2px;
+}
+
+.contributor-tag > div {
+margin-right: 5px;
+}
+
+.shares {
+width: 50px;
+text-align: right;
+}
+
+#deleteButton {
+width: 24px;
+height: 24px;
+padding: 0;
+}
+
+.contributor-name {
+font-weight: bold;
+}
+
+.contributor-role {
+font-style: italic;
+}
+
+#contributorInput {
+display: inline-block;
+}
+
+paper-input {
+display: inline-block;
+}
+
+.upload {
+border: 2px dotted #aaa;
+width: 300px;
+height: 300px;
+}

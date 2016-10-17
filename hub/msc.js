@@ -13,7 +13,13 @@ const initObservables = require('./observables-defs.js');
 var mschub = {
   audioElement:null,
   toolSettings:{
-  }
+  },
+  financialData:{
+
+  },
+  worksEditor: {
+
+  },
 }
 /* here we init observables defined in observables-defs.js */
 initObservables(mschub);
@@ -29,6 +35,11 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return ['VOILA!',this];
       },
       skipTrack:function(elem, params, fns){
+
+      },
+    },
+    finops:{
+      sendTip:function(elem, params, fns){
 
       },
     }

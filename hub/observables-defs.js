@@ -17,6 +17,47 @@ var observables = [
     artwork:''
   }},
   {subproperties:'toolSettings',prop:'userImagePath',initVal:'images/'},
+  {subproperties:'toolSettings',prop:'contractImagesPath',initVal:'images/'},
+  {subproperties:'toolSettings',prop:'uploadedImagesDir',initVal:'images/'},
+  //for test purposes only TODO: remove when obsolete
+  {subproperties:'toolSettings',prop:'ipfsTestData',initVal:{
+    tx:'hdjfns112222',
+    hash:'hdjfns112222',
+    contract:'hdjfns112222',
+    status:'pending',
+  }},
+  {subproperties:'worksEditor',prop:'contributors',
+  //just test data, TODO: delete when real available
+  initVal:[
+    {name:'Anna Karenina', role:'manager', shares:'50'},
+    {name:'Anna Karenina', role:'manager', shares:'50'},
+    {name:'Anna Karenina', role:'manager', shares:'50'},
+    {name:'Anna Karenina', role:'manager', shares:'50'},
+  ]
+  },
+  //just test data, TODO: delete when real available
+  {subproperties:'financialData',prop:'parityData',initVal:{
+    account:'aaa8888aaa888',accounts:'notsurewhatgoeshere',balance:100000,mining:1000,coinbase:9999,syncing:'???',status:'Idle',customBalance:'232313',transaction:'aa1188ddd',receipt:'99kk11ss'
+  }},
+  {subproperties:'financialData',prop:'userBalance',initVal:0},
+  {subproperties:'financialData',prop:'pendingPayments',initVal:0},
+  {subproperties:'financialData',prop:'amountToPay',initVal:0},
+  {prop:'contractGroups',
+  //just test data, TODO: delete when real available
+  initVal:[
+    {name:'something',contracts:[
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+      {contractId:'abc123', img:'darude.jpg',artist:'Darude',album:'Sandstorm',track:'Sandstorm'},
+    ]
+  }
+  ],
+
+  //initVal:[]
+  },
 ];
 
 module.exports = function (baseObj) {

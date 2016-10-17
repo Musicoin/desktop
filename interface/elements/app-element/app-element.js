@@ -2,13 +2,14 @@
     Polymer({
       is: 'app-element',
       ready:function(){
-        mscIntf.locale = {register:this,prop:'locale'};
+        mscIntf.locale = {register:this,prop:'locale'}
       },
       properties: {
         selectedPage: {
           type: String,
           observer: '_pageChanged',
-          value: "rel"
+          value: "rel",
+          reflectToAttribute:true,
         },
         lang:{
           type: String,

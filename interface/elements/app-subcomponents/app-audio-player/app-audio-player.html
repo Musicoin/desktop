@@ -4,7 +4,7 @@
     <audio id="player" autoplay></audio>
     <div class="audio-control-area">
       <iron-image sizing="contain" id="miniImage" src="{{currentPlay.artwork}}" on-tap="toggleTrackDetailView"></iron-image>
-      <paper-icon-button id="playButton" icon="av:play-arrow" on-tap="togglePlayState" class="action-button"></paper-icon-button>
+      <paper-icon-button id="playButton" icon="[[playState]]" on-tap="togglePlayState" class="action-button"></paper-icon-button>
       <div class="audio-progress-area">
         <div class="audio-info">{{currentPlay.artist}}</div>
         <paper-progress id="progress" class="audio-progress"></paper-progress>
