@@ -3,5 +3,5 @@ nohup.out
 npm-debug.log
 runwatched.sh
 switchworkspace.sh
-node-modules/
+node_modules/
 .atomignore
