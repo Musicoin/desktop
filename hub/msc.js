@@ -26,6 +26,7 @@ initObservables(mschub);
 TODO: make it possible. */
 observable(mschub,'locale',locale[mschub.lang]);
 observable(mschub,'chainReady',false);
+observable(mschub,'chainSync',{start:0,current:0,max:0,syncProgress:0});
 observable(mschub,'ipfsReady',false);
 observable(mschub,'serverReady',false);
 
@@ -42,7 +43,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return {result: chain.chainDisconnect()};
       },
       watch: function(elem, params, fns){
-        chain.watch((state)=>{mschub.chainReady = state});
+        chain.watch((ready)=>{mschub.chainReady = ready}, (sync)=>{sync.start!==undefined && sync.max!==undefined && (sync.syncProgress = (Math.round(sync.current/sync.max*10000)/100), mschub.chainSync = sync)});
         return {result:'watching'}
       },
       unwatch: function(elem, params, fns){

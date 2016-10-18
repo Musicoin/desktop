@@ -3,6 +3,7 @@ Polymer({
     ready:function(){
       mscIntf.locale = {register:this,prop:'locale'}
       mscIntf.chainReady = {register:this,prop:'chainReady'}
+      mscIntf.chainSync = {register:this,prop:'chainSync'}
       mscIntf.ipfsReady = {register:this,prop:'ipfsReady'}
       mscIntf.serverReady = {register:this,prop:'serverReady'}
     },
@@ -14,6 +15,10 @@ Polymer({
       chainReady: {
         type: Boolean,
         observer: 'computeNotifierChain'
+      },
+      chainSync: {
+        type: Object,
+        observer: 'computeNotifierSyncChain'
       },
       ipfsReady: {
         type: Boolean,
@@ -29,6 +34,10 @@ Polymer({
     },
     computeNotifierChain: function() {
       this.chain = this.chainReady?this.locale.connectionWatch.chainReady:this.locale.connectionWatch.chainNotReady;
+    },
+    computeNotifierSyncChain: function() {
+      console.log('sync',this.chainSync);
+      //this.chain = this.chainReady?this.locale.connectionWatch.chainReady:this.locale.connectionWatch.chainNotReady;
     },
     computeNotifierIpfs: function() {
       this.ipfs = this.ipfsReady?this.locale.connectionWatch.ipfsReady:this.locale.connectionWatch.ipfsNotReady;

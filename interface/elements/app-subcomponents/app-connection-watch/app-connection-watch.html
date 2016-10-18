@@ -1,7 +1,7 @@
 <dom-module id="app-connection-watch">
   <link rel="import" type="css" href="app-connection-watch.css">
   <template>
-      <span id="geth-up" service-on$="[[chainReady]]">[[chain]]</span>
+      <span id="chain-up" service-on$="[[chainReady]]">[[chain]]<span id="chainSync">[[chainSync.syncProgress]]%</span></span>
       <span id="ipfs-up" service-on$="[[ipfsReady]]">[[ipfs]]</span>
       <span id="server-up" service-on$="[[serverReady]]">[[server]]</span>
   </template>

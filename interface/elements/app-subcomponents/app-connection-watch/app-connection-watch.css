@@ -14,3 +14,6 @@ span {
 span[service-on] {
   color: #eee;
 }
+span:not([service-on])>#chainSync {
+  display: none;
+}
