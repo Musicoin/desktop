@@ -78,6 +78,14 @@ var locale = {
         checkTransaction: 'check transaction',
       },
     },
+    connectionWatch: {
+      chainReady:'Connected to MusicChain',
+      chainNotReady:'Not connected to MusicChain',
+      ipfsReady:'Connected to IPFS',
+      ipfsNotReady:'Not connected to IPFS',
+      serverReady:'Connected to server',
+      serverNotReady:'Not connected to server',
+    },
   },
   se:{
     navMenu:{
@@ -157,6 +165,14 @@ var locale = {
         showBlock: 'show block',
         checkTransaction: 'check transaction',
       },
+    },
+    connectionWatch: {
+      chainReady:'Connected to MusicChain',
+      chainNotReady:'Not connected to MusicChain',
+      ipfsReady:'Connected to IPFS',
+      ipfsNotReady:'Not connected to IPFS',
+      serverReady:'Connected to server',
+      serverNotReady:'Not connected to server',
     },
   }
 }

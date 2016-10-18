@@ -1,5 +1,4 @@
 //const mscbuffer = require('./databuffer.js');
-
 /* locale is a set of strings to be fed to app depending on language chosen */
 const locale = require('./locale.js');
 /* observable-factory is responsible to make properties update respective Polymer elements upon update of property */
@@ -19,17 +18,38 @@ var mschub = {
   },
   worksEditor: {
 
-  },
+  }
 }
 /* here we init observables defined in observables-defs.js */
 initObservables(mschub);
 /* as it's not possible to define observables with initObservables having initial values depending on objects in this module scope we must define them separately.
 TODO: make it possible. */
 observable(mschub,'locale',locale[mschub.lang]);
+observable(mschub,'chainReady',false);
+observable(mschub,'ipfsReady',false);
+observable(mschub,'serverReady',false);
+
+var chain = require('./web3things.js');
 
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
 mschub.fnPool = function(fngroup, fn, elem, params) {
   var fns = {
+    chain:{
+      connect: function(elem, params, fns){
+        return {result: chain.chainConnect()};
+      },
+      disconnect: function(elem, params, fns){
+        return {result: chain.chainDisconnect()};
+      },
+      watch: function(elem, params, fns){
+        chain.watch((state)=>{mschub.chainReady = state});
+        return {result:'watching'}
+      },
+      unwatch: function(elem, params, fns){
+        chain.unwatch();
+        return {result:'unwatched'}
+      },
+    },
     audio:{
       togglePlayState:function(elem, params, fns){
         return ['VOILA!',this];
@@ -47,10 +67,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
   /* Here we either call a function called by fngroup/fn (and return its return) providing it with element object, passed parameters, fns var (to make sure functions can communicate and call themselves if needed) and setting 'this' to module exports (in this case mschub) or return object with one member - error to be managed by window. */
   return (fns[fngroup] && fns[fngroup][fn])?fns[fngroup][fn].call(this,elem, params, fns):{error:'Invalid function called'};
 }
+
+mschub.fnPool('chain','watch');
+mschub.fnPool('chain','connect');
+//mschub.fnPool('chain','disconnect');
+
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub
-
-
 
 setTimeout(function(){
   mschub.lang = 'se';
