@@ -1,3 +1,4 @@
+const staticData = require('./static-data.js');
 const observable = require('./observable-factory.js');
 /* observables defined below are meant to be static ones in a sense that their initial value is provided in explicit way (not referring to other objects).
 observable is provided in a form:

@@ -1,8 +1,13 @@
 <dom-module id="app-user-badge">
   <link rel="import" type="css" href="app-user-badge.css">
   <template>
-    <img id="user-img" src$="[[userImageDir]][[userDetails.image]]">
-    <div id="user-name">[[userDetails.name]]</div>
+    <paper-menu-button horizontal-align="left" vertical-align="top" vertical-offset="60">
+      <paper-button style="background-image:url([[usersImageDir]][[userDetails.external.image]])" class="dropdown-trigger">[[userDetails.fullName]]</paper-button>
+      <paper-menu on-iron-select="menuPick" attr-for-selected="menu-name" class="dropdown-content">
+        <paper-item menu-name="set">Settings</paper-item>
+        <paper-item menu-name="loo">Log out</paper-item>
+      </paper-menu>
+    </paper-menu-button>
   </template>
   <script src="app-user-badge.js"></script>
 </dom-module>

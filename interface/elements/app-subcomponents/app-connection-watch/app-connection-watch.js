@@ -36,7 +36,7 @@ Polymer({
       this.chain = this.chainReady?this.locale.connectionWatch.chainReady:this.locale.connectionWatch.chainNotReady;
     },
     computeNotifierSyncChain: function() {
-      console.log('sync',this.chainSync);
+      //console.log('sync',this.chainSync);
       //this.chain = this.chainReady?this.locale.connectionWatch.chainReady:this.locale.connectionWatch.chainNotReady;
     },
     computeNotifierIpfs: function() {

@@ -1,14 +1,21 @@
 <dom-module id="app-login-view">
   <link rel="import" type="css" href="app-login-view.css">
   <template>
-    <div id=loginWindow class="login">
-      <div class="login-elements">
-        <div class="login-label">Musicoin</div>
-        <paper-input id="loginPwd" class="login-text-box" type="password" label="password" on-keydown="checkForEnter"></paper-input>
-        {{account}}
-        <br><br>
-        <a id="skipLoginButton" href="javascript:musicoin.hideLoginWindow()">skip</a>
-      </div>
+    <h1 class="login-label">Musicoin</h1>
+    <div class="login-elements">
+      <iron-selector id="list">
+        <template is="dom-repeat" items="[[listUsers]]">
+          <div class="user-item" auto-login$="[[item.autoLogin]]" user-login="[[item.user]]">
+            <iron-icon src="[[usersImageDir]][[item.image]]"></iron-icon><span>[[item.user]]</span>
+            <template is="dom-if" if="[[!item.autoLogin]]">
+              <paper-input on-blur="onBlur" class="login-text-box" type="password" label="password" on-keydown="catchEnter" always-float-label></paper-input>
+            </template>
+            <template is="dom-if" if="[[item.autoLogin]]">
+              <paper-button on-tap="noPassEnter"><iron-icon icon="check"></iron-icon>ENTER</paper-button>
+            </template>
+          </div>
+        </template>
+      </iron-selector>
     </div>
   </template>
   <script src="app-login-view.js"></script>

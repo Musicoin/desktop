@@ -14,7 +14,7 @@ module.exports = function(obj,prop,initValue) {
     get: function() { return obj['__'+prop]; },
     set: function(newValue) {
       if (newValue.register) {
-        obj['__'+prop+'_binding'] = [];
+        obj['__'+prop+'_binding']===null && (obj['__'+prop+'_binding'] = []);
         obj['__'+prop+'_binding'].push({elem:newValue.register,prop:newValue.prop});
         newValue.register.set(newValue.prop,obj['__'+prop]);
       } else {

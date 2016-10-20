@@ -104,45 +104,6 @@ paper-toast {
   text-align: right;
 }
 
-.login {
-  color: #686868;
-  z-index: 3;
-  position: fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  background-size: cover;
-  background-image: url(../../images/login.jpg);
-  display: flex;
-  justify-content: center;
-
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-}
-
-.login-elements {
-  position: fixed;
-  top: 50%;
-  left: 20%;
-  width: 30%;
-  height: 25%;
-  padding: 2em;
-  transform: translate(-50%, -50%);
-}
-
-.login-text-box {
-  --paper-input-container-color: #686868;
-  --paper-input-container-focus-color: #2176bd;
-  --paper-input-container-input-color: #2176bd;
-}
-
-.login-label {
-  font-size: 2em;
-}
 
 #detailButton {
   width: 2em;
@@ -190,12 +151,6 @@ paper-toast {
   cursor: pointer;
 }
 
-#skipLoginButton {
-  color: #2176bd;
-  font-style: italic;
-  cursor: pointer;
-  text-decoration: none;
-}
 .drawer-menu-label {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

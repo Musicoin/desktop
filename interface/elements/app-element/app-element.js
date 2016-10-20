@@ -3,12 +3,17 @@
       is: 'app-element',
       ready:function(){
         mscIntf.locale = {register:this,prop:'locale'}
+        mscIntf.loginLock = {register:this,prop:'loginLock'}
       },
       properties: {
         selectedPage: {
           type: String,
           observer: '_pageChanged',
           value: "rel",
+          reflectToAttribute:true,
+        },
+        loginLock: {
+          type: Boolean,
           reflectToAttribute:true,
         },
         lang:{
