@@ -86,6 +86,16 @@ var locale = {
       serverReady:'Connected to server',
       serverNotReady:'Not connected to server',
     },
+    accountCreateConfirmDialog: {
+      header:'Provide a password to secure your account',
+      description:'Provide a password in input box and hit Enter when done.',
+      password:'password',
+      cancel:'cancel',
+      success:'Success',
+      errorOnInit:'There was an error while trying to call application\'s backend.',
+      errorInProcessing:'There was an error during processing your request.\nPlease try again or consult this error on musicoin.org support forum\n\nClick or tap anywhere around to dismiss this message.',
+
+    },
   },
   se:{
     navMenu:{
@@ -173,6 +183,15 @@ var locale = {
       ipfsNotReady:'Not connected to IPFS',
       serverReady:'Connected to server',
       serverNotReady:'Not connected to server',
+    },
+    accountCreateConfirmDialog: {
+      header:'Provide a password to secure your account',
+      description:'Provide a password in input box and hit Enter when done.',
+      password:'password',
+      cancel:'cancel',
+      success:'Success',
+      errorOnInit:'There was an error while trying to call application\'s backend.',
+      errorInProcessing:'There was an error during processing your request.\nPlease try again or consult this error on musicoin.org support forum\n\nClick or tap anywhere around to dismiss this message.',
     },
   }
 }

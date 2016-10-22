@@ -10,7 +10,7 @@ Polymer({
     },
     menuPick: function(ev) {
       if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
-      if (ev.target.selected=='set') {}
+      if (ev.target.selected=='set') document.querySelector('app-account-create-confirm-dialog').open()
       ev.target.selected = null;
     },
     // listeners: {

@@ -12,6 +12,12 @@ const initObservables = require('./observables-defs.js');
 const crypto = require('crypto');
 const fs = require('fs');
 
+/* here I define backend restricted storage that is not accessible directly from interface */
+var beRestricted = {
+  currentKeystore:null,
+  currentPrivateKeystore:null,
+}
+
 var cloneByValue = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
@@ -42,8 +48,9 @@ observable(mschub,'ipfsReady',false);
 observable(mschub,'serverReady',false);
 observable(mschub,'userGuest',staticData.guestUser.entry);
 observable(mschub,'userDetails',staticData.guestUser.entry);
-observable(mschub,'listUsers',[staticData.guestUser.list]); //JSON.parse(localStorage.getItem('users_table')).map((item)=>{return {user:item,image:JSON.parse(localStorage.getItem('user_'+item)).external.image}}));
-//console.log('val',JSON.parse(localStorage.getItem('users_table')).map((item)=>{return {user:item,image:JSON.parse(localStorage.getItem('user_'+item)).external.image}}),mschub.listUsers);
+observable(mschub,'listUsers',[staticData.guestUser.list]);
+observable(mschub,'notifyAccCreateDialog',null);
+
 var chain = require('./web3things.js');
 
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
@@ -58,11 +65,20 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       },
       watch: function(elem, params, fns){
         chain.watch((ready)=>{mschub.chainReady = ready}, (sync)=>{sync.start!==undefined && sync.max!==undefined && (sync.syncProgress = (Math.round(sync.current/sync.max*10000)/100), mschub.chainSync = sync)});
+
         return {result:'watching'}
       },
       unwatch: function(elem, params, fns){
         chain.unwatch();
         return {result:'unwatched'}
+      },
+      createKeystore(elem, params, fns){
+        chain.createKeystore(null,(ks)=>{beRestricted.currentKeystore = ks},(ks)=>{});
+        return {result:'pending'}
+      },
+      createPrivateAccount(elem, params, fns){
+        chain.createKeystore(params.pwd, (ks)=>{beRestricted.currentPrivateKeystore = ks}, (result)=>{console.log('RESVAL:',result);mschub.notifyAccCreateDialog = result})
+        return {result:'pending'}
       },
     },
     login:{
@@ -167,10 +183,12 @@ mschub.fnPool('login','updateUsersList');
 mschub.fnPool('login','verifyLogin',null,{login:'japple', pwd:'Musicoin'});
 mschub.fnPool('chain','watch');
 mschub.fnPool('chain','connect');
+// mschub.fnPool('chain','createKeystore');
+//mschub.fnPool('chain','createPrivateAccount',null,{pwd:'pass'});
 mschub.fnPool('login','logoutUser');
 //mschub.fnPool('chain','disconnect');
 
-console.log(localStorage);
+//console.log(localStorage);
 // console.log(sessionStorage);
 
 /* Here we export the hub's reference to be accessible for the interface */

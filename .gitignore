@@ -2,6 +2,7 @@ interface/bower_components/
 nohup.out
 npm-debug.log
 runwatched.sh
+watcher.sh
 switchworkspace.sh
 node_modules/
 .atomignore

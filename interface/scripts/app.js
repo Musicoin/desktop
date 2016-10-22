@@ -1,4 +1,4 @@
-require('nw.gui').Window.get().showDevTools();
+setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
 
 (function (document) {
   'use strict';
@@ -11,9 +11,9 @@ require('nw.gui').Window.get().showDevTools();
   app.baseUrl = '/';
   if (window.location.port === '') {
   }
-  app.addEventListener('dom-change', function () {
-    console.log('Our app is ready to rock!');
-  });
+  // app.addEventListener('dom-change', function () {
+  //   console.log('Our app is ready to rock!');
+  // });
 
   window.addEventListener('WebComponentsReady', function () {
       setTimeout(function () {

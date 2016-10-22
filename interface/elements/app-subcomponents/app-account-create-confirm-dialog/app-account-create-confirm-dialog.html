@@ -1,0 +1,37 @@
+<dom-module id="app-account-create-confirm-dialog" extends="paper-dialog">
+  <style is="custom-style" include="paper-dialog-shared-styles"></style>
+  <link rel="import" type="css" href="app-account-create-confirm-dialog.css">
+  <template>
+    <template is="dom-if" if="[[errorOccured]]">
+      <template is="dom-if" if="[[!messageSwitch]]">
+        <p class="message" id="errorOnInit">
+          [[locale.accountCreateConfirmDialog.errorOnInit]]
+        </p>
+      </template>
+      <template is="dom-if" if="[[messageSwitch]]">
+        <p class="message" id="errorInProcessing">
+          [[locale.accountCreateConfirmDialog.errorInProcessing]]
+        </p>
+      </template>
+    </template>
+    <template is="dom-if" if="[[!errorOccured]]">
+      <template is="dom-if" if="[[!waitForConfirmation]]">
+        <h2>[[locale.accountCreateConfirmDialog.header]]</h2>
+        <div>[[locale.accountCreateConfirmDialog.description]]</div>
+        <paper-input id="txtBox" type="password" label="[[locale.accountCreateConfirmDialog.password]]" on-keydown="catchEnter"></paper-input>
+        <paper-button id="cancelButton" dialog-dismiss>[[locale.accountCreateConfirmDialog.cancel]]</paper-button>
+      </template>
+      <template is="dom-if" if="[[waitForConfirmation]]">
+        <template is="dom-if" if="[[!messageSwitch]]">
+          <paper-spinner active></paper-spinner>
+        </template>
+        <template is="dom-if" if="[[messageSwitch]]">
+          <p id="successMessage">
+            [[locale.accountCreateConfirmDialog.success]]
+          </p>
+        </template>
+      </template>
+    </template>
+  </template>
+  <script src="app-account-create-confirm-dialog.js"></script>
+</dom-module>
