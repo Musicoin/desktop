@@ -1,0 +1,69 @@
+:host {
+  font-size:2vh;
+  padding:1vh 0;
+  display: flex;
+  flex-direction: column;
+}
+:host>div#ctrlLabel {
+  display:flex;
+}
+:host>div#accountSelected {
+  display:flex;
+  box-shadow: inset 0px -5px 1px -4px #aaa;
+  padding: 0.5vh 9vw;
+  color:#a2a2a1;
+  position:relative;
+  font-size:1.5em;
+  margin:0;
+  cursor:pointer;
+}
+#accountSelected #placeholderText {
+  
+}
+#accountSelected #selectedText {
+  
+}
+iron-selector>* {
+
+  background-color: #ffffff;
+  padding:0.4em 9vw;
+  color:#776868;
+  font-family: monospace;
+  cursor: pointer;
+}
+iron-selector>*:hover {
+  background-color: #eedabb;
+  color:teal;
+}
+iron-selector>#createNew {
+  background-color: #fffcdd;
+}
+paper-input {
+  --paper-input-prefix:{
+    padding:0 1vw 0 9vw;
+  font-size:3em;
+  color:antiquewhite;
+  }  
+  --paper-input-suffix:{
+    padding:0 1vw 0 9vw;
+  font-size:3em;
+  }  
+  --paper-input-container:{
+    padding:0;
+  font-size:3em;
+  }
+}
+paper-input paper-input-content{
+  padding:0 9vw;
+  font-size:3em;
+}
+#ctrlLabel {
+
+}
+#ctrlLabel h2{
+  padding: 0 2vw 0 9vw;
+  background-color:#aaa;
+  color:#333;
+  margin: 0;
+  border-radius: 0 0 0.5em 0;
+}

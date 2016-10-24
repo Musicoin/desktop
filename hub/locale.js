@@ -96,6 +96,15 @@ var locale = {
       errorInProcessing:'There was an error during processing your request.\nPlease try again or consult this error on musicoin.org support forum\n\nClick or tap anywhere around to dismiss this message.',
 
     },
+    accountSelector: {
+      roles:{
+        coinbase: 'Coinbase',
+        mainPrivate: 'Main private',
+        appBuiltIn: 'Application\'s built in',
+      },
+      placeholder: 'select existing or create new',
+      createNew: 'create new account',
+    }
   },
   se:{
     navMenu:{
@@ -193,6 +202,15 @@ var locale = {
       errorOnInit:'There was an error while trying to call application\'s backend.',
       errorInProcessing:'There was an error during processing your request.\nPlease try again or consult this error on musicoin.org support forum\n\nClick or tap anywhere around to dismiss this message.',
     },
+    accountSelector: {
+      roles:{
+        coinbase: 'Coinbase',
+        mainPrivate: 'Main private',
+        appBuiltIn: 'Application\'s built in',
+      },
+      placeholder: 'select existing or create new',
+      createNew: 'create new account',
+    }
   }
 }
 

@@ -120,9 +120,6 @@ module.exports = (function (data) {
 			return { error: this.errors.accountOther, description: err }
 		}
 	}
-
-
-
 	Promise.promisifyAll(this);
 	return this;
 })();

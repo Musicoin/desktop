@@ -10,14 +10,8 @@ Polymer({
     },
     menuPick: function(ev) {
       if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
-      if (ev.target.selected=='set') document.querySelector('app-account-create-confirm-dialog').open()
+      if (ev.target.selected=='acc') document.querySelector('app-account-create-confirm-dialog').open()
+      if (ev.target.selected=='set') document.querySelector('app-user-settings-view').open()
       ev.target.selected = null;
     },
-    // listeners: {
-    // 'tap': '_openSubMenu'
-    // },
-    // _openSubMenu: function(ev) {
-    //   console.log('sub');
-    // },
-
 })
