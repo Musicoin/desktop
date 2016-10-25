@@ -5,6 +5,7 @@ Polymer({
       this.payments = mscIntf.payments;
       mscIntf.audioHub.attach(this)
         .to('currentPlay')
+        .to('playbackPaymentPercentage')
 
       mscIntf.audioElement = this.$.player;
 
@@ -35,7 +36,8 @@ Polymer({
       playState: {
         type: String,
         value: 'av:play-arrow'
-      }
+      },
+      playbackPaymentPercentage: Number
     },
     _currentPlayChanged: function(item) {
       this.$.progress.value = 0;

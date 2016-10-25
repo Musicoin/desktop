@@ -7,8 +7,8 @@
   "window": {
     "frame": true,
     "toolbar": true,
-    "width": 850,
-    "height": 650
+    "width": 1000,
+    "height": 600
   },
   "webkit": {
     "plugin": true

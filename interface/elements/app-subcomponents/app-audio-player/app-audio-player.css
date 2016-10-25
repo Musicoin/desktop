@@ -1,5 +1,5 @@
 :host {
-
+  display: flex;
 }
 .audio-progress-area {
   flex-grow: 1;
@@ -9,7 +9,8 @@
 
 paper-progress.audio-progress {
   --paper-progress-active-color: #2176bd;
-  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  --paper-progress-secondary-color: var(--google-grey-300);
+  --paper-progress-container-color: var(--google-grey-500);
   width: 100%;
 }
 
@@ -17,6 +18,7 @@ paper-progress.audio-progress {
   align-items: center;
   display: flex;
   flex-grow: 0.8;
+  width: 200px;
 }
 
 .audio-info {
@@ -31,14 +33,14 @@ paper-progress.audio-progress {
   font-style: italic;
 }
 .tip-button {
-  width: 2em;
-  height: 2em;
-  margin-top: 0.4em;
+  width: 38px;
+  height: 38px;
+  margin-top: 10px;
 }
 
 .action-button {
-  width: 3em;
-  height: 3em;
+  width: 48px;
+  height: 48px;
   --paper-icon-button-ink-color: #2176bd;
 }
 
@@ -64,6 +66,7 @@ paper-progress.audio-progress {
   text-align: center;
   font-size: small;
   white-space: nowrap;
+  margin: 2px;
 }
 
 .audio-info-track {
@@ -74,4 +77,12 @@ paper-progress.audio-progress {
   width: 32px;
   height: 32px;
   cursor: pointer;
+}
+
+.tip-label {
+  display: block;
+  color: #7e7e7e;
+  text-align: center;
+  font-size: small;
+  line-height: 1;
 }
