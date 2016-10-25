@@ -245,13 +245,14 @@ paper-input {
 .top-area {
     display: flex;
     flex-direction: row;
+    padding-bottom: 10px;
 }
 
 .metadata-area {
     display: flex;
     flex-direction: column;
     flex-grow: 0.8;
-    padding: 5px;
+    padding: 5px 5px 5px 10px;
 }
 
 .extended-metadata-area {

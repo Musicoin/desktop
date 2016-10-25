@@ -57,14 +57,13 @@ Polymer({
 
     createNewWork: function() {
         return {
-            track: "New Work",
+            title: "< work name >",
             img: "",
             metadata: [],
             licenses: []
         }
     },
 
-    /*
     releaseWork: function (releaseEvent) {
         var work = releaseEvent.work;
         var editor = releaseEvent.editor;
@@ -138,11 +137,4 @@ Polymer({
             });
         });
     },
-
-    showView: function(element) {
-        this.$.gridView.style.display = 'none';
-        this.$.workEditor.style.display = 'none';
-        element.style.display = 'block';
-    }
-    */
 })

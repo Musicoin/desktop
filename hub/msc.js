@@ -189,6 +189,9 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       updateLoginPwdHash: function(elem, params, fns){
 
       },
+      web3TestLogin: function(elem, params, fns) {
+        web3Connector.storeCredentials(params.pwd);
+      }
     },
     audio:{
       togglePlayState:function(elem, params, fns){
@@ -239,41 +242,30 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
     },
     finops:{
       sendTip:function(elem, params, fns){
-        var pwd = mschub.pwd; // TODO: Hack!
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
-        web3Connector.tip({amount: wei, to: params.address}, pwd,
-        {
-          onPaymentInitiated: function () {
-            console.log("Payment initiated");
-          },
-          onPaymentComplete: function () {
-            console.log("Payment success!");
-          },
-          onFailure: function (err, isAuthFail) {
-            console.log("Payment failed: " + err + ", authFailed: " + isAuthFail);
-          },
-          onStatusChange: function (msg) {
-            console.log(msg)
-          }
+        web3Connector.tip({amount: wei, to: params.address})
+        .then(function(tx) {
+          // TODO: Add to pending payments
+          console.log("Waiting for transaction: " + tx);
+          return web3Connector.waitForTransaction(tx);
+        })
+        .then(function(receipt) {
+          // TODO: Remove from pending payments
+          console.log(JSON.stringify(receipt));
         });
       },
       payForPlay: function(elem, params, fns) {
-        var pwd = mschub.pwd; // TODO: Hack!
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
-        web3Connector.ppp({to: params.address, amount: wei}, pwd, {
-          onPaymentInitiated: function () {
-            console.log("Payment initiated");
-          },
-          onPaymentComplete: function () {
-            console.log("Payment success!");
-          },
-          onFailure: function (err, isAuthFail) {
-            console.log("Payment failed: " + err + ", authFailed: " + isAuthFail);
-          },
-          onStatusChange: function (msg) {
-            console.log(msg)
-          }
-        });
+        web3Connector.ppp({to: params.address, amount: wei})
+          .then(function(tx) {
+            // TODO: Add to pending payments
+            console.log("Waiting for transaction: " + tx);
+            return web3Connector.waitForTransaction(tx);
+          })
+          .then(function(receipt) {
+            // TODO: Remove from pending payments
+            console.log(JSON.stringify(receipt));
+          });
       }
     }
   };
