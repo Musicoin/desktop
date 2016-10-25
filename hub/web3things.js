@@ -3,8 +3,18 @@ const Web3 = require('web3');
 const console = require('./console.log.js');
 const etherSettings = require('./ether.settings.js')
 const Hook = require('hooked-web3-provider');
-const Lightwallet = require('eth-lightwallet');
+const Lightwallet = require('eth-lightwallet-nwjs');
+const fs = require("fs");
+
 Promise.promisifyAll(Lightwallet.keystore);
+
+var loggerAddress_v2 = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
+
+var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
+var pppMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/PayPerPlay.sol.abi'));
+var pppMvp2Code = "0x" + fs.readFileSync('solidity/mvp2/PayPerPlay.sol.bin');
+var workCode = "0x" + fs.readFileSync('solidity/mvp2/Work.sol.bin');
+var workAbi = JSON.parse(fs.readFileSync('solidity/mvp2/Work.sol.abi'));
 
 module.exports = (function (data) {
 	var web3 = new Web3();
@@ -120,6 +130,83 @@ module.exports = (function (data) {
 			return { error: this.errors.accountOther, description: err }
 		}
 	}
+
+	this.sendTip  = function(licenseContractAddress, musicCoins, pwd) {
+		// TODO: somehow we need to communicate progress back to the UI
+		var callback = {
+			onPaymentInitiated: function() { console.log("payment initiated ")},
+			onStatusChange: function(status) { console.log("status changed: " + status)},
+			onFailure: function(err) { console.log("Failed: " + err);},
+			onPaymentComplete: function() { console.log("Success!")}
+		};
+
+		Lightwallet.keystore.deriveKeyFromPassword(pwd, function(err, pwDerivedKey) {
+			if (err) {
+				callback.onFailure(err);
+			}
+			else {
+				var txOptions = {
+					gasLimit: 940000,
+					value: web3.toWei(musicCoins, 'ether'),
+					to: licenseContractAddress
+				}
+				var registerTx = Lightwallet.txutils.functionTx(pppMvp2Abi, 'tip', [], txOptions);
+				var signedRegisterTx = Lightwallet.signing.signTx(keystore, pwDerivedKey, registerTx, this.selectedAccount);
+
+				// inject signedRegisterTx into the network...
+				console.log('Signed register key TX: ' + signedRegisterTx);
+				console.log('');
+				this._handleTransactionResult(signedRegisterTx, callback);
+			}
+		}.bind(this));
+	}
+
+	this._handleTransactionResult = function(err, expectedTx, callback) {
+		if (err) {
+			callback.onFailure(err);
+			return;
+		}
+		this.waitForTransaction(expectedTx, callback)
+	};
+
+	this.waitForTransaction = function(expectedTx, callback) {
+		callback.onPaymentInitiated();
+		callback.onStatusChange("Waiting for " + expectedTx + " ..." + "(0)");
+		var filter = this.web3.eth.filter('latest');
+		var count = 0;
+		var that = this;
+		filter.watch(function(error, result) {
+			if (error) console.log("Error: " + error);
+			if (result) console.log("Result: " + result);
+			count++;
+
+			var receipt = that.web3.eth.getTransactionReceipt(expectedTx);
+			var transaction = that.web3.eth.getTransaction(expectedTx);
+			if (receipt && transaction.gas == receipt.gasUsed) {
+				// wtf?! This is the only way to check for an error??
+				callback.onFailure(new Error("Out of gas (or an error was thrown)"), false);
+				return;
+			}
+			callback.onStatusChange("Waiting for " + expectedTx + " ..." + "(" + count + ")");
+			if (receipt && receipt.transactionHash == expectedTx) {
+				if (receipt.blockHash) {
+					console.log("Confirmed " + expectedTx);
+					console.log("Block hash " + receipt.blockHash);
+					callback.onPaymentComplete();
+					filter.stopWatching();
+				}
+				else {
+					console.log("Waiting for confirmation of " + expectedTx);
+				}
+			}
+
+			if (count > 5) {
+				callback.onFailure(new Error("Transaction was not confirmed"));
+				filter.stopWatching();
+			}
+		});
+	};
+
 	Promise.promisifyAll(this);
 	return this;
 })();

@@ -7,6 +7,12 @@
   margin-right: 5px;
 }
 
+paper-progress.audio-progress {
+  --paper-progress-active-color: #2176bd;
+  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  width: 100%;
+}
+
 .audio-control-area {
   align-items: center;
   display: flex;
@@ -28,4 +34,44 @@
   width: 2em;
   height: 2em;
   margin-top: 0.4em;
+}
+
+.action-button {
+  width: 3em;
+  height: 3em;
+  --paper-icon-button-ink-color: #2176bd;
+}
+
+.audio-progress-area {
+  flex-grow: 1;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.audio-control-area {
+  align-items: center;
+  display: flex;
+  flex-grow: 0.9;
+}
+
+.audio-info {
+  width: 100%;
+  color: #7e7e7e;
+  text-align: center;
+  font-size: small;
+  white-space: nowrap;
+}
+
+.audio-info-track {
+  font-style: italic;
+}
+
+#miniImage {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }

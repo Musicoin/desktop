@@ -5,6 +5,10 @@ Polymer({
       mscIntf.loginLock = {register:this,prop:'loginLock'}
       mscIntf.listUsers = {register:this,prop:'listUsers'}
       mscIntf.toolSettings.userImagePath = {register:this,prop:'usersImageDir'};
+
+      mscIntf.attach(this)
+        .to('test1')
+        .to('test2')
     },
     properties: {
       loginLock: {
@@ -17,6 +21,8 @@ Polymer({
       },
       usersImageDir: String,
       locale: Object,
+      test1: String,
+      test2: String
     },
     noPassEnter: function(ev) {
       result = mscIntf.fnPool('login','verifyLogin',null,{login:this.$.list.selectedItem.userLogin});
@@ -38,6 +44,8 @@ Polymer({
       }
     },
     catchEnter: function (ev) {
+      mscIntf.test1 = "xxx"
+      mscIntf.test2 = "yyy";
       if (ev.keyCode === 13) {
         this.passEnter(this.$.list.selectedItem.userLogin,ev.target);
       }

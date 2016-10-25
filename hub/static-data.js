@@ -12,5 +12,9 @@ module.exports = {
     user_AkiroKurosawa:{login:'AkiraKurosawa', fullName:'Akira Kurosawa', autoLoginExpire:0, autoLogin:false, dataFile: '12fff32aa631213.udm',  pwdHash:'b0a6ea25250a05d7134d512eb81e9d248e9823eb616b3809bc2aafd8669595fe', nonce: 'abc123xyz890', appAccount:'jjss22jj11', mainAccount:'zzjjss22jj11', accounts:['zzjjss22jj11'], keys:{}, external:{image: 'users/avatars/AkiraKurosawa.png',}},
 
     user_JimBim:{login:'JimBim', fullName:'Jim Bim Bam', autoLoginExpire:0, autoLogin:false, dataFile: '12fff32aa631213.udm',  pwdHash:'b0a6ea25250a05d7134d512eb81e9d248e9823eb616b3809bc2aafd8669595fe', nonce: 'abc123xyz890', appAccount:'jjss22jj11', mainAccount:'zzjjss22jj11', accounts:['zzjjss22jj11'], keys:{}, external:{image: 'users/avatars/JimBim.png',}},
-  }
+  },
+  playback: {
+    playbackPaymentPercentage: 70
+  },
+  musicoinHost: "http://catalog.musicoin.org"
 }

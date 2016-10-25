@@ -1,28 +1,28 @@
 {
-    "name": "Musicoin-client",
-    "version": "0.0.0",
-    "private": true,
-    "node-main": "./hub/msc.js",
-    "main": "./interface/index.html",
-    "window": {
-        "frame": true,
-        "toolbar":true,
-        "width": 850,
-        "height": 650
-    },
-    "webkit": {
-      "plugin": true
-    },
-    "dependencies": {
-      "eth-lightwallet": "^2.5.2",
-      "hooked-web3-provider": "^1.0.0",
-      "bluebird": "^3.4.0",
-      "bignumber": "^1.1.0",
-      "bignumber.js": "^2.4.0",
-      "crypto": "0.0.3",
-      "debug": "~2.2.0",
-      "request": "^2.75.0",
-      "serve-favicon": "~2.3.0",
-      "web3": "^0.17.0-beta"
-    }
+  "name": "Musicoin-client",
+  "version": "0.0.0",
+  "private": true,
+  "node-main": "./hub/msc.js",
+  "main": "./interface/index.html",
+  "window": {
+    "frame": true,
+    "toolbar": true,
+    "width": 850,
+    "height": 650
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+    "bignumber": "^1.1.0",
+    "bignumber.js": "^2.4.0",
+    "bluebird": "^3.4.0",
+    "crypto": "0.0.3",
+    "debug": "~2.2.0",
+    "eth-lightwallet-nwjs": "^2.5.2",
+    "hooked-web3-provider": "^1.0.0",
+    "request": "^2.75.0",
+    "serve-favicon": "~2.3.0",
+    "web3": "^0.17.0-beta"
+  }
 }

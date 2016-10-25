@@ -42,6 +42,26 @@ var locale = {
         release: 'Release',
       },
     },
+    workEditor: {
+      instructions: {
+        selectImage: "click to select an image",
+        addNewLicense: "Click the "+" symbol to add a new license."
+      },
+      workTypes: {
+        score: "Score",
+        lyrics: "Lyrics",
+        recording: "Recording"
+      },
+      fields: {
+        title: "Title",
+        artist: "Artist",
+        workType: "Work Type",
+        licenses: "Licenses"
+      },
+      actions: {
+        releaseWork: "Release Work"
+      }
+    },
     editorView: {
       headers: {
         contributors: 'Contributors',

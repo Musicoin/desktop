@@ -3,12 +3,12 @@
   <template>
     <audio id="player" autoplay></audio>
     <div class="audio-control-area">
-      <iron-image sizing="contain" id="miniImage" src="{{currentPlay.artwork}}" on-tap="toggleTrackDetailView"></iron-image>
+      <iron-image sizing="contain" id="miniImage" src="{{currentPlay.work.image_url_https}}" on-tap="toggleTrackDetailView"></iron-image>
       <paper-icon-button id="playButton" icon="[[playState]]" on-tap="togglePlayState" class="action-button"></paper-icon-button>
       <div class="audio-progress-area">
-        <div class="audio-info">{{currentPlay.artist}}</div>
+        <div class="audio-info">{{currentPlay.artist_name}}</div>
         <paper-progress id="progress" class="audio-progress"></paper-progress>
-        <div class="audio-info audio-info-track"><em>{{currentPlay.track}}</em></div>
+        <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="skipTrack" class="action-button"></paper-icon-button>
       <div>

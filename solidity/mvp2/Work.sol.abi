@@ -1,0 +1,103 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "artist",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "title",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "workType",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "imageUrl",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "metadataUrl",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "logger",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "_loggerAddress",
+        "type": "address"
+      },
+      {
+        "name": "_workType",
+        "type": "uint8"
+      },
+      {
+        "name": "_title",
+        "type": "string"
+      },
+      {
+        "name": "_artist",
+        "type": "string"
+      },
+      {
+        "name": "_imageUrl",
+        "type": "string"
+      },
+      {
+        "name": "_metadataUrl",
+        "type": "string"
+      }
+    ],
+    "type": "constructor"
+  }
+]
