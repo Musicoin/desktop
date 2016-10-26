@@ -4,7 +4,7 @@
   --app-secondary-background-color: #2c2c2c;
   display: block;
 }
-app-parity-view, app-contract-editor-view, works-view {
+app-parity-view, works-view, app-wallet-view {
   display: none;
   background-color: var(--app-secondary-background-color);
 }
@@ -14,7 +14,7 @@ app-parity-view, app-contract-editor-view, works-view {
 :host[selected-page="myf"] app-player-view,
 :host[selected-page="myw"] works-view,
 :host[selected-page="uti"] app-parity-view,
-:host[selected-page="edi"] app-contract-editor-view {
+:host[selected-page="wal"] app-wallet-view {
   display: block;
 }
 

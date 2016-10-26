@@ -201,42 +201,39 @@ Web3Connector.prototype.waitForTransaction = function (expectedTx) {
   }.bind(this));
 };
 
-Web3Connector.prototype.waitForTransactionOld = function (expectedTx, callback) {
-  callback.onPaymentInitiated();
-  callback.onStatusChange("Waiting for " + expectedTx + " ..." + "(0)");
-  var filter = this.web3.eth.filter('latest');
-  var count = 0;
-  var that = this;
-  filter.watch(function (error, result) {
-    if (error) console.log("Error: " + error);
-    if (result) console.log("Result: " + result);
-    count++;
+Web3Connector.prototype.loadHistory = function () {
+  return new Promise(function (resolve, reject) {
+    var block = this.web3.eth.blockNumber
+    resolve(this.getTransactionsByAccount(this.getSelectedAccount(), block-1000, block));
+  }.bind(this));
+};
 
-    var receipt = that.web3.eth.getTransactionReceipt(expectedTx);
-    var transaction = that.web3.eth.getTransaction(expectedTx);
-    if (receipt && transaction.gas == receipt.gasUsed) {
-      // wtf?! This is the only way to check for an error??
-      callback.onFailure(new Error("Out of gas (or an error was thrown)"), false);
-      return;
-    }
-    callback.onStatusChange("Waiting for " + expectedTx + " ..." + "(" + count + ")");
-    if (receipt && receipt.transactionHash == expectedTx) {
-      if (receipt.blockHash) {
-        console.log("Confirmed " + expectedTx);
-        console.log("Block hash " + receipt.blockHash);
-        callback.onPaymentComplete();
-        filter.stopWatching();
-      }
-      else {
-        console.log("Waiting for confirmation of " + expectedTx);
-      }
-    }
+Web3Connector.prototype.getTransactionsByAccount = function getTransactionsByAccount(myaccount, startBlockNumber, endBlockNumber) {
+  if (endBlockNumber == null) {
+    endBlockNumber = this.web3.eth.blockNumber;
+    console.log("Using endBlockNumber: " + endBlockNumber);
+  }
+  if (startBlockNumber == null) {
+    startBlockNumber = endBlockNumber - 1000;
+    console.log("Using startBlockNumber: " + startBlockNumber);
+  }
+  console.log("Searching for transactions to/from account \"" + myaccount + "\" within blocks "  + startBlockNumber + " and " + endBlockNumber);
 
-    if (count > 5) {
-      callback.onFailure(new Error("Transaction was not confirmed"));
-      filter.stopWatching();
+  var output = [];
+  for (var i = startBlockNumber; i <= endBlockNumber; i++) {
+    if (i % 1000 == 0) {
+      console.log("Searching block " + i);
     }
-  });
+    var block = this.web3.eth.getBlock(i, true);
+    if (block != null && block.transactions != null) {
+      block.transactions.forEach( function(e) {
+        if (myaccount == e.from || myaccount == e.to) {
+          output.push(e);
+        }
+      })
+    }
+  }
+  return output;
 };
 
 Web3Connector.prototype.releaseWork = function (work) {

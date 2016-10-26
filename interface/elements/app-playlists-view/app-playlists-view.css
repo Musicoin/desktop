@@ -1,0 +1,11 @@
+:host {
+
+}
+
+#addNewPlaylistButton {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    z-index: 3;
+    background-color: #2176bd;
+}

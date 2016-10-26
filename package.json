@@ -23,6 +23,7 @@
     "hooked-web3-provider": "^1.0.0",
     "request": "^2.75.0",
     "serve-favicon": "~2.3.0",
+    "tmp": "0.0.29",
     "web3": "^0.17.0-beta"
   }
 }

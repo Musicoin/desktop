@@ -1,0 +1,53 @@
+:host {
+    margin: 10px;
+    color: #a1a1a1;
+}
+
+.amount {
+    width: 80px;
+    text-align: right;
+    font-size: 1em;
+    border: none;
+    background: transparent;
+    color: #a1a1a1;
+    padding: 2px;
+}
+
+.value-units {
+    font-size: 1.5em;
+    width: 20px;
+}
+
+.input-with-units {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(255,255,255, 0.05);
+}
+
+.recipient {
+    text-align: center;
+    font-size: 1em;
+    border: none;
+    background: rgba(255,255,255, 0.05);
+    color: #a1a1a1;
+    padding: 2px;
+    margin-left: 5px;
+    flex-grow: 1;
+}
+
+.send-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.balance-area {
+
+}
+
+.history-area {
+
+}

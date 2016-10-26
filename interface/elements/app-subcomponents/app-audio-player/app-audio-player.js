@@ -53,9 +53,17 @@ Polymer({
       this.playState = this.$.player.paused ? 'av:play-arrow' : 'av:pause';
     },
     togglePlayState: function(ev) {
-      this.audio.togglePlayState();
+      // I think this is a purely client side operation.  No need to call to back end (right?)
+      if (this.$.player.paused) {
+        if (this.$.player.readyState > 0) {
+          this.$.player.play();
+        }
+      }
+      else {
+        this.$.player.pause();
+      }
     },
-    skipTrack: function(ev) {
+    playNext: function(ev) {
       this.audio.playNext();
     },
     sendTip: function(ev) {

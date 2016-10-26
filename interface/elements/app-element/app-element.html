@@ -22,6 +22,7 @@
           <paper-item menu-name="myw">[[locale.navMenu.items.myWorks]]</paper-item>
 					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.developer]]</h3>
 					<paper-item menu-name="uti">[[locale.navMenu.items.utilities]]</paper-item>
+          <paper-item menu-name="wal">[[locale.navMenu.items.wallet]]</paper-item>
 				</paper-menu>
       </app-drawer>
 
@@ -37,6 +38,7 @@
         <app-player-view id="browse" show-group-play-icon hidden$="{{_shouldHideBrowsePage(selectedPage)}}" groups="[[browseViewItems]]" ></app-player-view>
         <works-view></works-view>
         <app-parity-view></app-parity-view>
+        <app-wallet-view></app-wallet-view>
       </app-header-layout>
     </app-drawer-layout>
     <app-payment-approval-dialog></app-payment-approval-dialog>

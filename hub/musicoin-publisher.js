@@ -29,6 +29,14 @@ MusicoinPublisher.prototype.releaseWork = function(releaseEvent) {
     });
 };
 
+MusicoinPublisher.prototype.publishFile = function(file) {
+  return this.ipfsUtils.add(file);
+};
+
+MusicoinPublisher.prototype.publishString = function(file) {
+  return this.ipfsUtils.add(file);
+};
+
 MusicoinPublisher.prototype.releaseLicense = function(releaseEvent) {
   var license = releaseEvent.license;
   var work = releaseEvent.work;

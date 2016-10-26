@@ -45,8 +45,9 @@ initObservables(mschub);
 pcs.addObservable('currentAudioUrl', '');
 pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
+pcs.addObservable('transactionHistory', []);
 
-// TODO: Seems like it would be better to have a more module structure
+// TODO: Seems like it would be better to have a more modular structure
 mschub.audioHub = {};
 var pcsAudio = new PropertyChangeSupport(mschub.audioHub);
 pcsAudio.addObservable('playlist', []);
@@ -78,6 +79,9 @@ var MusicoinService = require("./musicoin-connector.js");
 var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
+
+var IPFSConnector = require("./ipfs-connector.js");
+var ipfsConnector = new IPFSConnector();
 
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
 mschub.fnPool = function(fngroup, fn, elem, params) {
@@ -159,10 +163,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
               localStorage.setItem('lastLogged', storeOpened.login);
               /* load here on-disk stored data */
               mschub.userDetails = storeOpened;
-
-              // TODO: @hibryda has some plan to deal with this
-              mschub.pwd = params.pwd;
-
               /* i18n!!! */
               return {success:'Log in'}
             } else
@@ -194,16 +194,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       }
     },
     audio:{
-      togglePlayState:function(elem, params, fns){
-        if (mschub.audioElement.paused) {
-          if (mschub.audioElement.readyState > 0) {
-            mschub.audioElement.play();
-          }
-        }
-        else {
-          mschub.audioElement.pause();
-        }
-      },
       playAll: function(elem, params, fns) {
         mschub.audioHub.playlist = params.items;
         fns.audio.playNext(elem, {}, fns);
@@ -247,6 +237,39 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return {result: "pending"};
       }
     },
+    publish: {
+      releaseWork: function(elem, params, fns) {
+        var work = params.work;
+        var workReleaseRequest = {
+          type: work.type,
+          title: work.track,
+          artist: work.artist,
+          imageUrl: "",
+          metadataUrl: ""
+        };
+
+        work.releaseStatus = "Publishing artwork...";
+        ipfsConnector.add(work.imgFile)
+          .then(function (hash) {
+            workReleaseRequest.imageUrl = "ipfs://" + hash;
+            work.releaseStatus = "Publishing metadata...";
+            return ipfsConnector.addString(JSON.stringify(work.metadata));
+          })
+          .then(function (hash) {
+            workReleaseRequest.metadataUrl = "ipfs://" + hash;
+            work.releaseStatus = "Releasing work...";
+            return web3Connector.releaseWork(workReleaseRequest);
+          })
+          .then(function (contractAddress) {
+            work.releaseStatus = "Success!";
+            work.contract_address = contractAddress;
+            return contractAddress;
+          })
+          .catch(function(err) {
+            work.releaseStatus = "Failed: " + err;
+          });
+      }
+    },
     finops:{
       sendTip:function(elem, params, fns){
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
@@ -272,6 +295,12 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           .then(function(receipt) {
             // TODO: Remove from pending payments
             console.log(JSON.stringify(receipt));
+          });
+      },
+      loadHistory: function(elem, params, fns) {
+        web3Connector.loadHistory()
+          .then(function (history) {
+            mschub.transactionHistory = history;
           });
       }
     }
