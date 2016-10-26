@@ -4,21 +4,17 @@
   --app-secondary-background-color: #2c2c2c;
   display: block;
 }
-app-works-view, app-parity-view, app-contract-editor-view, works-view {
+app-parity-view, works-view, app-wallet-view {
   display: none;
-  background-color: #2c2c2c;
-}
-app-drawer {
-  --app-drawer-width:48px;
+  background-color: var(--app-secondary-background-color);
 }
 
 :host[selected-page="rel"] app-player-view,
 :host[selected-page="cbr"] app-player-view,
 :host[selected-page="myf"] app-player-view,
-:host[selected-page="myw"] app-works-view,
-:host[selected-page="myw2"] works-view,
+:host[selected-page="myw"] works-view,
 :host[selected-page="uti"] app-parity-view,
-:host[selected-page="edi"] app-contract-editor-view {
+:host[selected-page="wal"] app-wallet-view {
   display: block;
 }
 
@@ -52,7 +48,7 @@ app-toolbar {
 }
 
 app-audio-player {
-  flex-grow: 0.9;
+  flex-grow: 1;
   font-size: small;
 }
 
@@ -69,9 +65,8 @@ paper-item {
     --paper-item-focused-before: {
         opacity: 0;
     };
+    cursor: pointer;
 }
-
-
 
 paper-menu {
     --paper-menu-selected-item: {

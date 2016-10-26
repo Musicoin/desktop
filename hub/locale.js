@@ -16,6 +16,7 @@ var locale = {
         myWorks:'My works',
         editor:'Editor',
         utilities:'Utilities',
+        wallet:'Wallet'
       }
     },
     layeredMenu:[
@@ -64,6 +65,17 @@ var locale = {
         upload: 'Upload',
         release: 'Release',
       },
+    },
+    walletView: {
+      label: {
+        history: "History",
+        balance: "Balance",
+        send: "Send",
+        to: "to"
+      },
+      instructions: {
+        enterAddress: "enter an address"
+      }
     },
     workEditor: {
       instructions: {
@@ -120,6 +132,9 @@ var locale = {
         showBlock: 'show block',
         checkTransaction: 'check transaction',
       },
+    },
+    playlistsView: {
+      instructions: "Click the '+' sign to add a playlist"
     },
     connectionWatch: {
       chainReady:'Connected to MusicChain',

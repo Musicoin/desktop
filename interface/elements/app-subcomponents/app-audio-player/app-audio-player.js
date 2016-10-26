@@ -5,6 +5,7 @@ Polymer({
       this.payments = mscIntf.payments;
       mscIntf.audioHub.attach(this)
         .to('currentPlay')
+        .to('playbackPaymentPercentage')
 
       mscIntf.audioElement = this.$.player;
 
@@ -35,7 +36,8 @@ Polymer({
       playState: {
         type: String,
         value: 'av:play-arrow'
-      }
+      },
+      playbackPaymentPercentage: Number
     },
     _currentPlayChanged: function(item) {
       this.$.progress.value = 0;
@@ -51,12 +53,22 @@ Polymer({
       this.playState = this.$.player.paused ? 'av:play-arrow' : 'av:pause';
     },
     togglePlayState: function(ev) {
-      this.audio.togglePlayState();
+      // I think this is a purely client side operation.  No need to call to back end (right?)
+      if (this.$.player.paused) {
+        if (this.$.player.readyState > 0) {
+          this.$.player.play();
+        }
+      }
+      else {
+        this.$.player.pause();
+      }
     },
-    skipTrack: function(ev) {
+    playNext: function(ev) {
       this.audio.playNext();
     },
     sendTip: function(ev) {
+      var output = prompt("Enter pwd");
+      mscIntf.fnPool('login', 'web3TestLogin', null, {pwd: output});
       if (this.currentPlay && this.currentPlay.contract_id) {
         this.payments.sendTip(this.currentPlay.contract_id, 1);
       }

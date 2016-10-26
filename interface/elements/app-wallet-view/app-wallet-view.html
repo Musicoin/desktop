@@ -1,0 +1,25 @@
+<dom-module id="app-wallet-view">
+  <link rel="import" type="css" href="app-wallet-view.css">
+  <template>
+    <div class="balance-area">
+      [[locale.walletView.label.balance]]: {{balance}}
+    </div>
+    <div class="send-area">
+      [[locale.walletView.label.send]]
+      <div class="input-with-units">
+        <div class="value-units">&#x266E;</div>
+        <input class="amount" min=0 type=number value="{{amount}}">
+      </div>
+      [[locale.walletView.label.to]]
+      <input placeholder="[[local.walletView.instructions.enterAddress]]" class="recipient" value="{{recipient}}">
+    </div>
+    <div class="history-area">
+      <h3>[[locale.walletView.label.history]]</h3>
+      <paper-button on-tap="refresh">Refresh</paper-button>
+      <template is="dom-repeat" items="{{transactionHistory}}" as="tx">
+        {{tx}}
+      </template>
+    </div>
+  </template>
+  <script src="app-wallet-view.js"></script>
+</dom-module>

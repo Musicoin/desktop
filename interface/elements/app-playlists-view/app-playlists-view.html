@@ -1,0 +1,8 @@
+<dom-module id="app-">
+  <link rel="import" type="css" href="app-playlists-view.css">
+  <template>
+    <app-player-view groups="{{groups}}" instruction-text="{{local.playlistsView.instructions}}"></app-player-view>
+    <paper-fab id="addNewPlaylistButton" icon="add" mini on-tap="handleAddNewPlaylist"></paper-fab>
+  </template>
+  <script src="app-playlists-view.js"></script>
+</dom-module>

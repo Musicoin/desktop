@@ -40,6 +40,9 @@
         if (this.isBrowsePage(newValue)) {
           mscIntf.catalog.loadBrowsePage(newValue);
         }
+        else if ("myw" === newValue) {
+          mscIntf.catalog.loadMyWorks();
+        }
       },
       _shouldHideBrowsePage() {
         return !this.isBrowsePage(this.selectedPage);
@@ -71,7 +74,6 @@
 
         this.browseViewItems = newGroups.map(toViewGroup);
       }
-
 })
     //   ready: function() {
     //     musicoin = getMusicoin();

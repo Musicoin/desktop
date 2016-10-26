@@ -16,30 +16,25 @@ Polymer({
     mscIntf.attach(this)
       .to('locale');
 
-    /*
-    this.editable = true;
-    this.licenses = [];
-    this.metadata = [];
     this.releaseButtonText = "Release";
     this.$.fileSelector.onclick = function() {
-      if (this.editable) {
+      if (this._isWorkEditable()) {
         this.$.imageFile.click();
       }
     }.bind(this);
 
     this.$.imageFile.onchange = function() {
-      if (!this.editable) return;
+      if (!this._isWorkEditable()) return;
       var filePath = this.$.imageFile.value;
       if (filePath) {
         var corrected = "file:///" + filePath.split("\\").join("/");
         console.log("img path: " + filePath);
         console.log("img src: " + corrected);
 
-        this.set('work.img', corrected);
+        this.set('work.image_url_https', corrected);
         this.set('work.imgFile', filePath);
       }
     }.bind(this);
-    */
   },
 
   _shouldHideInstructions: function() {

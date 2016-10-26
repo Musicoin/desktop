@@ -15,8 +15,7 @@ Polymer({
     },
     groups: {
       type: Array,
-      value: [],
-      reflectToAttribute: true
+      value: []
     },
     instructionText: {
       type: String,

@@ -7,8 +7,8 @@
     "window": {
         "frame": true,
         "toolbar":true,
-        "width": 850,
-        "height": 650
+        "width": 1000,
+        "height": 600
     },
     "webkit": {
       "plugin": true
@@ -23,6 +23,7 @@
       "debug": "~2.2.0",
       "request": "^2.75.0",
       "serve-favicon": "~2.3.0",
+      "tmp": "0.0.29",
       "web3": "^0.17.0-beta"
     }
 }

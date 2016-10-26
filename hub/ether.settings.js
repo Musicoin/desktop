@@ -1,3 +1,3 @@
 module.exports = {
-  etherServerRpc:'http://10.0.0.8:8545',
+  etherServerRpc:'http://localhost:8545',
 }

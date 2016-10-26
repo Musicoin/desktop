@@ -1,9 +1,14 @@
+var request = require("request");
 Polymer({
   is: 'metadata-editor',
   properties: {
     metadata: {
       type: Object,
-      reflectToAttribute: true
+    },
+    metadataUrl: {
+      type: String,
+      reflectToAttribute: true,
+      observer: "_metadataUrlChanged"
     },
     editable: {
       type: Boolean,
@@ -13,6 +18,27 @@ Polymer({
   },
   ready: function () {
     console.log("Metadata editable: " + this.editable);
+  },
+
+  _metadataUrlChanged: function(newUrl) {
+    if (!newUrl) {
+      this.metadata = [];
+      return;
+    }
+
+    this.metadata = [{key: "Loading...", value:newUrl}];
+    request({
+      url: newUrl,
+      json: true
+    }, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        this.metadata = body;
+      }
+      else {
+        console.log("Unable to load metadata: " + error);
+        this.metadata = [];
+      }
+    }.bind(this));
   },
 
   _shouldHideHeaderRow: function (e) {

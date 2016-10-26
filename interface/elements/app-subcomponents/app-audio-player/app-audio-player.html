@@ -7,13 +7,13 @@
       <paper-icon-button id="playButton" icon="[[playState]]" on-tap="togglePlayState" class="action-button"></paper-icon-button>
       <div class="audio-progress-area">
         <div class="audio-info">{{currentPlay.artist_name}}</div>
-        <paper-progress id="progress" class="audio-progress"></paper-progress>
+        <paper-progress id="progress" class="audio-progress" secondary-progress="[[playbackPaymentPercentage]]"></paper-progress>
         <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="skipTrack" class="action-button"></paper-icon-button>
       <div>
-        <paper-icon-button icon="icons:thumb-up" class="tip-button action-button" on-tap="sendTip"></paper-icon-button>
-        <div class="user-balance-label">tip</div>
+        <paper-icon-button icon="icons:thumb-up" class="tip-button" on-tap="sendTip"></paper-icon-button>
+        <div class="tip-label">tip</div>
       </div>
     </div>
   </template>

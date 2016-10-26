@@ -43,10 +43,11 @@ initObservables(mschub);
 
 // TODO: Probably pull these into initObservables
 pcs.addObservable('currentAudioUrl', '');
-pcs.addObservable('myWorks', [{"metadata_url_https": "https://ipfs.io/ipfs/QmPowb1h17GrDn3KofF9DD7GepgZ2aWwQb7PS1Mxdm3cmc", "artist": "Bob Dylan", "image_url": "ipfs://QmdfUmoWJTZd7wMF1ukkzeBAWpfLemkeCs8Q7iogy2cj1J", "contract_address": "0x27a8a0f06448d1db83cfa56b1dad81a038e1543b", "licenses": [{"is_listed": 1, "contract_id": "0xcfdfc1c63ecb2e6af4d638b27e0d6a3721fe7b6f", "song_name": "Dylan's Song", "artist_name": "Bob Dylan", "play_count": 3, "owner": "0x008d4c913ca41f1f8d73b43d8fa536da423f1fb4"}], "image_url_https": "https://ipfs.io/ipfs/QmdfUmoWJTZd7wMF1ukkzeBAWpfLemkeCs8Q7iogy2cj1J", "title": "Dylan's Song", "metadata_url": "ipfs://QmPowb1h17GrDn3KofF9DD7GepgZ2aWwQb7PS1Mxdm3cmc", "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "And 7 Year Ago", "image_url": null, "contract_address": "0xa505ca04b12ff703e3acbf3cac47986531a44694", "licenses": [], "image_url_https": "", "title": "Horse Score", "metadata_url": null, "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "No One In Particular", "image_url": null, "contract_address": "0x7422dc155fc065b23964bba9aec918d82d1ad84c", "licenses": [], "image_url_https": "", "title": "Tree Work", "metadata_url": null, "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "Someone", "image_url": null, "contract_address": "0x139d69f7168e7ddb7ec5dfdb5e101f66c57f0183", "licenses": [], "image_url_https": "", "title": "Allegro", "metadata_url": null, "datetime": "Oct 19, 2016"}]);
+pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
+pcs.addObservable('transactionHistory', []);
 
-// TODO: Seems like it would be better to have a more module structure
+// TODO: Seems like it would be better to have a more modular structure
 mschub.audioHub = {};
 var pcsAudio = new PropertyChangeSupport(mschub.audioHub);
 pcsAudio.addObservable('playlist', []);
@@ -75,9 +76,12 @@ var web3Connector = new Web3Connector();
 
 
 var MusicoinService = require("./musicoin-connector.js");
-var musicoinService = new MusicoinService(staticData.musicoinHost);
+var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
+
+var IPFSConnector = require("./ipfs-connector.js");
+var ipfsConnector = new IPFSConnector();
 
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
 mschub.fnPool = function(fngroup, fn, elem, params) {
@@ -159,10 +163,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
               localStorage.setItem('lastLogged', storeOpened.login);
               /* load here on-disk stored data */
               mschub.userDetails = storeOpened;
-
-              // TODO: @hibryda has some plan to deal with this
-              mschub.pwd = params.pwd;
-
               /* i18n!!! */
               return {success:'Log in'}
             } else
@@ -189,18 +189,11 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       updateLoginPwdHash: function(elem, params, fns){
 
       },
+      web3TestLogin: function(elem, params, fns) {
+        web3Connector.storeCredentials(params.pwd);
+      }
     },
     audio:{
-      togglePlayState:function(elem, params, fns){
-        if (mschub.audioElement.paused) {
-          if (mschub.audioElement.readyState > 0) {
-            mschub.audioElement.play();
-          }
-        }
-        else {
-          mschub.audioElement.pause();
-        }
-      },
       playAll: function(elem, params, fns) {
         mschub.audioHub.playlist = params.items;
         fns.audio.playNext(elem, {}, fns);
@@ -235,45 +228,80 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           mschub.browseCategories = result;
         });
         return {result: "pending"};
+      },
+      loadMyWorks: function(elem, params, fns) {
+        musicoinService.loadMyWorks(web3Connector.getDefaultAccount())
+          .then(function(result) {
+            mschub.myWorks = result;
+          });
+        return {result: "pending"};
+      }
+    },
+    publish: {
+      releaseWork: function(elem, params, fns) {
+        var work = params.work;
+        var workReleaseRequest = {
+          type: work.type,
+          title: work.track,
+          artist: work.artist,
+          imageUrl: "",
+          metadataUrl: ""
+        };
+
+        work.releaseStatus = "Publishing artwork...";
+        ipfsConnector.add(work.imgFile)
+          .then(function (hash) {
+            workReleaseRequest.imageUrl = "ipfs://" + hash;
+            work.releaseStatus = "Publishing metadata...";
+            return ipfsConnector.addString(JSON.stringify(work.metadata));
+          })
+          .then(function (hash) {
+            workReleaseRequest.metadataUrl = "ipfs://" + hash;
+            work.releaseStatus = "Releasing work...";
+            return web3Connector.releaseWork(workReleaseRequest);
+          })
+          .then(function (contractAddress) {
+            work.releaseStatus = "Success!";
+            work.contract_address = contractAddress;
+            return contractAddress;
+          })
+          .catch(function(err) {
+            work.releaseStatus = "Failed: " + err;
+          });
       }
     },
     finops:{
       sendTip:function(elem, params, fns){
-        var pwd = mschub.pwd; // TODO: Hack!
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
-        web3Connector.tip({amount: wei, to: params.address}, pwd,
-        {
-          onPaymentInitiated: function () {
-            console.log("Payment initiated");
-          },
-          onPaymentComplete: function () {
-            console.log("Payment success!");
-          },
-          onFailure: function (err, isAuthFail) {
-            console.log("Payment failed: " + err + ", authFailed: " + isAuthFail);
-          },
-          onStatusChange: function (msg) {
-            console.log(msg)
-          }
+        web3Connector.tip({amount: wei, to: params.address})
+        .then(function(tx) {
+          // TODO: Add to pending payments
+          console.log("Waiting for transaction: " + tx);
+          return web3Connector.waitForTransaction(tx);
+        })
+        .then(function(receipt) {
+          // TODO: Remove from pending payments
+          console.log(JSON.stringify(receipt));
         });
       },
       payForPlay: function(elem, params, fns) {
-        var pwd = mschub.pwd; // TODO: Hack!
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
-        web3Connector.ppp({to: params.address, amount: wei}, pwd, {
-          onPaymentInitiated: function () {
-            console.log("Payment initiated");
-          },
-          onPaymentComplete: function () {
-            console.log("Payment success!");
-          },
-          onFailure: function (err, isAuthFail) {
-            console.log("Payment failed: " + err + ", authFailed: " + isAuthFail);
-          },
-          onStatusChange: function (msg) {
-            console.log(msg)
-          }
-        });
+        web3Connector.ppp({to: params.address, amount: wei})
+          .then(function(tx) {
+            // TODO: Add to pending payments
+            console.log("Waiting for transaction: " + tx);
+            return web3Connector.waitForTransaction(tx);
+          })
+          .then(function(receipt) {
+            // TODO: Remove from pending payments
+            console.log(JSON.stringify(receipt));
+          });
+      },
+      loadHistory: function(elem, params, fns) {
+        web3Connector.loadHistory()
+          .then(function (history) {
+            mschub.transactionHistory = history;
+          });
       }
     }
   };

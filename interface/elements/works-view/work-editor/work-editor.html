@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
       <div class="main-section">
-        <metadata-editor id="metadataEditor" label="Work Metadata" metadata="[[work.metadata]]" editable="[[_isWorkEditable(work.contract_address)]]"></metadata-editor>
+        <metadata-editor id="metadataEditor" label="Work Metadata" metadata-url="[[work.metadata_url_https]]"  editable="[[_isWorkEditable(work.contract_address)]]"></metadata-editor>
         <br>
         <div class="status-bar" pending$="[[releasePending]]">
           <div class="status-message">[[status]]</div>
