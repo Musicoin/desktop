@@ -50,6 +50,9 @@ Polymer({
       },
       browseCategories: Array,
     },
+    _ws_stateChange: function(ev) {
+      console.log('WS',ev.detail);
+    },
     _baseWidthChange: function(newValue) {
 
     },

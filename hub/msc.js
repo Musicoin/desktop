@@ -11,6 +11,15 @@ const initObservables = require('./observables-defs.js');
 /* crypto for pwd ops */
 const crypto = require('crypto');
 const fs = require('fs');
+/* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
+const lStorage = require('node-localstorage');
+
+/* express like (better) net server */
+const koa = require('koa')
+const route = require('koa-route')
+const websockify = require('koa-websocket');
+const session = require('koa-session');
+const comm = websockify(koa());
 
 /* here I define backend restricted storage that is not accessible directly from interface */
 var beRestricted = {
@@ -21,6 +30,8 @@ var beRestricted = {
 var cloneByValue = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
+
+var netSrvSession = session(comm);
 
 var localStorage = global.localStorage;
 var sessionStorage = global.sessionStorage;
@@ -333,7 +344,15 @@ mschub.catalog = require('../facade/catalog.js')(mschub);
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub
 
-// setTimeout(function(){
-//   mschub.lang = 'se';
-//   mschub.locale = locale[mschub.lang];
-// },7500)
+/* websockets and other comm */
+comm.ws.use(route.all('/', function* (next) {
+  this.websocket.on('message', function(message) {
+
+
+    console.log(message);
+  });
+  this.websocket.send('Hello Client!');
+  yield next;
+}));
+
+setTimeout(()=>{console.log('init');comm.listen(22222);},3000)
