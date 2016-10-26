@@ -8,7 +8,9 @@ app-parity-view, works-view, app-wallet-view {
   display: none;
   background-color: var(--app-secondary-background-color);
 }
-
+app-drawer {
+    --app-drawer-width:48px;
+}
 :host[selected-page="rel"] app-player-view,
 :host[selected-page="cbr"] app-player-view,
 :host[selected-page="myf"] app-player-view,

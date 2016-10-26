@@ -28,15 +28,13 @@ var locale = {
       {dynamic:true, header:{name:'Categories',shortcut:'cat',icon:'catalogicon'},items:[
         {name:'New releases',shortcut:'rel'},
         {name:'Coinboard',shortcut:'cbr'},
-        {name:'My favorites',shortcut:'myf'},
       ]},
       {header:{name:'Playlist',shortcut:'pls',icon:'playlisticon'},items:[
+        {name:'My favorites',shortcut:'myf'},
         {name:'My playlists',shortcut:'mpl'},
-        {name:'Collection',shortcut:'col'},
       ]},
       {header:{name:'Musician',shortcut:'mus',icon:'musicianicon'},items:[
         {name:'My works',shortcut:'myw'},
-        {name:'Editor',shortcut:'edi'},
       ]},
       {header:{name:'Developer',shortcut:'dev',icon:'developericon'},items:[
         {name:'Utilities',shortcut:'uti'},
