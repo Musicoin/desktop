@@ -43,7 +43,7 @@ initObservables(mschub);
 
 // TODO: Probably pull these into initObservables
 pcs.addObservable('currentAudioUrl', '');
-pcs.addObservable('myWorks', [{"metadata_url_https": "https://ipfs.io/ipfs/QmPowb1h17GrDn3KofF9DD7GepgZ2aWwQb7PS1Mxdm3cmc", "artist": "Bob Dylan", "image_url": "ipfs://QmdfUmoWJTZd7wMF1ukkzeBAWpfLemkeCs8Q7iogy2cj1J", "contract_address": "0x27a8a0f06448d1db83cfa56b1dad81a038e1543b", "licenses": [{"is_listed": 1, "contract_id": "0xcfdfc1c63ecb2e6af4d638b27e0d6a3721fe7b6f", "song_name": "Dylan's Song", "artist_name": "Bob Dylan", "play_count": 3, "owner": "0x008d4c913ca41f1f8d73b43d8fa536da423f1fb4"}], "image_url_https": "https://ipfs.io/ipfs/QmdfUmoWJTZd7wMF1ukkzeBAWpfLemkeCs8Q7iogy2cj1J", "title": "Dylan's Song", "metadata_url": "ipfs://QmPowb1h17GrDn3KofF9DD7GepgZ2aWwQb7PS1Mxdm3cmc", "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "And 7 Year Ago", "image_url": null, "contract_address": "0xa505ca04b12ff703e3acbf3cac47986531a44694", "licenses": [], "image_url_https": "", "title": "Horse Score", "metadata_url": null, "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "No One In Particular", "image_url": null, "contract_address": "0x7422dc155fc065b23964bba9aec918d82d1ad84c", "licenses": [], "image_url_https": "", "title": "Tree Work", "metadata_url": null, "datetime": "Oct 19, 2016"}, {"metadata_url_https": "", "artist": "Someone", "image_url": null, "contract_address": "0x139d69f7168e7ddb7ec5dfdb5e101f66c57f0183", "licenses": [], "image_url_https": "", "title": "Allegro", "metadata_url": null, "datetime": "Oct 19, 2016"}]);
+pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
 
 // TODO: Seems like it would be better to have a more module structure
@@ -75,7 +75,7 @@ var web3Connector = new Web3Connector();
 
 
 var MusicoinService = require("./musicoin-connector.js");
-var musicoinService = new MusicoinService(staticData.musicoinHost);
+var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
 
@@ -237,6 +237,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         musicoinService.loadBrowseCategories(function(result) {
           mschub.browseCategories = result;
         });
+        return {result: "pending"};
+      },
+      loadMyWorks: function(elem, params, fns) {
+        musicoinService.loadMyWorks(web3Connector.getDefaultAccount())
+          .then(function(result) {
+            mschub.myWorks = result;
+          });
         return {result: "pending"};
       }
     },
