@@ -42,7 +42,7 @@ Polymer({
       },
       topNotifiesTopElement: {
         type:Object,
-        value:{elem:'#app',attr:'selected-page'},
+        value:{elem:'#app',attr:'selected-pages-group'},
       },
       bottomNotifiesTopElement: {
         type:Object,
@@ -72,12 +72,14 @@ Polymer({
       ev.target.selected = null;
     },
     bottomMenuSelect: function(ev) {
-      this.bottomSelected = ev.target.selected;
-      this.opened = false;
-      this.bottomNotifiesTopElement.elem && document.querySelector(this.bottomNotifiesTopElement.elem).setAttribute(this.bottomNotifiesTopElement.attr,ev.target.selected);
-      if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
-      if (ev.target.selected=='acc') document.querySelector('msc-account-create-confirm-dialog').open()
-      if (ev.target.selected=='set') document.querySelector('msc-user-settings-view').open()
-      ev.target.selected = null;
+      if (ev.target.selected!==null) {
+        this.bottomSelected = ev.target.selected;
+        this.opened = false;
+        this.bottomNotifiesTopElement.elem && document.querySelector(this.bottomNotifiesTopElement.elem).setAttribute(this.bottomNotifiesTopElement.attr,ev.target.selected);
+        if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
+        if (ev.target.selected=='acc') document.querySelector('msc-account-create-confirm-dialog').open()
+        if (ev.target.selected=='set') document.querySelector('msc-user-settings-view').open()
+        Polymer.dom(this.root).querySelectorAll('.drawer-sub-menu').forEach((item)=>{item.selected=null});
+      }
     }
 });

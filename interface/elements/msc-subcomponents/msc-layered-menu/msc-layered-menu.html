@@ -13,7 +13,7 @@
             </template>
 
             <template is="dom-if" if="[[item.dynamic]]">
-              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" selected="rel" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
                 <!-- TODO: The catalog service will need to accept a locale id -->
                 <template is="dom-repeat" items="{{browseCategories}}" as="category">
                   <paper-item sub-menu-name="[[category.id]]">[[category.name]]</paper-item>
@@ -21,7 +21,7 @@
               </paper-menu>
             </template>
             <template is="dom-if" if="[[!item.dynamic]]">
-              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" selected="rel" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
                 <template is="dom-repeat" items="[[item.items]]">
                   <paper-item sub-menu-name="[[item.shortcut]]">[[item.name]]</paper-item>
                 </template>
@@ -34,7 +34,7 @@
 
     </div>
     <div id="topLayer" style="">
-      <paper-menu id="topMenu" on-iron-select="topMenuSelect" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
+      <paper-menu id="topMenu" on-iron-select="topMenuSelect" class="drawer-menu" attr-for-selected="menu-name">
         <template is="dom-repeat" items="[[locale.layeredMenu]]">
           <template is="dom-if" if="[[!item.user]]">
             <paper-icon-button menu-name$="[[item.header.shortcut]]" icon$="msc-msc-iconset:[[item.header.icon]]" on-blur="closeMenu"></paper-icon-button>
