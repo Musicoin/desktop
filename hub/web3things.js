@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const console = require('./console.log.js');
 const etherSettings = require('./ether.settings.js')
 const Hook = require('hooked-web3-provider');
-const Lightwallet = require('eth-lightwallet');
+const Lightwallet = require('eth-lightwallet-nwjs');
 Promise.promisifyAll(Lightwallet.keystore);
 
 module.exports = (function (data) {

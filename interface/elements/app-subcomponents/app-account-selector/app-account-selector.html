@@ -1,7 +1,7 @@
 <dom-module id="app-account-selector">
   <link rel="import" type="css" href="app-account-selector.css">
   <template>
-    
+
     <div id="accountSelected" on-tap="toggleList">
       <template is="dom-if" if="[[!accountChosen]]">
         <div id="placeholderText">[[locale.accountSelector.placeholder]]</div>

@@ -60,6 +60,7 @@
     "test-fixture": "polymerelements/test-fixture#^1.0.0",
     "web-animations-js": "^2.2.2",
     "web-component-tester": "^4.0.0",
-    "paper-fab-dropdown": "^0.1.4"
+    "paper-fab-dropdown": "^0.1.4",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.1.0"
   }
 }

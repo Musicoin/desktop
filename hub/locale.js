@@ -18,6 +18,29 @@ var locale = {
         utilities:'Utilities',
       }
     },
+    layeredMenu:[
+      {user:true, header:{name:'user',shortcut:'usr',icon:''},items:[
+        {name:'Settings',shortcut:'set'},
+        {name:'Create account |temp|',shortcut:'acc'},
+        {name:'Log out',shortcut:'loo'},
+      ]},
+      {header:{name:'Categories',shortcut:'cat',icon:'catalogicon'},items:[
+        {name:'New releases',shortcut:'rel'},
+        {name:'Coinboard',shortcut:'cbr'},
+        {name:'My favorites',shortcut:'myf'},
+      ]},
+      {header:{name:'Playlist',shortcut:'pls',icon:'playlisticon'},items:[
+        {name:'My playlists',shortcut:'mpl'},
+        {name:'Collection',shortcut:'col'},
+      ]},
+      {header:{name:'Musician',shortcut:'mus',icon:'musicianicon'},items:[
+        {name:'My works',shortcut:'myw'},
+        {name:'Editor',shortcut:'edi'},
+      ]},
+      {header:{name:'Developer',shortcut:'dev',icon:'developericon'},items:[
+        {name:'Utilities',shortcut:'uti'},
+      ]},
+    ],
     paymentApprovalDialog: {
       confirmDisposition:'Confirm payment of ♮',
       confirmationMessage:'bla, bla',
@@ -125,6 +148,29 @@ var locale = {
         utilities:'Verktyg',
       }
     },
+    layeredMenu:[
+      {user:true, header:{name:'user',shortcut:'usr',icon:''},items:[
+        {name:'Installningar',shortcut:'set'},
+        {name:'Create account |temp|',shortcut:'acc'},
+        {name:'Log out',shortcut:'loo'},
+      ]},
+      {header:{name:'Kategorier',shortcut:'cat',icon:'catalogicon'},items:[
+        {name:'Ny frisättningen',shortcut:'rel'},
+        {name:'Coinboard',shortcut:'cbr'},
+        {name:'Mina favoriter',shortcut:'myf'},
+      ]},
+      {header:{name:'Spellista',shortcut:'pls',icon:'playlisticon'},items:[
+        {name:'Mina spellistor',shortcut:'mpl'},
+        {name:'Kollektion',shortcut:'col'},
+      ]},
+      {header:{name:'Musiker',shortcut:'mus',icon:'musicianicon'},items:[
+        {name:'ina skapelser',shortcut:'myw'},
+        {name:'Redigering',shortcut:'edi'},
+      ]},
+      {header:{name:'Developer',shortcut:'dev',icon:'developericon'},items:[
+        {name:'Verktyg',shortcut:'uti'},
+      ]},
+    ],
     paymentApprovalDialog: {
       confirmDisposition:'Confirm payment of ♮',
       confirmationMessage:'bla, bla',
