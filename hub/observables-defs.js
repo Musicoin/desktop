@@ -43,7 +43,7 @@ var observables = [
   {subproperties:'financialData',prop:'userBalance',initVal:0},
   {subproperties:'financialData',prop:'pendingPayments',initVal:0},
   {subproperties:'financialData',prop:'amountToPay',initVal:0},
-  {prop:'contractGroups',
+  {prop:'groups',
   //just test data, TODO: delete when real available
   initVal:[
     {name:'something',contracts:[

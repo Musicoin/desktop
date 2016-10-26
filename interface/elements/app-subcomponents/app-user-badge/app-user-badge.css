@@ -6,6 +6,7 @@
 paper-menu-button {
   width: 100%;
   padding: 0;
+  background-color: var(--primary-background-color);
 }
 paper-button {
   width: 100%;

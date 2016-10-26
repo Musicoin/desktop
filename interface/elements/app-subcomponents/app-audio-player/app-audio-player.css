@@ -7,6 +7,12 @@
   margin-right: 5px;
 }
 
+paper-progress.audio-progress {
+  --paper-progress-active-color: #2176bd;
+  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  width: 100%;
+}
+
 .audio-control-area {
   align-items: center;
   display: flex;

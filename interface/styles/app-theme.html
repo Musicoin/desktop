@@ -26,8 +26,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   /* Application theme */
 
   :root {
-    --primary-text-color: var(--paper-grey-900);
-    --primary-background-color: #ffffff;
+    --primary-text-color: #7e7e7e;
+    --primary-background-color: #212121;
     --secondary-text-color: #737373;
     --disabled-text-color: #9b9b9b;
     --divider-color: #dbdbdb;
@@ -41,13 +41,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* Components */
 
     /* paper-drawer-panel */
-    --drawer-menu-color: #ffffff;
+    --drawer-menu-color: #7e7e7e;
     --drawer-border-color: 1px solid #ccc;
     --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
 
     /* paper-menu */
-    --paper-menu-background-color: #fff;
-    --menu-link-color: #111111;
+    --paper-menu-background-color: #212121;
+    --menu-link-color: #aaaaaa;
   }
 
   /* General styles */
@@ -71,6 +71,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     @apply(--paper-font-title);
   }
 
+  app-drawer {
+    --app-drawer-content-container: {
+      background-color: var(--primary-background-color);
+    }
+  }
+
   paper-scroll-header-panel {
     height: 100%;
   }
@@ -78,6 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   paper-menu {
     --paper-menu-selected-item: {
       color: var(--primary-color);
+      font-weight: normal;
     }
 
     --paper-menu-focused-item-after: {

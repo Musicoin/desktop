@@ -1,25 +1,60 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-audio-player/paper-audio-player.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
 <dom-module id="app-player-view">
   <link rel="import" type="css" href="app-player-view.css">
+  <style include="shared-styles" is="custom-style"></style>
   <template>
-        <paper-button on-tap="playAll">[[locale.playView.playAll]]</paper-button>
-        <template is="dom-repeat" items="[[contractGroups]]" as="contractGroup" style="position:relative">
-            <div>
-                <h3>[[contractGroup.name]]</h3>
-                <template is="dom-repeat" items="[[contractGroup.contracts]]" style="position:relative">
-                    <div class="title">
-                        <paper-card class="recent" animated="true" elevation="3" on-tap="playProvidedContract" contract-id="[[item.contractId]]">
-                            <div class="recent-bg" style="background-image: url('[[contractImagesPath]][[item.img]]');"></div>
-                            <paper-ripple fit></paper-ripple>
-                            <div class="show-off"></div>
-                        </paper-card>
-                        <p class="title-details">
-                            <span class="artist">[[item.artist]]</span><br>
-                            <span class="album">[[item.album]]</span><br>
-                            <span class="track">[[item.track]]</span><br>
-                        </p>
-                    </div>
-                </template>
-  </div>
+    <div style="padding:10px">
+      <template is="dom-repeat" items="{{groups}}" as="group" style="position:relative">
+        <div hidden$="{{!_shouldHideInstructions(groups.*, instructionText)}}">
+          <div class="group-header">{{group.name}}
+            <paper-icon-button hidden$="[[!showGroupPlayIcon]]" icon="[[groupActionIcon]]" on-tap="handleGroupSelection"
+                               class="action-button"></paper-icon-button>
+          </div>
+          <template is="dom-repeat" items="{{group.items}}" style="position:relative">
+            <div class="title">
+              <paper-card class="recent" animated="true" elevation="3" on-tap="handleItemSelection">
+                <div class="recent-bg" style="background-image: url('{{item.img}}');"></div>
+                <paper-ripple fit></paper-ripple>
+                <div class="show-off"></div>
+              </paper-card>
+              <p class="title-details">
+                <span class="description track">{{item.line1}}</span><br>
+                <span class="description artist">{{item.line2}}</span><br>
+              </p>
+            </div>
+          </template>
+        </div>
+      </template>
+      <div class="instructions" hidden$="{{_shouldHideInstructions(groups.*, instructionText)}}">
+        {{instructionText}}
+      </div>
+    </div>
   </template>
 
   <div class="card" hidden>

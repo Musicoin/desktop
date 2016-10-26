@@ -20,11 +20,11 @@ setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
         console.log('initialized');
       }, 400);
 
-      // [].forEach.call(document.querySelectorAll('.drawer-menu'), function(el) {
-      //     el.addEventListener('iron-select',function(ev){
-      //       document.querySelector('#app').setAttribute('selected-page',ev.target.selected);
-      //     },true);
-      //   });
+      [].forEach.call(document.querySelectorAll('.drawer-menu'), function(el) {
+          el.addEventListener('iron-select',function(ev){
+            document.querySelector('#app').setAttribute('selected-page',ev.target.selected);
+          },true);
+        });
   });
 
 })(document);
