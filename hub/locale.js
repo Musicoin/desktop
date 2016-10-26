@@ -24,7 +24,7 @@ var locale = {
         {name:'Create account |temp|',shortcut:'acc'},
         {name:'Log out',shortcut:'loo'},
       ]},
-      {header:{name:'Categories',shortcut:'cat',icon:'catalogicon'},items:[
+      {dynamic:true, header:{name:'Categories',shortcut:'cat',icon:'catalogicon'},items:[
         {name:'New releases',shortcut:'rel'},
         {name:'Coinboard',shortcut:'cbr'},
         {name:'My favorites',shortcut:'myf'},
@@ -174,7 +174,7 @@ var locale = {
         {name:'Create account |temp|',shortcut:'acc'},
         {name:'Log out',shortcut:'loo'},
       ]},
-      {header:{name:'Kategorier',shortcut:'cat',icon:'catalogicon'},items:[
+      {dynamic:true, header:{name:'Kategorier',shortcut:'cat',icon:'catalogicon'},items:[
         {name:'Ny frisättningen',shortcut:'rel'},
         {name:'Coinboard',shortcut:'cbr'},
         {name:'Mina favoriter',shortcut:'myf'},

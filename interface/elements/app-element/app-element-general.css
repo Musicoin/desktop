@@ -8,6 +8,9 @@ app-works-view, app-parity-view, app-contract-editor-view, works-view {
   display: none;
   background-color: #2c2c2c;
 }
+app-drawer {
+  --app-drawer-width:48px;
+}
 
 :host[selected-page="rel"] app-player-view,
 :host[selected-page="cbr"] app-player-view,

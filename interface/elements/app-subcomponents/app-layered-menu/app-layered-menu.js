@@ -4,6 +4,8 @@ Polymer({
       mscIntf.locale = {register:this,prop:'locale'}
       mscIntf.userDetails = {register:this,prop:'userDetails'};
       mscIntf.toolSettings.userImagePath = {register:this,prop:'usersImageDir'};
+      mscIntf.attach(this)
+        .to('browseCategories');
     },
     attached:function(){
 
@@ -22,7 +24,7 @@ Polymer({
       },
       opened: {
         type:Boolean,
-        value:false,
+        value:true,
         observer:'_openSub',
         reflectToAttribute:true,
       },
@@ -46,6 +48,7 @@ Polymer({
         type:Object,
         value:{elem:'#app',attr:'selected-page'},
       },
+      browseCategories: Array,
     },
     _baseWidthChange: function(newValue) {
 
@@ -57,6 +60,7 @@ Polymer({
 
     },
     topMenuSelect: function(ev) {
+      !this.opened && (this.opened = true);
       this.topSelected = ev.target.selected;
       this.topNotifiesTopElement.elem && document.querySelector(this.topNotifiesTopElement.elem).setAttribute(this.topNotifiesTopElement.attr,ev.target.selected);
       Polymer.dom(this.root).querySelectorAll('.sub-menu-box').forEach((item)=>{item.classList.remove('active')});
@@ -64,7 +68,11 @@ Polymer({
     },
     bottomMenuSelect: function(ev) {
       this.bottomSelected = ev.target.selected;
+      this.opened = false;
       this.bottomNotifiesTopElement.elem && document.querySelector(this.bottomNotifiesTopElement.elem).setAttribute(this.bottomNotifiesTopElement.attr,ev.target.selected);
+      if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
+      if (ev.target.selected=='acc') document.querySelector('app-account-create-confirm-dialog').open()
+      if (ev.target.selected=='set') document.querySelector('app-user-settings-view').open()
     },
 
 });
