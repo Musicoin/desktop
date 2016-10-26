@@ -29,6 +29,7 @@ body {
 app-header {
   background-color: var(--msc-primary-background-color);
   padding-left: 12px;
+  height: 48px;
 }
 
 .drawer-list {
@@ -49,6 +50,7 @@ app-toolbar {
   color: #7e7e7e;
   justify-content: space-between;
   padding: 0 0;
+  height: 48px;
 }
 
 msc-audio-player {

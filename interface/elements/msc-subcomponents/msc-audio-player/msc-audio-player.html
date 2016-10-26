@@ -12,8 +12,9 @@
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="skipTrack" class="action-button"></paper-icon-button>
       <div>
-        <paper-icon-button icon="icons:thumb-up" class="tip-button" on-tap="sendTip"></paper-icon-button>
-        <div class="tip-label">tip</div>
+        <paper-icon-button icon="icons:thumb-up" class="tip-button" on-tap="sendTip">
+          <paper-tooltip>Send a tip!</paper-tooltip>
+        </paper-icon-button>
       </div>
     </div>
   </template>

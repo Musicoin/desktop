@@ -6,7 +6,12 @@
         mscIntf.loginLock = {register:this,prop:'loginLock'}
         mscIntf.attach(this)
           .to('catalogBrowseItems')
-          .to('browseCategories');
+          .to('browseCategories', function(oldValue, newValue) {
+            this.browseCategories = newValue;
+            if (this.selectedPage == "not-set" && this.browseCategories && this.browseCategories.length > 0) {
+              this.selectedPage = newValue[0].id;
+            }
+          }.bind(this));
 
         this.$.browse.addEventListener('selected', function(e) {
           mscIntf.audio.playAll(e.detail);
@@ -16,7 +21,7 @@
         selectedPage: {
           type: String,
           observer: '_pageChanged',
-          value: "rel",
+          value: "not-set",
           reflectToAttribute:true,
         },
         loginLock: {

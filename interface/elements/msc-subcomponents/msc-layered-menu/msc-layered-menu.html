@@ -3,36 +3,40 @@
   <template>
     <div id="container">
       <div id="bottomLayer">
-        <template is="dom-repeat" items="[[locale.layeredMenu]]">
-          <div class="sub-menu-box" sub-menu-box-id$="[[item.header.shortcut]]">
-            <template is="dom-if" if="[[!item.user]]">
-              <h3>[[item.header.name]]</h3>
-            </template>
-            <template is="dom-if" if="[[item.user]]">
-              <h3>[[item.header.name]]</h3>
-            </template>
+        <!--<paper-menu id="bottomMenu">-->
+          <template is="dom-repeat" items="[[locale.layeredMenu]]">
+            <div class="sub-menu-box" sub-menu-box-id$="[[item.header.shortcut]]">
+              <template is="dom-if" if="[[!item.user]]">
+                <h3>[[item.header.name]]</h3>
+              </template>
+              <template is="dom-if" if="[[item.user]]">
+                <h3>[[item.header.name]]</h3>
+              </template>
 
-            <template is="dom-if" if="[[item.dynamic]]">
-              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
-                <!-- TODO: The catalog service will need to accept a locale id -->
-                <template is="dom-repeat" items="{{browseCategories}}" as="category">
-                  <paper-item sub-menu-name="[[category.id]]">[[category.name]]</paper-item>
-                </template>
-              </paper-menu>
-            </template>
-            <template is="dom-if" if="[[!item.dynamic]]">
-              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
-                <template is="dom-repeat" items="[[item.items]]">
-                  <paper-item sub-menu-name="[[item.shortcut]]">[[item.name]]</paper-item>
-                </template>
-              </paper-menu>
-            </template>
-          </div>
-        </template>
-      </paper-menu>
+              <template is="dom-if" if="[[item.dynamic]]">
+                <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu"
+                            on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]"
+                            class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+                  <!-- TODO: The catalog service will need to accept a locale id -->
+                  <template is="dom-repeat" items="{{browseCategories}}" as="category">
+                    <paper-item sub-menu-name="[[category.id]]">[[category.name]]</paper-item>
+                  </template>
+                </paper-menu>
+              </template>
+              <template is="dom-if" if="[[!item.dynamic]]">
+                <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu"
+                            on-iron-select="bottomMenuSelect" sub-menu-idx="[[item.header.shortcut]]"
+                            class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+                  <template is="dom-repeat" items="[[item.items]]">
+                    <paper-item sub-menu-name="[[item.shortcut]]">[[item.name]]</paper-item>
+                  </template>
+                </paper-menu>
+              </template>
+            </div>
+          </template>
+        <!--</paper-menu>-->
+      </div>
 
-
-    </div>
     <div id="topLayer" style="">
       <paper-menu id="topMenu" on-iron-select="topMenuSelect" class="drawer-menu" attr-for-selected="menu-name">
         <template is="dom-repeat" items="[[locale.layeredMenu]]">

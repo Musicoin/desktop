@@ -12,7 +12,7 @@
 }
 
 #pending-label {
-  display: block;
+  display: none;
   color: #7e7e7e;
   text-align: center;
   font-size: small;

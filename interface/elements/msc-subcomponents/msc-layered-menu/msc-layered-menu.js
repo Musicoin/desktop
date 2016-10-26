@@ -67,6 +67,7 @@ Polymer({
     },
 
     topMenuSelect: function(ev) {
+      console.log("topMenuSelect: " + ev.target.selected);
       !this.opened && (this.opened = true);
       this.topSelected = ev.target.selected;
       this.topNotifiesTopElement.elem && document.querySelector(this.topNotifiesTopElement.elem).setAttribute(this.topNotifiesTopElement.attr,ev.target.selected);
@@ -75,14 +76,19 @@ Polymer({
       ev.target.selected = null;
     },
     bottomMenuSelect: function(ev) {
+      console.log("bottomMenuSelect: " + ev.target.selected);
       if (ev.target.selected!==null) {
-        this.bottomSelected = ev.target.selected;
-        this.opened = false;
-        this.bottomNotifiesTopElement.elem && document.querySelector(this.bottomNotifiesTopElement.elem).setAttribute(this.bottomNotifiesTopElement.attr,ev.target.selected);
-        if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
-        if (ev.target.selected=='acc') document.querySelector('msc-account-create-confirm-dialog').open()
-        if (ev.target.selected=='set') document.querySelector('msc-user-settings-view').open()
-        Polymer.dom(this.root).querySelectorAll('.drawer-sub-menu').forEach((item)=>{item.selected=null});
+        this._selectBottomMenuItem(ev.target.selected);
       }
+    },
+    _selectBottomMenuItem: function(selected) {
+      console.log("_selectBottomMenuItem: " + JSON.stringify(selected));
+      this.bottomSelected = selected;
+      this.opened = false;
+      this.bottomNotifiesTopElement.elem && document.querySelector(this.bottomNotifiesTopElement.elem).setAttribute(this.bottomNotifiesTopElement.attr,selected);
+      if (selected=='loo') mscIntf.fnPool('login','logoutUser');
+      if (selected=='acc') document.querySelector('msc-account-create-confirm-dialog').open()
+      if (selected=='set') document.querySelector('msc-user-settings-view').open()
+      Polymer.dom(this.root).querySelectorAll('.drawer-sub-menu').forEach((item)=>{item.selected=null});
     }
 });

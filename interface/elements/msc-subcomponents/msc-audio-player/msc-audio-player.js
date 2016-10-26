@@ -22,7 +22,7 @@ Polymer({
       }.bind(this));
 
       this.$.player.addEventListener('ended', function() {
-        this.skipTrack();
+        this.playNext();
       }.bind(this));
     },
     attached:function(){
@@ -63,10 +63,10 @@ Polymer({
         this.$.player.pause();
       }
     },
-    playNext: function(ev) {
+    playNext: function() {
       this.audio.playNext();
     },
-    sendTip: function(ev) {
+    sendTip: function() {
       var output = prompt("Enter pwd");
       mscIntf.fnPool('login', 'web3TestLogin', null, {pwd: output});
       if (this.currentPlay && this.currentPlay.contract_id) {
