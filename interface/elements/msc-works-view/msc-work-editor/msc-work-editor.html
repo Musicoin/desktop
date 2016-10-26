@@ -8,10 +8,10 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../license-editor/license-editor.html">
+<link rel="import" href="../msc-license-editor/msc-license-editor.html">
 
-<dom-module id="work-editor">
-  <link rel="import" type="css" href="work-editor.css">
+<dom-module id="msc-work-editor">
+  <link rel="import" type="css" href="msc-work-editor.css">
   <template>
     <div style="margin: 10px">
       <div class="header">
@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="add" on-tap="handleAddLicense"></paper-icon-button>
           </div>
           <template is="dom-repeat" items="{{work.licenses}}" as="license">
-            <license-editor license="{{license}}" work="{{work}}"></license-editor>
+            <msc-license-editor license="{{license}}" work="{{work}}"></msc-license-editor>
           </template>
           <div class="instructions" hidden$="{{_shouldHideInstructions(work.licenses.*)}}">
             [[locale.workEditor.instructions.addNewLicense]]
@@ -65,5 +65,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
   </template>
 
-  <script src="work-editor.js"></script>
+  <script src="msc-work-editor.js"></script>
 </dom-module>

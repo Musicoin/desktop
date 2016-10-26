@@ -17,13 +17,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="work-editor/work-editor.html">
+<link rel="import" href="msc-work-editor/msc-work-editor.html">
 
 <dom-module id="msc-works-view">
     <link rel="import" type="css" href="msc-works-view.css">
     <template>
       <msc-player-view id="gridView" groups="{{myWorks}}" hidden$="{{!shouldShowGridView(selectedWork)}}"></msc-player-view>
-      <work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></work-editor>
+      <msc-work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></msc-work-editor>
       <paper-fab id="addNewWorkButton" icon="add" mini on-tap="handleAddNewWork"></paper-fab>
     </template>
 

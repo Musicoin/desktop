@@ -1,5 +1,5 @@
 Polymer({
-  is: 'work-editor',
+  is: 'msc-work-editor',
   properties: {
     work: {
       type: Object,

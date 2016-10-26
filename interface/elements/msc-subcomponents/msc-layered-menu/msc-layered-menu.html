@@ -37,7 +37,7 @@
       <paper-menu id="topMenu" on-iron-select="topMenuSelect" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
         <template is="dom-repeat" items="[[locale.layeredMenu]]">
           <template is="dom-if" if="[[!item.user]]">
-            <paper-icon-button menu-name$="[[item.header.shortcut]]" icon$="msc-msc-iconset:[[item.header.icon]]"></paper-icon-button>
+            <paper-icon-button menu-name$="[[item.header.shortcut]]" icon$="msc-msc-iconset:[[item.header.icon]]" on-blur="closeMenu"></paper-icon-button>
           </template>
           <template is="dom-if" if="[[item.user]]">
             <paper-icon-button menu-name$="[[item.header.shortcut]]" src$="[[usersImageDir]][[userDetails.external.image]]"></paper-icon-button>

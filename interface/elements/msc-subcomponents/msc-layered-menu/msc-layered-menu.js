@@ -59,12 +59,17 @@ Polymer({
     _openSub: function(newValue) {
 
     },
+    closeMenu: function() {
+      this.opened = false;
+    },
+
     topMenuSelect: function(ev) {
       !this.opened && (this.opened = true);
       this.topSelected = ev.target.selected;
       this.topNotifiesTopElement.elem && document.querySelector(this.topNotifiesTopElement.elem).setAttribute(this.topNotifiesTopElement.attr,ev.target.selected);
       Polymer.dom(this.root).querySelectorAll('.sub-menu-box').forEach((item)=>{item.classList.remove('active')});
       this.$$('[sub-menu-box-id='+ev.target.selected+']').classList.add('active');
+      ev.target.selected = null;
     },
     bottomMenuSelect: function(ev) {
       this.bottomSelected = ev.target.selected;
@@ -73,6 +78,6 @@ Polymer({
       if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');
       if (ev.target.selected=='acc') document.querySelector('msc-account-create-confirm-dialog').open()
       if (ev.target.selected=='set') document.querySelector('msc-user-settings-view').open()
-    },
-
+      ev.target.selected = null;
+    }
 });

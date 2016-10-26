@@ -1,5 +1,5 @@
 Polymer({
-  is: 'license-editor',
+  is: 'msc-license-editor',
   properties: {
     license: {
       type: Object,

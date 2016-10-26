@@ -2,6 +2,7 @@
   --msc-primary-color: #4285f4;
   --msc-secondary-color: white;
   --msc-secondary-background-color: #2c2c2c;
+  --msc-primary-background-color: #212121;
   display: block;
 }
 msc-parity-view, msc-works-view, msc-wallet-view {
@@ -22,18 +23,19 @@ app-drawer {
 
 
 body {
-  background-color: #212121;
+  background-color: var(--msc-primary-background-color);
 }
 
-msc-header {
-  background-color: #212121;
+app-header {
+  background-color: var(--msc-primary-background-color);
+  padding-left: 12px;
 }
 
 .drawer-list {
   margin: 5px 10px;
 }
 
-msc-header-layout {
+app-header-layout {
     background-color: var(--msc-secondary-background-color);
 }
 
@@ -43,7 +45,7 @@ app-drawer {
     }
 }
 
-msc-toolbar {
+app-toolbar {
   color: #7e7e7e;
   justify-content: space-between;
   padding: 0 0;
