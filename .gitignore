@@ -6,3 +6,4 @@ watcher.sh
 switchworkspace.sh
 node_modules/
 .atomignore
+hub/ether.settings.js

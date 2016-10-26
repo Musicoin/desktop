@@ -6,7 +6,7 @@ var pppCode = "0x" + fs.readFileSync('solidity/mvp1/PayPerPlay.sol.bin');
 
 var loggerAddress = "0x88Fc62CFAC71041f9704c122293e249110c8efbb";
 var loggerAddress_v2 = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
-
+const etherSettings = require('./ether.settings.js')
 var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
 var pppMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/PayPerPlay.sol.abi'));
 var pppMvp2Code = "0x" + fs.readFileSync('solidity/mvp2/PayPerPlay.sol.bin');
@@ -17,7 +17,7 @@ var deployGas = 4700000;
 function Web3Connector() {
   this.web3 = new Web3();
   console.log("connecting to web3")
-  this.web3.setProvider(new this.web3.providers.HttpProvider('http://localhost:8545'));
+  this.web3.setProvider(new this.web3.providers.HttpProvider(etherSettings.etherServerRpc));
   this.selectedAccount = this.getDefaultAccount();
   this.storedPassword = null;
 }
