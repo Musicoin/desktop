@@ -1,0 +1,14 @@
+<dom-module id="msc-payment-approval-dialog">
+  <link rel="import" type="css" href="msc-payment-approval-dialog.css">
+  <template>
+    <style include="paper-dialog-shared-styles"></style>
+    <h2>[[locale.paymentApprovalDialog.confirmDisposition]][[amountToPay]]</h2>
+    <p>[[locale.paymentApprovalDialog.confirmationMessage]]</p>
+    <paper-input class="my-class" id="pwd" type=password label="password"></paper-input>
+    <div class="buttons">
+      <paper-button dialog-dismiss>[[locale.paymentApprovalDialog.declinePayment]]</paper-button>
+      <paper-button id="confirm" dialog-confirm autofocus on-tap="onPermissionGranted">[[locale.paymentApprovalDialog.acceptPayment]]</paper-button>
+    </div>
+  </template>
+  <script src="msc-payment-approval-dialog.js"></script>
+</dom-module>

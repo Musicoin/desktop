@@ -1,0 +1,27 @@
+:host {
+
+}
+@keyframes expandit {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(18);
+    opacity: 0;
+  }
+}
+
+:host[wait-for-confirmation],
+:host[wait-for-confirmation][message-switch] {
+  font-size: 3em;
+  background-color: transparent;
+  color: #a0fda0;
+  box-shadow: none;
+}
+:host[wait-for-confirmation] paper-spinner{
+  transform: scale(2);
+}
+#successMessage {
+  animation: expandit 700ms 200ms ease;
+}

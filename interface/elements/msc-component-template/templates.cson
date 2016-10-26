@@ -1,0 +1,40 @@
+"Polymer Component Template 1":
+  type: "GROUP"
+  "[{[componentName]}]":
+    type: "FOLDER"
+    "[{[componentName]}].js":
+      type: "FILE"
+      content: '''
+        Polymer({
+            is: '[{[componentName]}]',
+            ready:function(){
+        
+            },
+            attached:function(){
+        
+            },
+            properties: {
+        
+            },
+        })
+        
+      '''
+    "[{[componentName]}].css":
+      type: "FILE"
+      content: '''
+        :host {
+        
+        }
+        
+      '''
+    "[{[componentName]}].html":
+      type: "FILE"
+      content: '''
+        <dom-module id="[{[componentName]}]">
+          <link rel="import" type="css" href="[{[componentName]}].css">
+          <template>
+          </template>
+          <script src="[{[componentName]}].js"></script>
+        </dom-module>
+        
+      '''

@@ -1,0 +1,56 @@
+<!-- <script src="web3-connector.js"></script>
+<script src="musicoin-connector.js"></script> -->
+
+<dom-module id="msc-element">
+  <link rel="import" type="css" href="msc-element-general.css">
+  <template>
+    <msc-connection-watch></msc-connection-watch>
+    <app-drawer-layout fullbleed>
+      <!-- Drawer content -->
+      <app-drawer>
+        <!--<app-user-badge></app-user-badge>-->
+        <!-- <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
+					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.categories]]</h3>
+          <template is="dom-repeat" items="{{browseCategories}}" as="category" style="position:relative"> -->
+            <!-- TODO: The catalog service will need to accept a locale id -->
+            <!-- <paper-item menu-name="[[category.id]]">[[category.name]]</paper-item>
+          </template>
+					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.playlist]]</h3>
+          <paper-item menu-name="myf">[[locale.navMenu.items.myFavorites]]</paper-item>
+					<paper-item menu-name="mpl">[[locale.navMenu.items.myPlaylists]]</paper-item>
+					<paper-item menu-name="col">[[locale.navMenu.items.collection]]</paper-item>
+					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.musician]]</h3>
+					<paper-item menu-name="myw">[[locale.navMenu.items.myWorks]]</paper-item>
+          <paper-item menu-name="myw2">[[locale.navMenu.items.myWorks]]2</paper-item>
+					<paper-item menu-name="edi">[[locale.navMenu.items.editor]]</paper-item>
+					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.developer]]</h3>
+					<paper-item menu-name="uti">[[locale.navMenu.items.utilities]]</paper-item> -->
+				<!--</paper-menu>-->
+        <msc-layered-menu></msc-layered-menu>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+        <app-header shadow fixed condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <msc-audio-player></msc-audio-player>
+            <msc-user-balance></msc-user-balance>
+          </app-toolbar>
+        </app-header>
+        <msc-player-view id="browse" show-group-play-icon hidden$="{{_shouldHideBrowsePage(selectedPage)}}" groups="[[browseViewItems]]" ></msc-player-view>
+        <msc-works-view></msc-works-view>
+        <msc-parity-view></msc-parity-view>
+        <msc-wallet-view></msc-wallet-view>
+      </app-header-layout>
+    </app-drawer-layout>
+    <msc-payment-approval-dialog></msc-payment-approval-dialog>
+    <msc-user-settings-view></msc-user-settings-view>
+    <msc-login-view></msc-login-view>
+    <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>
+    <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
+    <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
+  </template>
+
+  <script src="msc-element.js"></script>
+</dom-module>

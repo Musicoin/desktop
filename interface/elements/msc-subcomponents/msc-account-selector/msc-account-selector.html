@@ -1,0 +1,27 @@
+<dom-module id="msc-account-selector">
+  <link rel="import" type="css" href="msc-account-selector.css">
+  <template>
+    
+    <div id="accountSelected" on-tap="toggleList">
+      <template is="dom-if" if="[[!accountChosen]]">
+        <div id="placeholderText">[[locale.accountSelector.placeholder]]</div>
+      </template>
+      <template is="dom-if" if="[[accountChosen]]">
+        <div id="selectedText">[[selectedAccount]]</div>
+      </template>
+      <paper-ripple></paper-ripple>
+    </div>
+    <iron-collapse id="collapseList">
+      <iron-selector attr-for-selected="hash" selected="crn">
+        <div hash="crn" id="createNew">[[locale.accountSelector.createNew]]</div>
+        <template is="dom-repeat" items="[[availableAccounts]]">
+          <div hash="[[item]]">[[item]]</div>
+        </template>
+      </iron-selector>
+    </iron-collapse>
+    <div id="ctrlLabel">
+      <h2>[[roleAssigned]]</h2>
+    </div>
+  </template>
+  <script src="msc-account-selector.js"></script>
+</dom-module>

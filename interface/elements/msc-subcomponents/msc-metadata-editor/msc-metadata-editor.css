@@ -1,0 +1,80 @@
+:host {
+    display: block;
+    margin: 0px;
+    color: #aaa;
+}
+
+[hidden] {
+    display: none;
+}
+
+h3 {
+    font-weight: lighter;
+    margin-bottom: 0px;
+}
+
+.header {
+    display: flex;
+    font-size: 2em;
+    font-weight: lighter;
+}
+
+.metadata-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0.8;
+    padding: 5px;
+}
+
+.extended-metadata-area {
+    display: table;
+    table-layout: fixed;
+    -webkit-border-vertical-spacing: 2px;
+    -webkit-border-horizontal-spacing: 2px;
+    width: 100%;
+}
+
+.extended-metadata-row {
+    border: 5px solid white;
+    margin: 2px;
+    align-items: center;
+    min-width: 100px;
+}
+
+.field-column {
+    width: 30%;
+}
+
+.value-column {
+    width: 60%;
+}
+
+.delete-column {
+    width: 20px;
+}
+
+.extended-metadata-input {
+    font-weight: lighter;
+    min-width: 100px;
+    margin-right: 10px;
+    border: none;
+    background: rgba(255,255,255, 0.05);
+    color: #a1a1a1;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 1em;
+    width: 100%;
+}
+
+.delete-metadata-button {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.metadata-instructions {
+    text-align: justify;
+    color: #777676;
+    padding-left: 60px;
+    padding-right: 100px;
+}

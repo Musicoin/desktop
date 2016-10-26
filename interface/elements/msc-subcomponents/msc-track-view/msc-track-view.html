@@ -1,0 +1,12 @@
+<dom-module id="msc-track-view">
+  <link rel="import" type="css" href="msc-track-view.css">
+  <template>
+    <div id="trackDetailView" class="detailView">
+      <h1>{{artist}}: {{track}}</h1>
+      <paper-material class="track-detail-image" style="background-image: url('{{artworkUrl}}');">
+      </paper-material>
+      {{contractId}}
+    </div>
+  </template>
+  <script src="msc-track-view.js"></script>
+</dom-module>

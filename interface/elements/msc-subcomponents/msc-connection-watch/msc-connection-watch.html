@@ -1,0 +1,9 @@
+<dom-module id="msc-connection-watch">
+  <link rel="import" type="css" href="msc-connection-watch.css">
+  <template>
+      <span id="chain-up" service-on$="[[chainReady]]">[[chain]]<span id="chainSync">[[chainSync.syncProgress]]%</span></span>
+      <span id="ipfs-up" service-on$="[[ipfsReady]]">[[ipfs]]</span>
+      <span id="server-up" service-on$="[[serverReady]]">[[server]]</span>
+  </template>
+  <script src="msc-connection-watch.js"></script>
+</dom-module>

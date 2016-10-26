@@ -1,0 +1,43 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<dom-module id="msc-player-view">
+  <link rel="import" type="css" href="msc-player-view.css">
+  <style include="shared-styles" is="custom-style"></style>
+  <template>
+    <div style="padding:10px">
+      <template is="dom-repeat" items="{{groups}}" as="group" style="position:relative">
+        <div hidden$="{{!_shouldHideInstructions(groups.*, instructionText)}}">
+          <div class="group-header">{{group.name}}
+            <paper-icon-button hidden$="[[!showGroupPlayIcon]]" icon="[[groupActionIcon]]" on-tap="handleGroupSelection"
+                               class="action-button"></paper-icon-button>
+          </div>
+          <template is="dom-repeat" items="{{group.items}}" style="position:relative">
+            <div class="title">
+              <paper-card class="recent" animated="true" elevation="3" on-tap="handleItemSelection">
+                <div class="recent-bg" style="background-image: url('{{item.img}}');"></div>
+                <paper-ripple fit></paper-ripple>
+                <div class="show-off"></div>
+              </paper-card>
+              <p class="title-details">
+                <span class="description track">{{item.line1}}</span><br>
+                <span class="description artist">{{item.line2}}</span><br>
+              </p>
+            </div>
+          </template>
+        </div>
+      </template>
+      <div class="instructions" hidden$="{{_shouldHideInstructions(groups.*, instructionText)}}">
+        {{instructionText}}
+      </div>
+    </div>
+  </template>
+  <script src="msc-player-view.js"></script>
+</dom-module>

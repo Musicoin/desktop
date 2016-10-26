@@ -1,0 +1,20 @@
+:host {
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+#user-balance {
+  display: block;
+  color: #2176bd;
+  font-size: 2em;
+  text-align: center;
+  line-height: 1;
+}
+
+#pending-label {
+  display: block;
+  color: #7e7e7e;
+  text-align: center;
+  font-size: small;
+  line-height: 1;
+}

@@ -1,0 +1,102 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-audio-player/paper-audio-player.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+
+<dom-module id="license-editor">
+  <link rel="import" type="css" href="license-editor.css">
+  <template>
+    <paper-material class="license-item">
+      <paper-material elevation="2" class="license-item-header" pending$="{{_isPending(license.releaseState)}}" on-tap="toggleLicenseBody">
+        <div>&#x266E;{{license.coinsPerPlay}} [[license.typeName]]</div>
+        <div>{{_computeLicenseHeaderText(license.releaseState)}}</div>
+        <paper-icon-button mini icon="cloud-upload" hidden$=[[!license.editable]] on-tap="releaseLicense"></paper-icon-button>
+        <paper-icon-button mini icon="done" hidden$=[[license.editable]]></paper-icon-button>
+      </paper-material>
+      <div class="license-item-body" hidden$="[[!expanded]]">
+        <div class="license-item-body-header">
+          <div id="fileSelector" class="audio-input-section normal-margin" hidden$=[[!license.editable]]>
+            <iron-icon class="music-icon" icon="av:queue-music"></iron-icon>
+            <div class="music-file-text">[[selectedAudioText]]</div>
+            <div class="music-file-size">[[selectedAudioSize]]</div>
+          </div>
+          <input hidden id="audioFile" type="file" value="{{selectedAudio}}">
+          <div class="license-item-body-price normal-margin">&#x266E;<input class="price" min=0 type=number disabled="[[!license.editable]]" value="{{license.coinsPerPlay::input}}"></div>
+          <paper-dropdown-menu class="normal-margin" disabled="[[!license.editable]]" label="License type">
+            <paper-listbox selected="{{license.type}}" class="dropdown-content">
+              <paper-item>PPP</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+
+        <paper-material class="form-section" elevation="0">
+          <div class="royalty-area-header">
+            <div class="royalty-header">Royalties</div>
+            <div>
+              <paper-button on-tap="addNewRoyalty" raised elevation="1" hidden$=[[!license.editable]]>Add fixed payment</paper-button>
+              <paper-button on-tap="addNewContributor" raised elevation="1" hidden$=[[!license.editable]]>Add shareholder</paper-button>
+            </div>
+            <!--<paper-input hidden$={{!license.editable}} class="contributor-input" on-keydown="addRoyaltyOnEnter" label="add royalty address"></paper-input>-->
+          </div>
+          <template is="dom-repeat" items="{{license.royalties}}" as="royalty">
+            <div>
+              <paper-material class="royalty-tag contributor-tag">
+                <input placeholder="Name" class="contributor-name" disabled="[[!license.editable]]" on-keyup="updateUserMapping" value="{{royalty.name::input}}">
+                <div class="input-with-units">
+                  <div class="value-units">&#x266E;</div>
+                  <input class="royalty-amount" min=0 type=number value="{{royalty.amount::input}}" disabled="[[!license.editable]]">
+                </div>
+                <input placeholder="enter an address" class="contributor-address" disabled="[[!license.editable]]" value="{{royalty.address::input}}">
+                <paper-icon-button hidden$=[[!license.editable]] class="deleteButton" icon="remove" on-tap="removeRoyalty"></paper-icon-button>
+              </paper-material>
+            </div>
+          </template>
+          <template is="dom-repeat" items="{{license.contributors}}" as="contributor">
+            <div>
+              <paper-material class="contributor-tag">
+                <input placeholder="Name" class="contributor-name" disabled="[[!license.editable]]" on-keyup="updateUserMapping" value="{{contributor.name::input}}">
+                <div class="input-with-units">
+                  <div class="value-units">&#x25D4;</div>
+                  <input class="shares" min=0 type=number disabled="[[!license.editable]]" value="{{contributor.shares::input}}">
+                </div>
+                <input placeholder="enter an address" class="contributor-address" disabled="[[!license.editable]]" value="{{contributor.address::input}}">
+                <paper-icon-button hidden$=[[!license.editable]] class="deleteButton" icon="remove" on-tap="removeContributor"></paper-icon-button>
+              </paper-material>
+            </div>
+          </template>
+          <div hidden$="{{_shouldHideShareholderMessage(license.contributors.*, license.royalties.*)}}">After paying fixed payments, shareholders will share <u>&#x266E;{{_computeRemainingCoinsPerPlay(license.coinsPerPlay, license.royalties.*)}}</u> between them according to their shares entered above</div>
+          <div class="royalty-instructions" hidden$="{{_shouldHideRoyaltyInstructions(license.contributors.*, license.royalties.*)}}">
+            Here you can determine how each payment will be distributed.
+            Fixed payments are paid first after each play event, with the remaining amount distributed to shareholds.
+            Fixed payments are not made when a tip is received.
+          </div>
+        </paper-material>
+        <paper-material class="form-section" elevation="0">
+          <msc-metadata-editor id="metadataEditor" label="License Metadata" metadata="[[license.metadata]]" editable="[[license.editable]]"></msc-metadata-editor>
+        </paper-material>
+
+      </div>
+
+    </paper-material>
+  </template>
+
+  <script src="license-editor.js"></script>
+</dom-module>

@@ -1,0 +1,228 @@
+:host {
+  --msc-primary-color: #4285f4;
+  --msc-secondary-color: white;
+  --msc-secondary-background-color: #2c2c2c;
+  display: block;
+}
+msc-parity-view, msc-works-view, msc-wallet-view {
+  display: none;
+  background-color: var(--msc-secondary-background-color);
+}
+app-drawer {
+    --app-drawer-width:48px;
+}
+:host[selected-page="rel"] msc-player-view,
+:host[selected-page="cbr"] msc-player-view,
+:host[selected-page="myf"] msc-player-view,
+:host[selected-page="myw"] msc-works-view,
+:host[selected-page="uti"] msc-parity-view,
+:host[selected-page="wal"] msc-wallet-view {
+  display: block;
+}
+
+
+body {
+  background-color: #212121;
+}
+
+msc-header {
+  background-color: #212121;
+}
+
+.drawer-list {
+  margin: 5px 10px;
+}
+
+msc-header-layout {
+    background-color: var(--msc-secondary-background-color);
+}
+
+app-drawer {
+    --app-drawer-content-container: {
+        background-color: var(--primary-background-color);
+    }
+}
+
+msc-toolbar {
+  color: #7e7e7e;
+  justify-content: space-between;
+  padding: 0 0;
+}
+
+msc-audio-player {
+  flex-grow: 1;
+  font-size: small;
+}
+
+h3 {
+  padding: 0 16px;
+  color: #7e7e7e;
+  font-weight: lighter;
+  font-variant-caps: all-petite-caps;
+  -webkit-margin-after: 0;
+}
+
+paper-item {
+    --dark-divider-opacity: 0;
+    --paper-item-focused-before: {
+        opacity: 0;
+    };
+    cursor: pointer;
+}
+
+paper-menu {
+    --paper-menu-selected-item: {
+        color: #eee;
+        background-color: var(--msc-secondary-background-color);
+        font-weight: lighter;
+    };
+
+    --paper-menu-focused-item: {
+        color: #eee;
+        background-color: var(--msc-secondary-background-color);
+        font-weight: lighter;
+    };
+
+    --paper-item-focused: {
+        color: #eee;
+        background-color: var(--msc-secondary-background-color);
+        font-weight: lighter;
+    };
+
+    --paper-item-selected: {
+        color: #eee;
+        background-color: var(--msc-secondary-background-color);
+        font-weight: lighter;
+    };
+
+    --paper-menu-focused-item-after: {
+        opacity: 0;
+    }
+}
+
+.drawer-list paper-item {
+  display: block;
+  padding: 0 16px;
+  text-decoration: none;
+  line-height: 25px;
+  color: #aaaaaa;
+  font-weight: lighter;
+}
+
+paper-item {
+  min-height: 25px;
+}
+
+iron-pages {
+  height: 100%
+}
+
+.iron-selected {
+    color: #eee;
+    background-color: #2c2c2c;
+    font-weight: lighter;
+}
+
+.drawer-list a.iron-selected {
+  color: #eee;
+  background-color: #2c2c2c;
+  font-weight: lighter;
+}
+
+paper-progress.audio-progress {
+  --paper-progress-active-color: #2176bd;
+  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  width: 100%;
+}
+
+#player {
+  width: 100%;
+}
+
+.action-button {
+  width: 3em;
+  height: 3em;
+  --paper-icon-button-ink-color: #2176bd;
+}
+
+.play-icon {
+  icon: "av:play-arrow";
+}
+
+.pause-icon {
+  icon: "av:pause";
+}
+
+
+
+paper-toast {
+  position: fixed;
+  right: 2em;
+  left: 2em;
+  text-align: right;
+}
+
+
+#detailButton {
+  width: 2em;
+  height: 2em;
+}
+
+.detailView {
+  position: fixed;
+  top: 64px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 3;
+  padding: 2em;
+  display: none;
+  background-color: black;
+  color: whitesmoke;
+}
+
+.detailView > h1 {
+  font-weight: 300;
+  margin: 0px;
+}
+
+.track-detail-image {
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 1em;
+  left: 1em;
+  width: 25%;
+  height: 25%;
+}
+
+.track-detail-close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  --paper-fab-background: #2176bd;
+}
+
+#miniImage {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.drawer-menu-label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+h3[disabled] {
+  margin: 0;
+  text-transform: uppercase;
+  padding: 0 16px;
+  margin-top: 16px;
+  pointer-events: none;
+}

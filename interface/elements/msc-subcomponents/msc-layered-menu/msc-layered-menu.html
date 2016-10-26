@@ -1,0 +1,54 @@
+<dom-module id="msc-layered-menu">
+  <link rel="import" type="css" href="msc-layered-menu.css">
+  <template>
+    <div id="container">
+      <div id="bottomLayer">
+        <template is="dom-repeat" items="[[locale.layeredMenu]]">
+          <div class="sub-menu-box" sub-menu-box-id$="[[item.header.shortcut]]">
+            <template is="dom-if" if="[[!item.user]]">
+              <h3>[[item.header.name]]</h3>
+            </template>
+            <template is="dom-if" if="[[item.user]]">
+              <h3>[[item.header.name]]</h3>
+            </template>
+
+            <template is="dom-if" if="[[item.dynamic]]">
+              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" selected="rel" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+                <!-- TODO: The catalog service will need to accept a locale id -->
+                <template is="dom-repeat" items="{{browseCategories}}" as="category">
+                  <paper-item sub-menu-name="[[category.id]]">[[category.name]]</paper-item>
+                </template>
+              </paper-menu>
+            </template>
+            <template is="dom-if" if="[[!item.dynamic]]">
+              <paper-menu selectable="paper-item" id="[[item.header.shortcut]]-sub-menu" on-iron-select="bottomMenuSelect" selected="rel" sub-menu-idx="[[item.header.shortcut]]" class="drawer-sub-menu" attr-for-selected="sub-menu-name">
+                <template is="dom-repeat" items="[[item.items]]">
+                  <paper-item sub-menu-name="[[item.shortcut]]">[[item.name]]</paper-item>
+                </template>
+              </paper-menu>
+            </template>
+          </div>
+        </template>
+      </paper-menu>
+
+
+    </div>
+    <div id="topLayer" style="">
+      <paper-menu id="topMenu" on-iron-select="topMenuSelect" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
+        <template is="dom-repeat" items="[[locale.layeredMenu]]">
+          <template is="dom-if" if="[[!item.user]]">
+            <paper-icon-button menu-name$="[[item.header.shortcut]]" icon$="msc-msc-iconset:[[item.header.icon]]"></paper-icon-button>
+          </template>
+          <template is="dom-if" if="[[item.user]]">
+            <paper-icon-button menu-name$="[[item.header.shortcut]]" src$="[[usersImageDir]][[userDetails.external.image]]"></paper-icon-button>
+          </template>
+        </template>
+        <!-- <paper-icon-button menu-name="mpl" icon="msc-msc-iconset:developericon"></paper-icon-button>
+        <paper-icon-button menu-name="wgl" icon="menu"></paper-icon-button>
+        <paper-icon-button menu-name="bbb" icon="menu"></paper-icon-button> -->
+      </paper-menu>
+    </div>
+    </div>
+  </template>
+  <script src="msc-layered-menu.js"></script>
+</dom-module>
