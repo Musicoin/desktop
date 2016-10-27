@@ -48,7 +48,12 @@
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>
     <msc-user-settings-view></msc-user-settings-view>
-    <msc-simple-login-view hidden$="{{loggedIn}}"></msc-simple-login-view>
+    <template is="dom-if" if="[[ui.hibryda]]">
+      <msc-login-view hidden$="{{loggedIn}}"></msc-login-view>
+    </template>
+    <template is="dom-if" if="[[ui.dan]]">
+      <msc-simple-login-view hidden$="{{loggedIn}}"></msc-simple-login-view>
+    </template>
     <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>
     <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
     <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
