@@ -11,10 +11,13 @@
               <paper-input on-blur="onBlur" class="login-text-box" type="password" label="password" on-keydown="catchEnter" always-float-label></paper-input>
             </template>
             <template is="dom-if" if="[[item.autoLogin]]">
-              <paper-button on-tap="noPassEnter"><iron-icon icon="check"></iron-icon>ENTER</paper-button>
+              <paper-button class="no-pass" on-tap="noPassEnter"><iron-icon icon="check"></iron-icon>ENTER</paper-button>
             </template>
           </div>
         </template>
+        <div class="user-item" user-login="newuser">
+          <paper-button class="new-user"  on-tap="addNewUser"><iron-icon icon="add"></iron-icon>new user</paper-button>
+        </div>
       </iron-selector>
     </div>
     {{test1}}:{{test2}}

@@ -1,0 +1,30 @@
+<script>
+
+  Polymer({
+
+    is: 'height-decrease-animation',
+
+    behaviors: [
+      Polymer.NeonAnimationBehavior
+    ],
+
+    configure: function(config) {
+      var node = config.node;
+      var rect = node.getBoundingClientRect();
+      var style = getComputedStyle(node);
+      var height =
+        rect.height -
+        parseInt(style.paddingTop, 10) -
+        parseInt(style.paddingBottom, 10);
+
+      this._effect = new KeyframeEffect(node, [
+        {height: height + 'px'},
+        {height: '0px'}
+      ], this.timingFromConfig(config));
+
+      return this._effect;
+    }
+
+  });
+
+</script>

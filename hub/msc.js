@@ -20,12 +20,6 @@ try {
 } catch (e) {
   settings = require('../config/config.std.js');
 }
-/* express like (better) net server */
-const koa = require('koa')
-const route = require('koa-route')
-const websockify = require('koa-websocket');
-const session = require('koa-session');
-const comm = websockify(koa());
 
 /* here I define backend restricted storage that is not accessible directly from interface */
 var beRestricted = {
@@ -37,7 +31,6 @@ var cloneByValue = function(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-var netSrvSession = session(comm);
 
 var localStorage = global.localStorage;
 var sessionStorage = global.sessionStorage;
@@ -84,6 +77,7 @@ pcsAudio.addObservable('playbackPaymentPercentage', staticData.playback.playback
 TODO: make it possible. */
 observable(mschub,'ui', settings.ui);
 observable(mschub,'lightwallet', settings.lightwallet);
+observable(mschub,'rpcComm', settings.rpcComm);
 observable(mschub,'loginLock',true);
 observable(mschub,'locale',locale[mschub.lang]);
 observable(mschub,'chainReady',false);
@@ -412,19 +406,87 @@ mschub.login = require('../facade/login.js')(mschub);
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub
 
-/* websockets and other comm */
-comm.ws.use(route.all('/', function* (next) {
-  this.websocket.on('message', function(message) {
+if (!settings.lightwallet) {
+  mschub.fnPool('finops', 'updateUserBalance');
+  setInterval(()=>{
+    mschub.fnPool('finops', 'updateUserBalance')});
+  }
 
+if (mschub.rpcComm) {
+  /* express like (better) net server */
+  const koa = require('koa')
+  const route = require('koa-route')
+  const websockify = require('koa-websocket');
+  const session = require('koa-session');
+  const comm = websockify(koa());
+  var netSrvSession = session(comm);
+  var wssend = null;
+  /* websockets and other comm */
+  comm.ws.use(route.all('/', function* (next) {
+    this.websocket.on('message', function(message) {
+      try {
+        message = JSON.parse(message);
+      } catch (e) {
 
-    console.log(message);
-  });
-  this.websocket.send('Hello Client!');
-  yield next;
-}));
+      } finally {
 
-setTimeout(()=>{console.log('init');comm.listen(22222);},3000)
+      }
+      console.log(message);
+      console.log('MSG');
+    });
+    console.log(this.websocket.on);
+    this.websocket.on('connect', function() {
+      console.log('OPEN');
+    });
+    wssend = this;
+    this.websocket.send(JSON.stringify({result:{relmethod:'greetings', data:'Hello Client!', id:null}}));
 
-mschub.fnPool('finops', 'updateUserBalance');
-setInterval(()=>{
-  mschub.fnPool('finops', 'updateUserBalance')});
+    yield next;
+  }));
+
+  comm.ws.use(route.all('/auth', function* (next) {
+    this.websocket.on('message', function(message) {
+      try {
+        message = JSON.parse(message);
+      } catch (e) {
+
+      } finally {
+
+      }
+      console.log(message);
+      console.log('MSG');
+    });
+    console.log(this.websocket.on);
+    this.websocket.on('connect', function() {
+      console.log('OPEN');
+    });
+    wssend = this;
+    this.websocket.send(JSON.stringify({result:{relmethod:'greetings', data:'Hello Client!', id:null}}));
+
+    yield next;
+  }));
+  comm.ws.use(route.all('/public', function* (next) {
+    this.websocket.on('message', function(message) {
+      try {
+        message = JSON.parse(message);
+      } catch (e) {
+
+      } finally {
+
+      }
+      console.log(message);
+      console.log('MSG');
+    });
+    console.log(this.websocket.on);
+    this.websocket.on('connect', function() {
+      console.log('OPEN');
+    });
+    wssend = this;
+    this.websocket.send(JSON.stringify({result:{relmethod:'greetings', data:'Hello Client!', id:null}}));
+
+    yield next;
+  }));
+
+  //setTimeout(()=>{console.log(comm.ws.server.clients);},3000);
+  comm.listen(22222);
+}

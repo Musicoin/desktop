@@ -1,10 +1,9 @@
 setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
-var mscomm;
+var mscomm, mscreg, mscaut;
 
 (function (document) {
   'use strict';
   setTimeout(()=>{
-    console.log(nw.process.mainModule);
   },1500)
   console.log(mscIntf);
   var app = document.querySelector('#app');
@@ -17,10 +16,14 @@ var mscomm;
 
   window.addEventListener('WebComponentsReady', function () {
     /* done this way to not spawn 'new' objects on reconnection attempts. These objects cannot be GCd effectively as dead WS is still WS. So would accumulate. With single instance there is no such problem. */
-      mscomm = estWS.init("localhost",22222,'',app);
+    if (mscIntf.rpcComm) {
+      mscomm = estWS.init("localhost",22222,'',app, 'restricted');
+      mscomm = estWS.init("localhost",22222,'/public',app, 'public');
+      mscreg = estWS.init("localhost",22222,'/auth',app, 'authentication');
       setTimeout(function () {
         mscomm.ws.send('present');
-      }, 5400);
+      }, 1400);
+    }
 
     if (mscIntf.ui.dan) {
       [].forEach.call(document.querySelectorAll('.drawer-menu'), function(el) {

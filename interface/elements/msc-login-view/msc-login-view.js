@@ -24,6 +24,9 @@ Polymer({
       test1: String,
       test2: String
     },
+    addNewUser: function(ev) {
+      this.fire('iron-signal', {name:'page-open',data:'nwu'});
+    },
     noPassEnter: function(ev) {
       result = mscIntf.fnPool('login','verifyLogin',null,{login:this.$.list.selectedItem.userLogin});
       if (result.error) {

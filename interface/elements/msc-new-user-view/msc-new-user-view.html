@@ -1,0 +1,35 @@
+<dom-module id="msc-new-user-view">
+  <link rel="import" type="css" href="msc-new-user-view.css">
+  <template>
+
+
+    <msc-custom-paper-steps class="first">
+      <msc-custom-paper-step label="Your credentials" continue-label="Proceed">
+        <h2>Please provide your login and password</h2>
+        <form is="iron-form" method="post" content-type="application/json" action="http://posttestserver.com/post.php?dir=paper-steps&amp;dump&amp;sleep=1">
+          <paper-input name="domain" label="Domain" auto-validate required pattern="^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$"></paper-input>
+          <paper-input name="store_name" label="Store Name" auto-validate required></paper-input>
+        </form>
+      </msc-custom-paper-step>
+      <msc-custom-paper-step label="Private wallet" continue-label="Proceed" optional editable>
+        <h2>Private wallet</h2>
+        <form is="iron-form" method="post" action="http://posttestserver.com/post.php?dir=paper-steps&amp;dump&amp;sleep=1">
+          <paper-input name="store_name" label="Store Name" auto-validate required></paper-input>
+        </form>
+      </msc-custom-paper-step>
+      <msc-custom-paper-step label="Details" continue-label="Proceed">
+        <h2>Tell more about yourself</h2>
+        <form is="iron-form" method="post" content-type="application/json" action="http://posttestserver.com/post.php?dir=paper-steps&amp;dump&amp;sleep=1">
+        </form>
+      </msc-custom-paper-step>
+      <msc-custom-paper-step label="Finalize" continue-label="Create account">
+        <h2>Please check information below</h2>
+        <form is="iron-form" method="post" content-type="application/json" action="http://posttestserver.com/post.php?dir=paper-steps&amp;dump&amp;sleep=1">
+        </form>
+      </msc-custom-paper-step>
+    </msc-custom-paper-steps>
+
+    <iron-signals on-iron-signal-page-open="_page_change"></iron-signals>
+  </template>
+  <script src="msc-new-user-view.js"></script>
+</dom-module>

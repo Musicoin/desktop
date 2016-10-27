@@ -6,4 +6,5 @@ module.exports = {
     other: false,
   },
   lightwallet: false,
+  rpcComm: false,
 }

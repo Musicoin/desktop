@@ -1,0 +1,140 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<dom-module id="msc-custom-paper-step">
+  <template>
+    <style>
+      :root {
+      }
+      :host {
+        var(--paper-font-common-base);
+        position: relative;
+      }
+
+      :host .h-label {
+        margin: 0 8px;
+        white-space: nowrap;
+      }
+
+      :host .label {
+        margin-left: 12px;
+      }
+
+      :host .line {
+        margin-right: 8px;
+        width: 100%;
+        height: 1px;
+        background-color: var(--paper-grey-300);
+        @apply(--trailing-line);
+      }
+
+      :host .stepper-circle {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+        @apply(--stepper-circle);
+      }
+
+      :host(:not(.iron-selected)) .stepper-circle {
+        background-color: var(--paper-grey-500);
+        @apply(--stepper-circle-selected);
+      }
+
+      :host([completed]) .stepper-circle iron-icon {
+        width: 16px;
+        @apply(--stepper-circle-icon);
+      }
+
+      :host .label .optional-text,
+      :host .h-label .optional-text {
+        color: var(--paper-grey-600);
+        position: absolute;
+        font-weight: normal;
+        margin-top: 17px;
+        font-size: 12px;
+      }
+
+      :host(:not([selectable])) .label,
+      :host(:not([selectable])) .h-label {
+        color: var(--msc-custom-paper-step-disabled-color, --disabled-text-color);
+      }
+
+      :host .h-label .optional-text {
+        margin-top: 17px;
+      }
+
+      :host(.iron-selected) .label,
+      :host(.iron-selected) .h-label {
+        font-weight: 500;
+      }
+
+      :host #actions {
+        margin-top: 15px;
+        display: flex;
+      }
+
+      :host #actions paper-button {
+        margin: 0 14px 0 0;
+      }
+
+      :host #actions #skip {
+        margin-left: auto;
+      }
+
+      button {
+        -webkit-appearance: none;
+        border: 0;
+        padding: 0;
+        background: transparent;
+      }
+
+      button paper-button {
+        @apply(--paper-font-common-base);
+        font-size: 14px;
+      }
+
+    </style>
+    <div class="hover-target"><paper-ripple></paper-ripple></div>
+
+    <div class$="stepper-circle {{_cssClass}}">
+      <span hidden$="{{!completed}}"><iron-icon icon="{{_image}}"></iron-icon></span>
+      <span hidden$="{{completed}}">{{step}}</span>
+    </div>
+
+    <span class$="h-label {{_cssClass}}">
+      <span class="optional-text" hidden$="[[!optional]]">Optional</span>
+      [[label]]
+    </span>
+
+    <div class="line"></div>
+
+    <span hidden$="[[!label]]" class$="label {{_cssClass}}">
+      <span class="optional-text" hidden$="[[!optional]]">Optional</span>
+      [[label]]
+    </span>
+
+    <div id="step_content" class$="{{_cssClass}}" >
+      <div hidden$="{{!_selected}}">
+        <content></content>
+
+        <div id="actions" hidden$={{actionsDisabled}}>
+          <paper-button id="continue" class="actions" raised>{{continueLabel}}</paper-button>
+          <paper-button id="reset" class="actions" raised>{{resetLabel}}</paper-button>
+          <paper-button id="skip" class="actions" raised
+            hidden$="{{!optional}}">{{skipLabel}}</paper-button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script src="msc-custom-paper-step.js"></script>
+</dom-module>

@@ -56,13 +56,17 @@ iron-icon {
   opacity: 1;
 }
 paper-input,
-paper-button {
+paper-button.no-pass {
   transform: translate3d(100vw,0,0);
   opacity: 0;
   transition: transform 50ms ease, opacity 50ms ease;
 }
+paper-button.new-user {
+  margin: 0;
+  padding-left: 0;
+}
 .user-item.iron-selected paper-input,
-.user-item.iron-selected paper-button {
+.user-item.iron-selected paper-button.no-pass {
   transform: translate3d(0,0,0);
   opacity: 1;
   transition: transform 250ms ease, opacity 1000ms ease;

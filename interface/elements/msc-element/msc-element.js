@@ -20,8 +20,6 @@
         });
       },
       attached: function(){
-        console.log(mscIntf);
-
       },
       properties: {
         selectedPage: {
@@ -65,7 +63,6 @@
       },
       _langChanged:function(newValue) {
         this.locale = mscIntf.localeStrings
-        console.log(newValue);
       },
       _itemsChanged: function(newGroups) {
         // the browse view is generic, so it has its own object model

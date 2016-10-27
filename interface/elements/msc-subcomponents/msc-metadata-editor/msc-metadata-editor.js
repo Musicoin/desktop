@@ -17,7 +17,7 @@ Polymer({
     }
   },
   ready: function () {
-    console.log("Metadata editable: " + this.editable);
+    //console.log("Metadata editable: " + this.editable);
   },
 
   getMetadata: function() {
