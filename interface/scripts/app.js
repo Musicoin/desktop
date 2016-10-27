@@ -22,6 +22,13 @@ var mscomm;
         mscomm.ws.send('present');
       }, 5400);
 
+    if (mscIntf.ui.dan) {
+      [].forEach.call(document.querySelectorAll('.drawer-menu'), function(el) {
+        el.addEventListener('iron-select',function(ev){
+          document.querySelector('#app').setAttribute('selected-page',ev.target.selected);
+        },true);
+      });
+    }
   });
 
 })(document);
