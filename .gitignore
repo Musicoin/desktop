@@ -4,7 +4,7 @@ npm-debug.log
 runwatched.sh
 watcher.sh
 switchworkspace.sh
-node_modules/
+node_modules/*
 !node_modules/sha3/
 !node_modules/secp256k1/
 .atomignore

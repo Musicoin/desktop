@@ -1,0 +1,8 @@
+{
+  "description": "A Node.js C++ extension for SHA-3 (Keccak) dummy pointing to JS only version",
+  "main": "./index.js",
+  "license": "MIT",
+  "name": "sha3",
+  "readme": "ERROR: No README data found!",
+  "version": "1.2.0"
+}
