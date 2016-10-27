@@ -40,7 +40,7 @@ var observables = [
   {subproperties:'financialData',prop:'parityData',initVal:{
     account:'aaa8888aaa888',accounts:'notsurewhatgoeshere',balance:100000,mining:1000,coinbase:9999,syncing:'???',status:'Idle',customBalance:'232313',transaction:'aa1188ddd',receipt:'99kk11ss'
   }},
-  {subproperties:'financialData',prop:'userBalance',initVal:0},
+  // {subproperties:'financialData',prop:'userBalance',initVal:0},
   {subproperties:'financialData',prop:'pendingPayments',initVal:0},
   {subproperties:'financialData',prop:'amountToPay',initVal:0},
   {prop:'groups',

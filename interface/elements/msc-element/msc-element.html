@@ -46,7 +46,7 @@
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>
     <msc-user-settings-view></msc-user-settings-view>
-    <msc-login-view></msc-login-view>
+    <msc-simple-login-view hidden$="{{loggedIn}}"></msc-simple-login-view>
     <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>
     <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
     <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>

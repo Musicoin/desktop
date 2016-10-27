@@ -22,7 +22,6 @@
       "eth-lightwallet-nwjs": "^2.5.2",
       "hooked-web3-provider": "^1.0.0",
       "bluebird": "^3.4.0",
-      "bignumber": "^1.1.0",
       "bignumber.js": "^2.4.0",
       "crypto": "0.0.3",
       "debug": "~2.2.0",

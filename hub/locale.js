@@ -91,6 +91,11 @@ var locale = {
         workType: "Work Type",
         licenses: "Licenses"
       },
+      validation: {
+        artist: "You must enter the artist's name",
+        title: "You must enter a title",
+        image: "You must select an image",
+      },
       actions: {
         releaseWork: "Release Work"
       }

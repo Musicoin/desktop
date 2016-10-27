@@ -3,7 +3,7 @@ Polymer({
   is: 'msc-metadata-editor',
   properties: {
     metadata: {
-      type: Object,
+      type: Array,
     },
     metadataUrl: {
       type: String,
@@ -18,6 +18,10 @@ Polymer({
   },
   ready: function () {
     console.log("Metadata editable: " + this.editable);
+  },
+
+  getMetadata: function() {
+    return this.metadata;
   },
 
   _metadataUrlChanged: function(newUrl) {

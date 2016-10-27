@@ -41,11 +41,8 @@ Polymer({
 
   releaseLicense: function(e) {
     e.stopPropagation();
-    this.fire('release-license', {
-      license: this.license,
-      audioFile: this.selectedAudio,
-      editor: this
-    })
+    this.license.audioFile = this.selectedAudio;
+    this.fire('release-license', this.license);
   },
 
   _computeRemainingCoinsPerPlay: function(coinsPerPlay, change) {

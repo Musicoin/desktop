@@ -63,15 +63,16 @@ Polymer({
       title: "",
       img: "",
       metadata: [],
+      metadata_url_https: "",
       licenses: []
     }
   },
 
-  releaseWork: function (releaseEvent) {
-    // TODO: Still working on backend for this
+  releaseWork: function (work) {
+    mscIntf.catalog.releaseWork(work);
   },
 
-  releaseLicense: function (releaseEvent) {
-    // TODO: Still working on backend for this
+  releaseLicense: function (license) {
+    mscIntf.catalog.releaseLicense(this.selectedWork, license);
   },
 })

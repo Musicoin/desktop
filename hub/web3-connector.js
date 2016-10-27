@@ -41,8 +41,8 @@ Web3Connector.prototype.getDefaultAccount = function () {
   return this.web3.eth.defaultAccount || this.web3.eth.accounts[0];
 };
 
-Web3Connector.prototype.getUserBalance = function () {
-  return this.web3.eth.getBalance(this.selectedAccount);
+Web3Connector.prototype.getUserBalanceInMusicoin = function () {
+  return this.toMusicCoinUnits(this.web3.eth.getBalance(this.selectedAccount));
 };
 
 Web3Connector.prototype.getWeiPerPlay = function (address) {

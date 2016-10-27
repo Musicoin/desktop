@@ -58,6 +58,10 @@ pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
 pcs.addObservable('transactionHistory', []);
 
+// TODO: Added this temporarily. Removing lightwallet
+pcs.addObservable('loggedIn', false);
+pcs.addObservable('loginError', false);
+
 // TODO: Seems like it would be better to have a more modular structure
 mschub.audioHub = {};
 var pcsAudio = new PropertyChangeSupport(mschub.audioHub);
@@ -85,6 +89,11 @@ var chain = require('./web3things.js');
 var Web3Connector = require('./web3-connector.js');
 var web3Connector = new Web3Connector();
 
+var pcsFinData = new PropertyChangeSupport(mschub.financialData);
+pcsFinData.addObservable('userBalance', 0);
+
+console.log("selectedAccount: " + web3Connector.getSelectedAccount())
+pcsFinData.addObservable('selectedAccount', web3Connector.getSelectedAccount());
 
 var MusicoinService = require("./musicoin-connector.js");
 var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
@@ -200,8 +209,16 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       updateLoginPwdHash: function(elem, params, fns){
 
       },
-      web3TestLogin: function(elem, params, fns) {
-        web3Connector.storeCredentials(params.pwd);
+      loginToDefault: function(elem, params, fns) {
+        mschub.loginError = null;
+        web3Connector.storeCredentials(params.pwd)
+          .then(function() {
+            mschub.loggedIn = true;
+            mschub.loginLock = false;
+          })
+          .catch(function(e) {
+            mschub.loginError = "Login failed";
+          });
       }
     },
     audio:{
@@ -253,7 +270,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         var work = params.work;
         var workReleaseRequest = {
           type: work.type,
-          title: work.track,
+          title: work.title,
           artist: work.artist,
           imageUrl: "",
           metadataUrl: ""
@@ -278,6 +295,41 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           })
           .catch(function(err) {
             work.releaseStatus = "Failed: " + err;
+          });
+      },
+      releaseLicense: function(elem, params, fns) {
+        var license = params.license;
+        var work = params.work;
+        var licenseReleaseRequest = {
+          workAddress: work.contract_address,
+          coinsPerPlay: license.coinsPerPlay,
+          resourceUrl: "",
+          metadataUrl: "",
+          royalties: license.royalties.map(function (r) {return r.address}),
+          royaltyAmounts: license.royalties.map(function (r) {return r.amount}),
+          contributors: license.contributors.map(function (r) {return r.address}),
+          contributorShares: license.contributors.map(function (r) {return r.shares}),
+        };
+
+        license.releaseStatus = "Publishing audio...";
+        ipfsConnector.add(license.audioFile)
+          .then(function (hash) {
+            licenseReleaseRequest.resourceUrl = "ipfs://" + hash;
+            license.releaseStatus = "Publishing metadata...";
+            return ipfsConnector.addString(JSON.stringify(license.metadata));
+          })
+          .then(function (hash) {
+            licenseReleaseRequest.metadataUrl = "ipfs://" + hash;
+            license.releaseStatus = "Releasing license...";
+            return web3Connector.releaseLicense(licenseReleaseRequest);
+          })
+          .then(function (contractAddress) {
+            license.releaseStatus = "Success!";
+            license.contract_id = contractAddress;  // TODO: be consistent with work
+            return contractAddress;
+          })
+          .catch(function(err) {
+            license.releaseStatus = "Failed: " + err;
           });
       }
     },
@@ -313,6 +365,9 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           .then(function (history) {
             mschub.transactionHistory = history;
           });
+      },
+      updateUserBalance: function(elem, params, fns) {
+        mschub.financialData.userBalance = web3Connector.getUserBalanceInMusicoin();
       }
     }
   };
@@ -340,6 +395,7 @@ mschub.fnPool('catalog','loadBrowseCategories');
 mschub.audio = require('../facade/audio.js')(mschub);
 mschub.payments = require('../facade/payments.js')(mschub);
 mschub.catalog = require('../facade/catalog.js')(mschub);
+mschub.login = require('../facade/login.js')(mschub);
 
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub
@@ -356,3 +412,7 @@ comm.ws.use(route.all('/', function* (next) {
 }));
 
 setTimeout(()=>{console.log('init');comm.listen(22222);},3000)
+
+mschub.fnPool('finops', 'updateUserBalance');
+setInterval(()=>{
+  mschub.fnPool('finops', 'updateUserBalance')});

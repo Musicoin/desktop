@@ -1,0 +1,13 @@
+<dom-module id="msc-simple-login-view">
+  <link rel="import" type="css" href="msc-simple-login-view.css">
+  <template>
+    <div class="login-elements">
+      <div class="login-label">Musicoin</div>
+      <paper-input id=loginPwd class="login-text-box" type="password" label="password" on-keydown="checkForEnter"></paper-input>
+      {{selectedAccount}}
+      <br><br>
+      <paper-button id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>
+    </div>
+  </template>
+  <script src="msc-simple-login-view.js"></script>
+</dom-module>

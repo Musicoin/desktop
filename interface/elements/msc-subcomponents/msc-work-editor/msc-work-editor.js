@@ -47,9 +47,21 @@ Polymer({
   },
 
   releaseWork: function() {
-    this.fire('release-work', {
-      editor: this,
-      work: this.getDataObject()});
+    this.work.metadata = this.$.metadataEditor.getMetadata();
+    var err = this.checkForErrors(this.work)
+    if (err) {
+      alert(err);
+      return;
+    }
+    this.releasePending = false;
+    this.fire('release-work', this.work);
+  },
+
+  checkForErrors: function(w) {
+    if (!w.title) return this.locale.workEditor.validation.title;
+    if (!w.imgFile) return this.locale.workEditor.validation.image;
+    if (!w.artist) return this.locale.workEditor.validation.artist;
+    return null;
   },
 
   handleBackClick: function () {
@@ -88,7 +100,8 @@ Polymer({
       releaseState: 0,
       contributors: [],
       royalties: [],
-      metadata: []
+      metadata: [],
+      metadata_url_https: ""
     }
   }
 });

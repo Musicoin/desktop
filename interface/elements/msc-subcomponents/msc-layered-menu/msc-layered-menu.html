@@ -3,7 +3,7 @@
   <template>
     <div id="container">
       <div id="bottomLayer">
-        <!--<paper-menu id="bottomMenu">-->
+        <paper-menu id="bottomMenu">
           <template is="dom-repeat" items="[[locale.layeredMenu]]">
             <div class="sub-menu-box" sub-menu-box-id$="[[item.header.shortcut]]">
               <template is="dom-if" if="[[!item.user]]">
@@ -34,7 +34,7 @@
               </template>
             </div>
           </template>
-        <!--</paper-menu>-->
+        </paper-menu>
       </div>
 
     <div id="topLayer" style="">

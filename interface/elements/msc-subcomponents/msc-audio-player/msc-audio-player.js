@@ -67,8 +67,6 @@ Polymer({
       this.audio.playNext();
     },
     sendTip: function() {
-      var output = prompt("Enter pwd");
-      mscIntf.fnPool('login', 'web3TestLogin', null, {pwd: output});
       if (this.currentPlay && this.currentPlay.contract_id) {
         this.payments.sendTip(this.currentPlay.contract_id, 1);
       }

@@ -5,6 +5,12 @@ module.exports = function(rpcProvider) {
     },
     loadMyWorks: function() {
       return rpcProvider.fnPool('catalog', 'loadMyWorks', null, {});
+    },
+    releaseWork: function(work) {
+      return rpcProvider.fnPool('publish', 'releaseWork', null, {work:work});
+    },
+    releaseLicense: function(work, license) {
+      return rpcProvider.fnPool('publish', 'releaseLicense', null, {work:work, license:license});
     }
   }
 };

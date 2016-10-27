@@ -6,6 +6,7 @@
         mscIntf.loginLock = {register:this,prop:'loginLock'}
         mscIntf.attach(this)
           .to('catalogBrowseItems')
+          .to('loggedIn')
           .to('browseCategories', function(oldValue, newValue) {
             this.browseCategories = newValue;
             if (this.selectedPage == "not-set" && this.browseCategories && this.browseCategories.length > 0) {
@@ -40,6 +41,7 @@
         browseCategories: Array,
         browseViewItems: Array,
         locale: Object,
+        loggedIn: Boolean
       },
       _pageChanged:function(newValue) {
         if (this.isBrowsePage(newValue)) {

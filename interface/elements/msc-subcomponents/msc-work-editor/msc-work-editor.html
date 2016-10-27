@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <msc-metadata-editor id="metadataEditor" label="Work Metadata" metadata-url="[[work.metadata_url_https]]"  editable="[[_isWorkEditable(work.contract_address)]]"></msc-metadata-editor>
         <br>
         <div class="status-bar" pending$="[[releasePending]]">
-          <div class="status-message">[[status]]</div>
+          <div class="status-message">[[work.releaseStatus]]</div>
           <paper-button hidden$="[[!_isWorkEditable(work.contract_address)]]" class="release-button" raised on-tap="releaseWork">
             <iron-icon icon="cloud-upload"></iron-icon>
             [[locale.workEditor.actions.releaseWork]]
