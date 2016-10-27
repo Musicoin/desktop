@@ -9,3 +9,4 @@ node_modules/*
 !node_modules/secp256k1/
 .atomignore
 hub/ether.settings.js
+config/config.ext.js

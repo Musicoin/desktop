@@ -4,6 +4,7 @@
       ready:function(){
         mscIntf.locale = {register:this,prop:'locale'}
         mscIntf.loginLock = {register:this,prop:'loginLock'}
+        mscIntf.ui = {register:this,prop:'ui'}
         mscIntf.attach(this)
           .to('catalogBrowseItems')
           .to('loggedIn')
@@ -17,6 +18,10 @@
         this.$.browse.addEventListener('selected', function(e) {
           mscIntf.audio.playAll(e.detail);
         });
+      },
+      attached: function(){
+        console.log(mscIntf);
+
       },
       properties: {
         selectedPage: {
@@ -41,7 +46,8 @@
         browseCategories: Array,
         browseViewItems: Array,
         locale: Object,
-        loggedIn: Boolean
+        loggedIn: Boolean,
+        ui: Object,
       },
       _pageChanged:function(newValue) {
         if (this.isBrowsePage(newValue)) {

@@ -7,28 +7,33 @@
     <msc-connection-watch></msc-connection-watch>
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
-      <app-drawer>
-        <!--<app-user-badge></app-user-badge>-->
-        <!-- <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
-					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.categories]]</h3>
-          <template is="dom-repeat" items="{{browseCategories}}" as="category" style="position:relative"> -->
-            <!-- TODO: The catalog service will need to accept a locale id -->
-            <!-- <paper-item menu-name="[[category.id]]">[[category.name]]</paper-item>
-          </template>
-					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.playlist]]</h3>
-          <paper-item menu-name="myf">[[locale.navMenu.items.myFavorites]]</paper-item>
-					<paper-item menu-name="mpl">[[locale.navMenu.items.myPlaylists]]</paper-item>
-					<paper-item menu-name="col">[[locale.navMenu.items.collection]]</paper-item>
-					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.musician]]</h3>
-					<paper-item menu-name="myw">[[locale.navMenu.items.myWorks]]</paper-item>
-          <paper-item menu-name="myw2">[[locale.navMenu.items.myWorks]]2</paper-item>
-					<paper-item menu-name="edi">[[locale.navMenu.items.editor]]</paper-item>
-					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.developer]]</h3>
-					<paper-item menu-name="uti">[[locale.navMenu.items.utilities]]</paper-item> -->
-				<!--</paper-menu>-->
-        <msc-layered-menu></msc-layered-menu>
-      </app-drawer>
-
+        <template is="dom-if" if="[[ui.dan]]">
+          <app-drawer dan-ui>
+            <app-user-badge></app-user-badge>
+            <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
+    					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.categories]]</h3>
+              <template is="dom-repeat" items="{{browseCategories}}" as="category" style="position:relative">
+                <!-- TODO: The catalog service will need to accept a locale id -->
+                <paper-item menu-name="[[category.id]]">[[category.name]]</paper-item>
+              </template>
+    					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.playlist]]</h3>
+              <paper-item menu-name="myf">[[locale.navMenu.items.myFavorites]]</paper-item>
+    					<paper-item menu-name="mpl">[[locale.navMenu.items.myPlaylists]]</paper-item>
+    					<paper-item menu-name="col">[[locale.navMenu.items.collection]]</paper-item>
+    					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.musician]]</h3>
+    					<paper-item menu-name="myw">[[locale.navMenu.items.myWorks]]</paper-item>
+              <paper-item menu-name="myw2">[[locale.navMenu.items.myWorks]]2</paper-item>
+    					<paper-item menu-name="edi">[[locale.navMenu.items.editor]]</paper-item>
+    					<h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.developer]]</h3>
+    					<paper-item menu-name="uti">[[locale.navMenu.items.utilities]]</paper-item>
+    				</paper-menu>
+          </app-drawer>
+        </template>
+        <template is="dom-if" if="[[ui.hibryda]]">
+          <app-drawer hibryda-ui>
+            <msc-layered-menu></msc-layered-menu>
+          </app-drawer>
+        </template>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
         <app-header shadow fixed condenses reveals effects="waterfall">

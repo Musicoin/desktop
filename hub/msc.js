@@ -1,3 +1,4 @@
+
 /* static data is a set of template data that never changes */
 const staticData = require('./static-data.js');
 /* locale is a set of strings to be fed to app depending on language chosen */
@@ -13,7 +14,12 @@ const crypto = require('crypto');
 const fs = require('fs');
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 const lStorage = require('node-localstorage');
-
+var settings;
+try {
+  settings = require('../config/config.ext.js');
+} catch (e) {
+  settings = require('../config/config.std.js');
+}
 /* express like (better) net server */
 const koa = require('koa')
 const route = require('koa-route')
@@ -47,12 +53,16 @@ var mschub = {
 
   },
 }
+
+
 /* here we init observables defined in observables-defs.js */
 var PropertyChangeSupport = require('./pcs.js');
 var pcs = new PropertyChangeSupport(mschub);
 initObservables(mschub);
 
 // TODO: Probably pull these into initObservables
+
+
 pcs.addObservable('currentAudioUrl', '');
 pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
@@ -72,6 +82,8 @@ pcsAudio.addObservable('playbackPaymentPercentage', staticData.playback.playback
 
 /* as it's not possible to define observables with initObservables having initial values depending on objects in this module scope we must define them separately.
 TODO: make it possible. */
+observable(mschub,'ui', settings.ui);
+observable(mschub,'lightwallet', settings.lightwallet);
 observable(mschub,'loginLock',true);
 observable(mschub,'locale',locale[mschub.lang]);
 observable(mschub,'chainReady',false);

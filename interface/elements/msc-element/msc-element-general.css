@@ -9,8 +9,11 @@ msc-parity-view, msc-works-view, msc-wallet-view {
   display: none;
   background-color: var(--msc-secondary-background-color);
 }
-app-drawer {
+app-drawer[hibryda-ui] {
     --app-drawer-width:48px;
+}
+app-drawer[dan-ui] {
+    --app-drawer-width:256px;
 }
 :host[selected-page="rel"] msc-player-view,
 :host[selected-page="cbr"] msc-player-view,
