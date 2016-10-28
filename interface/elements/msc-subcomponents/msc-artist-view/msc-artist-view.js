@@ -66,7 +66,15 @@ Polymer({
   },
   loadDummyData: function() {
     // the browse view is generic, so it has its own object model
+    if (!this.selectedArtist) return;
+
+    var selected  = this.selectedArtist.address;
     var toViewItem = function(serverItem) {
+
+      // TODO: Hack!  Just working around a dummy API
+      if (serverItem.work.owner_address != selected)
+        return null;
+
       return {
         img: serverItem.work.image_url_https,
         line1: serverItem.song_name,
@@ -78,7 +86,7 @@ Polymer({
     var toViewGroup = function(serverGroup) {
       return {
         name: serverGroup.title,
-        items: serverGroup.result.map(toViewItem)
+        items: serverGroup.result.map(toViewItem).filter(function(v) { return v != null})
       }
     };
 

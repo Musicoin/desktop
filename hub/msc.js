@@ -289,6 +289,12 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       loadArtist: function(elem, params, fns) {
         musicoinService.loadArtist(params.artist_address)
           .then(function(result) {
+            // TODO: HACK!  Allows
+            if (mschub.audioHub.currentPlay) {
+              result.address = mschub.audioHub.currentPlay.work.owner_address;
+              result.name = mschub.audioHub.currentPlay.artist_name;
+              result.profile_pic = mschub.audioHub.currentPlay.work.image_url_https;
+            }
             mschub.selectedArtist = result;
           });
         return {result: "pending"};
