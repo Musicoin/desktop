@@ -1,4 +1,3 @@
-setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
 var mscomm, mscreg, mscaut;
 
 (function (document) {
@@ -23,6 +22,10 @@ var mscomm, mscreg, mscaut;
       setTimeout(function () {
         mscomm.ws.send('present');
       }, 1400);
+    }
+
+    if (mscIntf.ui.hibryda) {
+      setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
     }
 
     if (mscIntf.ui.dan) {
