@@ -7,10 +7,12 @@ module.exports = function(rpcProvider) {
       return rpcProvider.fnPool('catalog', 'loadMyWorks', null, {});
     },
     releaseWork: function(work) {
-      return rpcProvider.fnPool('publish', 'releaseWork', null, {work:work});
+      var tx = rpcProvider.fnPool('publish', 'releaseWork', null, {work:work});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     },
-    releaseLicense: function(work, license) {
-      return rpcProvider.fnPool('publish', 'releaseLicense', null, {work:work, license:license});
+    releaseLicense: function(license) {
+      var tx = rpcProvider.fnPool('publish', 'releaseLicense', null, {license:license});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     }
   }
 };

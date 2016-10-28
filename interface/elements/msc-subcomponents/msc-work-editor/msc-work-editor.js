@@ -37,6 +37,25 @@ Polymer({
     }.bind(this);
   },
 
+  _computeIsPending: function() {
+    if (!this.work) return false;
+
+    if (this.work.contract_address) {
+      return false;
+    }
+    return this.work.releaseState == 1;
+  },
+
+  _computeReleaseMessage: function() {
+    if (!this.work) return "";
+
+    if (this.work.contract_address) {
+      return "";
+    }
+    var values = ["Unreleased", "Pending...", "Failed!"];
+    return values[this.work.releaseState];
+  },
+
   _shouldHideInstructions: function() {
     return this.work && this.work.licenses && this.work.licenses.length > 0;
   },
@@ -53,8 +72,18 @@ Polymer({
       alert(err);
       return;
     }
-    this.releasePending = false;
-    this.fire('release-work', this.work);
+
+    this.set("work.releaseState", 1);
+    mscIntf.catalog.releaseWork(this.work)
+      .bind(this)
+      .then(function(result) {
+        this.set("work.contract_address", result);
+        this.set("work.releaseState", 3);
+      })
+      .catch(function(err) {
+        this.set("work.releaseState", 2);
+        console.log(err);
+      });
   },
 
   checkForErrors: function(w) {
@@ -70,24 +99,6 @@ Polymer({
 
   handleAddLicense: function (input) {
     this.push('work.licenses', this.createNewLicense());
-  },
-
-  onReleasePending: function() {
-    this.status = "Pending...";
-    this.releasePending = true;
-  },
-
-  onReleaseSuccess: function(address) {
-    this.status = "Success!";
-    this.releasePending = false;
-    this.set("work.address", address);
-    this.editable = false;
-  },
-
-  onReleaseFailure: function(err) {
-    this.releasePending = false;
-    this.status = "Failed!";
-    console.log("Filed to release work: " + err);
   },
 
   createNewLicense: function() {

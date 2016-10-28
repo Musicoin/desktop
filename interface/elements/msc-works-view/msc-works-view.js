@@ -32,20 +32,8 @@ Polymer({
     }.bind(this));
 
     this.$.workEditor.addEventListener('back-clicked', function (e) {
-      if (this.worksDataIsDirty) {
-        console.log("Forcing MyWorks to refresh because it's dirty!");
-        mscIntf.catalog.loadMyWorks();
-      }
+      mscIntf.catalog.loadMyWorks(); // force refresh
       mscIntf.selectedWork = null;
-    }.bind(this));
-
-    this.$.workEditor.addEventListener('release-work', function (e) {
-      this.releaseWork(e.detail);
-    }.bind(this));
-
-    // this event bubbles up from all child license editors.
-    this.$.workEditor.addEventListener('release-license', function (e) {
-      this.releaseLicense(e.detail);
     }.bind(this));
   },
 
@@ -64,15 +52,8 @@ Polymer({
       img: "",
       metadata: [],
       metadata_url_https: "",
-      licenses: []
+      licenses: [],
+      releaseState: 0
     }
-  },
-
-  releaseWork: function (work) {
-    mscIntf.catalog.releaseWork(work);
-  },
-
-  releaseLicense: function (license) {
-    mscIntf.catalog.releaseLicense(this.selectedWork, license);
   },
 })

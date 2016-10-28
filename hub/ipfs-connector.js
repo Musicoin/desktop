@@ -1,6 +1,7 @@
 var request = require("request");
 var fs = require("fs");
 var tmp = require("tmp");
+var Promise = require("bluebird");
 
 function IPFSConnector() {
   this.ipfsEndpoint = "http://localhost:8080/ipfs/";

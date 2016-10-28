@@ -40,8 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="main-section">
         <msc-metadata-editor id="metadataEditor" label="Work Metadata" metadata-url="[[work.metadata_url_https]]"  editable="[[_isWorkEditable(work.contract_address)]]"></msc-metadata-editor>
         <br>
-        <div class="status-bar" pending$="[[releasePending]]">
-          <div class="status-message">[[work.releaseStatus]]</div>
+        <div class="status-bar" pending$="[[_computeIsPending(work.releaseState)]]">
+          <div class="status-message">[[_computeReleaseMessage(work.releaseState)]]</div>
           <paper-button hidden$="[[!_isWorkEditable(work.contract_address)]]" class="release-button" raised on-tap="releaseWork">
             <iron-icon icon="cloud-upload"></iron-icon>
             [[locale.workEditor.actions.releaseWork]]
@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="add" on-tap="handleAddLicense"></paper-icon-button>
           </div>
           <template is="dom-repeat" items="{{work.licenses}}" as="license">
-            <msc-license-editor license="{{license}}" work="{{work}}"></msc-license-editor>
+            <msc-license-editor license="{{license}}" work-address="{{work.contract_address}}" ></msc-license-editor>
           </template>
           <div class="instructions" hidden$="{{_shouldHideInstructions(work.licenses.*)}}">
             [[locale.workEditor.instructions.addNewLicense]]

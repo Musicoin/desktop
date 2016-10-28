@@ -4,7 +4,9 @@
 <dom-module id="msc-element">
   <link rel="import" type="css" href="msc-element-general.css">
   <template>
-    <msc-connection-watch></msc-connection-watch>
+    <template is="dom-if" if="[[ui.hibryda]]">
+      <msc-connection-watch></msc-connection-watch>
+    </template>
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
         <template is="dom-if" if="[[ui.dan]]">
@@ -48,10 +50,10 @@
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>
     <msc-user-settings-view></msc-user-settings-view>
-    <template is="dom-if" if="[[ui.hibryda]]">
-      <msc-login-view hidden$="{{loggedIn}}"></msc-login-view>
+    <template is="dom-if" if="[[lightwallet]]">
+      <msc-login-view></msc-login-view>
     </template>
-    <template is="dom-if" if="[[ui.dan]]">
+    <template is="dom-if" if="[[!lightwallet]]">
       <msc-simple-login-view hidden$="{{loggedIn}}"></msc-simple-login-view>
     </template>
     <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>

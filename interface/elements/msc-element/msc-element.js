@@ -5,6 +5,7 @@
         mscIntf.locale = {register:this,prop:'locale'}
         mscIntf.loginLock = {register:this,prop:'loginLock'}
         mscIntf.ui = {register:this,prop:'ui'}
+        mscIntf.lightwallet = {register:this,prop:'lightwallet'}
         mscIntf.attach(this)
           .to('catalogBrowseItems')
           .to('loggedIn')

@@ -1,24 +1,19 @@
+var fs = require("fs");
+var path = require("path");
+
 Polymer({
   is: 'msc-license-editor',
   properties: {
     license: {
       type: Object,
-      reflectToAttribute: true
+      reflectToAttribute: true,
+      observer: "_licenseChanged"
     },
     expanded: {
       type: Boolean,
       value: false
     },
-    releasePending: {
-      type: Boolean,
-      value: false,
-      reflectToAttribute: true
-    },
-    releaseFailed: {
-      type: Boolean,
-      value: false,
-      reflectToAttribute: true
-    }
+    workAddress: String
   },
   ready: function () {
     this.$.audioFile.onchange = function() {
@@ -42,7 +37,29 @@ Polymer({
   releaseLicense: function(e) {
     e.stopPropagation();
     this.license.audioFile = this.selectedAudio;
-    this.fire('release-license', this.license);
+    this.license.workAddress = this.workAddress;
+
+    this.set("license.releaseState", 1);
+    mscIntf.catalog.releaseLicense(this.license)
+      .bind(this)
+      .then(function(licenseAddress) {
+        this.set("license.contract_id", licenseAddress);
+        this.set("license.editable", false);
+        this.set("license.releaseState", 3);
+      })
+      .catch(function(err) {
+        this.set("license.releaseState", 2);
+      });
+  },
+
+  _licenseChanged: function() {
+    if (!this.license) return;
+
+    this.set("license.coinsPerPlay", mscIntf.clientUtils.convertToMusicoinUnits(this.license.wei_per_play));
+    if (!this.license.type) {
+      this.set("license.type", 0);
+      this.set("license.typeName", "PPP");
+    }
   },
 
   _computeRemainingCoinsPerPlay: function(coinsPerPlay, change) {
@@ -209,32 +226,9 @@ Polymer({
       var stats = fs.statSync(filePath);
       var fileSizeInBytes = stats["size"];
       var fileSizeInMegabytes = fileSizeInBytes / 1000000.0
-      this.$.metadataEditor.addMetadata("fileName", path.basename(filePath));
+      // this.$.metadataEditor.addMetadata("fileName", path.basename(filePath));
       this.set('selectedAudioText', path.basename(filePath));
       this.set('selectedAudioSize', fileSizeInMegabytes.toFixed(1) + " mb");
     }
-  },
-
-  testState: function() {
-    this.set("license.releaseState", (this.license.releaseState + 1)%5);
-  },
-
-
-  onReleasePending: function() {
-    this.status = "Pending...";
-    this.set("license.releaseState", 1);
-  },
-
-  onReleaseSuccess: function(address) {
-    this.status = address;
-    this.set("license.releaseState", 3);
-    this.set("license.contract_id", address);
-    this.set("license.editable", false);
-  },
-
-  onReleaseFailure: function() {
-    this.set("license.releaseState", 2);
-    this.status = "Failed!";
-    console.log("Failed");
   }
 });

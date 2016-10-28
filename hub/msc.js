@@ -106,8 +106,17 @@ var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
 
+var MessageMonitor = require("../facade/message-monitor");
+mschub.messageMonitor = new MessageMonitor();
+
 var IPFSConnector = require("./ipfs-connector.js");
 var ipfsConnector = new IPFSConnector();
+
+mschub.clientUtils = {
+  convertToMusicoinUnits: function(wei) {
+    return web3Connector.toMusicCoinUnits(wei);
+  }
+}
 
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
 mschub.fnPool = function(fngroup, fn, elem, params) {
@@ -282,32 +291,29 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           metadataUrl: ""
         };
 
-        work.releaseStatus = "Publishing artwork...";
+        var tx = mschub.messageMonitor.create();
         ipfsConnector.add(work.imgFile)
           .then(function (hash) {
             workReleaseRequest.imageUrl = "ipfs://" + hash;
-            work.releaseStatus = "Publishing metadata...";
             return ipfsConnector.addString(JSON.stringify(work.metadata));
           })
           .then(function (hash) {
             workReleaseRequest.metadataUrl = "ipfs://" + hash;
-            work.releaseStatus = "Releasing work...";
             return web3Connector.releaseWork(workReleaseRequest);
           })
           .then(function (contractAddress) {
-            work.releaseStatus = "Success!";
-            work.contract_address = contractAddress;
+            mschub.messageMonitor.success(tx, contractAddress);
             return contractAddress;
           })
           .catch(function(err) {
-            work.releaseStatus = "Failed: " + err;
+            mschub.messageMonitor.error(tx, err);
           });
+        return tx;
       },
       releaseLicense: function(elem, params, fns) {
         var license = params.license;
-        var work = params.work;
         var licenseReleaseRequest = {
-          workAddress: work.contract_address,
+          workAddress: license.workAddress,
           coinsPerPlay: license.coinsPerPlay,
           resourceUrl: "",
           metadataUrl: "",
@@ -317,26 +323,21 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           contributorShares: license.contributors.map(function (r) {return r.shares}),
         };
 
-        license.releaseStatus = "Publishing audio...";
+        var tx = mschub.messageMonitor.create();
         ipfsConnector.add(license.audioFile)
           .then(function (hash) {
             licenseReleaseRequest.resourceUrl = "ipfs://" + hash;
-            license.releaseStatus = "Publishing metadata...";
-            return ipfsConnector.addString(JSON.stringify(license.metadata));
-          })
-          .then(function (hash) {
-            licenseReleaseRequest.metadataUrl = "ipfs://" + hash;
-            license.releaseStatus = "Releasing license...";
             return web3Connector.releaseLicense(licenseReleaseRequest);
           })
           .then(function (contractAddress) {
-            license.releaseStatus = "Success!";
-            license.contract_id = contractAddress;  // TODO: be consistent with work
+            mschub.messageMonitor.success(tx, contractAddress);
             return contractAddress;
           })
           .catch(function(err) {
-            license.releaseStatus = "Failed: " + err;
+            mschub.messageMonitor.error(tx, err);
           });
+
+        return tx;
       }
     },
     finops:{
