@@ -3,7 +3,7 @@
   <template>
     <audio id="player" autoplay></audio>
     <div class="audio-control-area">
-      <iron-image sizing="contain" id="miniImage" src="{{currentPlay.work.image_url_https}}" on-tap="toggleTrackDetailView"></iron-image>
+      <iron-image sizing="contain" id="miniImage" src="{{currentPlay.work.image_url_https}}" on-tap="showTrackDetailView"></iron-image>
       <paper-icon-button id="playButton" icon="[[playState]]" on-tap="togglePlayState" class="action-button"></paper-icon-button>
       <div class="audio-progress-area">
         <div class="audio-info">{{currentPlay.artist_name}}</div>

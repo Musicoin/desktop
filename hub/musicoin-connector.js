@@ -4,6 +4,7 @@ var fs = require("fs");
 function MusicoinConnector(server, blockchain) {
   this.musicoinListURL = server + "/api/pages/list";
   this.musicoinContentURL = server + "/api/page/content";
+  this.musicoinMusicianURL = server + "/api/musician/content";
   this.musicoinMyWorksURL = server + "/api/works/list";
   this.favoritesFile = 'favorites.json';
   this.playbackPaymentPercentage = 70;
@@ -88,6 +89,29 @@ MusicoinConnector.prototype.loadBrowseCategories = function (callback) {
     else {
       console.log(error);
     }
+  }.bind(this));
+};
+
+MusicoinConnector.prototype.loadArtist = function(artist_address) {
+  var propertiesObject = {address: artist_address};
+  return new Promise(function (resolve, reject){
+    return request({
+      url: this.musicoinMusicianURL,
+      qs: propertiesObject,
+      json: true
+    }, function (error, response, body) {
+      if (!error && !body.success) {
+        error = new Error(body.message);
+      }
+
+      if (!error && response.statusCode === 200) {
+        resolve(body.content);
+      }
+      else {
+        console.log("Unable to load artist: " + error);
+        reject(error);
+      }
+    }.bind(this))
   }.bind(this));
 };
 

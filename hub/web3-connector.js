@@ -79,6 +79,20 @@ Web3Connector.prototype.tip = function (tipRequest) {
     })
 };
 
+Web3Connector.prototype.send = function (tipRequest) {
+  return this.unlockAccount()
+    .bind(this)
+    .then(function(account) {
+      var params = {to: tipRequest.to, from: account, value: tipRequest.amount, gas: 940000};
+      return new Promise(function(resolve, reject) {
+        return this.web3.eth.sendTransaction(params, function (err, tx) {
+          if (err) reject(err);
+          else resolve(tx);
+        });
+      }.bind(this))
+    })
+};
+
 Web3Connector.prototype.unlockAccount = function (overridePwd) {
   console.log("Unlocking account...");
   return new Promise(function (resolve, reject) {

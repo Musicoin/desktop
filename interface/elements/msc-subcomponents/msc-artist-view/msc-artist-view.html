@@ -1,0 +1,23 @@
+<dom-module id="msc-artist-view">
+  <link rel="import" type="css" href="msc-artist-view.css">
+  <template>
+    <div class="top">
+      <img class="pic" src="{{selectedArtist.profile_pic}}">
+      <div class="name-area">
+        <div class="name">{{selectedArtist.name}}</div>
+        <div class="social">
+
+        </div>
+      </div>
+      <div class="actions">
+        <div class="follow action" on-tap="follow" following$="{{_isFollowing(selectedArtist, following)}}">{{_computeFollowText(selectedArtist, following)}}</div>
+        <div class="tip action" on-tap="sendTip" pending$="{{_computeTipPending(tipStatus)}}" failed$="{{_computeTipPending(tipStatus)}}">{{_computeTipMessage(selectedArtist, tipStatus)}}</div>
+      </div>
+    </div>
+    <div class="bio">
+      {{selectedArtist.description}}
+    </div>
+    <msc-player-view id="browse" class="songs"  show-group-play-icon groups="{{songs}}"></msc-player-view>
+  </template>
+  <script src="msc-artist-view.js"></script>
+</dom-module>

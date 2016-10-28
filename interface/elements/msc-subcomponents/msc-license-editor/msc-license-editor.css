@@ -267,24 +267,6 @@ paper-input {
     margin-left: 10px;
 }
 
-.stripes {
-    background-size: 64px 64px;
-    background-image: linear-gradient(135deg,
-        rgba(255, 255, 255, .05) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, .05) 50%,
-        rgba(255, 255, 255, .05) 75%,
-        transparent 75%,
-        transparent);
-
-    animation: animate-stripes 3s linear infinite;
-}
-
-@keyframes animate-stripes {
-    0% {background-position: 0 0;} 100% {background-position: 128px 0;}
-}
-
 .royalty-area-header {
     display: flex;
     align-items: center;

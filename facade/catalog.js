@@ -6,6 +6,9 @@ module.exports = function(rpcProvider) {
     loadMyWorks: function() {
       return rpcProvider.fnPool('catalog', 'loadMyWorks', null, {});
     },
+    loadArtist: function(artistId) {
+      return rpcProvider.fnPool('catalog', 'loadArtist', null, {artist_address:artistId});
+    },
     releaseWork: function(work) {
       var tx = rpcProvider.fnPool('publish', 'releaseWork', null, {work:work});
       return rpcProvider.messageMonitor.waitForResult(tx);

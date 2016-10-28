@@ -1,3 +1,18 @@
 :host {
+    margin: 20px;
+    color: #eee
+}
 
+.artist {
+    cursor: pointer;
+}
+
+.track-detail-image {
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: 1em;
+    left: 1em;
+    width: 25%;
+    height: 25%;
 }

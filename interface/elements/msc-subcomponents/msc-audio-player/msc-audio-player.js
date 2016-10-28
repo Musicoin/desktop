@@ -71,4 +71,7 @@ Polymer({
         this.payments.sendTip(this.currentPlay.contract_id, 1);
       }
     },
+    showTrackDetailView: function() {
+      document.querySelector('#app').setAttribute('selected-page','track');
+    }
 })

@@ -2,8 +2,9 @@
   <link rel="import" type="css" href="msc-track-view.css">
   <template>
     <div id="trackDetailView" class="detailView">
-      <h1>{{artist}}: {{track}}</h1>
-      <paper-material class="track-detail-image" style="background-image: url('{{artworkUrl}}');">
+      <h1>{{currentPlay.song_name}}</h1>
+      <div class="artist" on-tap="goToArtistPage">{{currentPlay.artist_name}}</div>
+      <paper-material class="track-detail-image" style="background-image: url('{{currentPlay.work.image_url_https}}');">
       </paper-material>
       {{contractId}}
     </div>

@@ -16,7 +16,8 @@ var locale = {
         myWorks:'My works',
         editor:'Editor',
         utilities:'Utilities',
-        wallet:'Wallet'
+        wallet:'Wallet',
+        settings:'Settings'
       }
     },
     layeredMenu:[
@@ -138,6 +139,16 @@ var locale = {
     },
     playlistsView: {
       instructions: "Click the '+' sign to add a playlist"
+    },
+    artistView: {
+      labels: {
+        follow: "follow",
+        following: "following",
+        tip: "tip",
+        tipPending: "sending...",
+        tipFailed: "failed!",
+        tipSuccess: "thanks!"
+      }
     },
     connectionWatch: {
       chainReady:'Connected to MusicChain',

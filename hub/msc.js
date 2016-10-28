@@ -59,6 +59,7 @@ initObservables(mschub);
 pcs.addObservable('currentAudioUrl', '');
 pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
+pcs.addObservable('selectedArtist', null);
 pcs.addObservable('transactionHistory', []);
 
 // TODO: Added this temporarily. Removing lightwallet
@@ -72,6 +73,12 @@ pcsAudio.addObservable('playlist', []);
 pcsAudio.addObservable('currentPlay', {});
 pcsAudio.addObservable('playPendingPayment', {});
 pcsAudio.addObservable('playbackPaymentPercentage', staticData.playback.playbackPaymentPercentage);
+
+
+mschub.userPreferences = {};
+var pcsUserPrefs = new PropertyChangeSupport(mschub.userPreferences);
+pcsUserPrefs.addObservable('following', []); // TODO: Load from somewhere
+pcsUserPrefs.addObservable('playlists', []); // TODO: Load from somewhere
 
 /* as it's not possible to define observables with initObservables having initial values depending on objects in this module scope we must define them separately.
 TODO: make it possible. */
@@ -278,6 +285,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
             mschub.myWorks = result;
           });
         return {result: "pending"};
+      },
+      loadArtist: function(elem, params, fns) {
+        musicoinService.loadArtist(params.artist_address)
+          .then(function(result) {
+            mschub.selectedArtist = result;
+          });
+        return {result: "pending"};
       }
     },
     publish: {
@@ -354,6 +368,23 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           console.log(JSON.stringify(receipt));
         });
       },
+      send:function(elem, params, fns){
+        var tx = mschub.messageMonitor.create();
+        var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
+        web3Connector.send({amount: wei, to: params.address})
+          .then(function(tx) {
+            console.log("Waiting for transaction: " + tx);
+            return web3Connector.waitForTransaction(tx);
+          })
+          .then(function(receipt) {
+            mschub.messageMonitor.success(tx, {});
+            console.log(JSON.stringify(receipt));
+          })
+          .catch(function(err) {
+            mschub.messageMonitor.error(tx, err);
+          });
+        return tx;
+      },
       payForPlay: function(elem, params, fns) {
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.ppp({to: params.address, amount: wei})
@@ -375,6 +406,20 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       },
       updateUserBalance: function(elem, params, fns) {
         mschub.financialData.userBalance = web3Connector.getUserBalanceInMusicoin();
+      }
+    },
+    profile: {
+      follow: function(elem, params, fns) {
+        var list = (mschub.userPreferences.following || []).slice();
+        var value = params.artist_address;
+        var idx = list.indexOf(value);
+        if (idx > -1)
+          list.splice(idx, 1);
+        else
+          list.push(params.artist_address);
+
+        // overwrite the whole list to ensure watchers are notified.
+        mschub.userPreferences.following = list;
       }
     }
   };
@@ -403,6 +448,7 @@ mschub.audio = require('../facade/audio.js')(mschub);
 mschub.payments = require('../facade/payments.js')(mschub);
 mschub.catalog = require('../facade/catalog.js')(mschub);
 mschub.login = require('../facade/login.js')(mschub);
+mschub.profile = require('../facade/profile.js')(mschub);
 
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub

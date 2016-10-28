@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" type="css" href="msc-player-view.css">
   <style include="shared-styles" is="custom-style"></style>
   <template>
-    <div style="padding:10px">
+    <div style="position:relative;padding:10px">
       <template is="dom-repeat" items="{{groups}}" as="group" style="position:relative">
         <div hidden$="{{!_shouldHideInstructions(groups.*, instructionText)}}">
           <div class="group-header">{{group.name}}
