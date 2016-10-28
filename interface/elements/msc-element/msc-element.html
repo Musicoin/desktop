@@ -11,7 +11,7 @@
       <!-- Drawer content -->
         <template is="dom-if" if="[[ui.dan]]">
           <app-drawer dan-ui>
-            <app-user-badge></app-user-badge>
+            <msc-simple-user-badge></msc-simple-user-badge>
             <paper-menu id="mainMenu" selected="rel" class="drawer-menu" attr-for-selected="menu-name">
               <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.categories]]</h3>
               <template is="dom-repeat" items="{{browseCategories}}" as="category" style="position:relative">
