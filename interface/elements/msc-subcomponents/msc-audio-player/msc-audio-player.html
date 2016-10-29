@@ -12,7 +12,7 @@
         <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="playNext" class="action-button"></paper-icon-button>
-      <div class="new-tip-button" on-tap="sendTip">tip</div>
+      <msc-tip-button recipient="{{currentPlay.contract_id}}" tip-contract></msc-tip-button>
     </div>
   </template>
   <script src="msc-audio-player.js"></script>

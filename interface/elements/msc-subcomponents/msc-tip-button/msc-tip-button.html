@@ -1,0 +1,11 @@
+<dom-module id="msc-tip-button">
+  <link rel="import" type="css" href="msc-tip-button.css">
+  <template>
+    <div class="tip action"
+         on-tap="sendTip"
+         pending$="{{_computeTipPending(tipStatus)}}"
+         failed$="{{_computeTipFailed(tipStatus)}}"
+         disabled$="{{_computeTipDisabled(recipient)}}">{{_computeTipMessage(recipient, tipStatus)}}</div>
+  </template>
+  <script src="msc-tip-button.js"></script>
+</dom-module>

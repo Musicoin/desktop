@@ -11,7 +11,7 @@
       </div>
       <div class="actions">
         <div class="follow action" on-tap="follow" following$="{{_isFollowing(selectedArtist, following)}}">{{_computeFollowText(selectedArtist, following)}}</div>
-        <div class="tip action" on-tap="sendTip" pending$="{{_computeTipPending(tipStatus)}}" failed$="{{_computeTipPending(tipStatus)}}">{{_computeTipMessage(selectedArtist, tipStatus)}}</div>
+        <msc-tip-button recipient="{{selectedArtist.address}}"></msc-tip-button>
       </div>
     </div>
     <div class="bio">

@@ -83,6 +83,11 @@ paper-progress.audio-progress {
   line-height: 1;
 }
 
+msc-tip-button {
+  width: 58px;
+  height: 21px;
+}
+
 .new-tip-button {
   width: 58px;
   height: 21px;

@@ -38,6 +38,7 @@ h1 {
 .artist {
     font-weight: lighter;
     font-size: small;
+    cursor: pointer;
 }
 
 .album {

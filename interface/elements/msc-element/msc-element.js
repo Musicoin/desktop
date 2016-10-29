@@ -19,6 +19,11 @@
         this.$.browse.addEventListener('selected', function(e) {
           mscIntf.audio.playAll(e.detail);
         });
+
+        this.$.browse.addEventListener('line2-selected', function(e) {
+          mscIntf.catalog.loadArtist(e.detail.work.owner_address);
+          document.querySelector('#app').setAttribute('selected-page','artist');
+        });
       },
       attached: function(){
       },

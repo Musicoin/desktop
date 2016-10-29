@@ -46,5 +46,8 @@ Polymer({
     this.fire('selected', viewItems.map(function(viewItem){
       return viewItem.data;
     }));
+  },
+  handleLine2Selection: function(e) {
+    this.fire('line2-selected', e.model.item.data);
   }
 })

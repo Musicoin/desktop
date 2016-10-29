@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-card>
               <p class="title-details">
                 <span class="description track">{{item.line1}}</span><br>
-                <span class="description artist">{{item.line2}}</span><br>
+                <span class="description artist" on-tap="handleLine2Selection">{{item.line2}}</span><br>
               </p>
             </div>
           </template>

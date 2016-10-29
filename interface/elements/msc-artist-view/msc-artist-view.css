@@ -84,6 +84,12 @@
     background-color: #00b050;
 }
 
+msc-tip-button {
+    width: 90%;
+    height: 32px;
+    --msc-tip-button-font-size: larger;
+}
+
 .tip {
     width: 90%;
 }

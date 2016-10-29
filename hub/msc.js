@@ -289,12 +289,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       loadArtist: function(elem, params, fns) {
         musicoinService.loadArtist(params.artist_address)
           .then(function(result) {
-            // TODO: HACK!  Allows
-            if (mschub.audioHub.currentPlay) {
-              result.address = mschub.audioHub.currentPlay.work.owner_address;
-              result.name = mschub.audioHub.currentPlay.artist_name;
-              result.profile_pic = mschub.audioHub.currentPlay.work.image_url_https;
-            }
             mschub.selectedArtist = result;
           });
         return {result: "pending"};
@@ -362,20 +356,24 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
     },
     finops:{
       sendTip:function(elem, params, fns){
+        var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.tip({amount: wei, to: params.address})
         .then(function(tx) {
-          // TODO: Add to pending payments
           console.log("Waiting for transaction: " + tx);
           return web3Connector.waitForTransaction(tx);
         })
         .then(function(receipt) {
-          // TODO: Remove from pending payments
+          mschub.messageMonitor.success(msgId, {});
           console.log(JSON.stringify(receipt));
+        })
+        .catch(function(err) {
+          mschub.messageMonitor.error(msgId, err);
         });
+        return msgId;
       },
       send:function(elem, params, fns){
-        var tx = mschub.messageMonitor.create();
+        var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.send({amount: wei, to: params.address})
           .then(function(tx) {
@@ -383,26 +381,30 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
             return web3Connector.waitForTransaction(tx);
           })
           .then(function(receipt) {
-            mschub.messageMonitor.success(tx, {});
+            mschub.messageMonitor.success(msgId, {});
             console.log(JSON.stringify(receipt));
           })
           .catch(function(err) {
-            mschub.messageMonitor.error(tx, err);
+            mschub.messageMonitor.error(msgId, err);
           });
-        return tx;
+        return msgId;
       },
       payForPlay: function(elem, params, fns) {
+        var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.ppp({to: params.address, amount: wei})
           .then(function(tx) {
-            // TODO: Add to pending payments
             console.log("Waiting for transaction: " + tx);
             return web3Connector.waitForTransaction(tx);
           })
           .then(function(receipt) {
-            // TODO: Remove from pending payments
+            mschub.messageMonitor.success(msgId, {});
             console.log(JSON.stringify(receipt));
+          })
+          .catch(function(err) {
+            mschub.messageMonitor.error(msgId, err);
           });
+        return msgId;
       },
       loadHistory: function(elem, params, fns) {
         web3Connector.loadHistory()

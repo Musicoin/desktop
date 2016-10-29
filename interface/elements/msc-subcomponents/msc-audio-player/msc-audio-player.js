@@ -66,11 +66,6 @@ Polymer({
     playNext: function() {
       this.audio.playNext();
     },
-    sendTip: function() {
-      if (this.currentPlay && this.currentPlay.contract_id) {
-        this.payments.sendTip(this.currentPlay.contract_id, 1);
-      }
-    },
     showTrackDetailView: function() {
       document.querySelector('#app').setAttribute('selected-page','track');
     }
