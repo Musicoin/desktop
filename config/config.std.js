@@ -1,5 +1,5 @@
 module.exports = {
-  etherServerRpc:'http://10.0.0.8:8545',
+  etherServerRpc:'http://localhost:8545',
   ui:{
     hibryda: false,
     dan: true,
@@ -7,4 +7,14 @@ module.exports = {
   },
   lightwallet: false,
   rpcComm: false,
+  startup: {
+    geth: {
+      start: true,
+      path: "/bin/geth/"
+    },
+    ipfs: {
+      start: true,
+      path: "/bin/go-ipfs/"
+    }
+  }
 }

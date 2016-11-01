@@ -1,10 +1,18 @@
 Polymer({
   is: 'msc-simple-login-view',
   properties: {
-    selectedAccount: String
+    locale: Object,
+    selectedAccountIndex: {
+      type:String,
+      observer: "_handleAccountChanged",
+      value: 0
+    },
+    selectedAccount: String,
+    accounts: Array
   },
   ready: function() {
     mscIntf.attach(this)
+      .to('locale')
       .to('loginError', function (oldValue, newValue) {
         if (newValue) {
           alert("login failed!");
@@ -12,7 +20,11 @@ Polymer({
       });
 
     mscIntf.financialData.attach(this)
-      .to('selectedAccount');
+      .to('selectAccount')
+      .to('accounts', function(oldValue, newValue) {
+        this.accounts = newValue;
+        console.log("accounts: " + newValue)
+      }.bind(this))
   },
   checkForEnter: function (e) {
     // check if 'enter' was pressed
@@ -23,5 +35,16 @@ Polymer({
   hideLoginWindow: function() {
     // logged in as guest
     mscIntf.loggedIn = true;
+  },
+  createNewAccount: function() {
+    var pwd = prompt("Create a new account by providing a strong password");
+    if (pwd) {
+      mscIntf.login.createAccount(pwd);
+    }
+  },
+  _handleAccountChanged: function(selected, previous) {
+    if (this.accounts) {
+      mscIntf.login.selectAccount(this.accounts[selected]);
+    }
   }
 })

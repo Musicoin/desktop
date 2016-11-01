@@ -27,14 +27,6 @@ var mscomm, mscreg, mscaut;
     if (mscIntf.ui.hibryda) {
       setTimeout(()=>{require('nw.gui').Window.get().showDevTools()},300);
     }
-
-    if (mscIntf.ui.dan) {
-      [].forEach.call(document.querySelectorAll('.drawer-menu'), function(el) {
-        el.addEventListener('iron-select',function(ev){
-          document.querySelector('#app').setAttribute('selected-page',ev.target.selected);
-        },true);
-      });
-    }
   });
 
 })(document);

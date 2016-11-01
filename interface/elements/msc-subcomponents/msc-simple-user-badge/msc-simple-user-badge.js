@@ -14,4 +14,7 @@ Polymer({
       if (ev.target.selected=='set') document.querySelector('app-user-settings-view').open()
       ev.target.selected = null;
     },
+    showProfile: function() {
+      mscIntf.selectedPage = 'myp';
+    }
 })

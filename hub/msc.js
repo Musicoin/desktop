@@ -21,6 +21,11 @@ try {
   settings = require('../config/config.std.js');
 }
 
+/* Run startup actions (currently, start geth and ipfs if they aren't already started) */
+var startup = require('./startup.js');
+if (settings.startup.geth.start) startup.startGeth(settings.startup.geth.path);
+if (settings.startup.ipfs.start) startup.startIPFS(settings.startup.ipfs.path);
+
 /* here I define backend restricted storage that is not accessible directly from interface */
 var beRestricted = {
   currentKeystore:null,
@@ -61,6 +66,7 @@ pcs.addObservable('myWorks', []);
 pcs.addObservable('selectedWork', null);
 pcs.addObservable('selectedArtist', null);
 pcs.addObservable('transactionHistory', []);
+pcs.addObservable('selectedPage', '');
 
 // TODO: Added this temporarily. Removing lightwallet
 pcs.addObservable('loggedIn', false);
@@ -100,13 +106,15 @@ var chain = require('./web3things.js');
 
 // TODO: Had some trouble getting Lightclient to work, trying to find a workaround for now
 var Web3Connector = require('./web3-connector.js');
-var web3Connector = new Web3Connector();
+var web3Connector = new Web3Connector(settings.etherServerRpc);
 
 var pcsFinData = new PropertyChangeSupport(mschub.financialData);
 pcsFinData.addObservable('userBalance', 0);
 
 console.log("selectedAccount: " + web3Connector.getSelectedAccount())
 pcsFinData.addObservable('selectedAccount', web3Connector.getSelectedAccount());
+pcsFinData.addObservable('accounts', web3Connector.getAccounts());
+console.log(web3Connector.getAccounts());
 
 var MusicoinService = require("./musicoin-connector.js");
 var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
@@ -241,6 +249,27 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           .catch(function(e) {
             mschub.loginError = "Login failed";
           });
+      },
+      createAccount: function() {
+        web3Connector.createAccount(params.pwd)
+          .then(function() {
+            mschub.loggedIn = true;
+            mschub.loginLock = false;
+          })
+          .catch(function(e) {
+            mschub.loginError = e;
+          })
+      },
+      selectAccount: function() {
+        web3Connector.setSelectedAccount(params.account)
+          .then(function(selected) {
+            mschub.loginError = null;
+            mschub.financialData.selectedAccount = web3Connector.getSelectedAccount();
+          })
+          .catch(function(e) {
+            mschub.loginError = e;
+            console.log(e);
+        })
       }
     },
     audio:{
@@ -403,6 +432,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           })
           .catch(function(err) {
             mschub.messageMonitor.error(msgId, err);
+            fns.audio.playNext(); // force the next track, they can't pay for this one.
           });
         return msgId;
       },
@@ -464,7 +494,7 @@ exports.mscdata = mschub
 if (!settings.lightwallet) {
   mschub.fnPool('finops', 'updateUserBalance');
   setInterval(()=>{
-    mschub.fnPool('finops', 'updateUserBalance')});
+    mschub.fnPool('finops', 'updateUserBalance')}, 1000);
   }
 
 if (mschub.rpcComm) {

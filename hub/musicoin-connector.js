@@ -36,10 +36,12 @@ MusicoinConnector.prototype.loadMyWorks = function (address) {
     });
   }.bind(this))
   .then(function(myWorks) {
-    // TODO: This is only until the API includes the contributor detail
     myWorks.forEach(function (w) {
       w.licenses.forEach(function(l) {
-        var details = this.getPayoutDetails(l.contract_id);
+        var details = this.getPayoutDetails(l);
+        // this is a little messy.  API returns parallel arrays rather than a list of items,
+        // but the app expected a list of items.  I'm combining the parallel arrays into a list of
+        // items and replacing the existing property.  It might be better to create a new property.
         l.contributors = details.contributors;
         l.royalties = details.royalties;
       }.bind(this))
@@ -132,17 +134,14 @@ MusicoinConnector.prototype.loadMetadataFromUrl = function(url) {
   }.bind(this));
 };
 
-// TODO: Remove this once the API includes the required details
-MusicoinConnector.prototype.getPayoutDetails = function (licenseAddress) {
-  var license = this.blockchain.getLicenseContractInstance(licenseAddress);
+MusicoinConnector.prototype.getPayoutDetails = function (license) {
   var _buildContributorsFromLicense = function (license) {
-
     var address;
     var output = [];
-    for (var idx = 0; ((address = license.contributors(idx)) != "0x"); idx++) {
+    for (var idx = 0; license.contributors && idx < license.contributors.length; idx++) {
       output.push({
-        address: address,
-        shares: license.contributorShares(idx)
+        address: license.contributors[idx],
+        shares: license.contributor_shares[idx]
       });
     }
     return output;
@@ -151,10 +150,11 @@ MusicoinConnector.prototype.getPayoutDetails = function (licenseAddress) {
   var _buildRoyaltiesFromLicense = function (license) {
     var address;
     var output = [];
-    for (var idx = 0; ((address = license.royalties(idx)) != "0x"); idx++) {
+    for (var idx = 0; license.royalties && idx < license.royalties.length; idx++) {
       output.push({
-        address: address,
-        amount: this.blockchain.toMusicCoinUnits(license.royaltyAmounts(idx))
+        address: license.royalties[idx],
+        amount: this.blockchain.toMusicCoinUnits(license.royalty_amounts[idx])
+
       });
     }
     return output;

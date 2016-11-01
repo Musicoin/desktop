@@ -67,6 +67,6 @@ Polymer({
       this.audio.playNext();
     },
     showTrackDetailView: function() {
-      document.querySelector('#app').setAttribute('selected-page','track');
+      mscIntf.selectedPage = 'track';
     }
 })

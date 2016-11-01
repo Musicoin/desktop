@@ -3,10 +3,17 @@
   <template>
     <div class="login-elements">
       <div class="login-label">Musicoin</div>
+      <paper-dropdown-menu label="{{locale.simpleLogin.labels.selectAccount}}">
+        <paper-listbox class="dropdown-content" selected="{{selectedAccountIndex}}">
+          <template is="dom-repeat" items="{{accounts}}" as="account">
+            <paper-item>{{account}}</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
       <paper-input id=loginPwd class="login-text-box" type="password" label="password" on-keydown="checkForEnter"></paper-input>
-      {{selectedAccount}}
       <br><br>
-      <paper-button id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>
+      <paper-button class="action" id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>
+      <paper-button class="action" id="newAccountButton" on-tap="createNewAccount">new account</paper-button>
     </div>
   </template>
   <script src="msc-simple-login-view.js"></script>

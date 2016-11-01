@@ -12,7 +12,7 @@ Polymer({
 
     },
     goToArtistPage: function() {
-        mscIntf.catalog.loadArtist(this.currentPlay.work.owner_address);
-        document.querySelector('#app').setAttribute('selected-page','artist');
+      mscIntf.catalog.loadArtist(this.currentPlay.work.owner_address);
+      mscIntf.selectedPage = 'artist';
     }
 })

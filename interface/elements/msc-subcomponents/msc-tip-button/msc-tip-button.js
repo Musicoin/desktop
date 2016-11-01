@@ -43,7 +43,7 @@ Polymer({
         this.tipStatus = 1;
         window.setTimeout(function() {
             this.sendTipAsync();
-        }.bind(this), 10);
+        }.bind(this), 500);
     },
     sendTipAsync: function() {
         var tipAmountInMusicoin = 1;

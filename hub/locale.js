@@ -6,6 +6,7 @@ var locale = {
         playlist:'Playlist',
         musician:'Musician',
         developer:'Developer',
+        account:'Account'
       },
       items:{
         newReleases:'New Releases',
@@ -18,7 +19,9 @@ var locale = {
         editor:'Editor',
         utilities:'Utilities',
         wallet:'Wallet',
-        settings:'Settings'
+        settings:'Settings',
+        following:'Following',
+        history:'History'
       }
     },
     layeredMenu:[
@@ -149,6 +152,11 @@ var locale = {
         tipPending: "sending...",
         tipFailed: "failed!",
         tipSuccess: "thanks!"
+      }
+    },
+    simpleLogin: {
+      labels: {
+        selectAccount: "Select an account"
       }
     },
     connectionWatch: {

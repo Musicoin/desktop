@@ -6,7 +6,6 @@ var pppCode = "0x" + fs.readFileSync('solidity/mvp1/PayPerPlay.sol.bin');
 
 var loggerAddress = "0x88Fc62CFAC71041f9704c122293e249110c8efbb";
 var loggerAddress_v2 = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
-const etherSettings = require('./ether.settings.js')
 var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
 var pppMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/PayPerPlay.sol.abi'));
 var pppMvp2Code = "0x" + fs.readFileSync('solidity/mvp2/PayPerPlay.sol.bin');
@@ -14,10 +13,10 @@ var workCode = "0x" + fs.readFileSync('solidity/mvp2/Work.sol.bin');
 var workAbi = JSON.parse(fs.readFileSync('solidity/mvp2/Work.sol.abi'));
 var deployGas = 4700000;
 
-function Web3Connector() {
+function Web3Connector(etherServerRpc) {
   this.web3 = new Web3();
   console.log("connecting to web3")
-  this.web3.setProvider(new this.web3.providers.HttpProvider(etherSettings.etherServerRpc));
+  this.web3.setProvider(new this.web3.providers.HttpProvider(etherServerRpc));
   this.selectedAccount = this.getDefaultAccount();
   this.storedPassword = null;
 }
@@ -33,8 +32,40 @@ Web3Connector.prototype.storeCredentials = function (pwd) {
     }.bind(this))
 };
 
+Web3Connector.prototype.setSelectedAccount = function(account) {
+  return new Promise(function(resolve, reject) {
+    if (this.web3.eth.accounts.indexOf(account) > -1) {
+      this.storedPassword = null;
+      this.selectedAccount = account;
+      resolve(account);
+    }
+    else {
+      reject(new Error("The given account does not exists: " + account));
+    }
+  }.bind(this));
+};
+
+Web3Connector.prototype.createAccount = function (pwd) {
+  return new Promise(function(resolve, reject) {
+    try {
+      var newAccount = this.web3.personal.newAccount(pwd);
+      this.storedPassword = pwd;
+
+      // TODO: user needs to be able to select this on login.
+      this.selectedAccount = newAccount;
+      return resolve(newAccount);
+    } catch (e) {
+      reject(e);
+    }
+  }.bind(this));
+};
+
 Web3Connector.prototype.getSelectedAccount = function () {
   return this.selectedAccount;
+};
+
+Web3Connector.prototype.getAccounts = function () {
+  return this.web3.eth.accounts;
 };
 
 Web3Connector.prototype.getDefaultAccount = function () {

@@ -1,7 +1,7 @@
 <dom-module id="msc-playlists-view">
   <link rel="import" type="css" href="msc-playlists-view.css">
   <template>
-    <msc-player-view groups="{{groups}}" instruction-text="{{local.playlistsView.instructions}}"></msc-player-view>
+    <msc-player-view groups="{{playlists}}" instruction-text="{{local.playlistsView.instructions}}"></msc-player-view>
     <paper-fab id="addNewPlaylistButton" icon="add" mini on-tap="handleAddNewPlaylist"></paper-fab>
   </template>
   <script src="msc-playlists-view.js"></script>

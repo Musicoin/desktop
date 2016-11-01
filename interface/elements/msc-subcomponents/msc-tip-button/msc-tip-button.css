@@ -15,6 +15,7 @@
     border-radius: 4px;
     cursor: pointer;
     border: 1px solid #abbab2;
+    position: relative;
 }
 
 .tip[failed] {

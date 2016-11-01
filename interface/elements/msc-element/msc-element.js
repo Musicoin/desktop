@@ -9,11 +9,9 @@
         mscIntf.attach(this)
           .to('catalogBrowseItems')
           .to('loggedIn')
-          .to('browseCategories', function(oldValue, newValue) {
-            this.browseCategories = newValue;
-            if (this.selectedPage == "not-set" && this.browseCategories && this.browseCategories.length > 0) {
-              this.selectedPage = newValue[0].id;
-            }
+          .to('browseCategories')
+          .to('selectedPage', function(oldValue, newValue) {
+            this.selectedPage = newValue;
           }.bind(this));
 
         this.$.browse.addEventListener('selected', function(e) {
@@ -22,8 +20,8 @@
 
         this.$.browse.addEventListener('line2-selected', function(e) {
           mscIntf.catalog.loadArtist(e.detail.work.owner_address);
-          document.querySelector('#app').setAttribute('selected-page','artist');
-        });
+          this.selectedPage = 'artist';
+        }.bind(this));
       },
       attached: function(){
       },
@@ -31,7 +29,6 @@
         selectedPage: {
           type: String,
           observer: '_pageChanged',
-          value: "not-set",
           reflectToAttribute:true,
         },
         loginLock: {
@@ -53,12 +50,24 @@
         loggedIn: Boolean,
         ui: Object,
       },
-      _pageChanged:function(newValue) {
-        if (this.isBrowsePage(newValue)) {
-          mscIntf.catalog.loadBrowsePage(newValue);
+      _pageChanged: function(newValue) {
+        // First page load
+        if (newValue == '' && this.browseCategories != null && this.browseCategories.length > 0) {
+          mscIntf.selectedPage = this.browseCategories[0].id;
         }
-        else if ("myw" === newValue) {
-          mscIntf.catalog.loadMyWorks();
+        else {
+          if (this.isBrowsePage(newValue)) {
+            mscIntf.catalog.loadBrowsePage(newValue);
+          }
+          else if ("myw" === newValue) {
+            mscIntf.catalog.loadMyWorks();
+          }
+
+          // unnecessary check, but just to make it clear that we won't get a stack overflow due to the
+          // two way sync between the local property and the global one.
+          if (mscIntf.selectedPage != newValue) {
+            mscIntf.selectedPage = newValue;
+          }
         }
       },
       _shouldHideBrowsePage() {
