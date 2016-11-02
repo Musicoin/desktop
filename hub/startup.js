@@ -3,39 +3,42 @@
 function noOp() {};
 
 const child_process = require('child_process');
+var fs = require('fs');
 
-var execAndKillOnShutdown = function(name, command, dir) {
-  var child = child_process.exec(command, {cwd: process.cwd() + dir});
+var execAndKillOnShutdown = function(logger, name, absolutePath, command) {
+  logger.log("Starting " + name + ": " + command + ", cwd: " + absolutePath);
+  var child = child_process.exec(command, {cwd: absolutePath});
+  logger.log("Started " + name + ": pid=" + child.pid);
   child.stdout.on('data', function(data) {
-    console.log(name + " stdout: " + data);
+    logger.log(name + " stdout: " + data);
   });
 
   child.stderr.on('data', function(data) {
-    console.log(name + " stderr: " + data);
+    logger.log(name + " stderr: " + data);
   });
 
   child.on('close', function(code) {
-    console.log(name + ": child process exited with code " + code);
+    logger.log(name + ": child process exited with code " + code);
   });
 
   // TODO: This isn't working, although all the docs that I'm reading say it should
   exports.onShutdown(function() {
-    console.log(name + " shutting down pid=" + ipfs.pid);
+    logger.log(name + " shutting down pid=" + child.pid);
     child.kill();
   });
 };
 
-exports.onStartup = function(callback) {
-  console.log("Starting up... ");
+exports.init = function(appDataDir) {
+  if (!fs.existsSync(appDataDir)) {
+    fs.mkdirSync(appDataDir);
+  }
+  console.log("appDataDir: " + appDataDir);
 };
 
-exports.startIPFS = function(ipfsPath) {
-  execAndKillOnShutdown("ipfs", "ipfs daemon", ipfsPath);
+exports.start = function(logger, name, path, pathIsRelative, command) {
+  var absolutePath = pathIsRelative ? process.cwd() + path : path;
+  execAndKillOnShutdown(logger, name, absolutePath, command);
 };
-
-exports.startGeth = function(gethPath) {
-  execAndKillOnShutdown("geth", 'geth --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" --testnet', gethPath);
-}
 
 exports.onShutdown = function onShutdown(callback) {
 
@@ -51,14 +54,14 @@ exports.onShutdown = function onShutdown(callback) {
 
   // catch ctrl+c event and exit normally
   process.on('SIGINT', function () {
-    console.log('Ctrl-C...');
+    process.stdout.write.log('Ctrl-C...');
     process.exit(2);
   });
 
   //catch uncaught exceptions, trace, then exit normally
   process.on('uncaughtException', function(e) {
-    console.log('Uncaught Exception...');
-    console.log(e.stack);
+    process.stdout.write.log('Uncaught Exception...');
+    process.stdout.write.log(e.stack);
     process.exit(99);
   });
 };

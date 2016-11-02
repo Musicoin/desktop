@@ -14,6 +14,9 @@
             this.selectedPage = newValue;
           }.bind(this));
 
+        mscIntf.userPreferences.attach(this)
+          .to("musicianMode");
+
         this.$.browse.addEventListener('selected', function(e) {
           mscIntf.audio.playAll(e.detail);
         });
@@ -49,6 +52,7 @@
         locale: Object,
         loggedIn: Boolean,
         ui: Object,
+        musicianMode: Boolean
       },
       _pageChanged: function(newValue) {
         // First page load
@@ -99,4 +103,4 @@
 
         this.browseViewItems = newGroups.map(toViewGroup);
       }
-})
+});

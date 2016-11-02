@@ -1,0 +1,40 @@
+<dom-module id="msc-profile-view">
+  <link rel="import" type="css" href="msc-profile-view.css">
+  <template>
+    <div class="top">
+      <canvas id="identicon" width="128" height="128"></canvas>
+      <div class="name-area">
+        <div class="name">{{username}}</div>
+        <div class="account">
+          {{selectedAccount}}
+        </div>
+      </div>
+    </div>
+    <div class="section call-to-action">
+      <div class="user-message">
+        {{_computeUserMessage(registrationStatus.status)}}
+      </div>
+      <div class="action-area">
+        <paper-button class="action"
+                      pending$="{{_isActionPending(actionState)}}"
+                      failed$="{{_isActionFailed(actionState)}}"
+                      on-tap="handleCallToAction">{{_computeActionText(registrationStatus.status)}}</paper-button>
+      </div>
+    </div>
+    <div class="section settings">
+      <paper-toggle-button>Store favorites locally (does nothing)</paper-toggle-button>
+      <paper-toggle-button>Some other setting (does nothing)</paper-toggle-button>
+    </div>
+    <div class="section settings">
+      TODO: When the registration flow is working, this option will be hidden until the user is registered
+      <paper-toggle-button
+              id="musicianModeButton"
+              xhidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
+              checked="[[musicianMode]]"
+              on-tap="updateMusicianMode"
+              xdisabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
+    </div>
+  </template>
+  <script src="msc-profile-view.js"></script>
+  <script src="../../scripts/jdenticon.min.js"></script>
+</dom-module>

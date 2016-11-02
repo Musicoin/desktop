@@ -6,6 +6,7 @@ function MusicoinConnector(server, blockchain) {
   this.musicoinContentURL = server + "/api/page/content";
   this.musicoinMusicianURL = server + "/api/musician/content";
   this.musicoinMyWorksURL = server + "/api/works/list";
+  this.musicoinMyProfileURL = server + "/api/myProfile";
   this.favoritesFile = 'favorites.json';
   this.playbackPaymentPercentage = 70;
 
@@ -111,6 +112,29 @@ MusicoinConnector.prototype.loadArtist = function(artist_address) {
       }
       else {
         console.log("Unable to load artist: " + error);
+        reject(error);
+      }
+    }.bind(this))
+  }.bind(this));
+};
+
+MusicoinConnector.prototype.loadMyProfile = function(address) {
+  var propertiesObject = {address: address};
+  return new Promise(function (resolve, reject){
+    return request({
+      url: this.musicoinMyProfileURL,
+      qs: propertiesObject,
+      json: true
+    }, function (error, response, body) {
+      if (!error && !body.success) {
+        error = new Error(body.message);
+      }
+
+      if (!error && response.statusCode === 200) {
+        resolve(body);
+      }
+      else {
+        console.log("Unable to load profile: " + error);
         reject(error);
       }
     }.bind(this))

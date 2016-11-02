@@ -154,6 +154,20 @@ var locale = {
         tipSuccess: "thanks!"
       }
     },
+    userProfileView: {
+      messages: {
+        NewUser:"Register your account on the Musicoin website to enable Musician Mode",
+        Confirm:"You're almost there! Confirm your account by sending a small payment to Musicoin.",
+        Registered:"Once your account is verified, the music you release will automatically appear in the public catalog",
+        Verified:"Your account is verified."
+      },
+      actions: {
+        NewUser:"Register your account",
+        Confirm:"Confirm your account",
+        Registered:"Learn More",
+        Verified:"Get Started!"
+      }
+    },
     simpleLogin: {
       labels: {
         selectAccount: "Select an account"

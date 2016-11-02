@@ -3,10 +3,22 @@ Polymer({
     ready:function(){
       mscIntf.userDetails = {register:this,prop:'userDetails'};
       mscIntf.toolSettings.userImagePath = {register:this,prop:'usersImageDir'};
+      mscIntf.userPreferences.attach(this)
+        .to('musicianMode')
+        .to('username')
+    },
+    attached: function() {
+      mscIntf.financialData.attach(this)
+        .to('selectedAccount', function(oldValue, newValue) {
+          if (newValue) {
+            jdenticon.update("#badgeidenticon", newValue.substring(2, newValue.length));
+          }
+        }.bind(this));
     },
     properties: {
       userDetails: Object,
       usersImageDir: String,
+      selectedAccount: String
     },
     menuPick: function(ev) {
       if (ev.target.selected=='loo') mscIntf.fnPool('login','logoutUser');

@@ -12,6 +12,10 @@ const initObservables = require('./observables-defs.js');
 /* crypto for pwd ops */
 const crypto = require('crypto');
 const fs = require('fs');
+var util = require('util');
+var appDataRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : '/var/local');
+var appData = appDataRoot + "/musicoin";
+
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 const lStorage = require('node-localstorage');
 var settings;
@@ -23,8 +27,23 @@ try {
 
 /* Run startup actions (currently, start geth and ipfs if they aren't already started) */
 var startup = require('./startup.js');
-if (settings.startup.geth.start) startup.startGeth(settings.startup.geth.path);
-if (settings.startup.ipfs.start) startup.startIPFS(settings.startup.ipfs.path);
+startup.init(appData);
+if (settings.startup.fileSharing) {
+  startup.start(
+    console,
+    "fileSharing",
+    settings.fileSharing.path,
+    settings.fileSharing.relativePath,
+    settings.fileSharing.command);
+}
+if (settings.startup.chain) {
+  startup.start(
+    console,
+    "chain",
+    settings.chain.path,
+    settings.chain.relativePath,
+    settings.chain.command);
+}
 
 /* here I define backend restricted storage that is not accessible directly from interface */
 var beRestricted = {
@@ -80,12 +99,6 @@ pcsAudio.addObservable('currentPlay', {});
 pcsAudio.addObservable('playPendingPayment', {});
 pcsAudio.addObservable('playbackPaymentPercentage', staticData.playback.playbackPaymentPercentage);
 
-
-mschub.userPreferences = {};
-var pcsUserPrefs = new PropertyChangeSupport(mschub.userPreferences);
-pcsUserPrefs.addObservable('following', []); // TODO: Load from somewhere
-pcsUserPrefs.addObservable('playlists', []); // TODO: Load from somewhere
-
 /* as it's not possible to define observables with initObservables having initial values depending on objects in this module scope we must define them separately.
 TODO: make it possible. */
 observable(mschub,'ui', settings.ui);
@@ -104,9 +117,8 @@ observable(mschub,'notifyAccCreateDialog',null);
 
 var chain = require('./web3things.js');
 
-// TODO: Had some trouble getting Lightclient to work, trying to find a workaround for now
 var Web3Connector = require('./web3-connector.js');
-var web3Connector = new Web3Connector(settings.etherServerRpc);
+var web3Connector = new Web3Connector(settings.chain);
 
 var pcsFinData = new PropertyChangeSupport(mschub.financialData);
 pcsFinData.addObservable('userBalance', 0);
@@ -120,6 +132,28 @@ var MusicoinService = require("./musicoin-connector.js");
 var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
+
+mschub.userPreferences = {};
+var pcsUserPrefs = new PropertyChangeSupport(mschub.userPreferences);
+pcsUserPrefs.addObservable('following', []);
+pcsUserPrefs.addObservable('playlists', []);
+pcsUserPrefs.addObservable('username', '');
+pcsUserPrefs.addObservable('musicianMode', false);
+pcsUserPrefs.addObservable('registrationStatus', {});
+
+// PreferenceManager handles swapping in/out of preferences when the selected account changes
+var PreferenceManager = require("./preferences.js");
+var preferenceManager = new PreferenceManager(mschub.userPreferences, musicoinService, appData + "/users/");
+pcsFinData.attach().to('selectedAccount', function(oldAccount, newAccount) {
+  preferenceManager.setCurrentAccount(newAccount)
+    .then(function() {
+      console.log("Loaded user preferences: " + JSON.stringify(mschub.userPreferences));
+    })
+    .catch(function(err) {
+      // mschub.userPreferences = {};
+      console.log("Could not load preferences: " + err);
+    })
+});
 
 var MessageMonitor = require("../facade/message-monitor");
 mschub.messageMonitor = new MessageMonitor();
@@ -447,6 +481,14 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       }
     },
     profile: {
+      setUserName: function(elem, params, fns) {
+        mschub.userPreferences.username = params.username;
+        preferenceManager.savePreferences();
+      },
+      setMusicianMode: function(elem, params, fns) {
+        mschub.userPreferences.musicianMode = params.enabled;
+        preferenceManager.savePreferences();
+      },
       follow: function(elem, params, fns) {
         var list = (mschub.userPreferences.following || []).slice();
         var value = params.artist_address;
@@ -458,6 +500,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
 
         // overwrite the whole list to ensure watchers are notified.
         mschub.userPreferences.following = list;
+        preferenceManager.savePreferences()
+          .then(function() {
+            console.log("preferences saved!");
+          })
+          .catch(function(e) {
+            console.log("Could not save preferences: " + e);
+          });
       }
     }
   };

@@ -11,14 +11,13 @@ paper-menu-button {
 paper-button {
   width: 100%;
   height: 64px;
-  margin: 0;
-  padding: 0;
-  padding-left: 64px;
-  background-size: auto 75%;
-  background-repeat: no-repeat;
-  background-position: 5% center;
-  overflow: hidden;
+  text-transform: none;
+  justify-content: flex-start;
+  --paper-button: {
+    justify-content: flex-start;
+  };
 }
+
 paper-menu-button {
   --paper-menu-button-dropdown: {
     width: 100%;

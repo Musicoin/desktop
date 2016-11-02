@@ -8,13 +8,19 @@ module.exports = {
   lightwallet: false,
   rpcComm: false,
   startup: {
-    geth: {
-      start: true,
-      path: "/bin/geth/"
-    },
-    ipfs: {
-      start: true,
-      path: "/bin/go-ipfs/"
-    }
+    chain: true,
+    fileSharing: true
+  },
+  chain: {
+    relativePath: true,
+    path: "/bin/geth/",
+    command: 'geth --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" --testnet',
+    loggerAddress: "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44",
+    rpcServer: 'http://localhost:8545'
+  },
+  fileSharing: {
+    relativePath: true,
+    path: "/bin/go-ipfs/",
+    command: "ipfs daemon"
   }
 }

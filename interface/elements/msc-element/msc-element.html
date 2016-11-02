@@ -22,8 +22,8 @@
               <paper-item menu-name="myf">[[locale.navMenu.items.myFavorites]]</paper-item>
               <paper-item menu-name="playlists">[[locale.navMenu.items.myPlaylists]]</paper-item>
               <paper-item menu-name="following">[[locale.navMenu.items.following]]</paper-item>
-              <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.musician]]</h3>
-              <paper-item menu-name="myw">[[locale.navMenu.items.myWorks]]</paper-item>
+              <h3 disabled class="drawer-menu-label" hidden$="[[!musicianMode]]">[[locale.navMenu.headers.musician]]</h3>
+              <paper-item menu-name="myw" hidden$="[[!musicianMode]]">[[locale.navMenu.items.myWorks]]</paper-item>
               <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.account]]</h3>
               <paper-item menu-name="myp">[[locale.navMenu.items.myProfile]]</paper-item>
               <paper-item menu-name="history">[[locale.navMenu.items.history]]</paper-item>
@@ -51,6 +51,7 @@
         <msc-track-view></msc-track-view>
         <msc-artist-view></msc-artist-view>
         <msc-playlists-view></msc-playlists-view>
+        <msc-profile-view></msc-profile-view>
       </app-header-layout>
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>
@@ -69,4 +70,22 @@
   </template>
 
   <script src="msc-element.js"></script>
+  <script>
+    function setupDebugLogging() {
+      var fs = require('fs');
+      var util = require('util');
+      var logFile = fs.createWriteStream('client.txt', { flags: 'a' });
+      // Or 'w' to truncate the file every time the process starts.
+      var logStdout = process.stdout;
+
+      var old = console.log;
+      console.log = function () {
+        old(arguments[0]);
+        logFile.write(util.format.apply(null, arguments) + '\n');
+        logStdout.write(util.format.apply(null, arguments) + '\n');
+      }
+      console.error = console.log;
+    }
+    setupDebugLogging();
+  </script>
 </dom-module>
