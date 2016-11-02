@@ -17,6 +17,10 @@ paper-card.recent {
     overflow: hidden;
 }
 
+paper-card.recent[selected] {
+    box-shadow: 0 0 35px -4px rgba(255,255,200,0.8);
+}
+
 h1 {
     color: #4f4f4f;
     font-weight: lighter;

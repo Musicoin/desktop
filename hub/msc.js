@@ -26,24 +26,11 @@ try {
 }
 
 /* Run startup actions (currently, start geth and ipfs if they aren't already started) */
-var startup = require('./startup.js');
-startup.init(appData);
-if (settings.startup.fileSharing) {
-  startup.start(
-    console,
-    "fileSharing",
-    settings.fileSharing.path,
-    settings.fileSharing.relativePath,
-    settings.fileSharing.command);
-}
-if (settings.startup.chain) {
-  startup.start(
-    console,
-    "chain",
-    settings.chain.path,
-    settings.chain.relativePath,
-    settings.chain.command);
-}
+var Startup = require('./startup.js');
+var startup = new Startup(console, appData);
+if (settings.startup.chainInit) startup.initChain(settings.chainInit);
+if (settings.startup.chain) startup.startChildProcess(settings.chain);
+if (settings.startup.fileSharing) startup.startChildProcess(settings.fileSharing);
 
 /* here I define backend restricted storage that is not accessible directly from interface */
 var beRestricted = {
@@ -129,7 +116,7 @@ pcsFinData.addObservable('accounts', web3Connector.getAccounts());
 console.log(web3Connector.getAccounts());
 
 var MusicoinService = require("./musicoin-connector.js");
-var musicoinService = new MusicoinService(staticData.musicoinHost, web3Connector);
+var musicoinService = new MusicoinService(settings.musicoinService.host, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);
 
@@ -481,7 +468,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       }
     },
     profile: {
-      setUserName: function(elem, params, fns) {
+      setUsername: function(elem, params, fns) {
         mschub.userPreferences.username = params.username;
         preferenceManager.savePreferences();
       },

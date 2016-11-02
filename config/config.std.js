@@ -9,7 +9,8 @@ module.exports = {
   rpcComm: false,
   startup: {
     chain: true,
-    fileSharing: true
+    fileSharing: true,
+    chainInit: false
   },
   chain: {
     relativePath: true,
@@ -22,5 +23,8 @@ module.exports = {
     relativePath: true,
     path: "/bin/go-ipfs/",
     command: "ipfs daemon"
+  },
+  musicoinService: {
+    host: "http://testnet.catalog.musicoin.org"
   }
 }

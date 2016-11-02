@@ -44,6 +44,9 @@ Polymer({
       .to('userImage')
       .to('registrationStatus');
   },
+  _updateUserName: function() {
+    mscIntf.profile.setUsername(this.$.usernameLabel.innerText);
+  },
   _isActionPending: function() {
     return "pending" == this.actionState;
   },
@@ -56,9 +59,11 @@ Polymer({
       && 'Verified' != this.registrationStatus.status;
   },
   _computeActionText: function() {
+    if (!this.registrationStatus || !this.registrationStatus.action) return "";
     return this.registrationStatus.action.button;
   },
   _computeUserMessage: function() {
+    if (!this.registrationStatus || !this.registrationStatus.action) return "";
     return this.registrationStatus.action.message;
   },
   handleCallToAction: function() {
@@ -86,6 +91,10 @@ Polymer({
           this.actionState = "failed";
           console.log("Failed to send confirmation payment: " + err);
         });
+    }
+    else {
+      this.actionState = "failed";
+      console.log("Could not send confirmation payment based on action: " + JSON.stringify(action));
     }
   },
   handleExternalLinkAction: function(action) {

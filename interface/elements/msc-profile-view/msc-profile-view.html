@@ -4,7 +4,7 @@
     <div class="top">
       <canvas id="identicon" width="128" height="128"></canvas>
       <div class="name-area">
-        <div class="name">{{username}}</div>
+        <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
         <div class="account">
           {{selectedAccount}}
         </div>

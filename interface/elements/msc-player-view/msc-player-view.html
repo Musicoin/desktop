@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <template is="dom-repeat" items="{{group.items}}" style="position:relative">
             <div class="title">
-              <paper-card class="recent" animated="true" elevation="3" on-tap="handleItemSelection">
+              <paper-card class="recent" selected$="{{_isSelected(item, selectedItem)}}" animated="true" elevation="3" on-tap="handleItemSelection">
                 <div class="recent-bg" style="background-image: url('{{item.img}}');"></div>
                 <paper-ripple fit></paper-ripple>
                 <div class="show-off"></div>

@@ -5,7 +5,16 @@ function noOp() {};
 const child_process = require('child_process');
 var fs = require('fs');
 
-var execAndKillOnShutdown = function(logger, name, absolutePath, command) {
+function Startup(logger, appDataDir) {
+  this.logger = logger;
+  this.appDataDir = appDataDir;
+  if (!fs.existsSync(appDataDir)) {
+    fs.mkdirSync(appDataDir);
+  }
+}
+
+Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command) {
+  var logger = this.logger;
   logger.log("Starting " + name + ": " + command + ", cwd: " + absolutePath);
   var child = child_process.exec(command, {cwd: absolutePath});
   logger.log("Started " + name + ": pid=" + child.pid);
@@ -22,26 +31,50 @@ var execAndKillOnShutdown = function(logger, name, absolutePath, command) {
   });
 
   // TODO: This isn't working, although all the docs that I'm reading say it should
-  exports.onShutdown(function() {
+  this.onShutdown(function() {
     logger.log(name + " shutting down pid=" + child.pid);
     child.kill();
   });
 };
 
-exports.init = function(appDataDir) {
-  if (!fs.existsSync(appDataDir)) {
-    fs.mkdirSync(appDataDir);
+Startup.prototype.initChain = function(commandObj) {
+  this.initCommand(commandObj);
+  if (!fs.existsSync(commandObj.chainDir)) {
+    fs.mkdirSync(commandObj.chainDir);
   }
-  console.log("appDataDir: " + appDataDir);
+
+  var chainDataDir = commandObj.chainDir + "/chainData";
+  if (!fs.existsSync(chainDataDir)) {
+    this.logger.log("Initializing chain in " + commandObj.chainDir);
+    fs.mkdirSync(chainDataDir);
+
+    // initialization needs to happen before we can move on.
+    child_process.execSync(commandObj.command, {cwd: commandObj.absolutePath});
+  }
 };
 
-exports.start = function(logger, name, path, pathIsRelative, command) {
-  var absolutePath = pathIsRelative ? process.cwd() + path : path;
-  execAndKillOnShutdown(logger, name, absolutePath, command);
+Startup.prototype.startChildProcess = function(commandObj) {
+  this.initCommand(commandObj);
+  this.execAndKillOnShutdown(commandObj.name, commandObj.absolutePath, commandObj.command);
 };
 
-exports.onShutdown = function onShutdown(callback) {
+Startup.prototype.initCommand = function(commandObj) {
+  this.logger.log("Initializing command: " + JSON.stringify(commandObj));
+  commandObj.absolutePath = this.injectPathVariables(commandObj.relativePath ? process.cwd() + commandObj.path : commandObj.path);
+  commandObj.command = this.injectPathVariables(commandObj.command);
+  if (commandObj.chainDir) {
+    commandObj.chainDir = this.injectPathVariables(commandObj.chainDir)
+  }
+  this.logger.log("Initialized command: " + JSON.stringify(commandObj));
+};
 
+Startup.prototype.injectPathVariables = function(p) {
+  p = p.split("{appdata}").join(this.appDataDir);
+  p = p.split("{process.cwd}").join(process.cwd());
+  return p;
+};
+
+Startup.prototype.onShutdown = function(callback) {
   // attach user callback to the process event emitter
   // if no callback, it will still exit gracefully on Ctrl-C
   callback = callback || noOp;
@@ -65,3 +98,5 @@ exports.onShutdown = function onShutdown(callback) {
     process.exit(99);
   });
 };
+
+module.exports = Startup;

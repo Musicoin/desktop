@@ -26,7 +26,14 @@ Polymer({
       type: String,
       value: "av:play-arrow",
       reflectToAttribute: true
+    },
+    selectedItem: {
+      type: Object,
+      value: {}
     }
+  },
+  _isSelected: function(item) {
+    return this.selectedItem == item.id;
   },
   _shouldHideInstructions: function() {
     for (var g in this.groups) {

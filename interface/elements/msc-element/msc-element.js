@@ -14,6 +14,11 @@
             this.selectedPage = newValue;
           }.bind(this));
 
+        mscIntf.audioHub.attach(this)
+          .to('currentPlay', function(oldValue, newValue) {
+              this.currentPlayId = (newValue && newValue.contract_id) ? newValue.contract_id : "none";
+          }.bind(this));
+
         mscIntf.userPreferences.attach(this)
           .to("musicianMode");
 
@@ -52,7 +57,8 @@
         locale: Object,
         loggedIn: Boolean,
         ui: Object,
-        musicianMode: Boolean
+        musicianMode: Boolean,
+        currentPlayId: String
       },
       _pageChanged: function(newValue) {
         // First page load
@@ -90,7 +96,8 @@
             img: serverItem.work.image_url_https,
             line1: serverItem.song_name,
             line2: serverItem.artist_name,
-            data: serverItem
+            data: serverItem,
+            id: serverItem.contract_id
           }
         };
 

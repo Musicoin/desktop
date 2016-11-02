@@ -44,7 +44,11 @@
             <msc-user-balance></msc-user-balance>
           </app-toolbar>
         </app-header>
-        <msc-player-view id="browse" show-group-play-icon hidden$="{{_shouldHideBrowsePage(selectedPage)}}" groups="[[browseViewItems]]" ></msc-player-view>
+        <msc-player-view id="browse"
+                         show-group-play-icon
+                         hidden$="{{_shouldHideBrowsePage(selectedPage)}}"
+                         groups="[[browseViewItems]]"
+                         selected-item="{{currentPlayId}}"></msc-player-view>
         <msc-works-view></msc-works-view>
         <msc-parity-view></msc-parity-view>
         <msc-wallet-view></msc-wallet-view>

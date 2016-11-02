@@ -5,6 +5,9 @@ module.exports = function(rpcProvider) {
     },
     setMusicianMode: function(enabled) {
       return rpcProvider.fnPool('profile', 'setMusicianMode', null, {enabled:enabled});
-    }
+    },
+    setUsername: function(username) {
+      return rpcProvider.fnPool('profile', 'setUsername', null, {username:username});
+    },
   }
 };
