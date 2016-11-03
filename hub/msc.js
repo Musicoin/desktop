@@ -69,6 +69,7 @@ initObservables(mschub);
 
 pcs.addObservable('currentAudioUrl', '');
 pcs.addObservable('myWorks', []);
+pcs.addObservable('pendingWorks', []);
 pcs.addObservable('selectedWork', null);
 pcs.addObservable('selectedArtist', null);
 pcs.addObservable('transactionHistory', []);
@@ -333,6 +334,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       loadMyWorks: function(elem, params, fns) {
         musicoinService.loadMyWorks(web3Connector.getSelectedAccount())
           .then(function(result) {
+            result.forEach(function (work) {
+              if (mschub.pendingWorks[work.contract_address])
+                delete mschub.pendingWorks[work.contract_address];
+            });
+            for (var pendingId in mschub.pendingWorks) {
+              result.push(mschub.pendingWorks[pendingId]);
+            }
             mschub.myWorks = result;
           });
         return {result: "pending"};
@@ -357,6 +365,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         };
 
         var tx = mschub.messageMonitor.create();
+        mschub.pendingWorks[tx] = work;
         ipfsConnector.add(work.imgFile)
           .then(function (hash) {
             workReleaseRequest.imageUrl = "ipfs://" + hash;
@@ -367,10 +376,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
             return web3Connector.releaseWork(workReleaseRequest);
           })
           .then(function (contractAddress) {
+            delete mschub.pendingWorks[tx];
+            mschub.pendingWorks[contractAddress] = work;
             mschub.messageMonitor.success(tx, contractAddress);
             return contractAddress;
           })
           .catch(function(err) {
+            if (mschub.pendingWorks[tx]) delete mschub.pendingWorks[tx];
             mschub.messageMonitor.error(tx, err);
           });
         return tx;

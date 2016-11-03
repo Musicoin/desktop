@@ -123,6 +123,7 @@ Polymer({
 
     this.set("work.releaseState", 1);
     var result = {};
+    this.work.isPending = true;
     mscIntf.catalog.releaseWork(this.work)
       .bind(this)
       .then(function(workAddress) {
