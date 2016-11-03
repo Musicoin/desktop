@@ -10,22 +10,24 @@ module.exports = {
   startup: {
     chain: true,
     fileSharing: true,
-    chainInit: false
+    chainInit: true
   },
   chain: {
-    name: "Geth Testnet",
-    relativePath: true,
-    path: "/bin/geth/",
-    command: 'geth --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" --testnet',
-    loggerAddress: "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44",
+    name: "Musicoin",
+    path: "{process.cwd}/bin/geth/",
+    command: 'geth --identity Musicoin --networkid 55313716 --datadir {appdata}/chain --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost"',
+    loggerAddress: "0x1BA9842b9f4886837edff6D2286342c47Ad8085A",
     rpcServer: 'http://localhost:8545'
   },
   fileSharing: {
-    relativePath: true,
-    path: "/bin/go-ipfs/",
+    name: "ipfs",
+    path: "{process.cwd}/bin/go-ipfs/",
     command: "ipfs daemon"
   },
+  chainInit: {
+    chainDir: "{appdata}/chain"
+  },
   musicoinService: {
-    host: "http://testnet.catalog.musicoin.org"
+    host: "http://catalog.musicoin.org"
   }
 }
