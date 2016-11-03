@@ -3,6 +3,9 @@ module.exports = function(rpcProvider) {
     follow: function(artist_address) {
       return rpcProvider.fnPool('profile', 'follow', null, {artist_address:artist_address});
     },
+    unfollow: function(artist_address) {
+      return rpcProvider.fnPool('profile', 'unfollow', null, {artist_address:artist_address});
+    },
     setMusicianMode: function(enabled) {
       return rpcProvider.fnPool('profile', 'setMusicianMode', null, {enabled:enabled});
     },

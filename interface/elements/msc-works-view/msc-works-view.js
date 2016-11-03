@@ -22,13 +22,8 @@ Polymer({
       }.bind(this))
 
 
-    // this.ipfsUtils = new IPFSConnector();
     this.$.gridView.addEventListener('selected', function (e) {
       mscIntf.selectedWork = e.detail[0];
-    }.bind(this));
-
-    this.$.workEditor.addEventListener('selected', function (e) {
-      this.showLicenseDetail(e.detail);
     }.bind(this));
 
     this.$.workEditor.addEventListener('back-clicked', function (e) {
@@ -52,7 +47,23 @@ Polymer({
       img: "",
       metadata: [],
       metadata_url_https: "",
-      licenses: [],
+      workType: 2,
+      license: {
+        type: 0,
+        typeName: "PPP",
+        coinsPerPlay: 1,
+        address: "",
+        editable: true,
+        releaseState: 0,
+        contributors: [{
+          name: 'You',
+          address: mscIntf.financialData.selectedAccount,
+          shares: 1
+        }],
+        royalties: [],
+        metadata: [],
+        metadata_url_https: ""
+      },
       releaseState: 0
     }
   },

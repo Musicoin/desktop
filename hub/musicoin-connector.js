@@ -45,7 +45,11 @@ MusicoinConnector.prototype.loadMyWorks = function (address) {
         // items and replacing the existing property.  It might be better to create a new property.
         l.contributors = details.contributors;
         l.royalties = details.royalties;
-      }.bind(this))
+        l.coinsPerPlay = this.blockchain.toMusicCoinUnits(l.wei_per_play);
+      }.bind(this));
+      if (w.licenses.length > 0) {
+        w.license = w.licenses[0];
+      }
     }.bind(this));
     return myWorks;
   }.bind(this));

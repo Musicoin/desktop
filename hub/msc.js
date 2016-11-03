@@ -73,6 +73,7 @@ pcs.addObservable('selectedWork', null);
 pcs.addObservable('selectedArtist', null);
 pcs.addObservable('transactionHistory', []);
 pcs.addObservable('selectedPage', '');
+pcs.addObservable('chainVersion', settings.chain.name);
 
 // TODO: Added this temporarily. Removing lightwallet
 pcs.addObservable('loggedIn', false);
@@ -330,7 +331,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return {result: "pending"};
       },
       loadMyWorks: function(elem, params, fns) {
-        musicoinService.loadMyWorks(web3Connector.getDefaultAccount())
+        musicoinService.loadMyWorks(web3Connector.getSelectedAccount())
           .then(function(result) {
             mschub.myWorks = result;
           });
@@ -477,24 +478,17 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         preferenceManager.savePreferences();
       },
       follow: function(elem, params, fns) {
-        var list = (mschub.userPreferences.following || []).slice();
-        var value = params.artist_address;
-        var idx = list.indexOf(value);
-        if (idx > -1)
-          list.splice(idx, 1);
-        else
-          list.push(params.artist_address);
-
-        // overwrite the whole list to ensure watchers are notified.
-        mschub.userPreferences.following = list;
-        preferenceManager.savePreferences()
-          .then(function() {
-            console.log("preferences saved!");
-          })
-          .catch(function(e) {
-            console.log("Could not save preferences: " + e);
-          });
-      }
+        preferenceManager.follow(params.artist_address);
+      },
+      unfollow: function(elem, params, fns) {
+        preferenceManager.unfollow(params.artist_address);
+      },
+      favorite: function(elem, params, fns) {
+        preferenceManager.addFavorite(params.contract_id);
+      },
+      unfavorite: function(elem, params, fns) {
+        preferenceManager.removeFavorite(params.contract_id);
+      },
     }
   };
   /* Here we either call a function called by fngroup/fn (and return its return) providing it with element object, passed parameters, fns var (to make sure functions can communicate and call themselves if needed) and setting 'this' to module exports (in this case mschub) or return object with one member - error to be managed by window. */

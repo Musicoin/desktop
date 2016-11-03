@@ -1,3 +1,4 @@
+pragma solidity ^0.4.2;
 contract MusicoinLogger {
     event playEvent(address sender, uint plays);
     event tipEvent(address sender, uint tipAmount, uint tipCount);
@@ -10,7 +11,7 @@ contract MusicoinLogger {
 
     modifier noCoins {
         if (msg.value > 0) throw;
-        _
+        _;
     }
 
     function MusicCoinLogger() noCoins {
@@ -152,12 +153,12 @@ contract PayPerPlay {
     modifier adminOnly {
         if (msg.sender != owner) throw;
         if (msg.value > 0) throw;
-        _
+        _;
     }
 
     modifier noCoins {
         if (msg.value > 0) throw;
-        _
+        _;
     }
 
     function tip() {
@@ -289,7 +290,7 @@ contract PayPerPlay {
     modifier withDistributionLock {
         if (distributionReentryLock) throw;
         distributionReentryLock = true;
-        _
+        _;
         distributionReentryLock = false;
     }
 

@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" type="css" href="msc-works-view.css">
     <template>
       <msc-player-view id="gridView" groups="{{myWorks}}" hidden$="{{!shouldShowGridView(selectedWork)}}"></msc-player-view>
-      <msc-work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></msc-work-editor>
+      <msc-simple-work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></msc-simple-work-editor>
       <paper-fab id="addNewWorkButton" icon="add" mini on-tap="handleAddNewWork"></paper-fab>
     </template>
 

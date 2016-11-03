@@ -37,3 +37,9 @@
 paper-dropdown-menu {
     width: 100%;
 }
+
+.version {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}

@@ -25,7 +25,13 @@ Polymer({
     });
   },
   follow: function() {
-    mscIntf.profile.follow(this.selectedArtist.address);
+    if (!this.selectedArtist) return;
+    if (this._isFollowing()) {
+      mscIntf.profile.unfollow(this.selectedArtist.address);
+    }
+    else {
+      mscIntf.profile.follow(this.selectedArtist.address);
+    }
   },
   _isFollowing: function() {
     if (!this.following) return false;

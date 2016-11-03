@@ -7,12 +7,14 @@ Polymer({
       observer: "_handleAccountChanged",
       value: 0
     },
+    chainVersion: String,
     selectedAccount: String,
     accounts: Array
   },
   ready: function() {
     mscIntf.attach(this)
       .to('locale')
+      .to('chainVersion')
       .to('loginError', function (oldValue, newValue) {
         if (newValue) {
           alert("login failed!");

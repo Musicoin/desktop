@@ -102,7 +102,9 @@ var locale = {
         image: "You must select an image",
       },
       actions: {
-        releaseWork: "Release Work"
+        releaseWork: "Release Work",
+        showAdvanced: "Show advanced options",
+        hideAdvanced: "Hide advanced options",
       }
     },
     editorView: {

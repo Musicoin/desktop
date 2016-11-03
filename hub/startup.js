@@ -42,15 +42,6 @@ Startup.prototype.initChain = function(commandObj) {
   if (!fs.existsSync(commandObj.chainDir)) {
     fs.mkdirSync(commandObj.chainDir);
   }
-
-  var chainDataDir = commandObj.chainDir + "/chainData";
-  if (!fs.existsSync(chainDataDir)) {
-    this.logger.log("Initializing chain in " + commandObj.chainDir);
-    fs.mkdirSync(chainDataDir);
-
-    // initialization needs to happen before we can move on.
-    child_process.execSync(commandObj.command, {cwd: commandObj.absolutePath});
-  }
 };
 
 Startup.prototype.startChildProcess = function(commandObj) {

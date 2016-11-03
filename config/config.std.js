@@ -13,6 +13,7 @@ module.exports = {
     chainInit: false
   },
   chain: {
+    name: "Geth Testnet",
     relativePath: true,
     path: "/bin/geth/",
     command: 'geth --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" --testnet',

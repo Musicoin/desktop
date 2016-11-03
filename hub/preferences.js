@@ -17,6 +17,7 @@ PreferenceManager.prototype.setCurrentAccount = function(account) {
       this.currentAccount = account;
       this.userPreferences.following = storedPreferences.following || [];
       this.userPreferences.playlists = storedPreferences.playlists || [];
+      this.userPreferences.favorites = storedPreferences.favorites || [];
       this.userPreferences.musicianMode = storedPreferences.musicianMode || false;
       this.userPreferences.registrationStatus = storedPreferences.registrationStatus || {};
       this.userPreferences.username = storedPreferences.username || "";
@@ -30,6 +31,63 @@ PreferenceManager.prototype.setCurrentAccount = function(account) {
       // this.savePreferences();
     })
 };
+
+PreferenceManager.prototype.follow = function(artistAddress) {
+  return this.addMember(this.userPreferences.following, artistAddress)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.following = newList;
+      return this.savePreferences();
+    });
+};
+
+PreferenceManager.prototype.unfollow = function(artistAddress) {
+  return this.removeMember(this.userPreferences.following, artistAddress)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.following = newList;
+      return this.savePreferences();
+    });
+};
+
+PreferenceManager.prototype.addFavorite = function(contractAddress) {
+  return this.addMember(this.userPreferences.favorites, contractAddress)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.favorites = newList;
+      return this.savePreferences();
+    });
+};
+
+PreferenceManager.prototype.removeFavorite = function(contractAddress) {
+  return this.removeMember(this.userPreferences.favorites, contractAddress)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.favorites = newList;
+      return this.savePreferences();
+    });
+};
+
+PreferenceManager.prototype.addMember = function(oldList, item) {
+  var list = (oldList || []).slice();
+  var idx = list.indexOf(item);
+  if (idx >= 0)
+    return Promise.resolve(oldList);
+
+  list.push(item);
+  return Promise.resolve(list);
+};
+
+PreferenceManager.prototype.removeMember = function(oldList, item) {
+  var list = (oldList || []).slice();
+  var idx = list.indexOf(item);
+  if (idx < 0)
+    return Promise.resolve(oldList);
+
+  list.splice(idx, 1);
+  return Promise.resolve(list);
+};
+
 
 PreferenceManager.prototype.loadPreferences = function(account) {
   return new Promise(function(resolve, reject) {
