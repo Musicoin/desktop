@@ -72,6 +72,9 @@
           else if ("myw" === newValue) {
             mscIntf.catalog.loadMyWorks();
           }
+          else if ("history" === newValue) {
+            mscIntf.payments.loadHistory();
+          }
 
           // unnecessary check, but just to make it clear that we won't get a stack overflow due to the
           // two way sync between the local property and the global one.

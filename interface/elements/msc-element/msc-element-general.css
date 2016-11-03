@@ -5,7 +5,14 @@
   --msc-primary-background-color: #212121;
   display: block;
 }
-msc-parity-view, msc-works-view, msc-wallet-view, msc-track-view, msc-artist-view, msc-playlists-view, msc-profile-view {
+msc-parity-view,
+msc-works-view,
+msc-wallet-view,
+msc-track-view,
+msc-artist-view,
+msc-playlists-view,
+msc-tx-view,
+msc-profile-view {
   display: none;
   background-color: var(--msc-secondary-background-color);
 }
@@ -24,6 +31,7 @@ app-drawer[dan-ui] {
 :host[selected-page="artist"] msc-artist-view,
 :host[selected-page="playlists"] msc-playlists-view,
 :host[selected-page="myp"] msc-profile-view,
+:host[selected-page="history"] msc-tx-view,
 :host[selected-page="wal"] msc-wallet-view {
   display: block;
 }

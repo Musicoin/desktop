@@ -1,3 +1,72 @@
 :host {
+    color: #aaa;
+    font-weight: lighter;
+    margin: 20px;
+}
 
+h1 {
+    font-weight: lighter;
+}
+
+.detailView {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255,255,255, 0.05);
+}
+
+.row[incoming] {
+    background-color: rgba(100,255,100, 0.1);
+}
+
+.play {
+
+}
+
+.art {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+}
+
+.song {
+    font-size: larger;
+}
+
+.artist {
+    color: #888;
+    font-size: small;
+}
+
+.address {
+    color: #888;
+    font-size: small;
+}
+
+.amount {
+    font-size: 2em;
+}
+
+.song-details {
+    flex-grow: 1;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.type {
+    width: 75px;
+    justify-content: center;
 }

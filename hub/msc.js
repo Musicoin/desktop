@@ -471,10 +471,11 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return msgId;
       },
       loadHistory: function(elem, params, fns) {
-        web3Connector.loadHistory()
-          .then(function (history) {
-            mschub.transactionHistory = history;
+        musicoinService.loadHistory(web3Connector.getSelectedAccount())
+          .then(function(result) {
+            mschub.transactionHistory = result;
           });
+        return {result: "pending"};
       },
       updateUserBalance: function(elem, params, fns) {
         mschub.financialData.userBalance = web3Connector.getUserBalanceInMusicoin();
