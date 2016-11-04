@@ -2,7 +2,7 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
     <div class="top">
-      <canvas id="identicon" width="128" height="128"></canvas>
+      <identicon-element size="128" seed="{{selectedAccount}}"></identicon-element>
       <div class="name-area">
         <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
         <div class="account">
@@ -36,5 +36,4 @@
     </div>
   </template>
   <script src="msc-profile-view.js"></script>
-  <script src="../../scripts/jdenticon.min.js"></script>
 </dom-module>

@@ -9,11 +9,7 @@ Polymer({
     },
     attached: function() {
       mscIntf.financialData.attach(this)
-        .to('selectedAccount', function(oldValue, newValue) {
-          if (newValue) {
-            jdenticon.update("#badgeidenticon", newValue.substring(2, newValue.length));
-          }
-        }.bind(this));
+        .to('selectedAccount');
     },
     properties: {
       userDetails: Object,

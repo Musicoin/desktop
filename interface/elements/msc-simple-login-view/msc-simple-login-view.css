@@ -24,6 +24,8 @@
 
 .login-label {
     font-size: 2em;
+    display: flex;
+    align-items: center;
 }
 
 .action {
@@ -42,4 +44,13 @@ paper-dropdown-menu {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+.user-area {
+    display: flex;
+    flex-direction: row;
+}
+
+identicon-element {
+    margin-right: 10px;
 }

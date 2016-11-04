@@ -5,7 +5,7 @@
       <template is="dom-repeat" items="{{transactionHistory}}">
         <template is="dom-if" if="[[isPlayOrTip(item)]]">
           <div class="row play">
-            <img class="art cell" src="{{item.song.work.image_url_https}}">
+            <div class="art" style="background-image:url('{{item.song.work.image_url_https}}')"></div>
             <div class="type cell">{{item.eventType}}</div>
             <div class="song-details cell">
               <div class="song">{{item.song.work.title}}</div>
@@ -17,7 +17,7 @@
 
         <template is="dom-if" if="[[isPayment(item)]]">
           <div class="row play" incoming$="[[isToThisAddress(item)]]">
-            <img class="art cell" src="">
+            <identicon-element size="64" seed="{{getSeedForIdenticon(item)}}"></identicon-element>
             <template is="dom-if" if="[[isFromThisAddress(item)]]">
               <div class="type cell">{{item.eventType}}</div>
             </template>
@@ -26,12 +26,10 @@
             </template>
             <div class="song-details cell">
               <template is="dom-if" if="[[isFromThisAddress(item)]]">
-                <div class="address">to</div>
-                <div class="address">{{item.to}}</div>
+                <div class="address">&#8594; {{item.to}}</div>
               </template>
               <template is="dom-if" if="[[isToThisAddress(item)]]">
-                <div class="address">from</div>
-                <div class="address">{{item.from}}</div>
+                <div class="address">&#8592; {{item.from}}</div>
               </template>
             </div>
             <div class="cell amount">{{item.amount}}</div>

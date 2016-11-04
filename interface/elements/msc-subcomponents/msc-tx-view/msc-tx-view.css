@@ -1,7 +1,7 @@
 :host {
     color: #aaa;
     font-weight: lighter;
-    margin: 20px;
+    margin: 10px;
 }
 
 h1 {
@@ -14,10 +14,11 @@ h1 {
 }
 
 .row {
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     display: flex;
     flex-direction: row;
     background-color: rgba(255,255,255, 0.05);
+    border-radius: 4px;
 }
 
 .row[incoming] {
@@ -31,7 +32,10 @@ h1 {
 .art {
     width: 64px;
     height: 64px;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    border-radius: 4px 0 0 4px;
 }
 
 .cell {

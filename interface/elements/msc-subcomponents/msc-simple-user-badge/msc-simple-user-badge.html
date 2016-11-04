@@ -2,9 +2,8 @@
   <link rel="import" type="css" href="msc-simple-user-badge.css">
   <template>
     <paper-button class="dropdown-trigger" on-tap="showProfile">
-      <canvas id="badgeidenticon" width="64" height="64"></canvas>
+      <identicon-element size="64" seed="{{selectedAccount}}"></identicon-element>
       [[username]]</paper-button>
   </template>
   <script src="msc-simple-user-badge.js"></script>
-  <script src="../../../scripts/jdenticon.min.js"></script>
 </dom-module>

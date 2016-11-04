@@ -14,14 +14,6 @@ Polymer({
     }
   },
   attached: function() {
-    mscIntf.financialData.attach(this)
-      .to('selectedAccount', function(oldValue, newValue) {
-        console.log("jdention update: " + newValue);
-        if (newValue) {
-          jdenticon.update("#identicon", newValue.substring(2, newValue.length));
-        }
-      }.bind(this));
-
     this.actionHandlers = {
       "external-link": function(action) {this.handleExternalLinkAction(action)}.bind(this),
       "app-link": function(action) {this.handleAppLinkAction(action)}.bind(this),

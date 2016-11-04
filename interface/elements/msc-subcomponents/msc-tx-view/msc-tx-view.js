@@ -27,5 +27,8 @@ Polymer({
         // it's one of the other.  In the future, the txs will be filtered on this address so
         // if it isn't from this address and it isn't to this address, the something went wrong
         return !this.isFromThisAddress(item);
+    },
+    getSeedForIdenticon: function(item) {
+        return this.isFromThisAddress(item) ? item.to : item.from;
     }
 })

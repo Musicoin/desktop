@@ -2,7 +2,10 @@
   <link rel="import" type="css" href="msc-simple-login-view.css">
   <template>
     <div class="login-elements">
-      <div class="login-label">Musicoin</div>
+      <div class="user-area">
+        <identicon-element size="64" seed="{{selectedAccount}}"></identicon-element>
+        <div class="login-label">Musicoin</div>
+      </div>
       <paper-dropdown-menu label="{{locale.simpleLogin.labels.selectAccount}}">
         <paper-listbox class="dropdown-content" selected="{{selectedAccountIndex}}">
           <template is="dom-repeat" items="{{accounts}}" as="account">

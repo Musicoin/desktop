@@ -22,7 +22,7 @@ Polymer({
       });
 
     mscIntf.financialData.attach(this)
-      .to('selectAccount')
+      .to('selectedAccount')
       .to('accounts', function(oldValue, newValue) {
         this.accounts = newValue;
         console.log("accounts: " + newValue)
