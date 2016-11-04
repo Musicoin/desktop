@@ -70,7 +70,16 @@ Web3Connector.prototype.getDefaultAccount = function () {
 };
 
 Web3Connector.prototype.getUserBalanceInMusicoin = function () {
-  return this.toMusicCoinUnits(this.web3.eth.getBalance(this.selectedAccount));
+  return new Promise(function(resolve, reject) {
+    this.web3.eth.getBalance(this.selectedAccount, function(err, result) {
+      if (err) {
+        reject(err);
+      }
+      else {
+        resolve(this.toMusicCoinUnits(result));
+      }
+    }.bind(this));
+  }.bind(this));
 };
 
 Web3Connector.prototype.getWeiPerPlay = function (address) {
@@ -125,13 +134,14 @@ Web3Connector.prototype.unlockAccount = function (overridePwd) {
   console.log("Unlocking account...");
   return new Promise(function (resolve, reject) {
     var account = this.selectedAccount;
-    var result = this.web3.personal.unlockAccount(account, overridePwd || this.storedPassword, 10);
-    if (result) {
-      resolve(account);
-    }
-    else {
-      reject(new Error("Unlocking account failed"));
-    }
+    this.web3.personal.unlockAccount(account, overridePwd || this.storedPassword, 10, function(err, result) {
+      if (result) {
+        resolve(account);
+      }
+      else {
+        reject(new Error("Unlocking account failed: " + err));
+      }
+    });
   }.bind(this));
 };
 
@@ -216,29 +226,33 @@ Web3Connector.prototype.waitForTransaction = function (expectedTx) {
       if (result) console.log("Result: " + result);
       count++;
 
-      var receipt = this.web3.eth.getTransactionReceipt(expectedTx);
-      var transaction = this.web3.eth.getTransaction(expectedTx);
-      if (receipt && transaction.gas == receipt.gasUsed) {
-        // wtf?! This is the only way to check for an error??
-        reject(new Error("Out of gas (or an error was thrown)"));
-        return;
-      }
-      if (receipt && receipt.transactionHash == expectedTx) {
-        if (receipt.blockHash) {
-          console.log("Confirmed " + expectedTx);
-          console.log("Block hash " + receipt.blockHash);
-          resolve(receipt);
-          filter.stopWatching();
-        }
-        else {
-          console.log("Waiting for confirmation of " + expectedTx);
-        }
-      }
-
       if (count > 5) {
+        console.log("Giving up on tx " + expectedTx);
         reject(new Error("Transaction was not confirmed"));
         filter.stopWatching();
       }
+
+      // each time a new block comes in, see if our tx is in it
+      this.web3.eth.getTransactionReceipt(expectedTx, function(error, receipt) {
+        if (receipt && receipt.transactionHash == expectedTx) {
+          this.web3.eth.getTransaction(expectedTx, function (error, transaction) {
+            if (transaction.gas == receipt.gasUsed) {
+              // wtf?! This is the only way to check for an error??
+              filter.stopWatching();
+              reject(new Error("Out of gas (or an error was thrown)"));
+            }
+            else if (receipt.blockHash) {
+              console.log("Confirmed " + expectedTx);
+              console.log("Block hash " + receipt.blockHash);
+              filter.stopWatching();
+              resolve(receipt);
+            }
+            else {
+              console.log("Waiting for confirmation of " + expectedTx);
+            }
+          }.bind(this));
+        }
+      }.bind(this));
     }.bind(this));
   }.bind(this));
 };

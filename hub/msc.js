@@ -478,7 +478,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return {result: "pending"};
       },
       updateUserBalance: function(elem, params, fns) {
-        mschub.financialData.userBalance = web3Connector.getUserBalanceInMusicoin();
+        web3Connector.getUserBalanceInMusicoin()
+          .then(function(result) {
+            mschub.financialData.userBalance = result;
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       }
     },
     profile: {
