@@ -12,5 +12,21 @@ module.exports = function(rpcProvider) {
     setUsername: function(username) {
       return rpcProvider.fnPool('profile', 'setUsername', null, {username:username});
     },
+    addPlaylist: function(playlistName) {
+      var tx = rpcProvider.fnPool('profile', 'addPlaylist', null, {playlistName:playlistName});
+      return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    removePlaylist: function(playlistName) {
+      var tx = rpcProvider.fnPool('profile', 'removePlaylist', null, {playlistName:playlistName});
+      return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    addToPlaylist: function(playlistName, licenseId) {
+      var tx = rpcProvider.fnPool('profile', 'addToPlaylist', null, {playlistName:playlistName, licenseId:licenseId});
+      return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    removeFromPlaylist: function(playlistName, licenseId) {
+      var tx = rpcProvider.fnPool('profile', 'removeFromPlaylist', null, {playlistName:playlistName, licenseId:licenseId});
+      return rpcProvider.messageMonitor.waitForResult(tx);
+    }
   }
 };

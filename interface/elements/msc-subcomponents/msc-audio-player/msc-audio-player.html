@@ -12,6 +12,15 @@
         <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="playNext" class="action-button"></paper-icon-button>
+      <paper-menu-button vertical-offset="32" id="playlistMenu" disabled$="{{_computeAddToPlaylistDisabled(currentPlay)}}">
+        <paper-icon-button icon="av:playlist-add" class="dropdown-trigger action-button"></paper-icon-button>
+        <paper-material class="dropdown-content">
+          <template is="dom-repeat" items="{{playlists}}" as="playlist">
+            <div class="playlist-option" on-tap="addToPlaylist">{{playlist.name}}</div>
+          </template>
+          <div class="playlist-option" on-tap="addToNewPlaylist">New...</div>
+        </paper-material>
+      </paper-menu-button>
       <msc-tip-button recipient="{{currentPlay.contract_id}}" tip-contract></msc-tip-button>
     </div>
   </template>

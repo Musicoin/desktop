@@ -1,8 +1,18 @@
 <dom-module id="msc-playlists-view">
   <link rel="import" type="css" href="msc-playlists-view.css">
   <template>
-    <msc-player-view groups="{{playlists}}" instruction-text="{{local.playlistsView.instructions}}"></msc-player-view>
-    <paper-fab id="addNewPlaylistButton" icon="add" mini on-tap="handleAddNewPlaylist"></paper-fab>
+    <msc-player-view
+            id="playlistsGrid"
+            actions='["av:play-arrow", "icons:delete"]'
+            groups="{{playlists}}"
+            hidden$="{{!shouldHideEditor(selectedPlaylist)}}"
+            instruction-text="{{locale.playlistsView.instructions}}"></msc-player-view>
+
+    <msc-playlist-editor-view
+            id="playlistEditor"
+            playlist="{{selectedPlaylist}}"
+            hidden$="{{shouldHideEditor(selectedPlaylist)}}"></msc-playlist-editor-view>
+
   </template>
   <script src="msc-playlists-view.js"></script>
 </dom-module>

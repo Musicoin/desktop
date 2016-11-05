@@ -1,7 +1,16 @@
 <dom-module id="msc-playlist-editor-view">
   <link rel="import" type="css" href="msc-playlist-editor-view.css">
   <template>
-    <msc-player-view groups="{{groups}}" instruction-text="{{local.playlistEditorView.instructions}}"></msc-player-view>
+    <div class="header">
+      <paper-icon-button icon="icons:arrow-back" class="back-button" on-tap="handleBackClick"></paper-icon-button>
+      {{playlist.name}}
+    </div>
+    <msc-player-view
+            id="browse"
+            actions='["icons:delete"]'
+            show-group-play-icon
+            groups="{{groups}}"
+            instruction-text="{{local.playlistEditorView.instructions}}"></msc-player-view>
   </template>
   <script src="msc-playlist-editor-view.js"></script>
 </dom-module>

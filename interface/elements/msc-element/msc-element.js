@@ -26,6 +26,10 @@
           mscIntf.audio.playAll(e.detail);
         });
 
+        this.$.browse.addEventListener('icons:favorite', function(e) {
+          mscIntf.profile.addToPlaylist("My Favorites", e.detail.contract_id);
+        }.bind(this));
+
         this.$.browse.addEventListener('line2-selected', function(e) {
           mscIntf.catalog.loadArtist(e.detail.work.owner_address);
           this.selectedPage = 'artist';
@@ -112,5 +116,10 @@
         };
 
         this.browseViewItems = newGroups.map(toViewGroup);
+      },
+      _computeIconForCategory: function(category) {
+        if (category.id == 'new-releases') return "social:whatshot";
+        if (category.id == 'coinboard') return "icons:toll";
+        return "av:art-track";
       }
 });

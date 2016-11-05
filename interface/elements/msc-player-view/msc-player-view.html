@@ -13,18 +13,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style include="shared-styles" is="custom-style"></style>
   <template>
     <div style="position:relative;padding:10px">
-      <template is="dom-repeat" items="{{groups}}" as="group" style="position:relative">
+      <template id="groupLoop" is="dom-repeat" items="{{groups}}" as="group" style="position:relative">
         <div hidden$="{{!_shouldHideInstructions(groups.*, instructionText)}}">
           <div class="group-header">{{group.name}}
             <paper-icon-button hidden$="[[!showGroupPlayIcon]]" icon="[[groupActionIcon]]" on-tap="handleGroupSelection"
                                class="action-button"></paper-icon-button>
           </div>
-          <template is="dom-repeat" items="{{group.items}}" style="position:relative">
+          <template is="dom-repeat" id="itemLoop" items="{{group.items}}" style="position:relative">
             <div class="title">
               <paper-card class="recent" selected$="{{_isSelected(item, selectedItem)}}" animated="true" elevation="3" on-tap="handleItemSelection">
                 <div class="recent-bg" style="background-image: url('{{item.img}}');"></div>
                 <paper-ripple fit></paper-ripple>
                 <div class="show-off"></div>
+                <div class="action-area">
+                  <template is="dom-repeat" items="{{actions}}" as="action">
+                    <paper-icon-button class="action" icon="{{action}}" on-tap="fireAction"></paper-icon-button>
+                  </template>
+                  <!--<paper-icon-button class="action" icon="av:play-arrow"></paper-icon-button>-->
+                  <!--<paper-icon-button class="action" icon="icons:create"></paper-icon-button>-->
+                  <!--<paper-icon-button class="action" icon="icons:delete"></paper-icon-button>-->
+                </div>
               </paper-card>
               <p class="title-details">
                 <span class="description track">{{item.line1}}</span><br>

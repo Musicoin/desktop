@@ -17,6 +17,32 @@ paper-card.recent {
     overflow: hidden;
 }
 
+.action-area {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: none;
+    flex-direction: column;
+}
+
+.action {
+    background-color: rgba(255,255,255,0.6);
+    width: 32px;
+    height: 32px;
+    margin: 4px;
+    border-radius: 4px;
+    border: 1px solid white;
+    color: #636060;
+    --paper-icon-button: {
+        padding: 2px;
+    }
+}
+
+.recent:hover .action-area {
+    display: flex;
+}
+
 paper-card.recent[selected] {
     box-shadow: 0 0 35px -4px rgba(255,255,200,0.8);
 }

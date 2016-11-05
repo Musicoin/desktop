@@ -129,6 +129,7 @@ pcsUserPrefs.addObservable('playlists', []);
 pcsUserPrefs.addObservable('username', '');
 pcsUserPrefs.addObservable('musicianMode', false);
 pcsUserPrefs.addObservable('registrationStatus', {});
+pcsUserPrefs.addObservable('playlistEdit', "", true);
 
 // PreferenceManager handles swapping in/out of preferences when the selected account changes
 var PreferenceManager = require("./preferences.js");
@@ -351,6 +352,14 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
             mschub.selectedArtist = result;
           });
         return {result: "pending"};
+      },
+      loadLicenses: function(elem, params, fns) {
+        var tx = mschub.messageMonitor.create();
+        musicoinService.loadLicenseDetails(params.licenses)
+          .then(function(items) {
+            mschub.messageMonitor.success(tx, items);
+          });
+        return tx;
       }
     },
     publish: {
@@ -507,6 +516,30 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       },
       unfavorite: function(elem, params, fns) {
         preferenceManager.removeFavorite(params.contract_id);
+      },
+      addPlaylist: function(elem, params, fns) {
+        preferenceManager.addPlaylist(params.playlistName);
+      },
+      removePlaylist: function(elem, params, fns) {
+        preferenceManager.removePlaylist(params.playlistName);
+      },
+      addToPlaylist: function(elem, params, fns) {
+        return mschub.messageMonitor.notifyOnCompletion(
+          preferenceManager.addToPlaylist(params.playlistName,params.licenseId)
+            .bind(this)
+            .then(function(){
+              this.userPreferences.playlistEdit = params.playlistName;
+            })
+        );
+      },
+      removeFromPlaylist: function(elem, params, fns) {
+        return mschub.messageMonitor.notifyOnCompletion(
+          preferenceManager.removeFromPlaylist(params.playlistName,params.licenseId)
+            .bind(this)
+            .then(function(){
+              this.userPreferences.playlistEdit = params.playlistName;
+            })
+        );
       },
     }
   };

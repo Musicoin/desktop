@@ -23,6 +23,20 @@ MessageMonitor.prototype.waitForResult = function(tx) {
   }.bind(this))
 };
 
+MessageMonitor.prototype.notifyOnCompletion = function(promise) {
+  var tx = this.create();
+  promise
+    .bind(this)
+    .then(function(result) {
+        this.complete(tx, result);
+      }
+    )
+    .catch(function(err) {
+      this.error(tx, err);
+    });
+  return tx;
+};
+
 
 MessageMonitor.prototype.monitor = function(tx, callback) {
   if (!this.monitors[tx]) {

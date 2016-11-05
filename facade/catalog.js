@@ -16,6 +16,10 @@ module.exports = function(rpcProvider) {
     releaseLicense: function(license) {
       var tx = rpcProvider.fnPool('publish', 'releaseLicense', null, {license:license});
       return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    loadLicenses: function(licenses) {
+      var tx = rpcProvider.fnPool('catalog', 'loadLicenses', null, {licenses:licenses});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     }
   }
 };

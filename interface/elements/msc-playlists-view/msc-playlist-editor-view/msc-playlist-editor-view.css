@@ -1,3 +1,15 @@
 :host {
 
 }
+
+.header {
+    color: #aaa;
+    font-weight: lighter;
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+}
+
+.back-button {
+    padding: 0px 0px 10px;
+}

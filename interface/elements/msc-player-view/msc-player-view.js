@@ -30,6 +30,10 @@ Polymer({
     selectedItem: {
       type: Object,
       value: {}
+    },
+    actions: {
+      type: Array,
+      value: []
     }
   },
   _isSelected: function(item) {
@@ -56,5 +60,10 @@ Polymer({
   },
   handleLine2Selection: function(e) {
     this.fire('line2-selected', e.model.item.data);
+  },
+  fireAction: function(e) {
+    e.cancelBubble = true;
+    e.stopPropagation();
+    this.fire(e.model.action, e.model.dataHost.dataHost.dataHost.modelForElement(e.target).item.data);
   }
 })

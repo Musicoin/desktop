@@ -111,3 +111,16 @@ msc-tip-button {
   display: block;
   background-color: #009443;
 }
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-option {
+  font-size: larger;
+  font-weight: lighter;
+  cursor: pointer;
+  margin: 5px;
+  white-space: nowrap;
+}

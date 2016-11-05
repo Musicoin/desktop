@@ -239,11 +239,11 @@ paper-toast {
     pointer-events: none;
 }
 h3[disabled] {
-  margin: 0;
-  text-transform: uppercase;
-  padding: 0 16px;
-  margin-top: 16px;
-  pointer-events: none;
+    text-transform: uppercase;
+    padding: 0 16px;
+    pointer-events: none;
+    margin: 8px 50px 8px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 msc-simple-login-view {
@@ -259,4 +259,8 @@ msc-simple-login-view {
     -ms-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
+}
+
+.menu-icon {
+    margin: 5px 10px;
 }

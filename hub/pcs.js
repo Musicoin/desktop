@@ -20,7 +20,7 @@ PropertyChangeSupport.prototype.addPropertyListener = function (prop, callback) 
   this.pcsListeners[prop].push(callback);
 };
 
-PropertyChangeSupport.prototype.addObservable = function (prop, defaultValue) {
+PropertyChangeSupport.prototype.addObservable = function (prop, defaultValue, alwaysNotify) {
   // TODO: We could also use a Prototype for the mschub object
   // shadow value is required here because defineProperty cannot hold a value (state) and define
   // getter/setter at the same time.  why???
@@ -33,7 +33,7 @@ PropertyChangeSupport.prototype.addObservable = function (prop, defaultValue) {
     },
     set: function (newValue) {
       var oldValue = subject[prop];
-      if (oldValue != newValue) {
+      if (alwaysNotify || oldValue != newValue) {
         shadowValue = newValue;
         pcs.firePropertyChange(prop, oldValue, newValue);
       }

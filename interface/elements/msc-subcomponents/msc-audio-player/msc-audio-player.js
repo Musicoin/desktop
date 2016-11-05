@@ -7,6 +7,9 @@ Polymer({
         .to('currentPlay')
         .to('playbackPaymentPercentage')
 
+      mscIntf.userPreferences.attach(this)
+        .to("playlists");
+
       mscIntf.audioElement = this.$.player;
 
       var _updatePlayState = function() {this.updatePlayState()}.bind(this);
@@ -37,6 +40,7 @@ Polymer({
         type: String,
         value: 'av:play-arrow'
       },
+      playlists: Array,
       playbackPaymentPercentage: Number
     },
     _currentPlayChanged: function(item) {
@@ -68,5 +72,22 @@ Polymer({
     },
     showTrackDetailView: function() {
       mscIntf.selectedPage = 'track';
+    },
+    addToPlaylist: function(e) {
+      this.addCurrentToPlaylist(e.model.playlist.name);
+    },
+    addToNewPlaylist: function(e) {
+      var name = prompt("Enter a new for the new playlist");
+      if (name) {
+        this.addCurrentToPlaylist(name);
+      }
+    },
+    addCurrentToPlaylist: function(playlistName) {
+      mscIntf.profile.addToPlaylist(playlistName, this.currentPlay.contract_id);
+      this.$.playlistMenu.close();
+    },
+    _computeAddToPlaylistDisabled: function() {
+      return !this.currentPlay || !this.currentPlay.contract_id;
     }
+
 })

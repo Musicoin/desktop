@@ -13,20 +13,36 @@
           <app-drawer dan-ui>
             <msc-simple-user-badge></msc-simple-user-badge>
             <paper-menu id="mainMenu" selected="{{selectedPage}}" class="drawer-menu" attr-for-selected="menu-name">
-              <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.categories]]</h3>
               <template is="dom-repeat" items="{{browseCategories}}" as="category" style="position:relative">
                 <!-- TODO: The catalog service will need to accept a locale id -->
-                <paper-item menu-name="[[category.id]]">[[category.name]]</paper-item>
+                <paper-item menu-name="[[category.id]]">
+                  <iron-icon icon="[[_computeIconForCategory(category)]]" class="menu-icon"></iron-icon>
+                  [[category.name]]
+                </paper-item>
               </template>
-              <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.playlist]]</h3>
-              <paper-item menu-name="myf">[[locale.navMenu.items.myFavorites]]</paper-item>
-              <paper-item menu-name="playlists">[[locale.navMenu.items.myPlaylists]]</paper-item>
-              <paper-item menu-name="following">[[locale.navMenu.items.following]]</paper-item>
-              <h3 disabled class="drawer-menu-label" hidden$="[[!musicianMode]]">[[locale.navMenu.headers.musician]]</h3>
-              <paper-item menu-name="myw" hidden$="[[!musicianMode]]">[[locale.navMenu.items.myWorks]]</paper-item>
-              <h3 disabled class="drawer-menu-label">[[locale.navMenu.headers.account]]</h3>
-              <paper-item menu-name="myp">[[locale.navMenu.items.myProfile]]</paper-item>
-              <paper-item menu-name="history">[[locale.navMenu.items.history]]</paper-item>
+              <h3 disabled class="drawer-menu-label"></h3>
+              <paper-item menu-name="playlists">
+                <iron-icon icon="av:queue-music" class="menu-icon"></iron-icon>
+                [[locale.navMenu.items.myPlaylists]]
+              </paper-item>
+              <paper-item menu-name="following">
+                <iron-icon icon="social:people" class="menu-icon"></iron-icon>
+                [[locale.navMenu.items.following]]
+              </paper-item>
+              <h3 disabled class="drawer-menu-label" hidden$="[[!musicianMode]]"></h3>
+              <paper-item menu-name="myw" hidden$="[[!musicianMode]]">
+                <iron-icon icon="av:mic" class="menu-icon"></iron-icon>
+                [[locale.navMenu.items.myWorks]]
+              </paper-item>
+              <h3 disabled class="drawer-menu-label"></h3>
+              <paper-item menu-name="myp">
+                <iron-icon icon="icons:account-box" class="menu-icon"></iron-icon>
+                [[locale.navMenu.items.myProfile]]
+              </paper-item>
+              <paper-item menu-name="history">
+                <iron-icon icon="icons:receipt" class="menu-icon"></iron-icon>
+                [[locale.navMenu.items.history]]
+              </paper-item>
             </paper-menu>
           </app-drawer>
         </template>
@@ -45,6 +61,7 @@
           </app-toolbar>
         </app-header>
         <msc-player-view id="browse"
+                         actions='["icons:favorite"]'
                          show-group-play-icon
                          hidden$="{{_shouldHideBrowsePage(selectedPage)}}"
                          groups="[[browseViewItems]]"

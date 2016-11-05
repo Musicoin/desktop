@@ -68,6 +68,59 @@ PreferenceManager.prototype.removeFavorite = function(contractAddress) {
     });
 };
 
+PreferenceManager.prototype.addPlaylist = function(playlistName) {
+  var list = (this.userPreferences.playlists|| []).slice();
+  list.push({name:playlistName, licenseIds:[]});
+  return Promise.resolve(list)
+    .then(function(newList) {
+      this.userPreferences.playlists = newList;
+      return this.savePreferences();
+    }.bind(this))
+};
+
+PreferenceManager.prototype.removePlaylist = function(playlistName) {
+  var list = (this.userPreferences.playlists|| []).filter(function(p) { return p.name != playlistName});
+  return Promise.resolve(list)
+    .then(function(newList) {
+      this.userPreferences.playlists = newList;
+      return this.savePreferences();
+    }.bind(this))
+};
+
+PreferenceManager.prototype.addToPlaylist = function(playlistName, licenseId) {
+  var list = (this.userPreferences.playlists|| []).slice();
+  var selected = list.filter(function(playlist){ return playlist.name == playlistName})[0];
+  if (!selected) {
+    selected = {name:playlistName, licenseIds: []};
+    list.push(selected);
+  }
+  selected.licenseIds.push(licenseId);
+  return Promise.resolve(list)
+    .then(function(newList) {
+      this.userPreferences.playlists = newList;
+      return this.savePreferences();
+    }.bind(this));
+};
+
+PreferenceManager.prototype.removeFromPlaylist = function(playlistName, licenseId) {
+  var list = (this.userPreferences.playlists|| []).slice();
+  list.forEach(function (playlist) {
+    if (playlist.name == playlistName) {
+      var idx = playlist.licenseIds.indexOf(licenseId);
+      if (idx > -1) {
+        playlist.licenseIds.splice(idx, 1);
+      }
+    }
+  });
+  return Promise.resolve(list)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.playlists = newList;
+      return this.savePreferences();
+    });
+};
+
+
 PreferenceManager.prototype.addMember = function(oldList, item) {
   var list = (oldList || []).slice();
   var idx = list.indexOf(item);

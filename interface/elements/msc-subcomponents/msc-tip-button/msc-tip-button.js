@@ -47,6 +47,11 @@ Polymer({
     },
     sendTipAsync: function() {
         var tipAmountInMusicoin = 1;
+
+        if (this.tipContract) {
+            mscIntf.profile.addToPlaylist("My Favorites", this.recipient);
+        }
+
         var promise = this.tipContract
           ? mscIntf.payments.sendTip(this.recipient, tipAmountInMusicoin)
           : mscIntf.payments.send(this.recipient, tipAmountInMusicoin);

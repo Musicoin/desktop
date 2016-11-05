@@ -5,6 +5,7 @@ function MusicoinConnector(server, blockchain) {
   this.musicoinListURL = server + "/api/pages/list";
   this.musicoinContentURL = server + "/api/page/content";
   this.musicoinMusicianURL = server + "/api/musician/content";
+  this.musicoinLicenseDetailURL = server + "/api/license/detail";
   this.musicoinMyWorksURL = server + "/api/works/list";
   this.musicoinMyProfileURL = server + "/api/myProfile";
   this.musicoinMyHistoryURL = "http://blocks.musicoin.org/api/history/";
@@ -140,6 +141,37 @@ MusicoinConnector.prototype.loadArtist = function(artist_address) {
       }
       else {
         console.log("Unable to load artist: " + error);
+        reject(error);
+      }
+    }.bind(this))
+  }.bind(this));
+};
+
+MusicoinConnector.prototype.loadLicenseDetails = function(contractIds) {
+  var propertiesObject = {address: contractIds.join(',')};
+  return new Promise(function (resolve, reject){
+    return request({
+      url: this.musicoinLicenseDetailURL,
+      qs: propertiesObject,
+      json: true
+    }, function (error, response, body) {
+      if (!error && !body.success) {
+        error = new Error(body.message);
+      }
+
+      if (!error && response.statusCode === 200) {
+        var sorter = {};
+        var sorted = [];
+        body.content.forEach(function(l) { sorter[l.contract_id] = l;});
+        contractIds.forEach(function(id) {
+          if (sorter[id]) {
+            sorted.push(sorter[id]);
+          }
+        });
+        resolve(sorted);
+      }
+      else {
+        console.log("Unable to load licenses: " + error);
         reject(error);
       }
     }.bind(this))
