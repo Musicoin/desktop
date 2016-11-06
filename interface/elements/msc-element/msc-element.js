@@ -26,7 +26,15 @@
           mscIntf.audio.playAll(e.detail);
         });
 
-        this.$.browse.addEventListener('icons:favorite', function(e) {
+        this.$.browse.addEventListener('play', function(e) {
+          mscIntf.audio.playAll(e.detail);
+        });
+
+        this.$.browse.addEventListener('shuffle', function(e) {
+          mscIntf.audio.shuffleAll(e.detail);
+        });
+
+        this.$.browse.addEventListener('favorite', function(e) {
           mscIntf.profile.addToPlaylist("My Favorites", e.detail.contract_id);
         }.bind(this));
 

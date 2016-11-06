@@ -12,6 +12,7 @@ msc-track-view,
 msc-artist-view,
 msc-playlists-view,
 msc-tx-view,
+msc-following-view,
 msc-profile-view {
   display: none;
   background-color: var(--msc-secondary-background-color);
@@ -32,6 +33,7 @@ app-drawer[dan-ui] {
 :host[selected-page="playlists"] msc-playlists-view,
 :host[selected-page="myp"] msc-profile-view,
 :host[selected-page="history"] msc-tx-view,
+:host[selected-page="following"] msc-following-view,
 :host[selected-page="wal"] msc-wallet-view {
   display: block;
 }
@@ -263,4 +265,23 @@ msc-simple-login-view {
 
 .menu-icon {
     margin: 5px 10px;
+}
+
+.notification {
+    min-width: 11px;
+    background-color: #00a321;
+    border: 2px solid hsla(0,0%,81%,1);
+    border-radius: 9px;
+    position: absolute;
+    right: 25px;
+    text-align: center;
+    color: white;
+    top: 6px;
+    padding: 0px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 12px;
+    line-height: 1.5;
 }

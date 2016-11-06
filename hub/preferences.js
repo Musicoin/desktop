@@ -123,6 +123,32 @@ PreferenceManager.prototype.removeFromPlaylist = function(playlistName, licenseI
     });
 };
 
+PreferenceManager.prototype.moveItemInPlaylist = function(playlistName, from, to) {
+  var list = (this.userPreferences.playlists|| []).slice();
+  if (from != to) {
+    list.forEach(function (playlist) {
+      if (playlist.name == playlistName) {
+        var value = playlist.licenseIds[from];
+        playlist.licenseIds.splice(from, 1);
+        if (to > from) {
+          playlist.licenseIds.splice(to-1, 0, value);
+        }
+        else {
+          playlist.licenseIds.splice(to, 0, value);
+        }
+      }
+    });
+  }
+  return Promise.resolve(list)
+    .bind(this)
+    .then(function(newList) {
+      this.userPreferences.playlists = newList;
+      return this.savePreferences();
+    });
+};
+
+
+
 
 PreferenceManager.prototype.addMember = function(oldList, item) {
   var list = (oldList || []).slice();

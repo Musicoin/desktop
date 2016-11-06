@@ -20,8 +20,12 @@ Polymer({
     mscIntf.userPreferences.attach(this)
       .to('following');
 
-    this.$.browse.addEventListener('selected', function (e) {
+    this.$.browse.addEventListener('play', function(e) {
       mscIntf.audio.playAll(e.detail);
+    });
+
+    this.$.browse.addEventListener('shuffle', function(e) {
+      mscIntf.audio.shuffleAll(e.detail);
     });
   },
   follow: function() {

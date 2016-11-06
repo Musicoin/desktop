@@ -7,8 +7,9 @@
     </div>
     <msc-player-view
             id="browse"
-            actions='["icons:delete"]'
-            show-group-play-icon
+            allow-drag="true"
+            actions='[{"icon":"icons:delete", "id":"delete"}]'
+            group-actions='[{"icon":"av:play-arrow", "id":"play"}, {"icon":"av:shuffle", "id":"shuffle"}, {"icon":"icons:cloud-upload", "id":"release"}]'
             groups="{{groups}}"
             instruction-text="{{local.playlistEditorView.instructions}}"></msc-player-view>
   </template>

@@ -20,9 +20,25 @@ Polymer({
         }
       }.bind(this));
 
-    this.$.browse.addEventListener('icons:delete', function (e) {
+    this.$.browse.addEventListener('delete', function (e) {
       mscIntf.profile.removeFromPlaylist(this.playlist.name, e.detail.contract_id);
     }.bind(this));
+
+    this.$.browse.addEventListener('play', function(e) {
+      mscIntf.audio.playAll(e.detail);
+    });
+
+    this.$.browse.addEventListener('release', function(e) {
+      alert("Not implemented");
+    });
+
+    this.$.browse.addEventListener('move', function(e) {
+      mscIntf.profile.moveItemInPlaylist(this.playlist.name, e.detail.from, e.detail.to);
+    }.bind(this));
+
+    this.$.browse.addEventListener('shuffle', function(e) {
+      mscIntf.audio.shuffleAll(e.detail);
+    });
   },
   _playlistChanged: function(newPlaylist) {
     if (!newPlaylist || !newPlaylist.licenseIds || newPlaylist.licenseIds.length == 0) {

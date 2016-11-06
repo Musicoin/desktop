@@ -157,6 +157,16 @@ mschub.clientUtils = {
   }
 }
 
+var shuffle = function (a) {
+  var j, x, i;
+  for (i = a.length; i; i--) {
+    j = Math.floor(Math.random() * i);
+    x = a[i - 1];
+    a[i - 1] = a[j];
+    a[j] = x;
+  }
+}
+
 /* here we define functions pool. It can be called from the interface with respective fngroup and fn provided to execute function on backend and grab result */
 mschub.fnPool = function(fngroup, fn, elem, params) {
   var fns = {
@@ -299,6 +309,12 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
     audio:{
       playAll: function(elem, params, fns) {
         mschub.audioHub.playlist = params.items;
+        fns.audio.playNext(elem, {}, fns);
+      },
+      shuffleAll: function(elem, params, fns) {
+        var items = params.items.slice();
+        shuffle(items);
+        mschub.audioHub.playlist = items;
         fns.audio.playNext(elem, {}, fns);
       },
       playNext: function(elem, params, fns) {
@@ -540,6 +556,15 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       removeFromPlaylist: function(elem, params, fns) {
         return mschub.messageMonitor.notifyOnCompletion(
           preferenceManager.removeFromPlaylist(params.playlistName,params.licenseId)
+            .bind(this)
+            .then(function(){
+              this.userPreferences.playlistEdit = params.playlistName;
+            })
+        );
+      },
+      moveItemInPlaylist: function(elem, params, fns) {
+        return mschub.messageMonitor.notifyOnCompletion(
+          preferenceManager.moveItemInPlaylist(params.playlistName,params.from,params.to)
             .bind(this)
             .then(function(){
               this.userPreferences.playlistEdit = params.playlistName;

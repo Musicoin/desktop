@@ -27,6 +27,10 @@ module.exports = function(rpcProvider) {
     removeFromPlaylist: function(playlistName, licenseId) {
       var tx = rpcProvider.fnPool('profile', 'removeFromPlaylist', null, {playlistName:playlistName, licenseId:licenseId});
       return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    moveItemInPlaylist: function(playlistName, from, to) {
+      var tx = rpcProvider.fnPool('profile', 'moveItemInPlaylist', null, {playlistName:playlistName, from:from, to:to});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     }
   }
 };

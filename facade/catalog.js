@@ -20,6 +20,10 @@ module.exports = function(rpcProvider) {
     loadLicenses: function(licenses) {
       var tx = rpcProvider.fnPool('catalog', 'loadLicenses', null, {licenses:licenses});
       return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    loadArtists: function(artist_addresses) {
+      var tx = rpcProvider.fnPool('catalog', 'loadArtists', null, {artist_addresses:artist_addresses});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     }
   }
 };

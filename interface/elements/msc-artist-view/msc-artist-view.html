@@ -17,7 +17,11 @@
     <div class="bio">
       {{selectedArtist.description}}
     </div>
-    <msc-player-view id="browse" class="songs"  show-group-play-icon groups="{{songs}}"></msc-player-view>
+    <msc-player-view
+            id="browse"
+            class="songs"
+            group-actions='[{"icon":"av:play-arrow", "id":"play"}, {"icon":"av:shuffle", "id":"shuffle"}]'
+            groups="{{songs}}"></msc-player-view>
   </template>
   <script src="msc-artist-view.js"></script>
 </dom-module>

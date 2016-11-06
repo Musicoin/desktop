@@ -9,6 +9,9 @@ module.exports = function(rpcProvider) {
     playAll: function(items) {
       return rpcProvider.fnPool('audio', 'playAll', null, {items: items});
     },
+    shuffleAll: function(items) {
+      return rpcProvider.fnPool('audio', 'shuffleAll', null, {items: items});
+    },
     reportPlaybackPercentage: function(item, percentage) {
       return rpcProvider.fnPool('audio', 'reportPlaybackPercentage', null, {
           percentage: percentage,

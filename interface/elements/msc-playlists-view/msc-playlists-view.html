@@ -3,7 +3,7 @@
   <template>
     <msc-player-view
             id="playlistsGrid"
-            actions='["av:play-arrow", "av:shuffle", "icons:delete"]'
+            actions='[{"icon":"av:play-arrow", "id":"play"}, {"icon":"av:shuffle", "id":"shuffle"}, {"icon":"icons:delete", "id":"delete"}]'
             groups="{{playlists}}"
             hidden$="{{!shouldHideEditor(selectedPlaylist)}}"
             instruction-text="{{locale.playlistsView.instructions}}"></msc-player-view>

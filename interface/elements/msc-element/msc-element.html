@@ -28,6 +28,7 @@
               <paper-item menu-name="following">
                 <iron-icon icon="social:people" class="menu-icon"></iron-icon>
                 [[locale.navMenu.items.following]]
+                <div disabled class="notification" hidden></div>
               </paper-item>
               <h3 disabled class="drawer-menu-label" hidden$="[[!musicianMode]]"></h3>
               <paper-item menu-name="myw" hidden$="[[!musicianMode]]">
@@ -61,8 +62,8 @@
           </app-toolbar>
         </app-header>
         <msc-player-view id="browse"
-                         actions='["icons:favorite"]'
-                         show-group-play-icon
+                         actions='[{"icon":"icons:favorite", "id":"favorite"}]'
+                         group-actions='[{"icon":"av:play-arrow", "id":"play"}, {"icon":"av:shuffle", "id":"shuffle"}]'
                          hidden$="{{_shouldHideBrowsePage(selectedPage)}}"
                          groups="[[browseViewItems]]"
                          selected-item="{{currentPlayId}}"></msc-player-view>
@@ -74,6 +75,7 @@
         <msc-playlists-view></msc-playlists-view>
         <msc-profile-view></msc-profile-view>
         <msc-tx-view></msc-tx-view>
+        <msc-following-view></msc-following-view>
       </app-header-layout>
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>

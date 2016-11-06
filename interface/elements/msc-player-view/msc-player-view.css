@@ -39,6 +39,16 @@ paper-card.recent {
     }
 }
 
+.group-action-area {
+    margin-left: 20px;
+}
+
+.group-action {
+    padding: 0px;
+    width: 28px;
+    height: 28px;
+}
+
 .recent:hover .action-area {
     display: flex;
 }
@@ -105,6 +115,9 @@ h1 {
 .group-header {
     font-size: larger;
     font-weight: lighter;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .group-header > paper-icon-button[hidden] {
