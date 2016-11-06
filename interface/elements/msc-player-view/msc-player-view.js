@@ -76,7 +76,7 @@ Polymer({
     while (target && target.className.indexOf("title") < 0) {
       target = target.parentElement;
     }
-
+    var numItems = (target.parentElement.childElementCount-1); // template counts as one, subtract it
     switch(e.detail.state) {
       case 'start':
         target.style.position = "relative";
@@ -93,6 +93,8 @@ Polymer({
         break;
       case 'end':
         var position = this.computePosition(target) + 1;
+        position = Math.min(position, numItems);
+
         target.style.top = 0 + "px";
         target.style.left = 0 + "px";
         target.style.opacity = 1;
@@ -100,9 +102,9 @@ Polymer({
 
         // Update the UI immediately, then fire the event
         var arrayId = "groups." + this.dragGroupIndex + ".items";
-        var numItems = (target.parentElement.childElementCount-1);
+
         this.splice(arrayId, this.startIndex, 1);
-        position = Math.min(position, numItems);
+
         if (position > this.startIndex) {
           this.splice(arrayId, position-1, 0, this.dragItem);
         }
@@ -120,7 +122,7 @@ Polymer({
     var xPos = target.getBoundingClientRect().left;
     var numItems = (target.parentElement.childElementCount-1);
     var col = Math.floor((xPos - target.parentElement.getBoundingClientRect().left) / target.getBoundingClientRect().width);
-    var cols = Math.floor((target.parentElement.getBoundingClientRect().width-10) / (target.getBoundingClientRect().width+margin));
+    var cols = Math.floor((target.parentElement.getBoundingClientRect().width-margin) / (target.getBoundingClientRect().width+margin));
     var row = Math.floor((yPos - target.parentElement.getBoundingClientRect().top) / target.getBoundingClientRect().height)
     var rows = Math.ceil(numItems/cols);
 

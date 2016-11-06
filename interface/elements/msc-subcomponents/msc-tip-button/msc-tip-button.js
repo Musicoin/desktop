@@ -62,10 +62,14 @@ Polymer({
                   this.tipStatus = 3;
                   window.setTimeout(function() {
                       this.tipStatus = 0;
-                  }.bind(this), 1000);
+                  }.bind(this), 3000);
               })
               .catch(function(err) {
                   this.tipStatus = 2;
+                  console.log("Tip failed: " + err);
+                  window.setTimeout(function() {
+                      this.tipStatus = 0;
+                  }.bind(this), 3000);
               });
     }
 });
