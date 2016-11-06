@@ -49,7 +49,7 @@ Polymer({
         var tipAmountInMusicoin = 1;
 
         if (this.tipContract) {
-            mscIntf.profile.addToPlaylist("My Favorites", this.recipient);
+            mscIntf.profile.addToPlaylist("My Favorites", this.recipient, true);
         }
 
         var promise = this.tipContract

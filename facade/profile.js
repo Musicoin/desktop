@@ -20,8 +20,8 @@ module.exports = function(rpcProvider) {
       var tx = rpcProvider.fnPool('profile', 'removePlaylist', null, {playlistName:playlistName});
       return rpcProvider.messageMonitor.waitForResult(tx);
     },
-    addToPlaylist: function(playlistName, licenseId) {
-      var tx = rpcProvider.fnPool('profile', 'addToPlaylist', null, {playlistName:playlistName, licenseId:licenseId});
+    addToPlaylist: function(playlistName, licenseId, suppressDuplicates) {
+      var tx = rpcProvider.fnPool('profile', 'addToPlaylist', null, {playlistName:playlistName, licenseId:licenseId, suppressDuplicates:!!suppressDuplicates});
       return rpcProvider.messageMonitor.waitForResult(tx);
     },
     removeFromPlaylist: function(playlistName, licenseId) {

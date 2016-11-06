@@ -28,7 +28,7 @@ MessageMonitor.prototype.notifyOnCompletion = function(promise) {
   promise
     .bind(this)
     .then(function(result) {
-        this.complete(tx, result);
+        this.success(tx, result);
       }
     )
     .catch(function(err) {

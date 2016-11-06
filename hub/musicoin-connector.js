@@ -1,5 +1,6 @@
 var request = require("request");
 var fs = require("fs");
+var Promise = require("bluebird");
 
 function MusicoinConnector(server, blockchain) {
   this.musicoinListURL = server + "/api/pages/list";
@@ -145,6 +146,22 @@ MusicoinConnector.prototype.loadArtist = function(artist_address) {
       }
     }.bind(this))
   }.bind(this));
+};
+
+MusicoinConnector.prototype.loadArtists = function(artist_addresses) {
+  var promises = [];
+  artist_addresses.forEach(function(artist_address) {
+    promises.push(this.loadArtist(artist_address));
+  }.bind(this));
+
+  return Promise.all(promises)
+    .then(function(allResults) {
+      var output = {};
+      artist_addresses.forEach(function (addr, idx) {
+        output[addr] = allResults[idx];
+      });
+      return output;
+    });
 };
 
 MusicoinConnector.prototype.loadLicenseDetails = function(contractIds) {

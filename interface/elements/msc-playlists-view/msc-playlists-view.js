@@ -67,6 +67,17 @@ Polymer({
         })
     }.bind(this));
 
+    this.$.playlistsGrid.addEventListener('av:shuffle', function (e) {
+      var playlist = e.detail;
+      var copy = playlist.licenseIds.slice();
+      this.shuffle(copy);
+      mscIntf.catalog.loadLicenses(copy)
+        .bind(this)
+        .then(function(details) {
+          mscIntf.audio.playAll(details);
+        })
+    }.bind(this));
+
     this.$.playlistsGrid.addEventListener('selected', function (e) {
       this.selectedPlaylist = e.detail[0];
     }.bind(this));
@@ -82,6 +93,15 @@ Polymer({
     var name = prompt("Enter a name");
     if (name) {
       mscIntf.profile.addPlaylist(name);
+    }
+  },
+  shuffle: function (a) {
+    var j, x, i;
+    for (i = a.length; i; i--) {
+      j = Math.floor(Math.random() * i);
+      x = a[i - 1];
+      a[i - 1] = a[j];
+      a[j] = x;
     }
   }
 });

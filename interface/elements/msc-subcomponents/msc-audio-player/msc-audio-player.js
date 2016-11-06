@@ -20,7 +20,7 @@ Polymer({
 
       this.$.player.addEventListener('timeupdate', function() {
         var progress_percent = this.$.player.currentTime / this.$.player.duration * 100;
-        this.$.progress.value = progress_percent;
+        this.$.progress.value = progress_percent*100; // 0 to 10000
         mscIntf.audio.reportPlaybackPercentage(this.currentPlay, progress_percent);
       }.bind(this));
 

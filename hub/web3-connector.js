@@ -226,7 +226,7 @@ Web3Connector.prototype.waitForTransaction = function (expectedTx) {
       if (result) console.log("Result: " + result);
       count++;
 
-      if (count > 5) {
+      if (count > 10) {
         console.log("Giving up on tx " + expectedTx);
         reject(new Error("Transaction was not confirmed"));
         filter.stopWatching();
@@ -235,6 +235,7 @@ Web3Connector.prototype.waitForTransaction = function (expectedTx) {
       // each time a new block comes in, see if our tx is in it
       this.web3.eth.getTransactionReceipt(expectedTx, function(error, receipt) {
         if (receipt && receipt.transactionHash == expectedTx) {
+          console.log("Got receipt: " + expectedTx + ", blockHash: " + receipt.blockHash);
           this.web3.eth.getTransaction(expectedTx, function (error, transaction) {
             if (transaction.gas == receipt.gasUsed) {
               // wtf?! This is the only way to check for an error??

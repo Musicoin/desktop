@@ -87,14 +87,17 @@ PreferenceManager.prototype.removePlaylist = function(playlistName) {
     }.bind(this))
 };
 
-PreferenceManager.prototype.addToPlaylist = function(playlistName, licenseId) {
+PreferenceManager.prototype.addToPlaylist = function(playlistName, licenseId, suppressDuplicates) {
   var list = (this.userPreferences.playlists|| []).slice();
   var selected = list.filter(function(playlist){ return playlist.name == playlistName})[0];
   if (!selected) {
     selected = {name:playlistName, licenseIds: []};
     list.push(selected);
   }
-  selected.licenseIds.push(licenseId);
+
+  if (!suppressDuplicates || selected.licenseIds.indexOf(licenseId) < 0)
+    selected.licenseIds.push(licenseId);
+
   return Promise.resolve(list)
     .then(function(newList) {
       this.userPreferences.playlists = newList;

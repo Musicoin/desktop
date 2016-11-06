@@ -7,7 +7,7 @@
       <paper-icon-button id="playButton" icon="[[playState]]" on-tap="togglePlayState" class="action-button"></paper-icon-button>
       <div class="audio-progress-area">
         <div class="audio-info">{{currentPlay.artist_name}}</div>
-        <paper-progress id="progress" class="audio-progress"></paper-progress>
+        <paper-progress id="progress" min=0 max=10000 class="audio-progress"></paper-progress>
         <div class="pay-marker"></div>
         <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
       </div>

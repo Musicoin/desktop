@@ -353,6 +353,11 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
           });
         return {result: "pending"};
       },
+      loadArtists: function(elem, params, fns) {
+        return mschub.messageMonitor.notifyOnCompletion(
+          musicoinService.loadArtists(params.artist_addresses)
+        );
+      },
       loadLicenses: function(elem, params, fns) {
         var tx = mschub.messageMonitor.create();
         musicoinService.loadLicenseDetails(params.licenses)
@@ -525,7 +530,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       },
       addToPlaylist: function(elem, params, fns) {
         return mschub.messageMonitor.notifyOnCompletion(
-          preferenceManager.addToPlaylist(params.playlistName,params.licenseId)
+          preferenceManager.addToPlaylist(params.playlistName, params.licenseId, params.suppressDuplicates)
             .bind(this)
             .then(function(){
               this.userPreferences.playlistEdit = params.playlistName;
