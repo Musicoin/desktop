@@ -115,6 +115,7 @@ msc-tip-button {
 .dropdown-content {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .playlist-option {

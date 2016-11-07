@@ -1,12 +1,22 @@
 <dom-module id="msc-track-view">
   <link rel="import" type="css" href="msc-track-view.css">
   <template>
-    <div id="trackDetailView" class="detailView">
-      <h1>{{currentPlay.song_name}}</h1>
+    <div id="background" style="background-image:url('{{currentPlay.work.image_url_https}}')"></div>
+    <div class="detail-view">
+      <div id="cover-art" style="background-image:url('{{currentPlay.work.image_url_https}}')"></div>
+      <div class="song-name">{{currentPlay.song_name}}</div>
       <div class="artist" on-tap="goToArtistPage">{{currentPlay.artist_name}}</div>
-      <paper-material class="track-detail-image" style="background-image: url('{{currentPlay.work.image_url_https}}');">
-      </paper-material>
-      {{contractId}}
+      <div class="up-next" on-tap="skipToNext" hidden$={{_computeUpNextHidden(nextPlay)}}>
+        <div class="up-next-image"
+             style="background-image: url('{{_computeUpNextImage(nextPlay)}}')"></div>
+        <div class="up-next-info">
+          <div class="up-next-label">Up Next</div>
+          <div class="up-next-song">
+            {{_computeUpNextSongName(nextPlay)}}
+          </div>
+          <div>{{_computeUpNextArtistName(nextPlay)}}</div>
+        </div>
+      </div>
     </div>
   </template>
   <script src="msc-track-view.js"></script>

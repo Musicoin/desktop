@@ -5,6 +5,10 @@
 
 .artist {
     cursor: pointer;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: lighter;
+    color: white;
 }
 
 .track-detail-image {
@@ -15,4 +19,91 @@
     left: 1em;
     width: 25%;
     height: 25%;
+}
+
+.detail-view {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* justify-content: center; */
+    flex-direction: column;
+    z-index: 3;
+}
+#cover-art {
+    height: 60%;
+    overflow: hidden;
+    background-size: contain;
+    background-position-x: center;
+    position: relative;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
+
+.song-name {
+    text-align: center;
+    font-size: 3em;
+    font-weight: lighter;
+    color: white;
+}
+
+#background {
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-size: cover;
+    filter: blur(46px);
+    opacity: 0.5;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.up-next {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0,0,0,0.5);
+    min-width: 250px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.up-next-image {
+    width: 64px;
+    height: 64px;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+}
+
+.up-next-info {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.up-next-label {
+    text-align: right;
+    color: #aaa;
+    margin-bottom: 10px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.up-next-song {
+    color: white;
+    font-weight: lighter;
+    font-style: italic;
 }

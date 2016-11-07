@@ -5,9 +5,13 @@ Polymer({
       type: Array,
       observer: "_followingChanged",
       value: []
-    }
+    },
+    locale: Object
   },
   ready: function() {
+    mscIntf.attach(this)
+      .to('locale');
+
     mscIntf.userPreferences.attach(this)
       .to('following');
 
@@ -24,11 +28,11 @@ Polymer({
     });
 
     this.$.browse.addEventListener('delete', function(e) {
-      mscIntf.profile.addToPlaylist("My Favorites", e.detail.contract_id);
+      mscIntf.profile.addToPlaylist(this.locale.general.favorites, e.detail.contract_id);
     }.bind(this));
 
     this.$.browse.addEventListener('favorite', function(e) {
-      mscIntf.profile.addToPlaylist("My Favorites", e.detail.contract_id);
+      mscIntf.profile.addToPlaylist(this.locale.general.favorites, e.detail.contract_id, true);
     }.bind(this));
 
     this.$.browse.addEventListener('line2-selected', function(e) {

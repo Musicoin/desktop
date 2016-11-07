@@ -201,6 +201,9 @@ var locale = {
       },
       placeholder: 'select existing or create new',
       createNew: 'create new account',
+    },
+    general: {
+      favorites: "My Favorites"
     }
   },
   se:{

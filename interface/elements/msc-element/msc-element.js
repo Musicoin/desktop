@@ -10,9 +10,7 @@
           .to('catalogBrowseItems')
           .to('loggedIn')
           .to('browseCategories')
-          .to('selectedPage', function(oldValue, newValue) {
-            this.selectedPage = newValue;
-          }.bind(this));
+          .to('selectedPage');
 
         mscIntf.audioHub.attach(this)
           .to('currentPlay', function(oldValue, newValue) {
@@ -35,7 +33,7 @@
         });
 
         this.$.browse.addEventListener('favorite', function(e) {
-          mscIntf.profile.addToPlaylist("My Favorites", e.detail.contract_id);
+          mscIntf.profile.addToPlaylist(this.locale.general.favorites, e.detail.contract_id, true);
         }.bind(this));
 
         this.$.browse.addEventListener('line2-selected', function(e) {

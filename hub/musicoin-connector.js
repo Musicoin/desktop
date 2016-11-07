@@ -84,10 +84,6 @@ MusicoinConnector.prototype.getPlaybackPaymentPercentage = function () {
   return this.playbackPaymentPercentage;
 };
 
-MusicoinConnector.prototype.addFavorite = function (address) {
-  // TODO:
-};
-
 MusicoinConnector.prototype.loadBrowseCategories = function (callback) {
   request({
     url: this.musicoinListURL,
@@ -165,6 +161,7 @@ MusicoinConnector.prototype.loadArtists = function(artist_addresses) {
 };
 
 MusicoinConnector.prototype.loadLicenseDetails = function(contractIds) {
+  // TODO: If we don't use the batch API, we can cache the response and use it offline
   var propertiesObject = {address: contractIds.join(',')};
   return new Promise(function (resolve, reject){
     return request({
