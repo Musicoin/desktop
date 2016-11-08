@@ -17,7 +17,6 @@ PreferenceManager.prototype.setCurrentAccount = function(account) {
       this.currentAccount = account;
       this.userPreferences.following = storedPreferences.following || [];
       this.userPreferences.playlists = storedPreferences.playlists || [];
-      this.userPreferences.favorites = storedPreferences.favorites || [];
       this.userPreferences.musicianMode = storedPreferences.musicianMode || false;
       this.userPreferences.registrationStatus = storedPreferences.registrationStatus || {};
       this.userPreferences.username = storedPreferences.username || "";
@@ -46,24 +45,6 @@ PreferenceManager.prototype.unfollow = function(artistAddress) {
     .bind(this)
     .then(function(newList) {
       this.userPreferences.following = newList;
-      return this.savePreferences();
-    });
-};
-
-PreferenceManager.prototype.addFavorite = function(contractAddress) {
-  return this.addMember(this.userPreferences.favorites, contractAddress)
-    .bind(this)
-    .then(function(newList) {
-      this.userPreferences.favorites = newList;
-      return this.savePreferences();
-    });
-};
-
-PreferenceManager.prototype.removeFavorite = function(contractAddress) {
-  return this.removeMember(this.userPreferences.favorites, contractAddress)
-    .bind(this)
-    .then(function(newList) {
-      this.userPreferences.favorites = newList;
       return this.savePreferences();
     });
 };

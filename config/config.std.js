@@ -17,7 +17,8 @@ module.exports = {
     path: "{process.cwd}/bin/geth/",
     command: 'geth --identity Musicoin --networkid 55313716 --datadir {appdata}/chain --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost"',
     loggerAddress: "0x1BA9842b9f4886837edff6D2286342c47Ad8085A",
-    rpcServer: 'http://localhost:8545'
+    rpcServer: 'http://localhost:8545',
+    txDirectory: '{appdata}/tx/'
   },
   fileSharing: {
     name: "ipfs",

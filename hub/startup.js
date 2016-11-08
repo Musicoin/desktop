@@ -13,10 +13,10 @@ function Startup(logger, appDataDir) {
   }
 }
 
-Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command) {
+Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, args) {
   var logger = this.logger;
-  logger.log("Starting " + name + ": " + command + ", cwd: " + absolutePath);
-  var child = child_process.exec(command, {cwd: absolutePath});
+  logger.log("Starting " + name + ": " + command + ", args: [" + args + "], cwd: " + absolutePath);
+  var child = child_process.spawn(command, args, {cwd: absolutePath});
   logger.log("Started " + name + ": pid=" + child.pid);
   child.stdout.on('data', function(data) {
     logger.log(name + " stdout: " + data);
@@ -30,10 +30,11 @@ Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command) 
     logger.log(name + ": child process exited with code " + code);
   });
 
-  // TODO: This isn't working, although all the docs that I'm reading say it should
   this.onShutdown(function() {
-    logger.log(name + " shutting down pid=" + child.pid);
-    child.kill();
+    // logger.log(name + " shutting down pid=" + child.pid);
+    // TODO: This is causing some problems for ipfs, which does not clean up it's lock file
+    // leaving this out for now until we find a workaround.
+    // child.kill();
   });
 };
 
@@ -46,13 +47,18 @@ Startup.prototype.initChain = function(commandObj) {
 
 Startup.prototype.startChildProcess = function(commandObj) {
   this.initCommand(commandObj);
-  this.execAndKillOnShutdown(commandObj.name, commandObj.absolutePath, commandObj.command);
+  this.execAndKillOnShutdown(commandObj.name, commandObj.absolutePath, commandObj.command, commandObj.args);
 };
 
 Startup.prototype.initCommand = function(commandObj) {
   this.logger.log("Initializing command: " + JSON.stringify(commandObj));
   if (commandObj.path) commandObj.absolutePath = this.injectPathVariables(commandObj.path);
   if (commandObj.command) commandObj.command = this.injectPathVariables(commandObj.command);
+  if (commandObj.args) {
+    for (var i=0; i < commandObj.args.length; i++) {
+      commandObj.args[i] = this.injectPathVariables(commandObj.args[i]);
+    }
+  }
   if (commandObj.chainDir) commandObj.chainDir = this.injectPathVariables(commandObj.chainDir)
   this.logger.log("Initialized command: " + JSON.stringify(commandObj));
 };

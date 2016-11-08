@@ -27,6 +27,10 @@ Polymer({
     this.$.browse.addEventListener('shuffle', function(e) {
       mscIntf.audio.shuffleAll(e.detail);
     });
+
+    this.$.browse.addEventListener('selected', function(e) {
+      mscIntf.audio.playAll(e.detail);
+    });
   },
   follow: function() {
     if (!this.selectedArtist) return;

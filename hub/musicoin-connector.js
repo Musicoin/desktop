@@ -11,7 +11,6 @@ function MusicoinConnector(server, blockchain) {
   this.musicoinMyProfileURL = server + "/api/myProfile";
   this.musicoinMyHistoryURL = "http://blocks.musicoin.org/api/history/";
   this.favoritesFile = 'favorites.json';
-  this.playbackPaymentPercentage = 70;
 
   // TODO: Adding this for now to fill in some missing details
   this.blockchain = blockchain;
@@ -78,10 +77,6 @@ MusicoinConnector.prototype.loadBrowsePage = function (page, keywords, callback)
       console.log(error);
     }
   }.bind(this))
-};
-
-MusicoinConnector.prototype.getPlaybackPaymentPercentage = function () {
-  return this.playbackPaymentPercentage;
 };
 
 MusicoinConnector.prototype.loadBrowseCategories = function (callback) {

@@ -107,7 +107,7 @@ observable(mschub,'notifyAccCreateDialog',null);
 var chain = require('./web3things.js');
 
 var Web3Connector = require('./web3-connector.js');
-var web3Connector = new Web3Connector(settings.chain);
+var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory));
 
 var pcsFinData = new PropertyChangeSupport(mschub.financialData);
 pcsFinData.addObservable('userBalance', 0);
@@ -452,10 +452,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.tip({amount: wei, to: params.address})
-        .then(function(tx) {
-          console.log("Waiting for transaction: " + tx);
-          return web3Connector.waitForTransaction(tx);
-        })
         .then(function(receipt) {
           mschub.messageMonitor.success(msgId, {});
           console.log(JSON.stringify(receipt));
@@ -469,10 +465,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.send({amount: wei, to: params.address})
-          .then(function(tx) {
-            console.log("Waiting for transaction: " + tx);
-            return web3Connector.waitForTransaction(tx);
-          })
           .then(function(receipt) {
             mschub.messageMonitor.success(msgId, {});
             console.log(JSON.stringify(receipt));
@@ -486,10 +478,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         var msgId = mschub.messageMonitor.create();
         var wei = params.weiAmount ? params.weiAmount : web3Connector.toIndivisibleUnits(params.musicoinAmount);
         web3Connector.ppp({to: params.address, amount: wei})
-          .then(function(tx) {
-            console.log("Waiting for transaction: " + tx);
-            return web3Connector.waitForTransaction(tx);
-          })
           .then(function(receipt) {
             mschub.messageMonitor.success(msgId, {});
             console.log(JSON.stringify(receipt));
@@ -531,12 +519,6 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
       },
       unfollow: function(elem, params, fns) {
         preferenceManager.unfollow(params.artist_address);
-      },
-      favorite: function(elem, params, fns) {
-        preferenceManager.addFavorite(params.contract_id);
-      },
-      unfavorite: function(elem, params, fns) {
-        preferenceManager.removeFavorite(params.contract_id);
       },
       addPlaylist: function(elem, params, fns) {
         preferenceManager.addPlaylist(params.playlistName);
