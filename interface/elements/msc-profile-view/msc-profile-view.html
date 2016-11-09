@@ -5,10 +5,10 @@
       <identicon-element size="128" seed="{{selectedAccount}}"></identicon-element>
       <div class="name-area">
         <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
+        <msc-user-balance></msc-user-balance>
         <div class="account">
           {{selectedAccount}}
         </div>
-        <msc-user-balance></msc-user-balance>
       </div>
     </div>
     <div class="section call-to-action">

@@ -19,7 +19,7 @@ PreferenceManager.prototype.setCurrentAccount = function(account) {
       this.userPreferences.playlists = storedPreferences.playlists || [];
       this.userPreferences.musicianMode = storedPreferences.musicianMode || false;
       this.userPreferences.registrationStatus = storedPreferences.registrationStatus || {};
-      this.userPreferences.username = storedPreferences.username || "";
+      this.userPreferences.username = storedPreferences.username || "user";
       this.userPreferences.userImage = storedPreferences.userImage || "../";
       console.log("Loaded preferences for " + account + ": " + JSON.stringify(storedPreferences));
       return this.musicoinService.loadMyProfile(account);
