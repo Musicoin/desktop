@@ -1,5 +1,4 @@
 :host {
-    color: #aaa;
     font-weight: lighter;
     margin: 10px;
 }
@@ -49,12 +48,10 @@ h1 {
 }
 
 .artist {
-    color: #888;
     font-size: small;
 }
 
 .address {
-    color: #888;
     font-size: small;
 }
 

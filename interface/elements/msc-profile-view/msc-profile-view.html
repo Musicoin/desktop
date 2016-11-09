@@ -24,16 +24,14 @@
     </div>
     <div class="section settings">
       <paper-toggle-button>Store favorites locally (does nothing)</paper-toggle-button>
-      <paper-toggle-button>Some other setting (does nothing)</paper-toggle-button>
     </div>
     <div class="section settings">
-      TODO: When the registration flow is working, this option will be hidden until the user is registered
       <paper-toggle-button
               id="musicianModeButton"
-              xhidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
+              hidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
               checked="[[musicianMode]]"
               on-tap="updateMusicianMode"
-              xdisabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
+              disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
     </div>
   </template>
   <script src="msc-profile-view.js"></script>

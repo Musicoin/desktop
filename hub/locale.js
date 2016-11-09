@@ -151,9 +151,9 @@ var locale = {
         follow: "follow",
         following: "following",
         tip: "tip",
-        tipPending: "sending...",
-        tipFailed: "failed!",
-        tipSuccess: "thanks!"
+        tipPending: "...",
+        tipFailed: ":(",
+        tipSuccess: ":)"
       }
     },
     userProfileView: {

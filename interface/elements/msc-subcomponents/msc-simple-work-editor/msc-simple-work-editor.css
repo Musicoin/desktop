@@ -1,11 +1,9 @@
 :host {
     display: block;
     margin: 0px;
-    color: #aaa;
 }
 
 .header {
-    color: #aaa;
     font-weight: lighter;
     display: flex;
     align-items: center;
@@ -98,7 +96,6 @@ paper-dropdown-menu {
     margin-right: 10px;
     border: none;
     width: 100px;
-    color: #a1a1a1;
     padding: 2px;
     font-size: 1em;
 }
@@ -142,7 +139,7 @@ paper-input {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #333;
+    background-color: var(--msc-background-hightlight);
     z-index: 1;
 
     display: flex;
@@ -164,8 +161,8 @@ paper-input {
 .price-area {
     font-size: 1.5em;
     text-align: center;
-    background-color: #3e3e3e;
-    border: 20px solid #3e3e3e;
+    background-color: var(--msc-background-hightlight);
+    border: 20px solid var(--msc-background-hightlight);
     border-top-width: 5px;
     position: absolute;
     border-radius: 10px;
@@ -194,7 +191,7 @@ paper-input {
 }
 
 .license-address {
-    color: #7e7e7e;
+    color: var(--msc-subtle-text-color);
     font-size: small;
 }
 
@@ -257,7 +254,7 @@ paper-input {
 .release-button {
     top: 0;
     right: 0;
-    background-color: #2176bd;
+    background-color: var(--msc-highlight-color);
     color: whitesmoke;
     margin: 0;
 }

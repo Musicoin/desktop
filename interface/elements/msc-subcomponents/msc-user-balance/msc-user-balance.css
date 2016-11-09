@@ -1,19 +1,11 @@
 :host {
   margin-right: 1em;
   cursor: pointer;
+  --msc-user-balance-font-size: 1em;
 }
 
 #user-balance {
   display: block;
-  color: #2176bd;
-  font-size: 1em;
-  line-height: 1;
-}
-
-#pending-label {
-  display: none;
-  color: #7e7e7e;
-  text-align: center;
-  font-size: small;
+  font-size: var(--msc-user-balance-font-size);
   line-height: 1;
 }

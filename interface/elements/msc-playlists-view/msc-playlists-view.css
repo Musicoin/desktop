@@ -7,7 +7,7 @@
     top: 1em;
     right: 2em;
     z-index: 3;
-    background-color: #2176bd;
+    background-color: var(--msc-highlight-color);
 }
 
 msc-player-view {
@@ -20,7 +20,6 @@ msc-player-view {
 }
 
 #playlistsGrid {
-    background-color: #2c2c2c;
     position: absolute;
     top:0;
     bottom:0;
@@ -30,7 +29,6 @@ msc-player-view {
 }
 
 msc-playlist-editor-view {
-    background-color: #2c2c2c;
     position: absolute;
     top:0;
     bottom:0;

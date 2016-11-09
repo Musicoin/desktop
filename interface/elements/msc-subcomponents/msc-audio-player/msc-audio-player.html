@@ -8,18 +8,18 @@
       <div class="audio-progress-area">
         <div class="audio-info audio-info-track"><em>{{currentPlay.song_name}}</em></div>
         <paper-progress id="progress" min=0 max=10000 class="audio-progress"></paper-progress>
-        <div class="pay-marker"></div>
+        <div class="pay-marker" style="left:{{playbackPaymentPercentage}}%"></div>
         <div class="audio-info">{{currentPlay.artist_name}}</div>
       </div>
       <paper-icon-button id="nextButton" icon="av:skip-next" on-tap="playNext" class="action-button"></paper-icon-button>
       <paper-menu-button vertical-offset="32" horizontal-align="right" id="playlistMenu" disabled$="{{_computeAddToPlaylistDisabled(currentPlay)}}">
         <paper-icon-button icon="av:playlist-add" class="dropdown-trigger action-button"></paper-icon-button>
-        <paper-material class="dropdown-content">
+        <div class="dropdown-content">
           <template is="dom-repeat" items="{{playlists}}" as="playlist">
             <div class="playlist-option" on-tap="addToPlaylist">{{playlist.name}}</div>
           </template>
           <div class="playlist-option" on-tap="addToNewPlaylist">New...</div>
-        </paper-material>
+        </div>
       </paper-menu-button>
       <msc-tip-button recipient="{{currentPlay.contract_id}}" tip-contract></msc-tip-button>
     </div>

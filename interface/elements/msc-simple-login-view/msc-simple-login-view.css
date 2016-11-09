@@ -1,5 +1,4 @@
 :host {
-    color: #686868;
     background-size: cover;
     background-image: url(../../images/login.jpg);
     display: flex;
@@ -18,8 +17,8 @@
 
 .login-text-box {
     --paper-input-container-color: #686868;
-    --paper-input-container-focus-color: #2176bd;
-    --paper-input-container-input-color: #2176bd;
+    --paper-input-container-focus-color: var(--msc-highlight-color);
+    --paper-input-container-input-color: var(--msc-highlight-color);
 }
 
 .login-label {
@@ -29,7 +28,7 @@
 }
 
 .action {
-    color: #2176bd;
+    color: var(--msc-highlight-color);
     font-style: italic;
     cursor: pointer;
     text-decoration: none;
@@ -53,4 +52,8 @@ paper-dropdown-menu {
 
 identicon-element {
     margin-right: 10px;
+}
+
+.dropdown-content {
+    background-color: var(--msc-opaque-background);
 }

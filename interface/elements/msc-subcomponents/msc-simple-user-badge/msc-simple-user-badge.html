@@ -3,7 +3,11 @@
   <template>
     <paper-button class="dropdown-trigger" on-tap="showProfile">
       <identicon-element size="64" seed="{{selectedAccount}}"></identicon-element>
-      [[username]]
+      <div class="name-and-balance">
+        [[username]]
+        <msc-user-balance class="balance"></msc-user-balance>
+      </div>
+
     </paper-button>
   </template>
   <script src="msc-simple-user-badge.js"></script>

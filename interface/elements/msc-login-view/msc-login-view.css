@@ -86,8 +86,8 @@ paper-input.shakeit {
 
 paper-input {
   --paper-input-container-color: #686868;
-  --paper-input-container-focus-color: #2176bd;
-  --paper-input-container-input-color: #2176bd;
+  --paper-input-container-focus-color: var(--msc-highlight-color);
+  --paper-input-container-input-color: var(--msc-highlight-color);
   max-width: 30vw;
 }
 

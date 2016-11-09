@@ -7,6 +7,7 @@
     <template is="dom-if" if="[[ui.hibryda]]">
       <msc-connection-watch></msc-connection-watch>
     </template>
+    <div id="background" style="background-image:url('{{currentPlay.work.image_url_https}}')"></div>
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
         <template is="dom-if" if="[[ui.dan]]">
@@ -58,7 +59,6 @@
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <msc-audio-player></msc-audio-player>
-            <msc-user-balance></msc-user-balance>
           </app-toolbar>
         </app-header>
         <msc-player-view id="browse"
@@ -79,18 +79,18 @@
       </app-header-layout>
     </app-drawer-layout>
     <msc-payment-approval-dialog></msc-payment-approval-dialog>
-    <msc-user-settings-view></msc-user-settings-view>
+
     <template is="dom-if" if="[[lightwallet]]">
       <msc-login-view></msc-login-view>
+      <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>
+      <msc-new-user-view></msc-new-user-view>
+      <msc-user-settings-view></msc-user-settings-view>
     </template>
     <template is="dom-if" if="[[!lightwallet]]">
       <msc-simple-login-view hidden$="{{loggedIn}}"></msc-simple-login-view>
     </template>
-    <msc-account-create-confirm-dialog with-backdrop></msc-account-create-confirm-dialog>
     <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
     <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
-    <msc-fatal-error-screen></msc-fatal-error-screen>
-    <msc-new-user-view></msc-new-user-view>
   </template>
 
   <script src="msc-element.js"></script>

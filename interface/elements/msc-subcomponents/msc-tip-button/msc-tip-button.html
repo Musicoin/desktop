@@ -5,8 +5,8 @@
          on-tap="sendTip"
          pending$="{{_computeTipPending(tipStatus)}}"
          failed$="{{_computeTipFailed(tipStatus)}}"
-         disabled$="{{_computeTipDisabled(recipient)}}">{{_computeTipMessage(recipient, tipStatus)}}
-      <paper-ripple fit></paper-ripple>
+         disabled$="{{_computeTipDisabled(recipient)}}">{{_computeTipMessage(recipient, tipStatus, locale)}}
+      <paper-ripple fit hidden$="{{_computeTipDisabled(recipient)}}"></paper-ripple>
     </div>
   </template>
   <script src="msc-tip-button.js"></script>

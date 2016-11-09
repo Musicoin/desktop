@@ -1,7 +1,6 @@
 :host {
     display: block;
     height: inherit;
-    color: #aaa;
 }
 
 paper-input.my-class {
@@ -27,16 +26,18 @@ paper-card.recent {
 }
 
 .action {
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(0,0,0,0.5);
     width: 32px;
     height: 32px;
     margin: 4px;
     border-radius: 4px;
-    border: 1px solid white;
-    color: #636060;
     --paper-icon-button: {
         padding: 2px;
-    }
+    };
+}
+
+.action:hover {
+    background-color: rgba(0,0,0,0.7);
 }
 
 .group-action-area {
@@ -54,11 +55,10 @@ paper-card.recent {
 }
 
 paper-card.recent[selected] {
-    box-shadow: 0 0 35px -4px rgba(255,255,200,0.8);
+    box-shadow: 0 0 25px -4px rgba(255,255,200,0.8);
 }
 
 h1 {
-    color: #4f4f4f;
     font-weight: lighter;
 }
 
@@ -87,7 +87,6 @@ h1 {
 }
 
 .track {
-    color: whitesmoke;
 }
 
 .title-details {
@@ -126,7 +125,6 @@ h1 {
 
 .instructions {
     text-align: justify;
-    color: #777676;
     padding-left: 60px;
     padding-right: 100px;
     position: absolute;

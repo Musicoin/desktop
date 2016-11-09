@@ -14,7 +14,8 @@
 
         mscIntf.audioHub.attach(this)
           .to('currentPlay', function(oldValue, newValue) {
-              this.currentPlayId = (newValue && newValue.contract_id) ? newValue.contract_id : "none";
+            this.currentPlay = newValue;
+            this.currentPlayId = (newValue && newValue.contract_id) ? newValue.contract_id : "none";
           }.bind(this));
 
         mscIntf.userPreferences.attach(this)
@@ -68,7 +69,8 @@
         loggedIn: Boolean,
         ui: Object,
         musicianMode: Boolean,
-        currentPlayId: String
+        currentPlayId: String,
+        currentPlay: Object
       },
       _pageChanged: function(newValue) {
         // First page load

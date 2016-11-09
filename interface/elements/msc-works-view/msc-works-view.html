@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template>
       <msc-player-view id="gridView" groups="{{myWorks}}" hidden$="{{!shouldShowGridView(selectedWork)}}"></msc-player-view>
       <msc-simple-work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></msc-simple-work-editor>
-      <paper-fab id="addNewWorkButton" icon="add" mini on-tap="handleAddNewWork"></paper-fab>
+      <paper-fab id="addNewWorkButton" icon="add" mini on-tap="handleAddNewWork" hidden$="{{!shouldShowGridView(selectedWork)}}"></paper-fab>
     </template>
 
   <script src="msc-works-view.js"></script>

@@ -6,7 +6,6 @@
 
 .section {
     margin-top: 20px;
-    color: #9c9c9c
 }
 
 .top {
@@ -24,20 +23,19 @@
 .name {
     font-size: 40px;
     font-weight: lighter;
-    color: #9c9c9c;
     display: flex;
     align-items: center;
     height: 50%;
 }
 
 .account {
-    color: #9c9c9c;
+    color: var(--msc-subtle-text-color);
+    margin-bottom: 10px;
 }
 
 .user-message {
     font-weight: lighter;
     text-align: justify;
-    color: rgb(119, 118, 118);
     font-size: 20px;
 }
 
@@ -62,7 +60,6 @@
     width: 300px;
     height: 32px;
     background-color: #00b050;
-    color: whitesmoke;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,6 +89,10 @@ msc-tip-button {
     width: 90%;
     height: 32px;
     --msc-tip-button-font-size: larger;
+}
+
+msc-user-balance {
+    --msc-user-balance-font-size: larger;
 }
 
 .action {

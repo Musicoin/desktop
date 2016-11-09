@@ -1,21 +1,19 @@
 :host {
-
+    --msc-tip-button-background: var(--msc-background-hightlight);
 }
+
 
 .tip {
     width: 100%;
     height: 100%;
-    background-color: #00b050;
-    color: whitesmoke;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--msc-tip-button-font-size, small);
+    font-size: var(--msc-tip-button-font-size, large);
     font-weight: lighter;
-    border-radius: 4px;
     cursor: pointer;
-    border: 1px solid #abbab2;
     position: relative;
+    background-color: var(--msc-tip-button-background);
 }
 
 .tip[failed] {
@@ -23,20 +21,16 @@
 }
 
 .tip[disabled] {
-    visibility: hidden;
+    color: var(--msc-subtle-text-color);
+    cursor: default;
 }
 
 .tip[pending] {
-    background-color: #3e4e3e;
+    background-color: rgba(100,100,100,0.1);
     background-size: 64px 64px;
-    background-image: linear-gradient(135deg,
-    rgba(255, 255, 255, .05) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, .05) 50%,
-    rgba(255, 255, 255, .05) 75%,
-    transparent 75%,
-    transparent);
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+    animation: animate-stripes-msc-tip-button-0 3s linear infinite;
+    border-radius: 3px;
 
     animation: animate-stripes 3s linear infinite;
 }

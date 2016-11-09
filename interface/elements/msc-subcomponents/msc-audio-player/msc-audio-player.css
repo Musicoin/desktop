@@ -4,16 +4,9 @@
 
 
 paper-progress.audio-progress {
-  --paper-progress-active-color: #2176bd;
-  --paper-progress-container-color: #191919;
+  --paper-progress-active-color: rgba(255,255,255,0.3);;
+  --paper-progress-container-color: var(--msc-background-hightlight);
   width: 100%;
-}
-
-.audio-control-area {
-  align-items: center;
-  display: flex;
-  flex-grow: 0.8;
-  width: 200px;
 }
 
 .audio-info {
@@ -33,9 +26,10 @@ paper-progress.audio-progress {
 }
 
 .action-button {
-  width: 48px;
-  height: 48px;
-  --paper-icon-button-ink-color: #2176bd;
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  --paper-icon-button-ink-color: var(--msc-highlight-color);
 }
 
 .audio-progress-area {
@@ -52,12 +46,13 @@ paper-progress.audio-progress {
 .audio-control-area {
   align-items: center;
   display: flex;
-  flex-grow: 0.9;
+  flex-grow: 0.95;
+  width: 200px;
 }
 
 .audio-info {
   width: 100%;
-  color: #7e7e7e;
+  color: white;
   text-align: center;
   font-size: small;
   white-space: nowrap;
@@ -72,27 +67,22 @@ paper-progress.audio-progress {
   width: 32px;
   height: 32px;
   cursor: pointer;
-  background-color: var(--msc-secondary-background-color);
+  background-color: var(--msc-background-hightlight);
 }
 
-.tip-label {
-  display: block;
-  color: #7e7e7e;
-  text-align: center;
-  font-size: small;
-  line-height: 1;
+#playButton {
+  margin-left: 5px;
 }
 
 msc-tip-button {
-  width: 58px;
+  width: 21px;
   height: 21px;
+  --msc-tip-button-background: transparent;
 }
 
 .new-tip-button {
   width: 58px;
   height: 21px;
-  background-color: #00b050;
-  color: whitesmoke;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,18 +94,18 @@ msc-tip-button {
 }
 
 .pay-marker {
-  width: 1px;
+  width: 2px;
   height: 10px;
   position: absolute;
-  left: 70%;
   display: block;
-  background-color: #009443;
+  background-color: rgba(255,255,255,0.3);
 }
 
 .dropdown-content {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--msc-opaque-background);
 }
 
 .playlist-option {
@@ -124,4 +114,16 @@ msc-tip-button {
   cursor: pointer;
   margin: 5px;
   white-space: nowrap;
+}
+
+#background {
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-size: cover;
+  filter: blur(46px);
+  overflow: hidden;
+  z-index: 1;
 }

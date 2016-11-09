@@ -1,5 +1,4 @@
 :host {
-  color: #7e7e7e;
   width: 100%;
   display: block;
 }
@@ -25,4 +24,13 @@ paper-menu-button {
   --paper-menu-button-content: {
     width: 100%;
   };
+}
+
+.name-and-balance {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  text-align: center;
 }
