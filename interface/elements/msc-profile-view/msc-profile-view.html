@@ -32,6 +32,11 @@
               checked="[[musicianMode]]"
               on-tap="updateMusicianMode"
               disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
+      <paper-toggle-button
+              id="isMining"
+              on-tap="toggleMiningState">
+        {{locale.userProfileView.actions.Mining}}
+      </paper-toggle-button>
     </div>
   </template>
   <script src="msc-profile-view.js"></script>

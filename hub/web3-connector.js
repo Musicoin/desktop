@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var Web3 = require('web3');
 var fs = require('fs');
+var request = require("request");
 var mkdirp = require('mkdirp');
 var loggerAddress = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
 var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
@@ -14,7 +15,9 @@ var algorithm = 'aes-256-ctr';
 
 function Web3Connector(chainConfig, txDir) {
   this.web3 = new Web3();
-  console.log("connecting to web3")
+  this.rpcId = 1;
+  console.log("connecting to web3");
+  this.rpcServer = chainConfig.rpcServer;
   this.web3.setProvider(new this.web3.providers.HttpProvider(chainConfig.rpcServer));
   loggerAddress = chainConfig.loggerAddress;
   this.selectedAccount = this.getDefaultAccount();
@@ -156,6 +159,43 @@ Web3Connector.prototype.createAccount = function (pwd) {
       reject(e);
     }
   }.bind(this));
+};
+
+Web3Connector.prototype.rpcCall = function(method, params) {
+  return new Promise(function (resolve, reject) {
+    var headers = {
+      'User-Agent': 'Super Agent/0.0.1',
+      'Content-Type': 'application/json-rpc',
+      'Accept':'application/json-rpc'
+    }
+    var options = {
+      url: this.rpcServer,
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: method,
+        params: params,
+        json: true,
+        id: this.rpcId++
+      })
+    };
+    request.post(options, function (err, resp, body) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(body);
+      }
+    });
+  }.bind(this));
+};
+
+Web3Connector.prototype.startMining = function () {
+  return this.rpcCall("miner_start", []);
+};
+
+Web3Connector.prototype.stopMining = function () {
+  return this.rpcCall("miner_stop", []);
 };
 
 Web3Connector.prototype.getSelectedAccount = function () {

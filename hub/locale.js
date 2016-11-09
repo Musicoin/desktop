@@ -167,7 +167,8 @@ var locale = {
         NewUser:"Register your account",
         Confirm:"Confirm your account",
         Registered:"Learn More",
-        Verified:"Get Started!"
+        Verified:"Get Started!",
+        Mining:"Enable mining to earn Musicoins"
       }
     },
     simpleLogin: {

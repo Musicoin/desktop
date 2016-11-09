@@ -20,7 +20,7 @@ module.exports = {
       '--networkid', '55313716',
       '--datadir', '{appdata}/chain',
       '--rpc',
-      '--rpcapi=db,eth,net,web3,personal',
+      '--rpcapi=db,eth,net,web3,personal,miner',
       '--rpcport', '8545',
       '--rpcaddr', '127.0.0.1',
       '--rpccorsdomain', 'localhost'],

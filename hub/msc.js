@@ -385,6 +385,14 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return tx;
       }
     },
+    mining: {
+      startMining: function() {
+        web3Connector.startMining();
+      },
+      stopMining: function() {
+        web3Connector.stopMining();
+      }
+    },
     publish: {
       releaseWork: function(elem, params, fns) {
         var work = params.work;

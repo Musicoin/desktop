@@ -15,6 +15,12 @@ module.exports = function(rpcProvider) {
     loadHistory: function() {
       var tx = rpcProvider.fnPool('finops', 'loadHistory', null, {});
       return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    startMining: function() {
+      rpcProvider.fnPool('mining', 'startMining', null, {});
+    },
+    stopMining: function() {
+      rpcProvider.fnPool('mining', 'stopMining', null, {});
     }
   }
 };

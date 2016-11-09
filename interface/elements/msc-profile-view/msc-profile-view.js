@@ -98,5 +98,13 @@ Polymer({
   handleAppLinkAction: function(action) {
     // TODO: define a mapping between server pageIds and internal pageIds
     if (action.url == "MyWorks") mscIntf.selectedPage = 'myw';
+  },
+  toggleMiningState: function() {
+    if (this.$.isMining.checked) {
+      mscIntf.payments.startMining();
+    }
+    else {
+      mscIntf.payments.stopMining();
+    }
   }
 });
