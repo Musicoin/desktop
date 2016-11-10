@@ -32,7 +32,15 @@ module.exports = {
     name: "./ipfs",
     path: "{process.cwd}/bin/go-ipfs/",
     args: ['daemon'],
-    command: "ipfs"
+    command: "ipfs",
+    prereq: {
+      comment: "Workaround: Forces deletion of the ipfs lock file. This will do nothing if the lock file is in use (i.e. if ipfs is already running)",
+      name: "ipfs-cleanup",
+      path: "{process.cwd}/bin/go-ipfs/",
+      args: ['repo', 'fsck'],
+      command: "./ipfs",
+      sync: true
+    }
   },
   chainInit: {
     chainDir: "{appdata}/chain"

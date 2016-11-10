@@ -13,9 +13,13 @@ function Startup(logger, appDataDir) {
   }
 }
 
-Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, args) {
+Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, args, sync) {
   var logger = this.logger;
   logger.log("Starting " + name + ": " + command + ", args: [" + args + "], cwd: " + absolutePath);
+  if (sync) {
+    child_process.spawnSync(command, args, {cwd: absolutePath});
+    return;
+  }
   var child = child_process.spawn(command, args, {cwd: absolutePath});
   logger.log("Started " + name + ": pid=" + child.pid);
   child.stdout.on('data', function(data) {
@@ -35,10 +39,10 @@ Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, 
   });
 
   this.onShutdown(function() {
-    // logger.log(name + " shutting down pid=" + child.pid);
+    logger.log(name + " shutting down pid=" + child.pid);
     // TODO: This is causing some problems for ipfs, which does not clean up it's lock file
     // leaving this out for now until we find a workaround.
-    // child.kill();
+    child.kill('SIGINT');
   });
 };
 
@@ -50,8 +54,11 @@ Startup.prototype.initChain = function(commandObj) {
 };
 
 Startup.prototype.startChildProcess = function(commandObj) {
+  if (commandObj.prereq) {
+    this.startChildProcess(commandObj.prereq);
+  }
   this.initCommand(commandObj);
-  this.execAndKillOnShutdown(commandObj.name, commandObj.absolutePath, commandObj.command, commandObj.args);
+  this.execAndKillOnShutdown(commandObj.name, commandObj.absolutePath, commandObj.command, commandObj.args, commandObj.sync);
 };
 
 Startup.prototype.initCommand = function(commandObj) {
