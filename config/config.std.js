@@ -15,7 +15,7 @@ module.exports = {
   chain: {
     name: "Musicoin",
     path: "{process.cwd}/bin/geth/",
-    command: 'geth',
+    command: './geth',
     args: ['--identity', 'Musicoin',
       '--networkid', '55313716',
       '--datadir', '{appdata}/chain',
@@ -29,7 +29,7 @@ module.exports = {
     txDirectory: '{appdata}/tx/'
   },
   fileSharing: {
-    name: "ipfs",
+    name: "./ipfs",
     path: "{process.cwd}/bin/go-ipfs/",
     args: ['daemon'],
     command: "ipfs"

@@ -85,6 +85,8 @@ function Web3Connector(chainConfig, txDir) {
   window.setInterval(function() {
     var dir = this.txDir + "inprogress" + "/" + this.selectedAccount + "/";
     fs.readdir(dir, (err, files) => {
+      if (!files) return;
+
       files.forEach(file => {
         console.log("Retyring transaction: " + file);
         fs.readFile(dir + file, 'utf8', function(err, result) {

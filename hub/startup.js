@@ -22,6 +22,10 @@ Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, 
     logger.log(name + " stdout: " + data);
   });
 
+  child.on('error', function(error) {
+    logger.log("Failed to start child process " + name + ": " + error);
+  });
+
   child.stderr.on('data', function(data) {
     logger.log(name + " stderr: " + data);
   });
@@ -81,15 +85,16 @@ Startup.prototype.onShutdown = function(callback) {
   });
 
   // catch ctrl+c event and exit normally
+  var logger = this.logger;
   process.on('SIGINT', function () {
-    process.stdout.write.log('Ctrl-C...');
+    logger.log('Ctrl-C...');
     process.exit(2);
   });
 
   //catch uncaught exceptions, trace, then exit normally
   process.on('uncaughtException', function(e) {
-    process.stdout.write.log('Uncaught Exception...');
-    process.stdout.write.log(e.stack);
+    logger.log('Uncaught Exception...');
+    logger.log(e.stack);
     process.exit(99);
   });
 };
