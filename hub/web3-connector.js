@@ -193,7 +193,14 @@ Web3Connector.prototype.rpcCall = function(method, params) {
 };
 
 Web3Connector.prototype.startMining = function () {
-  return this.rpcCall("miner_start", []);
+  // TODO: We could allow the user to specify a separate address, but for now this seems like the safest option
+  // assuming a lot of new users won't understand what they are doing.  The common usecase will be a new user sets up
+  // an account and want to use mined coins to test out musicoin.  That should work first.  Later, we can add options
+  return this.rpcCall("miner_setEtherbase", [this.selectedAccount])
+    .bind(this)
+    .then(function() {
+      return this.rpcCall("miner_start", []);
+    })
 };
 
 Web3Connector.prototype.stopMining = function () {
