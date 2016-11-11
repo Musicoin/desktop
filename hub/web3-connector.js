@@ -13,18 +13,32 @@ var deployGas = 4700000;
 var crypt = require('crypto');
 var algorithm = 'aes-256-ctr';
 
-function Web3Connector(chainConfig, txDir, connectionCallback) {
+function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
   this.web3 = new Web3();
   this.rpcId = 1;
   console.log("connecting to web3");
   this.rpcServer = chainConfig.rpcServer;
   this.web3.setProvider(new this.web3.providers.HttpProvider(chainConfig.rpcServer));
+  this.initialSyncStarted = false;
+  this.initialSyncEnded = false;
   loggerAddress = chainConfig.loggerAddress;
 
   window.setInterval(function(){
     var wasConnected = this.connected;
     try {
       this.connected = this.web3.isConnected() && this.web3.eth;
+      var newStatus = this.web3.eth.syncing ? this.web3.eth.syncing : {};
+      newStatus.peers = this.web3.net.peerCount;
+      newStatus.currentBlock = this.web3.eth.blockNumber;
+      newStatus.syncing = !!this.web3.eth.syncing;
+      if (newStatus.syncing && !this.initialSyncStarted)
+        this.initialSyncStarted = true;
+      if (!newStatus.syncing && this.initialSyncStarted && !this.initialSyncEnded)
+        this.initialSyncEnded = true;
+      newStatus.initialSyncStarted = this.initialSyncStarted;
+      newStatus.initialSyncEnded = this.initialSyncEnded;
+      mschub.syncStatus = newStatus;
+      console.log("Status: " + JSON.stringify(newStatus));
     }
     catch (e) {
       this.connected = false;

@@ -112,7 +112,8 @@ pcsFinData.addObservable('userBalance', 0);
 var MusicoinService = require("./musicoin-connector.js");
 
 var Web3Connector = require('./web3-connector.js');
-var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory), function(connected) {
+pcs.addObservable('syncStatus', {});
+var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory), mschub, function(connected) {
   if (connected) {
     mschub.financialData.selectedAccount = web3Connector.getSelectedAccount();
     mschub.financialData.accounts = web3Connector.getAccounts();
