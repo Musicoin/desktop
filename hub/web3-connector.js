@@ -45,7 +45,7 @@ function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
     }
     if (wasConnected != this.connected) {
       console.log("Connected to web3: " + this.connected);
-      if (!this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
+      if (this.connected && !this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
       connectionCallback(this.connected);
     }
   }.bind(this), 1000);
