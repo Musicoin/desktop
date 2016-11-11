@@ -46,9 +46,12 @@ Polymer({
     return "failed" == this.actionState;
   },
   _computeMusicianModeDisabled: function() {
+    return false;
+    /*
     if (!this.registrationStatus) return true;
     return 'Registered' != this.registrationStatus.status
       && 'Verified' != this.registrationStatus.status;
+    */
   },
   _computeActionText: function() {
     if (!this.registrationStatus || !this.registrationStatus.action) return "";
