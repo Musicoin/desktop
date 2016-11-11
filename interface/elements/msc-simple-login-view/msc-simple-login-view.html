@@ -3,7 +3,7 @@
   <template>
     <div class="login-elements">
       <div class="user-area">
-        <identicon-element size="64" seed="{{selectedAccount}}"></identicon-element>
+        <identicon-element size="64" seed="{{_computeSelectedAccount(selectedAccount)}}"></identicon-element>
         <div class="login-label">Musicoin</div>
       </div>
       <paper-dropdown-menu label="{{locale.simpleLogin.labels.selectAccount}}">

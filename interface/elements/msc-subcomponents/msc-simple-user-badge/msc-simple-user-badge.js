@@ -24,5 +24,8 @@ Polymer({
     },
     showProfile: function() {
       mscIntf.selectedPage = 'myp';
+    },
+    _computeSelectedAccount: function() {
+      return this.selectedAccount || "";
     }
 })

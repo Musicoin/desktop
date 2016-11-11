@@ -2,7 +2,7 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
     <div class="top">
-      <identicon-element size="128" seed="{{selectedAccount}}"></identicon-element>
+      <identicon-element size="128" seed="{{_computeSelectedAccount(selectedAccount)}}"></identicon-element>
       <div class="name-area">
         <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
         <msc-user-balance></msc-user-balance>

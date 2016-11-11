@@ -106,5 +106,8 @@ Polymer({
     else {
       mscIntf.payments.stopMining();
     }
+  },
+  _computeSelectedAccount: function() {
+    return this.selectedAccount || "";
   }
 });

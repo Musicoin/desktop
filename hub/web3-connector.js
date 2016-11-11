@@ -13,14 +13,30 @@ var deployGas = 4700000;
 var crypt = require('crypto');
 var algorithm = 'aes-256-ctr';
 
-function Web3Connector(chainConfig, txDir) {
+function Web3Connector(chainConfig, txDir, connectionCallback) {
   this.web3 = new Web3();
   this.rpcId = 1;
   console.log("connecting to web3");
   this.rpcServer = chainConfig.rpcServer;
   this.web3.setProvider(new this.web3.providers.HttpProvider(chainConfig.rpcServer));
   loggerAddress = chainConfig.loggerAddress;
-  this.selectedAccount = this.getDefaultAccount();
+
+  window.setInterval(function(){
+    var wasConnected = this.connected;
+    try {
+      this.connected = this.web3.isConnected() && this.web3.eth;
+    }
+    catch (e) {
+      this.connected = false;
+    }
+    if (wasConnected != this.connected) {
+      console.log("Connected to web3: " + this.connected);
+      if (!this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
+      connectionCallback(this.connected);
+    }
+  }.bind(this), 1000);
+
+  this.selectedAccount = null;
   this.storedPassword = null;
 
   this.stamp = new Date().getTime();
@@ -208,7 +224,7 @@ Web3Connector.prototype.stopMining = function () {
 };
 
 Web3Connector.prototype.getSelectedAccount = function () {
-  return this.selectedAccount;
+  return this.selectedAccount || (this.connected ? this.getDefaultAccount() : null);
 };
 
 Web3Connector.prototype.getAccounts = function () {
@@ -220,6 +236,10 @@ Web3Connector.prototype.getDefaultAccount = function () {
 };
 
 Web3Connector.prototype.getUserBalanceInMusicoin = function () {
+  console.log("getUserBalanceInMusicoin: Attempt, connected:" + this.connected + ", account: " + this.selectedAccount);
+  if (!this.connected || !this.selectedAccount) {
+    return Promise.resolve(0);
+  }
   return new Promise(function(resolve, reject) {
     this.web3.eth.getBalance(this.selectedAccount, function(err, result) {
       if (err) {

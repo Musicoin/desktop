@@ -105,19 +105,22 @@ observable(mschub,'listUsers',[staticData.guestUser.list]);
 observable(mschub,'notifyAccCreateDialog',null);
 
 var chain = require('./web3things.js');
+var pcsFinData = new PropertyChangeSupport(mschub.financialData);
+pcsFinData.addObservable('selectedAccount', null);
+pcsFinData.addObservable('accounts', []);
+pcsFinData.addObservable('userBalance', 0);
+var MusicoinService = require("./musicoin-connector.js");
 
 var Web3Connector = require('./web3-connector.js');
-var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory));
+var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory), function(connected) {
+  if (connected) {
+    mschub.financialData.selectedAccount = web3Connector.getSelectedAccount();
+    mschub.financialData.accounts = web3Connector.getAccounts();
+    console.log("selectedAccount: " + web3Connector.getSelectedAccount())
+    console.log(web3Connector.getAccounts());
+  }
+});
 
-var pcsFinData = new PropertyChangeSupport(mschub.financialData);
-pcsFinData.addObservable('userBalance', 0);
-
-console.log("selectedAccount: " + web3Connector.getSelectedAccount())
-pcsFinData.addObservable('selectedAccount', web3Connector.getSelectedAccount());
-pcsFinData.addObservable('accounts', web3Connector.getAccounts());
-console.log(web3Connector.getAccounts());
-
-var MusicoinService = require("./musicoin-connector.js");
 var musicoinService = new MusicoinService(settings.musicoinService.host, web3Connector);
 pcs.addObservable('catalogBrowseItems', []);
 pcs.addObservable('browseCategories', []);

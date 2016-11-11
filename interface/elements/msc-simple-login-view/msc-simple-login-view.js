@@ -48,5 +48,8 @@ Polymer({
     if (this.accounts) {
       mscIntf.login.selectAccount(this.accounts[selected]);
     }
+  },
+  _computeSelectedAccount: function() {
+    return this.selectedAccount || "";
   }
 })

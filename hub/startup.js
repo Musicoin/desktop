@@ -100,9 +100,12 @@ Startup.prototype.onShutdown = function(callback) {
 
   //catch uncaught exceptions, trace, then exit normally
   process.on('uncaughtException', function(e) {
-    logger.log('Uncaught Exception...');
+    logger.log('Uncaught Exception...' + e);
     logger.log(e.stack);
-    process.exit(99);
+
+    // This might be right in the long term, but for now I'm taking this out because the logs
+    // do not get saved to the log file if we exit like this.
+    // process.exit(99);
   });
 };
 
