@@ -28,10 +28,11 @@
     <div class="section settings">
       <paper-toggle-button
               id="musicianModeButton"
-              hidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
+              xhidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
               checked="[[musicianMode]]"
               on-tap="updateMusicianMode"
-              disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
+              xdisabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">
+      Musician Mode</paper-toggle-button>
       <paper-toggle-button
               id="isMining"
               on-tap="toggleMiningState">
