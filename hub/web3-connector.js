@@ -38,13 +38,12 @@ function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
       newStatus.initialSyncStarted = this.initialSyncStarted;
       newStatus.initialSyncEnded = this.initialSyncEnded;
       mschub.syncStatus = newStatus;
-      console.log("Status: " + JSON.stringify(newStatus));
     }
     catch (e) {
       this.connected = false;
     }
     if (wasConnected != this.connected) {
-      console.log("Connected to web3: " + this.connected);
+      console.log("web3 connection status changed: " + JSON.stringify(newStatus));
       if (this.connected && !this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
       connectionCallback(this.connected);
     }
@@ -250,7 +249,6 @@ Web3Connector.prototype.getDefaultAccount = function () {
 };
 
 Web3Connector.prototype.getUserBalanceInMusicoin = function () {
-  console.log("getUserBalanceInMusicoin: Attempt, connected:" + this.connected + ", account: " + this.selectedAccount);
   if (!this.connected || !this.selectedAccount) {
     return Promise.resolve(0);
   }
