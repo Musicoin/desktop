@@ -303,3 +303,12 @@ msc-simple-login-view {
     opacity: 0.3;
     overflow: hidden;
 }
+
+msc-chain-status {
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+    left: 0px;
+    z-index: 1;
+    justify-content: flex-end;
+}

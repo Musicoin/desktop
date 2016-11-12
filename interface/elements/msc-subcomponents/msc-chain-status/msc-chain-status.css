@@ -1,0 +1,35 @@
+:host {
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-weight: lighter;
+    color: rgba(255,255,255,0.2);
+    padding-right: 30px;
+}
+
+.container:hover {
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.item-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sync-area {
+    visibility: hidden;
+}
+
+.sync-area[syncing] {
+    visibility: visible;
+}
+
+.item-icon {
+    margin-right: 5px;
+}
