@@ -3,6 +3,7 @@ var Web3 = require('web3');
 var fs = require('fs');
 var request = require("request");
 var mkdirp = require('mkdirp');
+var LocalCatalog = require("./local-catalog.js");
 var loggerAddress = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
 var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
 var pppMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/PayPerPlay.sol.abi'));
@@ -22,6 +23,7 @@ function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
   this.initialSyncStarted = false;
   this.initialSyncEnded = false;
   loggerAddress = chainConfig.loggerAddress;
+  this.localCatalog = new LocalCatalog(this.web3, workAbi, pppMvp2Abi, loggerMvp2Abi, loggerAddress);
 
   window.setInterval(function(){
     var wasConnected = this.connected;
@@ -44,8 +46,17 @@ function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
       this.connected = false;
     }
     if (wasConnected != this.connected) {
+      if (this.connected) {
+        this.localCatalog.startIndexing();
+      }
+      else {
+        this.localCatalog.stopIndexing();
+      }
       console.log("web3 connection status changed: " + JSON.stringify(newStatus));
-      if (this.connected && !this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
+      if (this.connected && !this.selectedAccount) {
+        this.selectedAccount = this.getDefaultAccount();
+
+      }
       connectionCallback(this.connected);
     }
   }.bind(this), 1000);

@@ -14,8 +14,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 var util = require('util');
 const os = require('os');
-var appDataRoot = os.homedir();
-var appData = appDataRoot + "/.musicoin";
+var appData = os.homedir() + "/.musicoin";
 
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 const lStorage = require('node-localstorage');
