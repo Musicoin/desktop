@@ -28,3 +28,7 @@ del C:\tmp\mc-mvp3\Musicoin-client-linux-x64\log.txt
 del C:\tmp\mc-mvp3\Musicoin-client-win-x64\client.txt
 del C:\tmp\mc-mvp3\Musicoin-client-osx-x64\Musicoin-client.app\Contents\Resources\app.nw\client.txt
 del C:\tmp\mc-mvp3\Musicoin-client-linux-x64\client.txt
+
+REM OSX and Windows do not need the linux-setup.sh file
+del C:\tmp\mc-mvp3\Musicoin-client-win-x64\linux-setup.sh
+del C:\tmp\mc-mvp3\Musicoin-client-osx-x64\Musicoin-client.app\Contents\Resources\app.nw\linux-setup.sh

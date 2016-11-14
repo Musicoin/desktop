@@ -41,4 +41,5 @@ nav-plus-swipe-pages iron-swipeable-pages>div {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
