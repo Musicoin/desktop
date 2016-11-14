@@ -5,6 +5,9 @@
       <div class="item-area sync-area" title="Syncing..." syncing$="{{_computeIsSyncing(syncStatus)}}">
         <iron-icon class="item-icon" icon="notification:sync"></iron-icon>
       </div>
+      <div class="item-area mining-area" on-tap="toggleMiningState" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
+        <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
+      </div>
       <div class="item-area" title="{{syncStatus.peers}} peers">
         <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>
       </div>

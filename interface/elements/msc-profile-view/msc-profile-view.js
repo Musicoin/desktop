@@ -25,7 +25,12 @@ Polymer({
   },
   ready: function() {
     mscIntf.attach(this)
-      .to('locale');
+      .to('locale')
+      .to('syncStatus', function(oldValue, newValue) {
+        if (newValue) {
+          this.$.isMining.checked = newValue.mining;
+        }
+      }.bind(this));
 
     mscIntf.financialData.attach(this)
       .to('selectedAccount');

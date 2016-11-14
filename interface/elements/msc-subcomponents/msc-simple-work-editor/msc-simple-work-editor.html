@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="metadata-area">
           <paper-input label="[[locale.workEditor.fields.title]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.title}}"></paper-input>
           <paper-input label="[[locale.workEditor.fields.artist]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.artist}}"></paper-input>
-          <paper-input label="Price (&#x266E;)" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.license.coinsPerPlay}}"></paper-input>
+          <paper-input label="Price (&#x266E;)" readonly=true value="{{work.license.coinsPerPlay}}"></paper-input>
           <div id="audioFileSelector" tabindex="0" class="audio-input-section">
             <div class="music-file-text">[[selectedAudioText]]</div>
             <div class="music-file-size">[[selectedAudioSize]]</div>

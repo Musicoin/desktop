@@ -12,6 +12,9 @@ Polymer({
     _computeIsSyncing: function() {
         return this.syncStatus && this.syncStatus.syncing;
     },
+    _computeIsMining: function() {
+        return this.syncStatus && this.syncStatus.mining;
+    },
     _computePeerIcon: function() {
       if (!this.syncStatus || this.syncStatus.peers == 0) return "social:person-outline";
       if (this.syncStatus.peers == 1) return "social:person";
@@ -28,5 +31,16 @@ Polymer({
     _computeIPFSTooltip: function() {
         if (!this.ipfsStatus || !this.ipfsStatus.connected) return "IPFS not connected";
         return "IPFS connected";
+    },
+    _computeMiningTooltip: function() {
+        return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";
+    },
+    toggleMiningState: function() {
+        if (this._computeIsMining()) {
+            mscIntf.payments.stopMining();
+        }
+        else {
+            mscIntf.payments.startMining();
+        }
     }
 });

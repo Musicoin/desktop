@@ -37,6 +37,7 @@ function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
         this.initialSyncEnded = true;
       newStatus.initialSyncStarted = this.initialSyncStarted;
       newStatus.initialSyncEnded = this.initialSyncEnded;
+      newStatus.mining = this.web3.eth.mining;
       mschub.syncStatus = newStatus;
     }
     catch (e) {

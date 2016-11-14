@@ -11,11 +11,6 @@
     padding-right: 30px;
 }
 
-.container:hover {
-    color: white;
-    background-color: rgba(0,0,0,0.2);
-}
-
 .item-area {
     display: flex;
     align-items: center;
@@ -24,6 +19,15 @@
 
 .sync-area {
     visibility: hidden;
+}
+
+.mining-area {
+    color: rgba(255,255,255,0.05);
+    cursor: pointer;
+}
+
+.mining-area[mining] {
+    color: rgba(255,255,255,0.4);
 }
 
 .sync-area[syncing] {
