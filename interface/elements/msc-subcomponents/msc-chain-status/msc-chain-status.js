@@ -18,7 +18,7 @@ Polymer({
       return "social:people";
     },
     _formatBlockNumber: function() {
-        if (!this.syncStatus) return "0";
+        if (!this.syncStatus || !this.syncStatus.currentBlock) return "0";
         return this.syncStatus.currentBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     _computeIPFSIcon: function() {

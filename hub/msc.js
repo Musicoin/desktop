@@ -13,8 +13,9 @@ const initObservables = require('./observables-defs.js');
 const crypto = require('crypto');
 const fs = require('fs');
 var util = require('util');
-var appDataRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : '/var/local');
-var appData = appDataRoot + "/musicoin";
+const os = require('os');
+var appDataRoot = os.homedir();
+var appData = appDataRoot + "/.musicoin";
 
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 const lStorage = require('node-localstorage');
