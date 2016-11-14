@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var Web3 = require('web3');
 var fs = require('fs');
+var request = require("request");
 var mkdirp = require('mkdirp');
 var loggerAddress = "0x525eA72A00f435765CC8af6303Ff0dB4cBaD4E44";
 var loggerMvp2Abi = JSON.parse(fs.readFileSync('solidity/mvp2/MusicoinLogger.sol.abi'));
@@ -12,12 +13,44 @@ var deployGas = 4700000;
 var crypt = require('crypto');
 var algorithm = 'aes-256-ctr';
 
-function Web3Connector(chainConfig, txDir) {
+function Web3Connector(chainConfig, txDir, mschub, connectionCallback) {
   this.web3 = new Web3();
-  console.log("connecting to web3")
+  this.rpcId = 1;
+  console.log("connecting to web3");
+  this.rpcServer = chainConfig.rpcServer;
   this.web3.setProvider(new this.web3.providers.HttpProvider(chainConfig.rpcServer));
+  this.initialSyncStarted = false;
+  this.initialSyncEnded = false;
   loggerAddress = chainConfig.loggerAddress;
-  this.selectedAccount = this.getDefaultAccount();
+
+  window.setInterval(function(){
+    var wasConnected = this.connected;
+    try {
+      this.connected = this.web3.isConnected() && this.web3.eth;
+      var newStatus = this.web3.eth.syncing ? this.web3.eth.syncing : {};
+      newStatus.peers = this.web3.net.peerCount;
+      newStatus.currentBlock = this.web3.eth.blockNumber;
+      newStatus.syncing = !!this.web3.eth.syncing;
+      if (newStatus.syncing && !this.initialSyncStarted)
+        this.initialSyncStarted = true;
+      if (!newStatus.syncing && this.initialSyncStarted && !this.initialSyncEnded)
+        this.initialSyncEnded = true;
+      newStatus.initialSyncStarted = this.initialSyncStarted;
+      newStatus.initialSyncEnded = this.initialSyncEnded;
+      newStatus.mining = this.web3.eth.mining;
+      mschub.syncStatus = newStatus;
+    }
+    catch (e) {
+      this.connected = false;
+    }
+    if (wasConnected != this.connected) {
+      console.log("web3 connection status changed: " + JSON.stringify(newStatus));
+      if (this.connected && !this.selectedAccount) this.selectedAccount = this.getDefaultAccount();
+      connectionCallback(this.connected);
+    }
+  }.bind(this), 1000);
+
+  this.selectedAccount = null;
   this.storedPassword = null;
 
   this.stamp = new Date().getTime();
@@ -82,6 +115,8 @@ function Web3Connector(chainConfig, txDir) {
   window.setInterval(function() {
     var dir = this.txDir + "inprogress" + "/" + this.selectedAccount + "/";
     fs.readdir(dir, (err, files) => {
+      if (!files) return;
+
       files.forEach(file => {
         console.log("Retyring transaction: " + file);
         fs.readFile(dir + file, 'utf8', function(err, result) {
@@ -158,8 +193,52 @@ Web3Connector.prototype.createAccount = function (pwd) {
   }.bind(this));
 };
 
+Web3Connector.prototype.rpcCall = function(method, params) {
+  return new Promise(function (resolve, reject) {
+    var headers = {
+      'User-Agent': 'Super Agent/0.0.1',
+      'Content-Type': 'application/json-rpc',
+      'Accept':'application/json-rpc'
+    }
+    var options = {
+      url: this.rpcServer,
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: method,
+        params: params,
+        json: true,
+        id: this.rpcId++
+      })
+    };
+    request.post(options, function (err, resp, body) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(body);
+      }
+    });
+  }.bind(this));
+};
+
+Web3Connector.prototype.startMining = function () {
+  // TODO: We could allow the user to specify a separate address, but for now this seems like the safest option
+  // assuming a lot of new users won't understand what they are doing.  The common usecase will be a new user sets up
+  // an account and want to use mined coins to test out musicoin.  That should work first.  Later, we can add options
+  return this.rpcCall("miner_setEtherbase", [this.selectedAccount])
+    .bind(this)
+    .then(function() {
+      return this.rpcCall("miner_start", []);
+    })
+};
+
+Web3Connector.prototype.stopMining = function () {
+  return this.rpcCall("miner_stop", []);
+};
+
 Web3Connector.prototype.getSelectedAccount = function () {
-  return this.selectedAccount;
+  return this.selectedAccount || (this.connected ? this.getDefaultAccount() : null);
 };
 
 Web3Connector.prototype.getAccounts = function () {
@@ -171,6 +250,9 @@ Web3Connector.prototype.getDefaultAccount = function () {
 };
 
 Web3Connector.prototype.getUserBalanceInMusicoin = function () {
+  if (!this.connected || !this.selectedAccount) {
+    return Promise.resolve(0);
+  }
   return new Promise(function(resolve, reject) {
     this.web3.eth.getBalance(this.selectedAccount, function(err, result) {
       if (err) {

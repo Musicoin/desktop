@@ -2,13 +2,13 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
     <div class="top">
-      <identicon-element size="128" seed="{{selectedAccount}}"></identicon-element>
+      <identicon-element size="128" seed="{{_computeSelectedAccount(selectedAccount)}}"></identicon-element>
       <div class="name-area">
         <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
+        <msc-user-balance></msc-user-balance>
         <div class="account">
           {{selectedAccount}}
         </div>
-        <msc-user-balance></msc-user-balance>
       </div>
     </div>
     <div class="section call-to-action">
@@ -22,16 +22,22 @@
                       on-tap="handleCallToAction">{{_computeActionText(registrationStatus.status)}}</paper-button>
       </div>
     </div>
-    <div class="section settings">
-      <paper-toggle-button>Store favorites locally (does nothing)</paper-toggle-button>
-    </div>
+    <!--<div class="section settings">-->
+      <!--<paper-toggle-button>Store favorites locally (does nothing)</paper-toggle-button>-->
+    <!--</div>-->
     <div class="section settings">
       <paper-toggle-button
               id="musicianModeButton"
               hidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
               checked="[[musicianMode]]"
               on-tap="updateMusicianMode"
-              disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">Musician Mode</paper-toggle-button>
+              disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">
+      Musician Mode</paper-toggle-button>
+      <paper-toggle-button
+              id="isMining"
+              on-tap="toggleMiningState">
+        {{locale.userProfileView.actions.Mining}}
+      </paper-toggle-button>
     </div>
   </template>
   <script src="msc-profile-view.js"></script>

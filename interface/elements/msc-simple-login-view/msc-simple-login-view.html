@@ -3,7 +3,7 @@
   <template>
     <div class="login-elements">
       <div class="user-area">
-        <identicon-element size="64" seed="{{selectedAccount}}"></identicon-element>
+        <identicon-element size="64" seed="{{_computeSelectedAccount(selectedAccount)}}"></identicon-element>
         <div class="login-label">Musicoin</div>
       </div>
       <paper-dropdown-menu label="{{locale.simpleLogin.labels.selectAccount}}">
@@ -15,10 +15,16 @@
       </paper-dropdown-menu>
       <paper-input id=loginPwd class="login-text-box" type="password" label="password" on-keydown="checkForEnter"></paper-input>
       <br><br>
-      <paper-button class="action" id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>
+      <!--<paper-button class="action" id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>-->
       <paper-button class="action" id="newAccountButton" on-tap="createNewAccount">new account</paper-button>
     </div>
     <div class="version">{{chainVersion}}</div>
+    <div class="syncing" hidden$="{{_hideSyncingStatus(syncStatus, selectedAccount)}}">
+      <div class="sync-status">Please wait</div>
+      <paper-progress value="{{_computeSyncProgress(syncStatus, selectedAccount)}}" id="syncProgress" class="sync-progress"></paper-progress>
+      <div class="sync-detail">{{_computeSyncStatusMessage(syncStatus, selectedAccount)}}</div>
+      <div class="peers">{{syncStatus.peers}} peers</div>
+    </div>
   </template>
   <script src="msc-simple-login-view.js"></script>
 </dom-module>

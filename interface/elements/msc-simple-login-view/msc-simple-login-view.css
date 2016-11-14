@@ -43,6 +43,7 @@ paper-dropdown-menu {
     position: absolute;
     top: 20px;
     right: 20px;
+    z-index: 3;
 }
 
 .user-area {
@@ -56,4 +57,43 @@ identicon-element {
 
 .dropdown-content {
     background-color: var(--msc-opaque-background);
+}
+
+.sync-progress {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.sync-status {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: lighter;
+}
+
+.sync-detail {
+    width: 50%;
+    text-align: right;
+    font-weight: lighter;
+    color: var(--msc-subtle-text-color);
+}
+
+.peers {
+    width: 50%;
+    text-align: right;
+    font-weight: lighter;
+    color: var(--msc-subtle-text-color);
+}
+
+.syncing {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background-color: #0a3142;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

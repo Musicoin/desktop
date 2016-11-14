@@ -1,0 +1,39 @@
+:host {
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-weight: lighter;
+    color: rgba(255,255,255,0.2);
+    padding-right: 30px;
+}
+
+.item-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sync-area {
+    visibility: hidden;
+}
+
+.mining-area {
+    color: rgba(255,255,255,0.05);
+    cursor: pointer;
+}
+
+.mining-area[mining] {
+    color: rgba(255,255,255,0.4);
+}
+
+.sync-area[syncing] {
+    visibility: visible;
+}
+
+.item-icon {
+    margin-right: 5px;
+}

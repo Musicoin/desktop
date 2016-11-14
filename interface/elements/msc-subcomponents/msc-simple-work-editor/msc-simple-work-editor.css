@@ -125,7 +125,7 @@ paper-input {
 }
 
 .work-image {
-    height: 300px;
+    height: 100%;
     width: 100%;
     left: 0px;
     right: 0px;
@@ -195,38 +195,11 @@ paper-input {
     font-size: small;
 }
 
-.audio-input-section {
-    background-color: #3e3e3e;
-    flex-grow: 0.8;
-    font-weight: lighter;
-    cursor: pointer;
-    display: flex;
-    margin-right: 10px;
-    position: relative;
-}
-
-.audio-input-section[hidden] {
-    cursor: default;
-}
-
-.music-icon {
-    width: 64px;
-    background-color: #3e4e3e;
-    height: 64px;
-}
-
-.music-file-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-}
-
 .music-file-size {
     position: absolute;
     bottom: 0px;
     right: 5px;
-    color: #7e7e7e;
+    color: var(--msc-subtle-text-color);
     font-size: small;
 }
 
@@ -247,7 +220,7 @@ paper-input {
     display: flex;
     flex-direction: column;
     flex-grow: 0.8;
-    padding: 5px 5px 5px 10px;
+    padding: 5px 5px 0px 10px;
     justify-content: space-between;
 }
 
@@ -299,7 +272,7 @@ paper-input {
 }
 
 .audio-input-section {
-    background-color: rgba(255,255,255, 0.05);
+    background-color: var(--msc-background-hightlight);
     font-weight: lighter;
     cursor: pointer;
     display: flex;
@@ -315,26 +288,13 @@ paper-input {
     display: none;
 }
 
-.music-icon {
-    width: 64px;
-    background-color: #3e4e3e;
-    height: 64px;
-}
-
 .music-file-text {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
     margin-left: 10px;
-}
-
-.music-file-size {
-    position: absolute;
-    bottom: 0px;
-    right: 5px;
-    color: #7e7e7e;
-    font-size: small;
+    font-size: 13px;
 }
 
 h3 {
@@ -351,24 +311,22 @@ paper-button > iron-icon {
 }
 
 paper-input {
-    --paper-input-container-color: #aaa;
-    --paper-input-container-focus-color: #aaa;
-    --paper-input-container-invalid-color: #aaa;
-    --paper-input-container-input-color: #aaa;
+    --paper-input-container-color: var(--msc-subtle-text-color);
+    --paper-input-container-focus-color: var(--msc-subtle-text-color);
+    --paper-input-container-invalid-color: var(--msc-subtle-text-color);
+    --paper-input-container-input-color: var(--msc-subtle-text-color);
 }
 
 paper-dropdown-menu {
-    --paper-dropdown-menu-container-color: #aaa;
-    --paper-dropdown-menu-container-focus-color: #aaa;
-    --paper-dropdown-menu-container-invalid-color: #aaa;
-    --paper-dropdown-menu-container-input-color: #aaa;
-    --paper-input-container-color: #aaa;
-    --paper-input-container-focus-color: #aaa;
-    --paper-input-container-invalid-color: #aaa;
-    --paper-input-container-input-color: #aaa;
+    --paper-dropdown-menu-container-color: var(--msc-subtle-text-color);
+    --paper-dropdown-menu-container-focus-color: var(--msc-subtle-text-color);
+    --paper-dropdown-menu-container-invalid-color: var(--msc-subtle-text-color);
+    --paper-dropdown-menu-container-input-color: var(--msc-subtle-text-color);
+    --paper-input-container-color: var(--msc-subtle-text-color);
+    --paper-input-container-focus-color: var(--msc-subtle-text-color);
+    --paper-input-container-invalid-color: var(--msc-subtle-text-color);
+    --paper-input-container-input-color: var(--msc-subtle-text-color);
 }
-
-
 
 .license-item {
     display: flex;
@@ -382,7 +340,7 @@ paper-dropdown-menu {
     justify-content: space-between;
     align-items: center;
     padding: 5px;
-    background-color: rgba(0,0,0,0.05);
+    background-color: var(--msc-background-lowlight);
     cursor: pointer;
 }
 
@@ -410,7 +368,7 @@ paper-dropdown-menu {
     display: flex;
     flex-direction: column;
     padding: 5px;
-    background-color: rgba(255,255,255,0.05);
+    background-color: var(--msc-background-hightlight);
 
 }
 
@@ -451,7 +409,7 @@ paper-input {
 .contributor-tag {
     display: flex;
     flex-direction: row;
-    background-color: #3e4e3e;
+    background-color: var(--msc-background-hightlight);
     border: 5px solid transparent;
     margin: 2px;
     align-items: center;
@@ -459,7 +417,7 @@ paper-input {
 }
 
 .royalty-tag {
-    background-color: #3e3e4e;
+    background-color: var(--msc-background-hightlight);
     display: flex;
 }
 
@@ -480,11 +438,12 @@ paper-input {
     min-width: 100px;
     margin-right: 10px;
     border: none;
-    background: rgba(255,255,255, 0.05);
+    background: var(--msc-background-hightlight);
     width: 100px;
     color: #a1a1a1;
     padding: 2px;
     font-size: 1em;
+    height: 24px;
 }
 
 .deleteButton {
@@ -498,11 +457,12 @@ paper-input {
     text-align: center;
     font-size: 1em;
     border: none;
-    background: rgba(255,255,255, 0.05);
+    background: var(--msc-background-hightlight);
     color: #a1a1a1;
     padding: 2px;
     margin-left: 5px;
     flex-grow: 1;
+    height: 24px;
 }
 
 .form-section {
@@ -540,7 +500,7 @@ paper-input {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: rgba(255,255,255, 0.05);
+    background-color: var(--msc-background-hightlight);
 }
 
 .price {
@@ -548,7 +508,7 @@ paper-input {
     text-align: right;
     font-size: 1em;
     border: none;
-    background: rgba(255,255,255, 0.05);
+    background: var(--msc-background-hightlight);
     color: #a1a1a1;
     padding: 2px;
 }
@@ -574,7 +534,7 @@ paper-input {
 
 .royalty-instructions {
     text-align: justify;
-    color: #777676;
+    color: var(--msc-subtle-text-color);
     padding-left: 60px;
     padding-right: 100px;
 }

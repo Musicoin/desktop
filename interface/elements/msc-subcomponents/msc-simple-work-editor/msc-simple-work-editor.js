@@ -196,9 +196,9 @@ Polymer({
   },
 
   updateUserMapping: function (e) {
-    var item = e.model.royalty ? e.model.royalty : e.model.contributor;
-    if (item)
-      this.addressToNameMapping[item.address] = item.name;
+    // var item = e.model.royalty ? e.model.royalty : e.model.contributor;
+    // if (item)
+    //   this.addressToNameMapping[item.address] = item.name;
   },
 
   addContributorOnEnter: function (e) {

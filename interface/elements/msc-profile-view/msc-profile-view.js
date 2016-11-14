@@ -25,7 +25,12 @@ Polymer({
   },
   ready: function() {
     mscIntf.attach(this)
-      .to('locale');
+      .to('locale')
+      .to('syncStatus', function(oldValue, newValue) {
+        if (newValue) {
+          this.$.isMining.checked = newValue.mining;
+        }
+      }.bind(this));
 
     mscIntf.financialData.attach(this)
       .to('selectedAccount');
@@ -46,9 +51,12 @@ Polymer({
     return "failed" == this.actionState;
   },
   _computeMusicianModeDisabled: function() {
+    return false;
+    /*
     if (!this.registrationStatus) return true;
     return 'Registered' != this.registrationStatus.status
       && 'Verified' != this.registrationStatus.status;
+    */
   },
   _computeActionText: function() {
     if (!this.registrationStatus || !this.registrationStatus.action) return "";
@@ -98,5 +106,16 @@ Polymer({
   handleAppLinkAction: function(action) {
     // TODO: define a mapping between server pageIds and internal pageIds
     if (action.url == "MyWorks") mscIntf.selectedPage = 'myw';
+  },
+  toggleMiningState: function() {
+    if (this.$.isMining.checked) {
+      mscIntf.payments.startMining();
+    }
+    else {
+      mscIntf.payments.stopMining();
+    }
+  },
+  _computeSelectedAccount: function() {
+    return this.selectedAccount || "";
   }
 });

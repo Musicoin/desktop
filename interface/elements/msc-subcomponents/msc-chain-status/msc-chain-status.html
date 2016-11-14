@@ -1,0 +1,23 @@
+<dom-module id="msc-chain-status">
+  <link rel="import" type="css" href="msc-chain-status.css">
+  <template>
+    <div class="container">
+      <div class="item-area sync-area" title="Syncing..." syncing$="{{_computeIsSyncing(syncStatus)}}">
+        <iron-icon class="item-icon" icon="notification:sync"></iron-icon>
+      </div>
+      <div class="item-area mining-area" on-tap="toggleMiningState" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
+        <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
+      </div>
+      <div class="item-area" title="{{syncStatus.peers}} peers">
+        <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>
+      </div>
+      <div class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}">
+        <iron-icon class="item-icon" icon="maps:layers"></iron-icon>
+      </div>
+      <div class="item-area" title="{{_computeIPFSTooltip(ipfsStatus)}}">
+        <iron-icon class="item-icon" icon="{{_computeIPFSIcon(ipfsStatus)}}"></iron-icon>
+      </div>
+    </div>
+  </template>
+  <script src="msc-chain-status.js"></script>
+</dom-module>

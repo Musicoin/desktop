@@ -3,10 +3,21 @@ var fs = require("fs");
 var tmp = require("tmp");
 var Promise = require("bluebird");
 
-function IPFSConnector() {
+function IPFSConnector(mschub) {
   this.ipfsEndpoint = "http://localhost:8080/ipfs/";
   this.ipfsAPIEndpoint = "http://localhost:5001/";
   this.ipfsAddUrl = this.ipfsAPIEndpoint + "api/v0/add";
+  window.setInterval(function() {
+    request(this.ipfsAddUrl, function (error, response, body) {
+      if (error) {
+        mschub.ipfsStatus = {connected: false, error: error};
+      }
+      else {
+        mschub.ipfsStatus = {connected: true};
+      }
+
+    }.bind(this))
+  }.bind(this), 5000);
 }
 
 IPFSConnector.prototype.asUrl = function (hash) {

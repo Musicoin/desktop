@@ -14,10 +14,11 @@
 }
 
 .name-area {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .name {
@@ -25,12 +26,11 @@
     font-weight: lighter;
     display: flex;
     align-items: center;
-    height: 50%;
+    line-height: 1;
 }
 
 .account {
     color: var(--msc-subtle-text-color);
-    margin-bottom: 10px;
 }
 
 .user-message {
@@ -92,7 +92,7 @@ msc-tip-button {
 }
 
 msc-user-balance {
-    --msc-user-balance-font-size: larger;
+    --msc-user-balance-font-size: 2em;
 }
 
 .action {

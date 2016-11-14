@@ -9,12 +9,14 @@ Polymer({
     },
     chainVersion: String,
     selectedAccount: String,
-    accounts: Array
+    accounts: Array,
+    syncStatus: Object
   },
   ready: function() {
     mscIntf.attach(this)
       .to('locale')
       .to('chainVersion')
+      .to('syncStatus')
       .to('loginError', function (oldValue, newValue) {
         if (newValue) {
           alert("login failed!");
@@ -48,5 +50,34 @@ Polymer({
     if (this.accounts) {
       mscIntf.login.selectAccount(this.accounts[selected]);
     }
+  },
+  _computeSelectedAccount: function() {
+    return this.selectedAccount || "";
+  },
+  _computeSyncProgress: function() {
+    if (this.syncStatus) {
+      if (!this.syncStatus.syncing)
+        return 0;
+
+      var start = this.syncStatus.startingBlock;
+      return (100 * (this.syncStatus.currentBlock - start)) / (this.syncStatus.highestBlock - start);
+    }
+    return 0;
+  },
+  _hideSyncingStatus: function() {
+    // this ensures that the syncScreen will only show for new users
+    if (this.selectedAccount) return true;
+
+    if (!this.syncStatus) return false;
+    if (this.syncStatus.initialSyncEnded) { console.log("sync ended"); return true};
+    if (!this.syncStatus.initialSyncStarted) return false;
+    if (this.syncStatus.peers == 0) return false;
+    return !this.syncStatus.syncing;
+  },
+  _computeSyncStatusMessage: function() {
+    if (this.syncStatus) {
+      if (this.syncStatus.syncing) return "Downloading from the Musicoin network";
+      return "Looking for peers";
+    }
   }
-})
+});

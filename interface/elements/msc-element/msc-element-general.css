@@ -10,6 +10,7 @@
   --msc-primary-background-color: transparent;
   --primary-text-color: white;
   --msc-subtle-text-color: #aaa;
+  --msc-footer-height: 24px;
   display: block;
 }
 msc-parity-view,
@@ -56,8 +57,18 @@ app-header {
   height: 48px;
 }
 
+.outer-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .drawer-list {
   margin: 5px 10px;
+}
+
+/* I don't see any better way to include a foot */
+app-header-layout::shadow #contentContainer {
+    margin-bottom: var(--msc-footer-height);
 }
 
 app-header-layout {
@@ -302,4 +313,14 @@ msc-simple-login-view {
     filter: blur(46px);
     opacity: 0.3;
     overflow: hidden;
+}
+
+msc-chain-status {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 1;
+    justify-content: flex-end;
+    height: var(--msc-footer-height);
 }
