@@ -1,8 +1,12 @@
 #!/bin/bash
 # add required package for nwj
-sudo apt install libnss3
-
+SUDO=''
+if (( $EUID != 0 )); then
+    SUDO='sudo'
+fi
 # Make the application executable
-chmod +x Musicoin-client
-chmod +x bin/geth/geth
-chmod +x bin/go-ipfs/ipfs
+$SUDO apt install libnss3
+# Make sure several dependcies executable
+$SUDO chmod +x Musicoin-client
+$SUDO chmod +x bin/geth/geth
+$SUDO chmod +x bin/go-ipfs/ipfs
