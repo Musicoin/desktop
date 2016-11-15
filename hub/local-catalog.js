@@ -8,22 +8,24 @@ function LocalCatalog(web3, workAbi, licenseAbi, loggerAbi, loggerAddress) {
   this.licenseAbi = licenseAbi;
   this.loggerAbi = loggerAbi;
   this.loggerAddress = loggerAddress;
-  this.eventNameList = ['licenseReleasedEvent', 'playEvent', 'tipEvent'];
+  this.licenseEventList = ['licenseReleasedEvent'];
   this.indexName = os.homedir() + "/.musicoin/local-catalog.json";
+  this.eventFilter = {stopWatching: function(){}};
 }
 
 LocalCatalog.prototype.startIndexing = function() {
   this.loadIndexState()
     .bind(this)
-    .then(function() {
+    .then(function(index) {
+      this.pppIndex = index;
       console.log("Starting up indexer...");
       this.loggerContract = this.web3.eth.contract(this.loggerAbi).at(this.loggerAddress);
-      this.eventFilter = this.loggerContract.allEvents({fromBlock: this.pppIndex.lastBlock, toBlock:'latest'});
+      this.eventFilter = this.loggerContract.licenseReleasedEvent({}, {fromBlock: this.pppIndex.lastBlock, toBlock:'latest'});
       this.eventFilter.watch(function(err, eventEntry) {
         if (!err) {
-          if (this.eventNameList.indexOf(eventEntry.event) > -1) {
+          // if (this.licenseEventList.indexOf(eventEntry.event) > -1) {
             console.log("event: " + eventEntry.event);
-            this.updateLicense(eventEntry.args.sender)
+            this.updateLicense(eventEntry.args.sender, eventEntry.blockNumber)
               .bind(this)
               .then(function() {
                 this.pppIndex.lastBlock = eventEntry.blockNumber;
@@ -31,7 +33,7 @@ LocalCatalog.prototype.startIndexing = function() {
               .then(function() {
                 this.saveIndexState();
               });
-          }
+          // }
         }
       }.bind(this));
     });
@@ -59,27 +61,39 @@ LocalCatalog.prototype.loadIndexState = function() {
     })
 };
 
-LocalCatalog.prototype.updateLicense = function(licenseAddress) {
+LocalCatalog.prototype.updateLicense = function(licenseAddress, blockNumber) {
   return new Promise(function(resolve, reject) {
     var licenseContract = this.web3.eth.contract(this.licenseAbi).at(licenseAddress);
     var licenseObject = this.pppIndex.contracts[licenseAddress];
     if (!licenseObject) {
-      licenseObject = {contract_id: licenseAddress};
+      // TODO: Stop using contract_id
+      licenseObject = {address: licenseAddress, contract_id: licenseAddress};
       licenseObject.work = this.loadWorkFromAddress(licenseContract.workAddress());
+      licenseObject.blockNumber = blockNumber;
       this.pppIndex.contracts[licenseAddress] = licenseObject;
     }
-    this.updateFields(licenseObject, licenseContract, ['weiPerPlay', 'tipCount', 'totalEarned']);
+    this.updateFields(licenseObject, licenseContract, ['weiPerPlay', 'tipCount', 'totalEarned', 'owner', 'resourceUrl', 'metadataUrl']);
+    resolve(licenseObject);
   }.bind(this))
 };
 
 LocalCatalog.prototype.loadWorkFromAddress = function(workAddress) {
   var workContract = this.web3.eth.contract(this.workAbi).at(workAddress);
-  return this.updateFields({}, workContract, ['title', 'artist', 'imageUrl', 'metadataUrl']);
+  return this.updateFields({address: workAddress}, workContract, ['title', 'artist', 'imageUrl', 'metadataUrl']);
 };
 
 LocalCatalog.prototype.updateFields = function(output, contract, fields) {
   fields.forEach(function(f) {
-    output[f] = contract[f]();
+    try {
+      output[f] = contract[f]();
+      if (output[f] && typeof(output[f]) === 'string' && output[f].startsWith("ipfs://")) {
+        output[f + "_https"] = output[f].replace("ipfs://", "https://ipfs.io/ipfs/");
+      }
+    }
+    catch(e) {
+      console.log("Could not read field from contract: " + f + ", contract: " + contract.address);
+    }
+
   });
   return output;
 };
