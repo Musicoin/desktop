@@ -21,6 +21,7 @@ PreferenceManager.prototype.setCurrentAccount = function(account) {
       this.userPreferences.registrationStatus = storedPreferences.registrationStatus || {};
       this.userPreferences.username = storedPreferences.username || "user";
       this.userPreferences.userImage = storedPreferences.userImage || "../";
+      this.userPreferences.maxMusicoinPerPlay = storedPreferences.maxMusicoinPerPlay || 1;
       console.log("Loaded preferences for " + account + ": " + JSON.stringify(storedPreferences));
       return this.musicoinService.loadMyProfile(account);
     })

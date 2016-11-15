@@ -131,6 +131,7 @@ pcsUserPrefs.addObservable('username', '');
 pcsUserPrefs.addObservable('musicianMode', false);
 pcsUserPrefs.addObservable('registrationStatus', {});
 pcsUserPrefs.addObservable('playlistEdit', "", true);
+pcsUserPrefs.addObservable('maxMusicoinPerPlay', 1);
 
 // PreferenceManager handles swapping in/out of preferences when the selected account changes
 var PreferenceManager = require("./preferences.js");
@@ -220,7 +221,13 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         fns.audio.playNext(elem, {}, fns);
       },
       playNext: function(elem, params, fns) {
-        mschub.audioHub.currentPlay = mschub.audioHub.playlist.shift() || {};
+        var next = mschub.audioHub.playlist.shift();
+        var threshold = web3Connector.toIndivisibleUnits(mschub.userPreferences.maxMusicoinPerPlay);
+        while (next && next.wei_per_play > threshold) {
+          console.log("Skipping play that is above the user's defined wei_per_play threshold: " + next.wei_per_play + " > " + threshold);
+          next = mschub.audioHub.playlist.shift();
+        }
+        mschub.audioHub.currentPlay = next || {};
         mschub.audioHub.playPendingPayment = mschub.audioHub.currentPlay;
       },
       reportPlaybackPercentage: function(elem, params, fns) {
