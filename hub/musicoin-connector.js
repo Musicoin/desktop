@@ -150,7 +150,9 @@ MusicoinConnector.prototype.loadArtists = function(artist_addresses) {
 };
 
 MusicoinConnector.prototype.loadLicenseDetails = function(contractIds) {
-  // TODO: If we don't use the batch API, we can cache the response and use it offline
+  if (!contractIds || contractIds.length == 0)
+    return Promise.resolve([]);
+
   var propertiesObject = {address: contractIds.join(',')};
   return new Promise(function (resolve, reject){
     return request({

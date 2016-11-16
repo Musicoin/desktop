@@ -25,10 +25,13 @@ AccountHistoryManager.prototype.setCurrentAccount = function(account) {
   return new Promise(function(resolve, reject) {
     if (this.accountHistory) {
       this.accountHistory.stopIndexing();
+      this.accountHistory = null;
     }
     this.offset = 0;
-    this.accountHistory = new AccountHistory(account, this.web3Connector, this.historyChangeListener);
-    this.accountHistory.startIndexing();
+    if (account) {
+      this.accountHistory = new AccountHistory(account, this.web3Connector, this.historyChangeListener);
+      this.accountHistory.startIndexing();
+    }
     this.status.selectedAccount = account;
     resolve();
   }.bind(this));

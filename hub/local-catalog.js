@@ -24,7 +24,6 @@ LocalCatalog.prototype.startIndexing = function() {
       this.releaseEventFilter = this.loggerContract.allEvents({fromBlock: this.pppIndex.lastBlock, toBlock:'latest'});
       this.releaseEventFilter.watch(function(err, eventEntry) {
         if (!err) {
-          console.log("event: " + eventEntry.event);
           if ('licenseReleasedEvent' == eventEntry.event) {
             this.updateLicense(eventEntry.args.sender, eventEntry.blockNumber)
               .bind(this)

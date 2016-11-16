@@ -77,7 +77,6 @@ AccountHistory.prototype.startIndexing = function() {
       this.eventFilter.watch(function(err, eventEntry) {
         if (!err) {
           if (eventEntry.blockNumber > startingBlockNumber || eventEntry.transactionIndex > startingTransactionIndex) {
-            console.log("processing event: " + eventEntry.event + " @ " + eventEntry.blockNumber + ":" + eventEntry.transactionIndex + ", for " + this.account);
             this.logEvent(eventEntry)
               .bind(this)
               .then(function(updated) {

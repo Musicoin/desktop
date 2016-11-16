@@ -46,7 +46,6 @@ PropertyChangeSupport.prototype.addObservable = function (prop, defaultValue, al
 PropertyChangeSupport.prototype.attach = function(watcher) {
   var subject = this.obj;
   var pcs = this;
-  console.log("pcs: " + pcs);
   return {
     to: function(prop, fn) {
       if (!fn) {
