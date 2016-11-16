@@ -1,34 +1,63 @@
 Polymer({
-    is: 'msc-tx-view',
-    properties: {
-        transactionHistory: Array
+  is: 'msc-tx-view',
+  properties: {
+    transactions: Array,
+    startIndex: {
+      type: Number,
+      value: 0
     },
-    ready: function() {
-        mscIntf.attach(this)
-          .to('transactionHistory')
+    pageSize : {
+      type: Number,
+      value: 100
     },
-    isPlayOrTip: function(item) {
-        return this.isPlay(item) || this.isTip(item);
-    },
-    isPlay: function(item) {
-        return item.eventType == "play";
-    },
-    isTip: function(item) {
-        return item.eventType == "tip";
-    },
-    isPayment: function(item) {
-        return item.eventType == "payment";
-    },
-    isFromThisAddress: function(item) {
-        return item.from == mscIntf.financialData.selectedAccount;
-    },
-    isToThisAddress: function(item) {
-        // TODO: This isn't right, but for now the data is just dummy data, so this ensures
-        // it's one of the other.  In the future, the txs will be filtered on this address so
-        // if it isn't from this address and it isn't to this address, the something went wrong
-        return !this.isFromThisAddress(item);
-    },
-    getSeedForIdenticon: function(item) {
-        return this.isFromThisAddress(item) ? item.to : item.from;
-    }
+    local: Object
+  },
+  ready: function () {
+    mscIntf.accountHistoryStatus.attach(this)
+      .to('transactions')
+
+    mscIntf.attach(this)
+      .to('locale');
+  },
+  isPlayOrTip: function (item) {
+    return this.isPlay(item) || this.isTip(item);
+  },
+  isPlay: function (item) {
+    return item.eventType == "playEvent";
+  },
+  isTip: function (item) {
+    return item.eventType == "tipEvent";
+  },
+  isPayment: function (item) {
+    return item.eventType == "payment";
+  },
+  isFromThisAddress: function (item) {
+    return item.outgoing;
+  },
+  isIncoming: function (item) {
+    return item.incoming;
+  },
+  getSeedForIdenticon: function (item) {
+    return item.from;
+  },
+  refresh: function () {
+    this.startIndex = 0;
+    this.updatePage();
+  },
+  _computeEventTypeLabel: function(eventType) {
+    if (eventType == 'tipEvent') return 'tip';
+    if (eventType == 'playEvent') return 'play';
+    return eventType;
+  },
+  _computeDirectionText: function(item) {
+    if (item.incoming && item.outgoing) return "in/out";
+    if (item.incoming) return "in";
+    return "out";
+  },
+  nextPage: function() {
+  },
+  previousPage: function() {
+  },
+  updatePage: function() {
+  }
 })

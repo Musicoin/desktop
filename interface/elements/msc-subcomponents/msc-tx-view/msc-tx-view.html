@@ -2,24 +2,29 @@
   <link rel="import" type="css" href="msc-tx-view.css">
   <template>
     <div id="txDetailView" class="detailView">
-      <template is="dom-repeat" items="{{transactionHistory}}">
+      <div>
+        {{locale.historyView.label.recentTransactions}}
+      </div>
+      <template is="dom-repeat" items="{{transactions}}" initialCount="10">
         <template is="dom-if" if="[[isPlayOrTip(item)]]">
-          <div class="row play">
-            <div class="art" style="background-image:url('{{item.song.work.image_url_https}}')"></div>
-            <div class="type cell">{{item.eventType}}</div>
+          <div class="row play" incoming$="[[isIncoming(item)]]">
+            <div class="art" style="background-image:url('{{item.imgUrlHttps}}')"></div>
+            <div class="type cell">{{_computeEventTypeLabel(item.eventType)}}</div>
+            <div class="direction cell">{{_computeDirectionText(item)}}</div>
             <div class="song-details cell">
-              <div class="song">{{item.song.work.title}}</div>
-              <div class="artist">{{item.song.work.artist}}</div>
+              <div class="song">{{item.title}}</div>
+              <div class="artist">{{item.artist}}</div>
             </div>
+            <div class="cell">{{item.blockNumber}}</div>
             <div class="cell amount">{{item.amount}}</div>
           </div>
         </template>
 
         <template is="dom-if" if="[[isPayment(item)]]">
-          <div class="row play" incoming$="[[isToThisAddress(item)]]">
+          <div class="row play" incoming$="[[isIncoming(item)]]">
             <identicon-element size="64" seed="{{getSeedForIdenticon(item)}}"></identicon-element>
             <template is="dom-if" if="[[isFromThisAddress(item)]]">
-              <div class="type cell">{{item.eventType}}</div>
+              <div class="type cell">{{_computeEventTypeLabel(item.eventType)}}</div>
             </template>
             <template is="dom-if" if="[[isToThisAddress(item)]]">
               <div class="type cell">income</div>
@@ -35,7 +40,6 @@
             <div class="cell amount">{{item.amount}}</div>
           </div>
         </template>
-
       </template>
     </div>
   </template>

@@ -69,6 +69,11 @@ var locale = {
         release: 'Release',
       },
     },
+    historyView: {
+      label: {
+        recentTransactions: "Recent Transactions"
+      }
+    },
     walletView: {
       label: {
         history: "History",

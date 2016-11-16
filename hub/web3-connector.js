@@ -628,4 +628,25 @@ Web3Connector.prototype.releaseLicense = function (releaseRequest) {
     }.bind(this))
 };
 
+Web3Connector.prototype.getWorkAbi = function() {
+  return workAbi;
+};
+
+Web3Connector.prototype.getLicenseAbi = function() {
+  return pppMvp2Abi;
+};
+
+Web3Connector.prototype.getLoggerAbi = function() {
+  return loggerMvp2Abi;
+};
+
+Web3Connector.prototype.getLoggerAddress = function() {
+  return loggerAddress;
+};
+
+Web3Connector.prototype.getWeb3 = function() {
+  return this.web3;
+};
+
+
 module.exports = Web3Connector;

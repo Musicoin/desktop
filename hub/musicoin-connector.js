@@ -58,12 +58,6 @@ MusicoinConnector.prototype.loadMyWorks = function (address) {
 };
 
 MusicoinConnector.prototype.loadBrowsePage = function (page, keywords, callback) {
-  if (page == "favorites") {
-    // TODO:
-    // callback(this.loadFavoritesFromFile(callback));
-    return;
-  }
-
   var propertiesObject = {page_id: page, query: keywords};
   request({
     url: this.musicoinContentURL,
