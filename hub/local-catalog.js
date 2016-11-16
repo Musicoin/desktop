@@ -1,6 +1,7 @@
 var Promise = require('bluebird');
 var fs = require('fs');
 var os = require('os');
+var jsonio = require('./json-io.js');
 
 function LocalCatalog(web3, workAbi, licenseAbi, loggerAbi, loggerAddress) {
   this.web3 = web3;
@@ -10,7 +11,7 @@ function LocalCatalog(web3, workAbi, licenseAbi, loggerAbi, loggerAddress) {
   this.loggerAddress = loggerAddress;
   this.licenseEventList = ['licenseReleasedEvent'];
   this.indexName = os.homedir() + "/.musicoin/local-catalog.json";
-  this.eventFilter = {stopWatching: function(){}};
+  this.releaseEventFilter = {stopWatching: function(){}};
 }
 
 LocalCatalog.prototype.startIndexing = function() {
@@ -20,11 +21,11 @@ LocalCatalog.prototype.startIndexing = function() {
       this.pppIndex = index;
       console.log("Starting up indexer...");
       this.loggerContract = this.web3.eth.contract(this.loggerAbi).at(this.loggerAddress);
-      this.eventFilter = this.loggerContract.licenseReleasedEvent({}, {fromBlock: this.pppIndex.lastBlock, toBlock:'latest'});
-      this.eventFilter.watch(function(err, eventEntry) {
+      this.releaseEventFilter = this.loggerContract.allEvents({fromBlock: this.pppIndex.lastBlock, toBlock:'latest'});
+      this.releaseEventFilter.watch(function(err, eventEntry) {
         if (!err) {
-          // if (this.licenseEventList.indexOf(eventEntry.event) > -1) {
-            console.log("event: " + eventEntry.event);
+          console.log("event: " + eventEntry.event);
+          if ('licenseReleasedEvent' == eventEntry.event) {
             this.updateLicense(eventEntry.args.sender, eventEntry.blockNumber)
               .bind(this)
               .then(function() {
@@ -33,22 +34,22 @@ LocalCatalog.prototype.startIndexing = function() {
               .then(function() {
                 this.saveIndexState();
               });
-          // }
+          }
         }
       }.bind(this));
     });
 };
 
 LocalCatalog.prototype.stopIndexing = function() {
-  this.eventFilter.stopWatching();
+  this.releaseEventFilter.stopWatching();
 };
 
 LocalCatalog.prototype.saveIndexState = function() {
-  this.saveObject(this.indexName, this.pppIndex);
+  jsonio.saveObject(this.indexName, this.pppIndex);
 };
 
 LocalCatalog.prototype.loadIndexState = function() {
-  return this.loadObject(this.indexName)
+  return jsonio.loadObject(this.indexName)
     .bind(this)
     .then(function(result) {
       if (!result) {
@@ -96,32 +97,6 @@ LocalCatalog.prototype.updateFields = function(output, contract, fields) {
 
   });
   return output;
-};
-
-LocalCatalog.prototype.loadObject = function(fileName) {
-  return new Promise(function(resolve, reject) {
-    fs.exists(fileName, function(err, result){
-      if (err) return reject(err);
-      if (!result) return resolve(null);
-      fs.readFile(fileName, 'utf8', function(err, result) {
-        if (err) return reject(err);
-        try {
-          resolve(JSON.parse(result));
-        }
-        catch(parseError) {
-          reject(parseError);
-        }
-      });
-    });
-  }.bind(this));
-};
-
-LocalCatalog.prototype.saveObject = function(fileName, jsonObject) {
-  return new Promise(function(resolve, reject) {
-    fs.writeFile(fileName, JSON.stringify(jsonObject), 'utf8', function(err, result) {
-      return err ? reject(err) : resolve();
-    });
-  }.bind(this));
 };
 
 module.exports = LocalCatalog;
