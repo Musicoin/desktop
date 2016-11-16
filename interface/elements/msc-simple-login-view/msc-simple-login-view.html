@@ -18,7 +18,7 @@
       <!--<paper-button class="action" id="skipLoginButton" on-tap="hideLoginWindow">skip</paper-button>-->
       <paper-button class="action" id="newAccountButton" on-tap="createNewAccount">new account</paper-button>
     </div>
-    <div class="version">{{chainVersion}}</div>
+    <div class="version">{{chainVersion}} {{version}}</div>
     <div class="syncing" hidden$="{{_hideSyncingStatus(syncStatus, selectedAccount)}}">
       <div class="sync-status">Please wait</div>
       <paper-progress value="{{_computeSyncProgress(syncStatus, selectedAccount)}}" id="syncProgress" class="sync-progress"></paper-progress>

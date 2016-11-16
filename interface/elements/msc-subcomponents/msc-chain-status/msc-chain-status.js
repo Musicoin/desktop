@@ -2,12 +2,14 @@ Polymer({
     is: 'msc-chain-status',
     properties: {
         syncStatus: Object,
-        ipfsStatus: Object
+        ipfsStatus: Object,
+        version: String
     },
     ready: function() {
         mscIntf.attach(this)
           .to('syncStatus')
-          .to('ipfsStatus');
+          .to('ipfsStatus')
+          .to('version');
     },
     _computeIsSyncing: function() {
         return this.syncStatus && this.syncStatus.syncing;

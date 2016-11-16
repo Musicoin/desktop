@@ -1,3 +1,10 @@
+@echo off
+
+set /p version="Enter a verion number: "
+
+IF EXIST version.txt del /F version.txt
+@echo %version% > version.txt
+
 call nwb nwbuild  -v 0.17.4 --with-ffmpeg -p win64,osx64,linux64 -o C:\tmp\mc-mvp3 --side-by-side
 
 robocopy C:\tmp\mc-mvp3\dependencies\win64 C:\tmp\mc-mvp3\Musicoin-client-win-x64\bin /S

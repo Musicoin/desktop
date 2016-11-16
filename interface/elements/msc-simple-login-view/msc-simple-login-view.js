@@ -8,6 +8,7 @@ Polymer({
       value: 0
     },
     chainVersion: String,
+    version: String,
     selectedAccount: String,
     accounts: Array,
     syncStatus: Object
@@ -15,6 +16,7 @@ Polymer({
   ready: function() {
     mscIntf.attach(this)
       .to('locale')
+      .to('version')
       .to('chainVersion')
       .to('syncStatus')
       .to('loginError', function (oldValue, newValue) {
