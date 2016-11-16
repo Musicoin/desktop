@@ -129,6 +129,8 @@ Polymer({
       .then(function(workAddress) {
         result.workAddress = workAddress;
         this.work.license.workAddress = workAddress; // require for PPP contract creation
+        this.work.license.artist = this.work.artist;
+        this.work.license.title = this.work.title;
         mscIntf.catalog.releaseLicense(this.work.license);
       })
       .then(function(licenseAddress) {

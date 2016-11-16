@@ -45,8 +45,8 @@ Polymer({
     },
     _currentPlayChanged: function(item) {
       this.$.progress.value = 0;
-      if (item && item.resource_url_https) {
-        this.$.player.src = item.resource_url_https;
+      if (item && item.contract_id) {
+        this.$.player.src = mscIntf.clientUtils.getMediaUrlForLicense(item.contract_id);
         this.$.player.load();
       }
       else {

@@ -24,6 +24,7 @@ try {
 } catch (e) {
   settings = require('../config/config.std.js');
 }
+var AccountHistory = require('./account-history.js');
 
 /* Run startup actions (currently, start geth and ipfs if they aren't already started) */
 var Startup = require('./startup.js');
@@ -138,12 +139,18 @@ var PreferenceManager = require("./preferences.js");
 var preferenceManager = new PreferenceManager(mschub.userPreferences, musicoinService, appData + "/users/");
 pcsFinData.attach().to('selectedAccount', function(oldAccount, newAccount) {
   preferenceManager.setCurrentAccount(newAccount)
-    .then(function() {
-      console.log("Loaded user preferences: " + JSON.stringify(mschub.userPreferences));
-    })
     .catch(function(err) {
-      // mschub.userPreferences = {};
       console.log("Could not load preferences: " + err);
+    })
+});
+
+var AccountHistoryManager = require("./account-history-manager.js");
+var accountHistoryManager = new AccountHistoryManager(web3Connector);
+mschub.accountHistoryStatus = accountHistoryManager.getStatus();
+pcsFinData.attach().to('selectedAccount', function(oldAccount, newAccount) {
+  accountHistoryManager.setCurrentAccount(newAccount)
+    .catch(function(err) {
+      console.log("Could not load account history: " + err);
     })
 });
 
@@ -154,9 +161,16 @@ pcs.addObservable('ipfsStatus', {});
 var IPFSConnector = require("./ipfs-connector.js");
 var ipfsConnector = new IPFSConnector(mschub);
 
+
+var LocalMediaServer = require('./local-media-server.js');
+var localMediaServer = new LocalMediaServer(web3Connector);
+
 mschub.clientUtils = {
   convertToMusicoinUnits: function(wei) {
     return web3Connector.toMusicCoinUnits(wei);
+  },
+  getMediaUrlForLicense: function(licenseAddress) {
+    return localMediaServer.getMediaUrlForLicense(licenseAddress);
   }
 }
 
@@ -348,9 +362,18 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         };
 
         var tx = mschub.messageMonitor.create();
-        ipfsConnector.add(license.audioFile)
+        localMediaServer.encrypt(license.audioFile, license.artist, license.title)
+          .then(function(tmpFile) {
+            return ipfsConnector.add(tmpFile)
+              .then(function(hash) {
+                fs.unlink(tmpFile, function(err) {
+                  if (err) console.log("Could not delete temp file: " + err);
+                });
+                return hash;
+              });
+          })
           .then(function (hash) {
-            licenseReleaseRequest.resourceUrl = "ipfs://" + hash;
+            licenseReleaseRequest.resourceUrl = "eipfs://" + hash;
             return web3Connector.releaseLicense(licenseReleaseRequest);
           })
           .then(function (contractAddress) {
@@ -406,10 +429,7 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
         return msgId;
       },
       loadHistory: function(elem, params, fns) {
-        musicoinService.loadHistory(web3Connector.getSelectedAccount())
-          .then(function(result) {
-            mschub.transactionHistory = result;
-          });
+        accountHistoryManager.loadTransactions();
         return {result: "pending"};
       },
       updateUserBalance: function(elem, params, fns) {
@@ -483,6 +503,23 @@ mschub.payments = require('../facade/payments.js')(mschub);
 mschub.catalog = require('../facade/catalog.js')(mschub);
 mschub.login = require('../facade/login.js')(mschub);
 mschub.profile = require('../facade/profile.js')(mschub);
+
+pcs.addObservable('version', 'unknown');
+fs.exists("version.txt", function(exists) {
+  if (exists) {
+    fs.readFile("version.txt", function(err, result) {
+      if (err) {
+        console.log("Checking version... failed: " + err);
+        return;
+      }
+      console.log("Version " + result);
+      mschub.version = result;
+    })
+  }
+  else {
+    console.log("Checking version failed... version file does not exist");
+  }
+});
 
 /* Here we export the hub's reference to be accessible for the interface */
 exports.mscdata = mschub
