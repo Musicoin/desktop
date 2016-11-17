@@ -22,9 +22,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="msc-works-view">
     <link rel="import" type="css" href="msc-works-view.css">
     <template>
-      <msc-player-view id="gridView" groups="{{myWorks}}" hidden$="{{!shouldShowGridView(selectedWork)}}"></msc-player-view>
       <msc-simple-work-editor id="workEditor" work="{{selectedWork}}" hidden$="{{shouldShowGridView(selectedWork)}}"></msc-simple-work-editor>
       <paper-fab id="addNewWorkButton" icon="add" mini on-tap="handleAddNewWork" hidden$="{{!shouldShowGridView(selectedWork)}}"></paper-fab>
+      <div id="works" class="full-screen" hidden$="{{!shouldShowGridView(selectedWork)}}">
+        <h3 class="header">{{locale.worksView.headers.myWorks}}</h3>
+        <template is="dom-repeat" items="{{myWorks}}" as="work">
+          <msc-work-detail-view work="{{work}}"></msc-work-detail-view>
+        </template>
+      </div>
+
     </template>
 
   <script src="msc-works-view.js"></script>

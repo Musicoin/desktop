@@ -3,29 +3,14 @@ Polymer({
   is: 'msc-works-view',
   properties: {
     myWorks: Array,
-    selectedWork: Object
+    selectedWork: Object,
+    locale: Object
   },
   ready: function () {
     mscIntf.attach(this)
+      .to('locale')
       .to('selectedWork')
-      .to('myWorks', function (oldValue, newValue) {
-        this.myWorks = [{
-          name: "", items: newValue.map(function (work) {
-            var artist = work.isPending ? "pending..." : work.artist;
-            return {
-              line1: work.title,
-              line2: artist,
-              img: work.image_url_https,
-              data: work
-            }
-          })
-        }];
-      }.bind(this))
-
-
-    this.$.gridView.addEventListener('selected', function (e) {
-      mscIntf.selectedWork = e.detail[0];
-    }.bind(this));
+      .to('myWorks')
 
     this.$.workEditor.addEventListener('back-clicked', function (e) {
       mscIntf.catalog.loadMyWorks(); // force refresh

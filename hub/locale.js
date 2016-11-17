@@ -59,6 +59,7 @@ var locale = {
     },
     worksView: {
       headers: {
+        myWorks: 'My Works',
         assets: 'Assets',
         licensing: 'Licensing',
         contributorShares: 'Contributor Shares',
@@ -83,6 +84,15 @@ var locale = {
       },
       instructions: {
         enterAddress: "enter an address"
+      }
+    },
+    workDetailView: {
+      label: {
+        pending: "Pending...",
+        plays: "Plays",
+        tips: "Tips",
+        earned: "Earned",
+        releaseDate: "Released on"
       }
     },
     workEditor: {

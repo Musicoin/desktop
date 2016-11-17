@@ -31,8 +31,8 @@ Polymer({
         return "icons:cloud-done";
     },
     _computeIPFSTooltip: function() {
-        if (!this.ipfsStatus || !this.ipfsStatus.connected) return "IPFS not connected";
-        return "IPFS connected";
+        if (!this.ipfsStatus || !this.ipfsStatus.connected) return "Media network not connected";
+        return "Media network connected";
     },
     _computeMiningTooltip: function() {
         return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";

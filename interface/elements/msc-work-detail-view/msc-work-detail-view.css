@@ -1,0 +1,121 @@
+:host {
+    font-weight: lighter;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.container[pending] {
+    opacity: 0.75;
+}
+
+.header-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 5px;
+    margin-bottom: 2px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    position: relative;
+}
+
+.detail {
+    display: none;
+    background-color: rgba(0,0,0,0.1);
+    padding: 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+}
+
+.container[expanded] > .detail {
+    display: block;
+}
+
+.work-image {
+    width: 96px;
+    height: 96px;
+    background-size: cover;
+    background-position: center;
+    margin: 5px;
+}
+
+.header-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-size: 1.5em;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.stat {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.stat-value {
+    font-size: 1.5em;
+}
+
+.stat-name {
+    color: var(--msc-subtle-text-color);
+    font-size: 0.75em;
+}
+
+.earned {
+
+}
+
+.plays {
+
+}
+
+.tips {
+
+}
+
+.release-date {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgba(255,255,255,0.3);
+    font-size: small;
+    font-weight: normal;
+}
+
+.pending-bar {
+    background-color: rgba(100,100,100,0.1);
+    background-size: 64px 64px;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+    animation: animate-stripes-msc-tip-button-0 3s linear infinite;
+    border-radius: 5px 5px 0px 0px;
+    display: flex;
+    justify-content: center;
+}
