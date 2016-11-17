@@ -1,14 +1,27 @@
 :host {
 }
 
-.container {
+.right {
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.container {
     font-weight: lighter;
     color: rgba(255,255,255,0.2);
-    padding-right: 30px;
+    padding-right: 15px;
+    padding-left: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .item-area {

@@ -13,7 +13,7 @@ module.exports = {
     chainInit: true
   },
   chain: {
-    name: "Musicoin",
+    name: "Musicoin - TestNet",
     path: "{process.cwd}/bin/geth/",
     command: './geth',
     args: ['--identity', 'Musicoin',

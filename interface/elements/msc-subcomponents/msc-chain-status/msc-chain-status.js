@@ -9,7 +9,8 @@ Polymer({
         mscIntf.attach(this)
           .to('syncStatus')
           .to('ipfsStatus')
-          .to('version');
+          .to('version')
+          .to('chainVersion');
     },
     _computeIsSyncing: function() {
         return this.syncStatus && this.syncStatus.syncing;
