@@ -2,9 +2,6 @@
   <link rel="import" type="css" href="msc-tx-view.css">
   <template>
     <div id="txDetailView" class="detailView">
-      <div>
-        {{locale.historyView.label.recentTransactions}}
-      </div>
       <template is="dom-repeat" items="{{transactions}}" initialCount="10">
         <template is="dom-if" if="[[isPlayOrTip(item)]]">
           <div class="row play" incoming$="[[isIncoming(item)]]">
@@ -15,8 +12,8 @@
               <div class="song">{{item.title}}</div>
               <div class="artist">{{item.artist}}</div>
             </div>
-            <div class="cell">{{item.blockNumber}}</div>
-            <div class="cell amount">{{item.amount}}</div>
+            <div class="cell">{{_formatDate(item.timestamp)}}</div>
+            <div class="cell amount">{{_computeAmountText(item)}}</div>
           </div>
         </template>
 

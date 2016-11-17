@@ -54,6 +54,14 @@ Polymer({
     if (item.incoming) return "in";
     return "out";
   },
+  _computeAmountText: function(item) {
+    return item.incoming ? "+" + item.amount : item.amount;
+  },
+  _formatDate: function(timestamp) {
+    // TODO: Locale
+    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(timestamp*1000).toLocaleDateString('en-US', options);
+  },
   nextPage: function() {
   },
   previousPage: function() {
