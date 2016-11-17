@@ -115,6 +115,7 @@ var locale = {
         artist: "You must enter the artist's name",
         title: "You must enter a title",
         image: "You must select an image",
+        audio: "You must select an audio file"
       },
       actions: {
         releaseWork: "Release Work",

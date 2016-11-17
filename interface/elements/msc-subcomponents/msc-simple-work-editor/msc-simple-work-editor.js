@@ -91,10 +91,6 @@ Polymer({
 
   _computeIsPending: function() {
     if (!this.work) return false;
-
-    if (this.work.contract_address) {
-      return false;
-    }
     return this.work.releaseState == 1;
   },
 
@@ -131,7 +127,7 @@ Polymer({
         this.work.license.workAddress = workAddress; // require for PPP contract creation
         this.work.license.artist = this.work.artist;
         this.work.license.title = this.work.title;
-        mscIntf.catalog.releaseLicense(this.work.license);
+        return mscIntf.catalog.releaseLicense(this.work.license);
       })
       .then(function(licenseAddress) {
         this.set("work.releaseState", 3);
@@ -150,6 +146,7 @@ Polymer({
     if (!w.title) return this.locale.workEditor.validation.title;
     if (!w.imgFile) return this.locale.workEditor.validation.image;
     if (!w.artist) return this.locale.workEditor.validation.artist;
+    if (!w.license.audioFile) return this.locale.workEditor.validation.audio;
     return null;
   },
 
@@ -188,11 +185,15 @@ Polymer({
   _isPending: function() {
     return this.work.license.releaseState == 1;
   },
+  _shouldHideCancelButton: function() {
+    if (!this.work) return false;
+    return this.work.releaseState != 0;
+  },
 
   sumOfRoyalties: function(royalties) {
     var total = 0;
     royalties.forEach(function (r) {
-      total += r.amount;
+      total += parseFloat(r.amount);
     })
     return total;
   },
@@ -309,4 +310,16 @@ Polymer({
     if (!this.work.license.editable) return;
     this.splice('work.license.royalties', e.model.index, 1);
   },
+  openPreviewDialog: function() {
+    var err = this.checkForErrors(this.work)
+    if (err) {
+      alert(err);
+      return;
+    }
+    this.$.releaseButton.disabled = true;
+    this.$.scrolling.open();
+    window.setTimeout(function() {
+      this.$.releaseButton.disabled = false;
+    }.bind(this), 5000);
+  }
 });

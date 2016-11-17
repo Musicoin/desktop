@@ -18,7 +18,7 @@ Polymer({
     return mscIntf.clientUtils.convertToMusicoinUnits(wei);
   },
   _getLicenseValue: function(work, field, defaultValue) {
-    if (!work || !work.license) return defaultValue;
+    if (!work || !work.license || !work.license[field]) return defaultValue;
     return work.license[field];
   }
 });

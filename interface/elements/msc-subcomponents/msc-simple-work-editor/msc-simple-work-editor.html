@@ -13,31 +13,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="msc-simple-work-editor">
   <link rel="import" type="css" href="msc-simple-work-editor.css">
   <template>
-    <div style="margin: 10px">
+    <div id="container" style="margin: 10px">
       <div class="header">
         <paper-icon-button icon="icons:arrow-back" class="back-button" on-tap="handleBackClick"></paper-icon-button>
         {{work.title}}
       </div>
       <div class="license-address">{{work.contract_address}}</div>
       <div class="top-area">
-        <div class="image-area">
-          <iron-image id="fileSelector" class="work-image" src="{{work.image_url_https}}" sizing="cover"></iron-image>
-          <div class="work-image-bg">[[locale.workEditor.instructions.selectImage]]</div>
-          <input hidden id="imageFile" type="file">
-        </div>
-        <div class="metadata-area">
-          <paper-input label="[[locale.workEditor.fields.title]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.title}}"></paper-input>
-          <paper-input label="[[locale.workEditor.fields.artist]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.artist}}"></paper-input>
-          <paper-input label="Price (&#x266E;)" readonly=true value="{{work.license.coinsPerPlay}}"></paper-input>
+        <div class="media-area">
+          <div class="image-area">
+            <iron-image id="fileSelector" class="work-image" src="{{work.image_url_https}}" sizing="cover"></iron-image>
+            <div class="work-image-bg">[[locale.workEditor.instructions.selectImage]]</div>
+            <input hidden id="imageFile" type="file">
+          </div>
           <div id="audioFileSelector" tabindex="0" class="audio-input-section">
             <div class="music-file-text">[[selectedAudioText]]</div>
             <div class="music-file-size">[[selectedAudioSize]]</div>
           </div>
           <input hidden id="audioFile" type="file" value="{{selectedAudio}}">
         </div>
+        <div class="metadata-area">
+          <paper-input label="[[locale.workEditor.fields.title]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.title}}"></paper-input>
+          <paper-input label="[[locale.workEditor.fields.artist]]" readonly="[[!_isWorkEditable(work.contract_address)]]" value="{{work.artist}}"></paper-input>
+          <paper-input label="Price (&#x266E;)" readonly=true value="{{work.license.coinsPerPlay}}"></paper-input>
+          <div class="button-area">
+            <paper-button class="button" raised id="previewButton" on-tap="openPreviewDialog">Preview License</paper-button>
+            <paper-button class="button" raised on-tap="toggleAdvancedSection">{{_computeAdvancedToggleButtonText(hideAdvancedSection, locale)}}</paper-button>
+          </div>
+
+        </div>
       </div>
       <div class="main-section">
-        <paper-button raised elevation="1" on-tap="toggleAdvancedSection">{{_computeAdvancedToggleButtonText(hideAdvancedSection, locale)}}</paper-button>
         <div class="advanced" hidden$="{{hideAdvancedSection}}">
           <paper-material class="form-section" elevation="0">
             <div class="royalty-area-header">
@@ -82,20 +88,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
           </paper-material>
           <msc-metadata-editor id="metadataEditor" label="Work Metadata" metadata-url="[[work.metadata_url_https]]"  editable="[[_isWorkEditable(work.contract_address)]]"></msc-metadata-editor>
-
           <br>
-        </div>
-
-        <div class="status-bar" pending$="[[_computeIsPending(work.releaseState)]]">
-          <div class="status-message">[[_computeReleaseMessage(work.releaseState)]]</div>
-          <paper-button hidden$="[[!_isWorkEditable(work.contract_address)]]" class="release-button" raised on-tap="releaseWork">
-            <iron-icon icon="cloud-upload"></iron-icon>
-            [[locale.workEditor.actions.releaseWork]]
-          </paper-button>
         </div>
       </div>
     </div>
-    </div>
+    <paper-dialog class="license-preview-dialog" id="scrolling">
+      <paper-dialog-scrollable>
+        <msc-license-readable work="[[work]]"></msc-license-readable>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss hidden$="[[_isWorkEditable(work.contract_address)]]">Close</paper-button>
+        <paper-button dialog-dismiss
+                      hidden$="[[_shouldHideCancelButton(work.releaseState)]]"
+                      >Cancel</paper-button>
+        <paper-button id="releaseButton"
+                      autofocus
+                      class="release-button"
+                      raised on-tap="releaseWork"
+                      hidden$="[[!_isWorkEditable(work.contract_address)]]"
+                      pending$="[[_computeIsPending(work.releaseState)]]">
+          <iron-icon icon="cloud-upload"></iron-icon>
+          [[locale.workEditor.actions.releaseWork]]
+        </paper-button>
+      </div>
+    </paper-dialog>
   </template>
 
   <script src="msc-simple-work-editor.js"></script>
