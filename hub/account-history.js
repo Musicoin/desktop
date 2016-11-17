@@ -82,9 +82,10 @@ AccountHistory.prototype.startIndexing = function() {
         if (err) {
           return console.log("Error while watching account history: " + err);
         }
-        if (eventEntry.blockNumber <= startingBlockNumber && eventEntry.transactionIndex <= startingTransactionIndex) {
+
+        if (eventEntry.blockNumber < startingBlockNumber
+          || (eventEntry.blockNumber == startingBlockNumber && eventEntry.transactionIndex <= startingTransactionIndex))
           return console.log("Skipping event that was already processed, " + eventEntry.blockNumber + ", " + eventEntry.transactionIndex);
-        }
 
         // we need a queue because these events must be processed in order.
         this.queue.add(function() {
