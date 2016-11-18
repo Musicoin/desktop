@@ -15,6 +15,7 @@ const fs = require('fs');
 var util = require('util');
 const os = require('os');
 var appData = os.homedir() + "/.musicoin";
+var Promise = require('bluebird');
 
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 const lStorage = require('node-localstorage');
@@ -111,12 +112,37 @@ var MusicoinService = require("./musicoin-connector.js");
 
 var Web3Connector = require('./web3-connector.js');
 pcs.addObservable('syncStatus', {});
+
 var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariables(settings.chain.txDirectory), mschub, function(connected) {
   if (connected) {
     mschub.financialData.selectedAccount = web3Connector.getSelectedAccount();
     mschub.financialData.accounts = web3Connector.getAccounts();
     console.log("selectedAccount: " + web3Connector.getSelectedAccount())
     console.log(web3Connector.getAccounts());
+
+    // TESTING
+    if (settings.utilities.autoPlayNewLicenses) {
+      console.log("Auto-playing new licenses");
+      web3Connector.listenForNewLicense(function(licenseAddress) {
+        console.log("Auto-play found new license: " + licenseAddress);
+        Promise.resolve({})
+          .then(function() {
+            var licenseContract = web3Connector.getLicenseContractInstance(licenseAddress);
+            var workContract = web3Connector.getWorkContractInstance(licenseContract.workAddress());
+            var license = {
+              contract_id: licenseAddress,
+              song_name: workContract.title(),
+              artist_name: workContract.artist(),
+              image_url_https: workContract.imageUrl().replace("ipfs://", "https://ipfs.io/ipfs/")
+            }
+            return license;
+          })
+          .then(function(license) {
+            console.log("Auto-play playing: " + JSON.stringify(license));
+            mschub.audio.playAll([license]);
+          })
+      })
+    }
   }
 });
 

@@ -649,4 +649,13 @@ Web3Connector.prototype.getWeb3 = function() {
 };
 
 
+Web3Connector.prototype.listenForNewLicense = function(callback) {
+  var contract = this.web3.eth.contract(loggerMvp2Abi).at(loggerAddress);
+  contract.licenseReleasedEvent(function(err, eventEntry) {
+    if (!err) {
+      callback(eventEntry.args.sender);
+    }
+  });
+};
+
 module.exports = Web3Connector;

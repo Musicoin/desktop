@@ -50,5 +50,8 @@ module.exports = {
   },
   local: {
     cacheDir: "{appdata}/cache"
+  },
+  utilities: {
+    autoPlayNewLicenses: false
   }
 }
