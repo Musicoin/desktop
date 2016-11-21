@@ -94,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     <paper-dialog class="license-preview-dialog" id="scrolling">
       <paper-dialog-scrollable>
-        <msc-license-readable work="[[work]]"></msc-license-readable>
+        <msc-license-readable work="[[work]]" license="[[work.license]]"></msc-license-readable>
       </paper-dialog-scrollable>
       <div class="buttons">
         <paper-button dialog-dismiss hidden$="[[_isWorkEditable(work.contract_address)]]">Close</paper-button>

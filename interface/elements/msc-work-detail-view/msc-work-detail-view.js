@@ -20,5 +20,8 @@ Polymer({
   _getLicenseValue: function(work, field, defaultValue) {
     if (!work || !work.license || !work.license[field]) return defaultValue;
     return work.license[field];
+  },
+  showLicense: function() {
+    this.$.licenseDialog.open();
   }
 });

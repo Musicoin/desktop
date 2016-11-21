@@ -119,3 +119,17 @@
     display: flex;
     justify-content: center;
 }
+
+.license-preview-dialog {
+    background-color: white;
+    position: fixed;
+    top: 45px;
+    left: 300px;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+.link {
+    cursor: pointer;
+    color: var(--msc-subtle-text-color);
+}

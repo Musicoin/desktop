@@ -455,6 +455,10 @@ Web3Connector.prototype.listLicensesForWork = function (workAddress) {
   }.bind(this));
 };
 
+Web3Connector.prototype.loadLicenseDetails = function(licenseAddress) {
+  return this.localCatalog.loadLicense(licenseAddress);
+};
+
 Web3Connector.prototype.listRecentLicenses = function (numBlocks) {
   return new Promise(function (resolve, reject) {
     var loggerContract = this.web3.eth.contract(loggerMvp2Abi).at(loggerAddress);

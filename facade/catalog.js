@@ -24,6 +24,10 @@ module.exports = function(rpcProvider) {
     loadArtists: function(artist_addresses) {
       var tx = rpcProvider.fnPool('catalog', 'loadArtists', null, {artist_addresses:artist_addresses});
       return rpcProvider.messageMonitor.waitForResult(tx);
+    },
+    loadLicense: function(address) {
+      var tx = rpcProvider.fnPool('catalog', 'loadLicense', null, {license:address});
+      return rpcProvider.messageMonitor.waitForResult(tx);
     }
   }
 };

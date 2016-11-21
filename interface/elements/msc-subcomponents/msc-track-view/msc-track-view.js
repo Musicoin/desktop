@@ -2,6 +2,7 @@ Polymer({
   is: 'msc-track-view',
   properties: {
     currentPlay: Object,
+    currentLicense: Object,
     nextPlay: {
       type: Object,
       value: null
@@ -12,6 +13,11 @@ Polymer({
       .to('currentPlay', function (oldValue, newValue) {
         this.currentPlay = newValue;
         this.nextPlay = mscIntf.audioHub.playlist[0];
+        mscIntf.catalog.loadLicense(newValue.contract_id)
+          .bind(this)
+          .then(function(result) {
+            this.currentLicense = result;
+          });
         console.log(newValue);
       }.bind(this))
 
@@ -37,5 +43,8 @@ Polymer({
   },
   skipToNext: function() {
     mscIntf.audio.playNext();
+  },
+  showLicense: function() {
+    this.$.licenseDialog.open();
   }
 })

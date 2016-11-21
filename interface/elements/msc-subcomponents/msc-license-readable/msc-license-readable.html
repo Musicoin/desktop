@@ -12,27 +12,27 @@
       <br><br>
         By listening to <span class="parameter">{{playbackPaymentPercentage}}%</span> or more of this work, you agree to:
         <ul>
-          <li>Pay <span class="parameter">{{work.license.coinsPerPlay}}</span> musicoin to the owner of this licensed work.</li>
+          <li>Pay <span class="parameter">{{license.coinsPerPlay}}</span> musicoin to the owner of this licensed work.</li>
         </ul>
       <p>
-        <template is="dom-if" if="[[hasRoyalties(work.license.royalties, work.license.*)]]">
+        <template is="dom-if" if="[[hasRoyalties(license.royalties, license.*)]]">
           Upon successful execution of the payment, the following accounts will receive payments in the amount shown belown:
           <ul>
-            <template is="dom-repeat" items="{{work.license.royalties}}" as="royalty">
+            <template is="dom-repeat" items="{{license.royalties}}" as="royalty">
               <li>{{_resolveAddressToName(royalty.address)}} ({{royalty.amount}} musicoins)</li>
             </template>
           </ul>
           The remainder of the value will be divided into
-          <span class="parameter">{{_computeTotalShares(work.license.contributors, work.license.contributors.*)}}</span>
+          <span class="parameter">{{_computeTotalShares(license.contributors, license.contributors.*)}}</span>
           total shares and distributed as follows:
         </template>
-        <template is="dom-if" if="[[!hasRoyalties(work.license.royalties, work.license.*)]]">
+        <template is="dom-if" if="[[!hasRoyalties(license.royalties, license.*)]]">
           Upon successful execution of the payment, the payment will be divided into
-          <span class="parameter">{{_computeTotalShares(work.license.contributors, work.license.contributors.*)}}</span>
+          <span class="parameter">{{_computeTotalShares(license.contributors, license.contributors.*)}}</span>
           total shares and distributed to the following accounts:
         </template>
         <ul>
-          <template is="dom-repeat" items="{{work.license.contributors}}" as="contributor">
+          <template is="dom-repeat" items="{{license.contributors}}" as="contributor">
             <li>{{_resolveAddressToName(contributor.address)}} ({{contributor.shares}} shares)</li>
           </template>
         </ul>

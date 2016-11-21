@@ -2,6 +2,7 @@ Polymer({
   is: 'msc-license-readable',
   properties: {
     work: Object,
+    license: Object,
     playbackPaymentPercentage: Number
   },
   ready: function() {

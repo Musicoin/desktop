@@ -330,6 +330,9 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
             mschub.messageMonitor.success(tx, items);
           });
         return tx;
+      },
+      loadLicense: function(elem, params, fns) {
+       return mschub.messageMonitor.notifyOnCompletion(web3Connector.loadLicenseDetails(params.license));
       }
     },
     mining: {

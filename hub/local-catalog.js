@@ -61,6 +61,116 @@ LocalCatalog.prototype.loadIndexState = function() {
     })
 };
 
+
+LocalCatalog.prototype.loadWork = function(workAddress) {
+  var c = Promise.promisifyAll(this.web3.eth.contract(this.workAbi).at(workAddress));
+  return Promise.join(
+    c.titleAsync(),
+    c.artistAsync(),
+    c.imageUrlAsync(),
+    c.metadataUrlAsync(),
+    function(title, artist, imageUrl, metadataUrl) {
+      return {
+        address: workAddress,
+        title: title,
+        artist: artist,
+        imageUrl: imageUrl,
+        metadataUrl: metadataUrl,
+      }
+    }
+  )
+};
+
+LocalCatalog.prototype.loadLicense = function(licenseAddress) {
+  var c = Promise.promisifyAll(this.web3.eth.contract(this.licenseAbi).at(licenseAddress));
+  var contributorPromise = this.extractAddressAndValues(c.contributorsAsync, c.contributorSharesAsync, "shares");
+  var royaltyPromise = this.extractAddressAndValues(c.royaltiesAsync, c.royaltyAmountsAsync, "amount");
+
+  return Promise.join(
+    c.workAddressAsync(),
+    c.weiPerPlayAsync(),
+    c.tipCountAsync(),
+    c.totalEarnedAsync(),
+    c.ownerAsync(),
+    c.resourceUrlAsync(),
+    c.metadataUrlAsync(),
+    contributorPromise,
+    royaltyPromise,
+
+    function(workAddress, weiPerPlay, tipCount, totalEarned, owner, resourceUrl, metadataUrl, contributors, royalties) {
+      return {
+        address: licenseAddress,
+        contract_id: licenseAddress,
+        workAddress: workAddress,
+        weiPerPlay: weiPerPlay,
+        tipCount: tipCount,
+        totalEarned: totalEarned,
+        owner: owner,
+        resourceUrl: resourceUrl,
+        metadataUrl: metadataUrl,
+        contributors: contributors,
+        royalties: royalties
+      }
+    })
+    .bind(this)
+    .then(function(license) {
+      return this.loadWork(license.workAddress)
+        .then(function(work) {
+          license.work = work;
+          return license;
+        });
+    })
+    .then(function(license) {
+      console.log("Loaded license: " + JSON.stringify(license));
+      return license;
+    });
+};
+
+LocalCatalog.prototype.extractAddressAndValues = function(addressArray, valueArray, valueName) {
+  var ctx = {};
+  return this.extractAddressArray(addressArray, 0)
+    .bind(this)
+    .then(function(addresses) {
+      ctx.addresses = addresses;
+      return this.extractArray(valueArray, addresses.length);
+    })
+    .then(function(values) {
+      return ctx.addresses.map(function(address, idx) {
+        var output = {};
+        output["address"] = address;
+        output[valueName] = values[idx];
+        return output;
+      });
+    });
+};
+
+LocalCatalog.prototype.extractArray = function(provider, length) {
+  var promises = [];
+  for (var idx=0; idx < length; idx++) {
+    promises.push(provider(idx));
+  }
+  return Promise.all(promises);
+};
+
+LocalCatalog.prototype.extractAddressArray = function(provider, startIdx, result) {
+  return new Promise(function(resolve, reject) {
+    var output = result || [];
+    var idx = startIdx || 0;
+    provider(idx)
+      .bind(this)
+      .then(function(value) {
+        if (value != "0x") {
+          output.push(value);
+          resolve(this.extractAddressArray(provider, idx+1, output));
+        }
+        else {
+          resolve(output);
+        }
+      });
+  }.bind(this))
+};
+
+
 LocalCatalog.prototype.updateLicense = function(licenseAddress, blockNumber) {
   return new Promise(function(resolve, reject) {
     var licenseContract = this.web3.eth.contract(this.licenseAbi).at(licenseAddress);
