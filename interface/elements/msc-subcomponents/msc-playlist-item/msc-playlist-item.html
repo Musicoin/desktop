@@ -1,0 +1,36 @@
+<dom-module id="msc-playlist-item">
+  <link rel="import" type="css" href="msc-playlist-item.css">
+  <template>
+    <div class="container">
+      <div class="title-area">
+        {{playlist.name}}
+        <paper-icon-button class="group-action" icon="av:play-arrow" on-tap="playAll"></paper-icon-button>
+        <paper-icon-button class="group-action" icon="av:shuffle" on-tap="shuffleAll"></paper-icon-button>
+        <paper-icon-button class="group-action" icon="icons:create" on-tap="editPlaylist"></paper-icon-button>
+        <paper-icon-button class="group-action" icon="icons:delete" on-tap="deletePlaylist"></paper-icon-button>
+      </div>
+      <div class="main-area">
+        <div class="artwork" style="background-image: url('{{_computePlaylistImageUrl(licenses)}}')"></div>
+        <div class="table-container">
+          <table class="playlist-items" width="100%">
+            <colgroup>
+              <col class="index-column standard-column">
+              <col class="title-column standard-column">
+              <col class="artist-column standard-column">
+            </colgroup>
+            <tbody>
+            <template is="dom-repeat" items="{{licenses}}" as="license">
+              <tr class="playlist-entry" on-tap="playFrom" selected$="{{_isSelected(license, currentPlayId)}}">
+                <td class="index-column standard-column">{{_computeItemNumber(index)}}</td>
+                <td class="title-column standard-column">{{license.work.title}}</td>
+                <td class="artist-column standard-column">{{license.work.artist}}</td>
+              </tr>
+            </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script src="msc-playlist-item.js"></script>
+</dom-module>

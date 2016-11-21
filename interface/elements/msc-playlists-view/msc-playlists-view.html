@@ -1,12 +1,14 @@
 <dom-module id="msc-playlists-view">
   <link rel="import" type="css" href="msc-playlists-view.css">
   <template>
-    <msc-player-view
-            id="playlistsGrid"
-            actions='[{"icon":"av:play-arrow", "id":"play"}, {"icon":"av:shuffle", "id":"shuffle"}, {"icon":"icons:delete", "id":"delete"}]'
-            groups="{{playlists}}"
-            hidden$="{{!shouldHideEditor(selectedPlaylist)}}"
-            instruction-text="{{locale.playlistsView.instructions}}"></msc-player-view>
+
+    <div hidden$="{{!shouldHideEditor(selectedPlaylist)}}">
+      <template is="dom-repeat" items="{{playlists}}" as="playlist">
+        <div class="playlist-container">
+          <msc-playlist-item on-edit=editPlaylist playlist="[[playlist]]"></msc-playlist-item>
+        </div>
+      </template>
+    </div>
 
     <msc-playlist-editor-view
             id="playlistEditor"

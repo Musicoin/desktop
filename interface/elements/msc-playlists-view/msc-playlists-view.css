@@ -36,3 +36,7 @@ msc-playlist-editor-view {
     left:0;
     z-index: 4;
 }
+
+.playlist-container {
+    margin-bottom: 20px;
+}

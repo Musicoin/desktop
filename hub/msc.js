@@ -197,6 +197,9 @@ mschub.clientUtils = {
   },
   getMediaUrlForLicense: function(licenseAddress) {
     return localMediaServer.getMediaUrlForLicense(licenseAddress);
+  },
+  resolveUrl: function(url) {
+    return ipfsConnector.convertUrlToLocalhost(url);
   }
 }
 

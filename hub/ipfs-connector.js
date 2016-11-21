@@ -20,6 +20,13 @@ function IPFSConnector(mschub) {
   }.bind(this), 5000);
 }
 
+IPFSConnector.prototype.convertUrlToLocalhost = function (url) {
+  if (url && url.startsWith("ipfs://")) {
+    return this.ipfsEndpoint + url.substring("ipfs://".length);
+  }
+  return url;
+};
+
 IPFSConnector.prototype.asUrl = function (hash) {
   return this.ipfsEndpoint + hash;
 };
