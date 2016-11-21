@@ -103,6 +103,7 @@ LocalCatalog.prototype.loadLicense = function(licenseAddress) {
         contract_id: licenseAddress,
         workAddress: workAddress,
         weiPerPlay: weiPerPlay,
+        coinsPerPlay: this.web3.fromWei(weiPerPlay, 'ether'),
         tipCount: tipCount,
         totalEarned: totalEarned,
         owner: owner,
@@ -111,7 +112,7 @@ LocalCatalog.prototype.loadLicense = function(licenseAddress) {
         contributors: contributors,
         royalties: royalties
       }
-    })
+    }.bind(this))
     .bind(this)
     .then(function(license) {
       return this.loadWork(license.workAddress)
