@@ -1,6 +1,6 @@
 @echo off
 
-set /p version="Enter a verion number: "
+set /p version="Enter a version number: "
 
 IF EXIST version.txt del /F version.txt
 @echo %version% > version.txt
