@@ -21,8 +21,8 @@ function AccountHistory(account, web3Connector, onChange) {
   this.logName = this.indexDir + "transactions.json";
   this.eventFilter = {stopWatching: function(){}};
   this.historyIndex = { lastBlock: 0 };
-  this.logger = fs.createWriteStream(this.logName, { flags: 'a' });
   this.queue = new Queue(1, Infinity);
+  this.logger = null;
 
   this.createDirIfNeeded = function(dir) {
     return new Promise(function(resolve, reject) {
@@ -70,6 +70,11 @@ AccountHistory.prototype.startIndexing = function() {
     .then(function(index) {
       this.historyIndex = index;
       return this.createDirIfNeeded(this.indexDir)
+    })
+    .then(function() {
+      if (!this.logger) {
+        this.logger = fs.createWriteStream(this.logName, { flags: 'a' });
+      }
     })
     .then(function() {
       var startingTransactionIndex = this.historyIndex.transactionIndex || 0;
