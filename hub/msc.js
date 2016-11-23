@@ -1,3 +1,9 @@
+const os = require('os');
+const fs = require('fs');
+var appData = os.homedir() + "/.musicoin";
+var logDir = appData + "/logs";
+if (!fs.existsSync(appData)) fs.mkdirSync(appData);
+if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
 
 /* static data is a set of template data that never changes */
 const staticData = require('./static-data.js');
@@ -11,10 +17,7 @@ const console = require('./console.log.js');
 const initObservables = require('./observables-defs.js');
 /* crypto for pwd ops */
 const crypto = require('crypto');
-const fs = require('fs');
 var util = require('util');
-const os = require('os');
-var appData = os.homedir() + "/.musicoin";
 var Promise = require('bluebird');
 
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
@@ -139,7 +142,7 @@ var web3Connector = new Web3Connector(settings.chain, startup.injectPathVariable
           })
           .then(function(license) {
             console.log("Auto-play playing: " + JSON.stringify(license));
-            mschub.audio.playAll([license]);
+            mschub.audioHub.playlist.unshift(license);
           })
       })
     }
@@ -200,6 +203,9 @@ mschub.clientUtils = {
   },
   resolveUrl: function(url) {
     return ipfsConnector.convertUrlToLocalhost(url);
+  },
+  getLogDir: function() {
+    return logDir;
   }
 }
 
@@ -529,6 +535,41 @@ mschub.fnPool = function(fngroup, fn, elem, params) {
 }
 
 mschub.fnPool('catalog','loadBrowseCategories');
+
+// This is for testing, mainly.  It allows you to set up an instance that will just loop and play new releases
+console.log("New release auto-loop: Initializing: " + settings.utilities.loopAllNewReleases);
+if (settings.utilities.loopAllNewReleases) {
+  var isEmptyObject = function (obj) {
+    for (var name in obj) {
+      return false;
+    }
+    return true;
+  };
+  var refreshNewReleases = function () {
+    if (!mschub.loggedIn) return;
+
+    console.log("New release auto-loop: updating new releases");
+    musicoinService.loadBrowsePage("new-releases", "", function (groups) {
+      console.log("New release auto-loop: Got new releases");
+      if (mschub.audioHub.playlist.length < 3 && groups && groups.length > 0 && groups[0].result) {
+        console.log("New release auto-loop: Appending new release items to the playlist");
+        var items = groups[0].result;
+        mschub.audioHub.playlist = mschub.audioHub.playlist.concat(items);
+        if (isEmptyObject(mschub.audioHub.playPendingPayment)) {
+          console.log("New release auto-loop: kickstarting audio");
+          mschub.fnPool('audio', 'playNext');
+        }
+      }
+      else {
+        console.log("New release auto-loop: Not updating playlist, enough items are there");
+      }
+    });
+  }
+
+  console.log("New release auto-loop: ON");
+  refreshNewReleases();
+  window.setInterval(refreshNewReleases, 30 * 1000);
+}
 
 mschub.audio = require('../facade/audio.js')(mschub);
 mschub.payments = require('../facade/payments.js')(mschub);

@@ -110,6 +110,10 @@ Polymer({
   },
 
   releaseWork: function() {
+    if (this.work.releaseState == 1 || this.work.releaseState == 3) {
+      return;
+    }
+
     this.work.metadata = this.$.metadataEditor.getMetadata();
     var err = this.checkForErrors(this.work)
     if (err) {

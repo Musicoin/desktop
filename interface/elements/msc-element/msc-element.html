@@ -99,7 +99,10 @@
     function setupDebugLogging() {
       var fs = require('fs');
       var util = require('util');
-      var logFile = fs.createWriteStream('client.txt', { flags: 'a' });
+      var os = require('os');
+      var logDir = mscIntf.clientUtils.getLogDir();
+
+      var logFile = fs.createWriteStream(logDir + '/client.txt', { flags: 'a' });
       // Or 'w' to truncate the file every time the process starts.
       var logStdout = process.stdout;
 

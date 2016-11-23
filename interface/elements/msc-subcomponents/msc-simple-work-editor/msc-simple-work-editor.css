@@ -255,11 +255,11 @@ paper-input {
 .release-button[pending] {
     background-size: 64px 64px;
     background-image: linear-gradient(135deg,
-    rgba(255, 255, 255, .05) 25%,
+    rgba(255, 255, 255, .25) 25%,
     transparent 25%,
     transparent 50%,
-    rgba(255, 255, 255, .05) 50%,
-    rgba(255, 255, 255, .05) 75%,
+    rgba(255, 255, 255, .25) 50%,
+    rgba(255, 255, 255, .25) 75%,
     transparent 75%,
     transparent);
 

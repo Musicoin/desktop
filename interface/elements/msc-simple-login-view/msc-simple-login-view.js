@@ -71,7 +71,7 @@ Polymer({
     if (this.selectedAccount) return true;
 
     if (!this.syncStatus) return false;
-    if (this.syncStatus.initialSyncEnded) { console.log("sync ended"); return true};
+    if (this.syncStatus.initialSyncEnded) { return true};
     if (!this.syncStatus.initialSyncStarted) return false;
     if (this.syncStatus.peers == 0) return false;
     return !this.syncStatus.syncing;
