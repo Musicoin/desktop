@@ -8,7 +8,7 @@
       <div on-tap="showLicense" class="link centered">show license</div>
       <paper-dialog class="license-preview-dialog" id="licenseDialog">
         <paper-dialog-scrollable>
-          <msc-license-readable work="[[currentPlay.work]]" license="[[currentLicense]]"></msc-license-readable>
+          <msc-license-viewer id=licenseViewer work="[[currentPlay.work]]" license="[[currentLicense]]"></msc-license-viewer>
         </paper-dialog-scrollable>
         <div class="buttons">
           <paper-button dialog-dismiss>Close</paper-button>
