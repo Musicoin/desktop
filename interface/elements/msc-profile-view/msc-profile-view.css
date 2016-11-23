@@ -40,11 +40,11 @@
 }
 
 .call-to-action {
-    background-color: rgba(255,255,255,0.05);
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     padding: 10px;
     border-radius: 10px;
+    font-weight: lighter;
 }
 
 .action-area {
@@ -119,4 +119,15 @@ msc-user-balance {
 
 @keyframes animate-stripes {
     0% {background-position: 0 0;} 100% {background-position: 128px 0;}
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.link {
+    cursor: pointer;
+    display: inline-block;
+    font-weight: normal;
+    color: #abcdef;
 }

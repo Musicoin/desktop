@@ -11,20 +11,6 @@
         </div>
       </div>
     </div>
-    <div class="section call-to-action">
-      <div class="user-message">
-        {{_computeUserMessage(registrationStatus.status)}}
-      </div>
-      <div class="action-area">
-        <paper-button class="action"
-                      pending$="{{_isActionPending(actionState)}}"
-                      failed$="{{_isActionFailed(actionState)}}"
-                      on-tap="handleCallToAction">{{_computeActionText(registrationStatus.status)}}</paper-button>
-      </div>
-    </div>
-    <!--<div class="section settings">-->
-      <!--<paper-toggle-button>Store favorites locally (does nothing)</paper-toggle-button>-->
-    <!--</div>-->
     <div class="section settings">
       <paper-toggle-button
               id="musicianModeButton"
@@ -38,6 +24,11 @@
               on-tap="toggleMiningState">
         {{locale.userProfileView.actions.Mining}}
       </paper-toggle-button>
+    </div>
+    <div class="section call-to-action">
+      Visit musicoin.org to <div class="link" on-tap="register">register your account</div>,
+      check out the <div class="link" on-tap="showBlog">blog</div>,
+      or <div class="link" on-tap="showForum">join the conversation</div>.
     </div>
   </template>
   <script src="msc-profile-view.js"></script>

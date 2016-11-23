@@ -177,7 +177,8 @@ var locale = {
         NewUser:"Register your account on the Musicoin website to enable Musician Mode",
         Confirm:"You're almost there! Confirm your account by sending a small payment to Musicoin.",
         Registered:"Once your account is verified, the music you release will automatically appear in the public catalog",
-        Verified:"Your account is verified."
+        Verified:"Your account is verified.",
+        Visit: "Visit the Musicoin.org website to register your account or join the conversation."
       },
       actions: {
         NewUser:"Register your account",

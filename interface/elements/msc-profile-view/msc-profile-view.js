@@ -98,10 +98,7 @@ Polymer({
     }
   },
   handleExternalLinkAction: function(action) {
-    gui.Window.open(action.url, {
-      width: 1024,
-      height: 768
-    });
+    gui.Shell.openExternal(action.url);
   },
   handleAppLinkAction: function(action) {
     // TODO: define a mapping between server pageIds and internal pageIds
@@ -117,5 +114,14 @@ Polymer({
   },
   _computeSelectedAccount: function() {
     return this.selectedAccount || "";
+  },
+  register: function() {
+    this.handleExternalLinkAction({url: "http://catalog.musicoin.org/signin"})
+  },
+  showBlog: function() {
+    this.handleExternalLinkAction({url: "http://blog.musicoin.org/"})
+  },
+  showForum: function() {
+    this.handleExternalLinkAction({url: "http://forum.musicoin.org/"})
   }
 });
