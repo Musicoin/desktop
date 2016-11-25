@@ -31,7 +31,7 @@ module.exports = {
   fileSharing: {
     name: "ipfs",
     path: "{process.cwd}/bin/go-ipfs/",
-    args: ['daemon', '--init=true'],
+    args: ['daemon', '--init=true', '--migrate=true'],
     command: "./ipfs",
     prereq: {
       comment: "Workaround: Forces deletion of the ipfs lock file. This will do nothing if the lock file is in use (i.e. if ipfs is already running)",
