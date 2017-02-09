@@ -1,8 +1,9 @@
 :host {
-    background-size: cover;
-    background-image: url(../../images/login.jpg);
     display: flex;
+    background-color: black;
     justify-content: center;
+    font-weight: lighter;
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
 }
 
 .login-elements {
@@ -91,9 +92,47 @@ identicon-element {
     left: 0;
     right: 0;
     z-index: 2;
-    background-color: #0a3142;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+#background {
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-size: cover;
+    opacity: 0.3;
+    overflow: hidden;
+    background-image:url('/interface/images/concert.jpg')
+}
+
+.title {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+#forceHideButton {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+.clickable {
+    cursor: pointer;
 }

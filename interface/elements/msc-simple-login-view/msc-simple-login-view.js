@@ -2,16 +2,14 @@ Polymer({
   is: 'msc-simple-login-view',
   properties: {
     locale: Object,
-    selectedAccountIndex: {
-      type:String,
-      observer: "_handleAccountChanged",
-      value: 0
-    },
     chainVersion: String,
     version: String,
-    selectedAccount: String,
     accounts: Array,
-    syncStatus: Object
+    syncStatus: Object,
+    firstBlock: {
+      type: Number,
+      value: -1
+    }
   },
   ready: function() {
     mscIntf.attach(this)
@@ -19,42 +17,9 @@ Polymer({
       .to('version')
       .to('chainVersion')
       .to('syncStatus')
-      .to('loginError', function (oldValue, newValue) {
-        if (newValue) {
-          alert("login failed!");
-        }
-      });
-
-    mscIntf.financialData.attach(this)
-      .to('selectedAccount')
-      .to('accounts', function(oldValue, newValue) {
-        this.accounts = newValue;
-        console.log("accounts: " + newValue)
-      }.bind(this))
   },
-  checkForEnter: function (e) {
-    // check if 'enter' was pressed
-    if (e.keyCode === 13) {
-      mscIntf.login.login(this.$.loginPwd.value);
-    }
-  },
-  hideLoginWindow: function() {
-    // logged in as guest
-    mscIntf.loggedIn = true;
-  },
-  createNewAccount: function() {
-    var pwd = prompt("Create a new account by providing a strong password");
-    if (pwd) {
-      mscIntf.login.createAccount(pwd);
-    }
-  },
-  _handleAccountChanged: function(selected, previous) {
-    if (this.accounts) {
-      mscIntf.login.selectAccount(this.accounts[selected]);
-    }
-  },
-  _computeSelectedAccount: function() {
-    return this.selectedAccount || "";
+  hideSyncWindow: function() {
+    mscIntf.hideSyncWindow = true;
   },
   _computeSyncProgress: function() {
     if (this.syncStatus) {
@@ -67,12 +32,25 @@ Polymer({
     return 0;
   },
   _hideSyncingStatus: function() {
-    // this ensures that the syncScreen will only show for new users
-    if (this.selectedAccount) return true;
-
+    if (this._computeHideSyncStatus()) {
+      mscIntf.hideSyncWindow = true;
+      return true;
+    }
+    return false;
+  },
+  _computeHideSyncStatus: function() {
     if (!this.syncStatus) return false;
+
+    if (this.firstBlock == -1) {
+      this.firstBlock = this.syncStatus.currentBlock;
+    }
     if (this.syncStatus.initialSyncEnded) { return true};
-    if (!this.syncStatus.initialSyncStarted) return false;
+
+    // if this initial sync hasn't start (according to geth)
+    // but we are getting new blocks, then move on
+    if (!this.syncStatus.initialSyncStarted) {
+      return this.syncStatus.currentBlock > this.firstBlock;
+    }
     if (this.syncStatus.peers == 0) return false;
     return !this.syncStatus.syncing;
   },

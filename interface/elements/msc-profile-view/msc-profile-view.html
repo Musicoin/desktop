@@ -1,35 +1,70 @@
 <dom-module id="msc-profile-view">
+  <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
-    <div class="top">
-      <identicon-element size="128" seed="{{_computeSelectedAccount(selectedAccount)}}"></identicon-element>
-      <div class="name-area">
-        <div id=usernameLabel class="name" contenteditable="true" on-blur="_updateUserName">{{username}}</div>
-        <msc-user-balance></msc-user-balance>
-        <div class="account">
-          {{selectedAccount}}
-        </div>
+    <div class="flex-center title">
+      <img src="/interface/images/icon.png" width="64px" height="64px" style="margin-right: 20px"> musicoin
+    </div>
+
+    <div>
+      <table width="100%">
+        <tr>
+          <th>Account</th>
+          <th>Balance</th>
+          <th>Coinbase</th>
+          <th>Send</th>
+        </tr>
+        <template is="dom-repeat" items="[[accounts]]" as="account">
+          <tr coinbase$="[[account.isCoinbase]]">
+            <td class="account">[[account.address]]</td>
+            <td title="[[account.balance]]">[[account.displayBalance]]</td>
+            <td class="clickable">
+              <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
+            </td>
+            <td class="td-button">
+              <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
+            </td>
+          </tr>
+        </template>
+      </table>
+      <div class="flex-right">
+        <paper-button raised on-tap="handleNewAccount">new account...</paper-button>
       </div>
     </div>
-    <div class="section settings">
-      <paper-toggle-button
-              id="musicianModeButton"
-              hidden$="{{_computeMusicianModeDisabled(registrationStatus.status)}}"
-              checked="[[musicianMode]]"
-              on-tap="updateMusicianMode"
-              disabled$="{{_computeMusicianModeDisabled(registrationStatus.status)}}">
-      Musician Mode</paper-toggle-button>
+
+    <div>
+      <div id="status">{{txStatus}}</div>
+    </div>
+
+    <div class="section settings flex-center">
       <paper-toggle-button
               id="isMining"
               on-tap="toggleMiningState">
         {{locale.userProfileView.actions.Mining}}
       </paper-toggle-button>
     </div>
-    <div class="section call-to-action">
-      Visit musicoin.org to <div class="link" on-tap="register">register your account</div>,
-      check out the <div class="link" on-tap="showBlog">blog</div>,
-      or <div class="link" on-tap="showForum">join the conversation</div>.
-    </div>
+
+    <paper-dialog id="newAccountDialog">
+      <p>Enter a password for the new account.  Please note that there is no way to recover this password later.</p>
+      <paper-input id=newAccountPassword type="password" label="password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="createNewAccount">Ok</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="sendDialog">
+      <p>Enter the recipient address, the amount to send, and your password.</p>
+      <paper-input disabled id="sender" label="from"></paper-input>
+      <paper-input id="recipient" label="recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">ok</paper-button>
+      </div>
+    </paper-dialog>
+
   </template>
   <script src="msc-profile-view.js"></script>
 </dom-module>

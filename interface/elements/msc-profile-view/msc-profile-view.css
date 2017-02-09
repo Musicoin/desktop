@@ -2,6 +2,13 @@
     display: flex;
     flex-direction: column;
     margin: 20px;
+    font-weight: lighter;
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+}
+
+.title {
+    font-size: 48px;
+    margin-bottom: 20px;
 }
 
 .section {
@@ -31,6 +38,7 @@
 
 .account {
     color: var(--msc-subtle-text-color);
+    font-family: monospace;
 }
 
 .user-message {
@@ -54,6 +62,7 @@
 }
 
 .settings {
+    display: flex;
 }
 
 .action {
@@ -85,14 +94,28 @@ paper-toggle-button {
     font-weight: lighter;
 }
 
-msc-tip-button {
-    width: 90%;
-    height: 32px;
-    --msc-tip-button-font-size: larger;
+th {
+    font-weight: inherit;
 }
 
-msc-user-balance {
-    --msc-user-balance-font-size: 2em;
+td {
+    font-weight: lighter;
+    font-size: larger;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+}
+
+tr {
+    background-color: rgba(255,255,255,0.05);
+}
+
+tr[coinbase] {
+    background-color: rgba(200,255,200,0.2);
+}
+
+table {
+    background-color: var(--msc-background-hightlight);
 }
 
 .action {
@@ -130,4 +153,31 @@ msc-user-balance {
     display: inline-block;
     font-weight: normal;
     color: #abcdef;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.flex-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+paper-button {
+    text-transform: none;
+    color: white;
+}
+
+paper-dialog {
+    background-color: rgb(36, 36, 36);
+}
+
+table {
+    border-radius: 4px;
 }

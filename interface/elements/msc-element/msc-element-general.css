@@ -13,35 +13,15 @@
   --msc-footer-height: 24px;
   display: block;
 }
-msc-parity-view,
-msc-works-view,
-msc-wallet-view,
-msc-track-view,
-msc-artist-view,
-msc-playlists-view,
-msc-tx-view,
-msc-following-view,
 msc-profile-view {
   display: none;
   background-color: var(--msc-secondary-background-color);
 }
-app-drawer[hibryda-ui] {
-    --app-drawer-width:48px;
-}
-app-drawer[dan-ui] {
+app-drawer {
     --app-drawer-width:256px;
 }
-:host[selected-page="rel"] msc-player-view,
-:host[selected-page="cbr"] msc-player-view,
-:host[selected-page="myf"] msc-player-view,
-:host[selected-page="myw"] msc-works-view,
-:host[selected-page="uti"] msc-parity-view,
-:host[selected-page="track"] msc-track-view,
-:host[selected-page="artist"] msc-artist-view,
-:host[selected-page="playlists"] msc-playlists-view,
 :host[selected-page="myp"] msc-profile-view,
 :host[selected-page="history"] msc-tx-view,
-:host[selected-page="following"] msc-following-view,
 :host[selected-page="wal"] msc-wallet-view {
   display: block;
 }
@@ -310,7 +290,6 @@ msc-simple-login-view {
     right: 0;
     position: absolute;
     background-size: cover;
-    filter: blur(46px);
     opacity: 0.3;
     overflow: hidden;
 }

@@ -2,26 +2,17 @@ var gui = require('nw.gui');
 Polymer({
   is: 'msc-profile-view',
   properties: {
-    musicianMode: Boolean,
-    registrationStatus: Object,
-    selectedAccount: String,
+    accounts: Array,
     username: String,
     userImage: String,
     locale: Object,
+    txStatus: String,
     actionState: {
       type: String,
       value: "None"
     }
   },
   attached: function() {
-    this.actionHandlers = {
-      "external-link": function(action) {this.handleExternalLinkAction(action)}.bind(this),
-      "app-link": function(action) {this.handleAppLinkAction(action)}.bind(this),
-      "send": function(action) {this.handleSendAction(action)}.bind(this),
-    };
-    this.errorHandler = function(action) {
-      console.log("Could not handle action: " + JSON.stringify(action));
-    }
   },
   ready: function() {
     mscIntf.attach(this)
@@ -33,95 +24,60 @@ Polymer({
       }.bind(this));
 
     mscIntf.financialData.attach(this)
-      .to('selectedAccount');
+      .to('accounts')
+      .to('coinbase');
 
     mscIntf.userPreferences.attach(this)
-      .to('musicianMode')
       .to('username')
-      .to('userImage')
-      .to('registrationStatus');
   },
   _updateUserName: function() {
-    mscIntf.profile.setUsername(this.$.usernameLabel.innerText);
   },
-  _isActionPending: function() {
-    return "pending" == this.actionState;
-  },
-  _isActionFailed: function() {
-    return "failed" == this.actionState;
-  },
-  _computeMusicianModeDisabled: function() {
-    return false;
-    /*
-    if (!this.registrationStatus) return true;
-    return 'Registered' != this.registrationStatus.status
-      && 'Verified' != this.registrationStatus.status;
-    */
-  },
-  _computeActionText: function() {
-    if (!this.registrationStatus || !this.registrationStatus.action) return "";
-    return this.registrationStatus.action.button;
-  },
-  _computeUserMessage: function() {
-    if (!this.registrationStatus || !this.registrationStatus.action) return "";
-    return this.registrationStatus.action.message;
-  },
-  handleCallToAction: function() {
-    var action = this.registrationStatus.action;
-    if (action) {
-      var handler = this.actionHandlers[action.type] || this.errorHandler;
-      handler(action);
-    }
-  },
-  updateMusicianMode: function() {
-    mscIntf.profile.setMusicianMode(this.$.musicianModeButton.checked);
-  },
-  handleSendAction: function(action){
-    var wei = action.weiToSend;
-    var recipient = action.recipient;
-    if (wei && recipient) {
-      this.actionState = "pending";
-      mscIntf.payments.sendWei(recipient, wei)
-        .bind(this)
-        .then(function(){
-          this.actionState = "";
-          console.log("Confirmation payment success!");
-        })
-        .catch(function(err) {
-          this.actionState = "failed";
-          console.log("Failed to send confirmation payment: " + err);
-        });
-    }
-    else {
-      this.actionState = "failed";
-      console.log("Could not send confirmation payment based on action: " + JSON.stringify(action));
-    }
-  },
-  handleExternalLinkAction: function(action) {
-    gui.Shell.openExternal(action.url);
-  },
-  handleAppLinkAction: function(action) {
-    // TODO: define a mapping between server pageIds and internal pageIds
-    if (action.url == "MyWorks") mscIntf.selectedPage = 'myw';
+
+  changeCoinbase: function(e) {
+    mscIntf.accountModule.setCoinbase(e.model.account.address);
   },
   toggleMiningState: function() {
     if (this.$.isMining.checked) {
-      mscIntf.payments.startMining();
+      mscIntf.accountModule.startMining();
     }
     else {
-      mscIntf.payments.stopMining();
+      mscIntf.accountModule.stopMining();
     }
   },
-  _computeSelectedAccount: function() {
-    return this.selectedAccount || "";
+  _computeCheckboxIcon: function(value) {
+    return value ? "icons:check-box" : "icons:check-box-outline-blank";
   },
-  register: function() {
-    this.handleExternalLinkAction({url: "http://catalog.musicoin.org/signin"})
+  handleNewAccount: function() {
+    this.$.newAccountDialog.open();
   },
-  showBlog: function() {
-    this.handleExternalLinkAction({url: "http://blog.musicoin.org/"})
+  showSendDialog: function(e) {
+    this.$.sender.value = e.model.account.address;
+    this.$.sendDialog.open();
   },
-  showForum: function() {
-    this.handleExternalLinkAction({url: "http://forum.musicoin.org/"})
-  }
+  createNewAccount: function() {
+    mscIntf.accountModule.createAccount(this.$.newAccountPassword.value);
+  },
+  sendCoins: function() {
+    this.txStatus = "Sending coins...";
+    mscIntf.accountModule.sendCoins(
+      this.$.recipient.value,
+      this.$.coins.value,
+      this.$.sender.value,
+      this.$.sendPassword.value
+    ).
+      then((tx) => {
+      this.txStatus = "Waiting for transaction " + tx;
+      return mscIntf.accountModule.waitForTransaction(tx);
+    })
+      .then(() => {
+        this.txStatus = "Success!";
+      })
+      .delay(5000)
+      .then(() => {
+        this.txStatus = "";
+      })
+      .catch((err) => {
+        this.txStatus = "Failed to send: " + err;
+      })
+  },
 });

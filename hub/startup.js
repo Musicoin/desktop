@@ -46,13 +46,6 @@ Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, 
   });
 };
 
-Startup.prototype.initChain = function(commandObj) {
-  this.initCommand(commandObj);
-  if (!fs.existsSync(commandObj.chainDir)) {
-    fs.mkdirSync(commandObj.chainDir);
-  }
-};
-
 Startup.prototype.startChildProcess = function(commandObj) {
   if (commandObj.prereq) {
     this.startChildProcess(commandObj.prereq);
