@@ -27,21 +27,22 @@
           </tr>
         </template>
       </table>
-      <div class="flex-right">
-        <paper-button raised on-tap="handleNewAccount">new account...</paper-button>
+      <div class="flex-between">
+        <paper-toggle-button
+                id="isMining"
+                on-tap="toggleMiningState">
+          {{locale.userProfileView.actions.Mining}}
+        </paper-toggle-button>
+        <div>
+          <paper-button raised on-tap="handleSetCustomCoinbase">set external coinbase...</paper-button>
+          <paper-button raised on-tap="handleNewAccount">new account...</paper-button>
+        </div>
+
       </div>
     </div>
 
     <div>
       <div id="status">{{txStatus}}</div>
-    </div>
-
-    <div class="section settings flex-center">
-      <paper-toggle-button
-              id="isMining"
-              on-tap="toggleMiningState">
-        {{locale.userProfileView.actions.Mining}}
-      </paper-toggle-button>
     </div>
 
     <paper-dialog id="newAccountDialog">
@@ -50,6 +51,19 @@
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="createNewAccount">Ok</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="setCoinbaseDialog">
+      <p>Enter the wallet address of the coinbase.</p>
+      <p>
+        <b class="warn">WARNING</b>: be sure you have access to the coinbase!  If you want to use one of the local
+        accounts as the coinbase, cancel this dialog and just check the box.
+      </p>
+      <paper-input id=customCoinbase label="coinbase address"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">Ok</paper-button>
       </div>
     </paper-dialog>
 

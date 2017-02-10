@@ -108,11 +108,16 @@ Web3Connector.prototype.getDefaultAccount = function () {
 };
 
 Web3Connector.prototype.getAllAccountDetails = function() {
-  return Promise.all(this.getAccounts().map(account => this.getAccountDetails(account)));
+  const accounts = this.getAccounts();
+  const coinbase = this.getCoinbase();
+  if (accounts.indexOf(coinbase) < 0) {
+    accounts.push(coinbase)
+  }
+  return Promise.all(accounts.map(account => this.getAccountDetails(account, coinbase)));
 };
 
-Web3Connector.prototype.getAccountDetails = function(account) {
-  const coinbase = this.getCoinbase();
+Web3Connector.prototype.getAccountDetails = function(account, _coinbase) {
+  const coinbase = _coinbase ? _coinbase : this.getCoinbase();
   return this.getUserBalanceInMusicoin(account)
     .then((balance) => {
       return {

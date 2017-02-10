@@ -50,12 +50,20 @@ Polymer({
   handleNewAccount: function() {
     this.$.newAccountDialog.open();
   },
+  handleSetCustomCoinbase: function() {
+    this.$.setCoinbaseDialog.open();
+  },
   showSendDialog: function(e) {
     this.$.sender.value = e.model.account.address;
     this.$.sendDialog.open();
   },
   createNewAccount: function() {
     mscIntf.accountModule.createAccount(this.$.newAccountPassword.value);
+  },
+  setCustomCoinbase: function() {
+    if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
+      mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
+    }
   },
   sendCoins: function() {
     this.txStatus = "Sending coins...";

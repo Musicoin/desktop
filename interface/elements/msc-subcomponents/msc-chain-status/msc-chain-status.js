@@ -31,10 +31,10 @@ Polymer({
     },
     toggleMiningState: function() {
         if (this._computeIsMining()) {
-            mscIntf.account.stopMining();
+            mscIntf.accountModule.stopMining();
         }
         else {
-            mscIntf.account.startMining();
+            mscIntf.accountModule.startMining();
         }
     },
     _computeHashRate: function() {

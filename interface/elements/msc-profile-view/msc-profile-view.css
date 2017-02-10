@@ -169,6 +169,11 @@ table {
     justify-content: center;
 }
 
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 paper-button {
     text-transform: none;
     color: white;
@@ -180,4 +185,8 @@ paper-dialog {
 
 table {
     border-radius: 4px;
+}
+
+.warn {
+    color: red;
 }
