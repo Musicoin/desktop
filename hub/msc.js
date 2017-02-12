@@ -3,7 +3,7 @@ const fs = require('fs');
 
 var musicoinRoot = os.homedir() + "/.musicoin";
 if (process.platform == 'darwin') {
-  musicoinRoot = process.env.HOME + 'Library/Musicoin';
+  musicoinRoot = process.env.HOME + '/Library/Musicoin';
 }
 else if (process.platform && process.platform.startsWith("win")) {
   musicoinRoot = process.env.APPDATA + '/Musicoin';

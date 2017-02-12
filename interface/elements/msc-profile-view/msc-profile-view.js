@@ -54,7 +54,7 @@ Polymer({
     this.$.setCoinbaseDialog.open();
   },
   showSendDialog: function(e) {
-    this.$.sender.value = e.model.account.address;
+    this.$.sender.value = e.model.dataHost.dataHost.account.address;
     this.$.sendDialog.open();
   },
   createNewAccount: function() {

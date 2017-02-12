@@ -22,10 +22,10 @@ del C:\tmp\pi-musicoin\Musicoin-client-win-ia32\config\config.ext.js
 del C:\tmp\pi-musicoin\Musicoin-client-osx-x64\Musicoin-client.app\Contents\Resources\app.nw\config\config.ext.js
 del C:\tmp\pi-musicoin\Musicoin-client-linux-x64\config\config.ext.js
 
-del C:\tmp\pi-musicoin\Musicoin-client-win-x64\build-all.bat
-del C:\tmp\pi-musicoin\Musicoin-client-win-ia32\build-all.bat
-del C:\tmp\pi-musicoin\Musicoin-client-osx-x64\Musicoin-client.app\Contents\Resources\app.nw\build-all.bat
-del C:\tmp\pi-musicoin\Musicoin-client-linux-x64\build-all.bat
+RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-win-x64\local
+RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-win-ia32\local
+RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-osx-x64\Musicoin-client.app\Contents\Resources\app.nw\local
+RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-linux-x64\local
 
 RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-win-x64\.git
 RD /S /Q C:\tmp\pi-musicoin\Musicoin-client-win-ia32\.git
