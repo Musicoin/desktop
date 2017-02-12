@@ -1,14 +1,29 @@
 const os = require('os');
 const fs = require('fs');
-var appData = os.homedir() + "/.musicoin";
+
+var musicoinRoot = os.homedir() + "/.musicoin";
+if (process.platform == 'darwin') {
+  musicoinRoot = process.env.HOME + 'Library/Musicoin';
+}
+else if (process.platform && process.platform.startsWith("win")) {
+  musicoinRoot = process.env.APPDATA + '/Musicoin';
+}
+var appData = musicoinRoot + "/wallet-ui";
 var logDir = appData + "/logs";
+
+if (!fs.existsSync(musicoinRoot)) fs.mkdirSync(musicoinRoot);
 if (!fs.existsSync(appData)) fs.mkdirSync(appData);
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
 
+/* console - convenience console emulation to output messages to stdout */
+const console = require('./console.log.js')(logDir);
+console.log(`process.platform: ${process.platform}`);
+console.log(`process.env.APPDATA: ${process.env.APPDATA}`);
+console.log(`process.env.HOME: ${process.env.HOME}`);
+
 /* locale is a set of strings to be fed to app depending on language chosen */
 const locale = require('./locale.js');
-/* console - convenience console emulation to output messages to stdout */
-const console = require('./console.log.js');
+
 /* observables init array together with init fn */
 /* crypto for pwd ops */
 var util = require('util');

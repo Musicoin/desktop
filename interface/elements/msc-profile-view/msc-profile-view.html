@@ -22,7 +22,9 @@
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
             </td>
             <td class="td-button">
-              <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
+              <template is="dom-if" if="[[account.canSend]]">
+                <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
+              </template>
             </td>
           </tr>
         </template>

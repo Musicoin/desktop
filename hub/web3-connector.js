@@ -110,10 +110,21 @@ Web3Connector.prototype.getDefaultAccount = function () {
 Web3Connector.prototype.getAllAccountDetails = function() {
   const accounts = this.getAccounts();
   const coinbase = this.getCoinbase();
+  const output = accounts.map(account =>
+    this.getAccountDetails(account, coinbase)
+      .then(details => {
+        details.canSend = true;
+        return details;
+      }));
+
   if (accounts.indexOf(coinbase) < 0) {
-    accounts.push(coinbase)
+    output.push(this.getAccountDetails(coinbase, coinbase)
+      .then(details => {
+        details.canSend = false;
+        return details;
+      }));
   }
-  return Promise.all(accounts.map(account => this.getAccountDetails(account, coinbase)));
+  return Promise.all(output);
 };
 
 Web3Connector.prototype.getAccountDetails = function(account, _coinbase) {
