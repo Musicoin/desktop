@@ -41,6 +41,10 @@ Polymer({
       if (!this.syncStatus || !this.syncStatus.hashrate) return "";
       return this.formatHashRate(this.syncStatus.hashrate);
     },
+    _computeTimeSinceLastBlockMessage: function() {
+      if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
+      return this._timeSince(this.syncStatus.mostRecentBlockTime);
+    },
     formatHashRate: function(value) {
       const lookup = ["h/s", "kh/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s"];
       var order = Math.min(Math.floor(Math.log10(value)/3), lookup.length-1);
@@ -49,5 +53,33 @@ Polymer({
     },
     formatNumber: function(number, decimals) {
       return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  _timeSince: function(date) {
+
+    const seconds = Math.floor((Date.now() - date) / 1000);
+
+    const intervals = [
+      {value: 60, unit: "m"},
+      {value: 60, unit: "h"},
+      {value: 24, unit: "d"},
+      {value: 30, unit: "mon"},
+      {value: 12, unit: "yr"},
+    ]
+
+    let unit = "s";
+    let value = seconds;
+    for (let i=0; i < intervals.length; i++) {
+      const interval = intervals[i];
+      if (value > interval.value) {
+        unit = interval.unit;
+        value = value / interval.value;
+      }
+      else {
+        break;
+      }
     }
+
+    const rounded = Math.round(value);
+    return `${rounded}${unit}`;
+  }
 });

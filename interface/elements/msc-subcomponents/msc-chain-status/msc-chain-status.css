@@ -17,17 +17,23 @@
 
 .container {
     font-weight: lighter;
-    color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.4);
     padding-right: 15px;
     padding-left: 15px;
     display: flex;
     justify-content: space-between;
 }
 
+.time-area {
+
+}
+
 .item-area {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .sync-area {
@@ -48,7 +54,6 @@
 }
 
 .item-icon {
-    margin-right: 5px;
 }
 
 .version {

@@ -17,11 +17,14 @@
         <div class="item-area mining-area" on-tap="toggleMiningState" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
           <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
         </div>
+        <div class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
+          Last block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+        </div>
         <div class="item-area" title="{{syncStatus.peers}} peers">
-          <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>
+          <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>{{syncStatus.peers}}
         </div>
         <div class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}">
-          <iron-icon class="item-icon" icon="maps:layers"></iron-icon>
+          <iron-icon class="item-icon" icon="maps:layers"></iron-icon>{{_formatBlockNumber(syncStatus)}}
         </div>
       </div>
     </div>

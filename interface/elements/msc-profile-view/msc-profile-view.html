@@ -50,9 +50,10 @@
     <paper-dialog id="newAccountDialog">
       <p>Enter a password for the new account.  Please note that there is no way to recover this password later.</p>
       <paper-input id=newAccountPassword type="password" label="password"></paper-input>
+      <paper-input id=newAccountPasswordVerify type="password" label="confirm password"></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="createNewAccount">Ok</paper-button>
+        <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
+        <paper-button autofocus on-tap="createNewAccount">Ok</paper-button>
       </div>
     </paper-dialog>
 
@@ -76,7 +77,7 @@
       <paper-input id="coins" label="Amount (in musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="password"></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss>cancel</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendFields">cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="sendCoins">ok</paper-button>
       </div>
     </paper-dialog>

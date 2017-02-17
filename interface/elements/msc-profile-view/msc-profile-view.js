@@ -57,8 +57,21 @@ Polymer({
     this.$.sender.value = e.model.dataHost.dataHost.account.address;
     this.$.sendDialog.open();
   },
-  createNewAccount: function() {
-    mscIntf.accountModule.createAccount(this.$.newAccountPassword.value);
+  createNewAccount: function(e) {
+    var v1 = this.$.newAccountPassword.value;
+    var v2 = this.$.newAccountPasswordVerify.value;
+    if (v1 == v2) {
+      mscIntf.accountModule.createAccount(this.$.newAccountPassword.value)
+        .then(account => this.txStatus = "Created account: " + account)
+        .catch(err => this.txStatus = "Failed to create account: " + err);
+      this.clearNewAccountFields();
+      this.$.newAccountDialog.close();
+    }
+    else {
+      alert("Passwords do not match!");
+      return false;
+    }
+
   },
   setCustomCoinbase: function() {
     if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
@@ -74,8 +87,8 @@ Polymer({
       this.$.sendPassword.value
     ).
       then((tx) => {
-      this.txStatus = "Waiting for transaction " + tx;
-      return mscIntf.accountModule.waitForTransaction(tx);
+        this.txStatus = "Waiting for transaction " + tx;
+        return mscIntf.accountModule.waitForTransaction(tx);
     })
       .then(() => {
         this.txStatus = "Success!";
@@ -86,6 +99,19 @@ Polymer({
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
-      })
+      });
+    this.clearSendFields();
   },
+
+  clearNewAccountFields: function() {
+    this.$.newAccountPasswordVerify.value = "";
+    this.$.newAccountPassword.value = "";
+  },
+
+  clearSendFields: function() {
+    this.$.recipient.value = "";
+    this.$.coins.value = "";
+    this.$.sendPassword.value = "";
+    this.$.sender.value = "";
+  }
 });

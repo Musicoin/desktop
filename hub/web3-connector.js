@@ -11,6 +11,8 @@ function Web3Connector(chainConfig, mschub, connectionCallback) {
   this.initialSyncStarted = false;
   this.initialSyncEnded = false;
   this.mchub = mschub;
+  this.highestBlock = 0;
+  this.mostRecentBlockTime = 0;
 
   window.setInterval(function(){
     var wasConnected = this.connected;
@@ -19,6 +21,12 @@ function Web3Connector(chainConfig, mschub, connectionCallback) {
       var newStatus = this.web3.eth.syncing ? this.web3.eth.syncing : {};
       newStatus.peers = this.web3.net.peerCount;
       newStatus.currentBlock = this.web3.eth.blockNumber;
+      if (newStatus.currentBlock > this.highestBlock) {
+        this.highestBlock = newStatus.currentBlock;
+        this.mostRecentBlockTime = Date.now();
+      }
+      newStatus.timeSinceLastBlock = Date.now() - this.mostRecentBlockTime;
+      newStatus.mostRecentBlockTime = this.mostRecentBlockTime;
       newStatus.syncing = !!this.web3.eth.syncing;
       if (newStatus.syncing && !this.initialSyncStarted)
         this.initialSyncStarted = true;
