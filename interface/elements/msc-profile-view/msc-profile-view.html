@@ -38,6 +38,7 @@
         <div>
           <paper-button raised on-tap="handleSetCustomCoinbase">set external coinbase...</paper-button>
           <paper-button raised on-tap="handleNewAccount">new account...</paper-button>
+          <paper-button raised on-tap="handleAddPeer">add peers...</paper-button>
         </div>
 
       </div>
@@ -54,6 +55,17 @@
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
         <paper-button autofocus on-tap="createNewAccount">Ok</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="addPeerDialog">
+      <p>Paste in comma delimited enode addresses, for example:
+        <br>enode://fe9f2aea74c5e6f9cc1eff4e6cb519159db349...@101.102.103.104:30303,<BR>enode://eeeeeaea74c5e6f9cc1eff4e6cb519159db349...@101.102.103.104:30303,
+      </p>
+      <iron-autogrow-textarea id=newPeerEnodeAddress label="enode address" style="height: 300px; width: 600px"></iron-autogrow-textarea>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button autofocus on-tap="addPeers">Ok</paper-button>
       </div>
     </paper-dialog>
 

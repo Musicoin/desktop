@@ -50,12 +50,37 @@ Polymer({
   handleNewAccount: function() {
     this.$.newAccountDialog.open();
   },
+  handleAddPeer: function() {
+    this.$.addPeerDialog.open();
+  },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
   showSendDialog: function(e) {
     this.$.sender.value = e.model.dataHost.dataHost.account.address;
     this.$.sendDialog.open();
+  },
+  addPeers: function(e) {
+    var addresses = this.$.newPeerEnodeAddress.value;
+    if (addresses) {
+        var array = addresses.split(/[\n ,]+/).map(s => s.trim()).filter(s => s)
+            .map(peer => {
+              if (peer.startsWith("admin.addPeer(") && peer.endsWith(")"))
+                return peer.substring(15, peer.length - 2);
+              return peer;
+            })
+        if (array.length > 0) {
+            mscIntf.accountModule.addPeers(array)
+                .then(() => this.txStatus = array.length + " peer(s) will be contacted")
+                .delay(5000)
+                .then(() => this.txStatus = "")
+                .catch(err => this.txStatus = "Failed to add peer: " + err);
+        }
+        this.$.addPeerDialog.close();
+        return;
+    }
+    this.txStatus = "Please enter at least one enode address";
+    this.$.addPeerDialog.close();
   },
   createNewAccount: function(e) {
     var v1 = this.$.newAccountPassword.value;

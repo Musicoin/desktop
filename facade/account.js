@@ -25,6 +25,9 @@ module.exports = function(web3Connector) {
     stopMining: function() {
       return web3Connector.stopMining();
     },
+    addPeers: function(enode) {
+      return web3Connector.addPeers(enode);
+    },
     sendCoins: function(recipient, coins, from, pwd) {
       return web3Connector.sendCoins(recipient, coins, from, pwd);
     },

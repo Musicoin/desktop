@@ -63,6 +63,7 @@ Web3Connector.prototype.createAccount = function (pwd) {
 };
 
 Web3Connector.prototype.rpcCall = function(method, params) {
+  console.log(method + ": " + JSON.stringify(params));
   return new Promise(function (resolve, reject) {
     var headers = {
       'User-Agent': 'Super Agent/0.0.1',
@@ -89,6 +90,10 @@ Web3Connector.prototype.rpcCall = function(method, params) {
       }
     });
   }.bind(this));
+};
+
+Web3Connector.prototype.addPeers = function (enodes) {
+    return Promise.all(enodes.map(e => this.rpcCall("admin_addPeer", e)));
 };
 
 Web3Connector.prototype.startMining = function () {
