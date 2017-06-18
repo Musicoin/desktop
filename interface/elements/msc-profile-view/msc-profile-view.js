@@ -7,6 +7,7 @@ Polymer({
     userImage: String,
     locale: Object,
     txStatus: String,
+    nodeId: String,
     actionState: {
       type: String,
       value: "None"
@@ -29,6 +30,12 @@ Polymer({
 
     mscIntf.userPreferences.attach(this)
       .to('username')
+
+    this.nodeId = "Fetching...";
+      mscIntf.accountModule.getNodeId()
+      .then(result => {
+        this.nodeId = result;
+      });
   },
   _updateUserName: function() {
   },
@@ -61,9 +68,13 @@ Polymer({
     this.$.sendDialog.open();
   },
   addPeers: function(e) {
+    mscIntf.accountModule.getNodeId()
+      .then(result => {
+        this.nodeId = result;
+      });
     var addresses = this.$.newPeerEnodeAddress.value;
     if (addresses) {
-        var array = addresses.split(/[\n ,]+/).map(s => s.trim()).filter(s => s)
+        var array = addresses.split(/[\n ,;]+/).map(s => s.trim()).filter(s => s)
             .map(peer => {
               if (peer.startsWith("admin.addPeer(") && peer.endsWith(")"))
                 return peer.substring(15, peer.length - 2);

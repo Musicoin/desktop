@@ -11,7 +11,9 @@ module.exports = function(web3Connector) {
     getCoinbase: function() {
       return web3Connector.getCoinbase();
     },
-
+    getNodeId: function() {
+      return web3Connector.getNodeId();
+    },
     setCoinbase: function(address) {
       return web3Connector.setCoinbase(address);
     },

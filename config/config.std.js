@@ -7,6 +7,7 @@ module.exports = {
     path: "{process.cwd}/bin/go-musicoin/",
     command: './gmc',
     args: [
+      '--verbosity=6',
       '--rpc',
       '--rpcapi=admin,db,eth,net,web3,personal,miner',
       '--rpcport', '8545',

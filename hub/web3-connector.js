@@ -92,6 +92,22 @@ Web3Connector.prototype.rpcCall = function(method, params) {
   }.bind(this));
 };
 
+Web3Connector.prototype.getNodeId = function () {
+    return this.rpcCall("admin_nodeInfo", [])
+      .then(nodeInfo => {
+        var nodeInfoObj = JSON.parse(nodeInfo);
+        if (nodeInfoObj && nodeInfoObj.result && nodeInfoObj.result.enode) {
+          return nodeInfoObj.result.enode;
+        }
+        console.log("getNodeId did not return an enode id, response from gmc was: " + nodeInfo);
+        return "Not Found";
+      })
+      .catch(e => {
+        console.log("Could not fetch nodeId: " + e);
+        return "Error";
+      });
+};
+
 Web3Connector.prototype.addPeers = function (enodes) {
     return Promise.all(enodes.map(e => this.rpcCall("admin_addPeer", e)));
 };

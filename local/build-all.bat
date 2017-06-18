@@ -9,8 +9,8 @@ REM delete log files created during debugging before the copy
 del log.txt
 del client.txt
 
-REM call nwb nwbuild  -v 0.20.2 --with-ffmpeg -p win32,win64,osx64,linux64,linux32 -o C:\tmp\pi-musicoin --side-by-side
-call nwb nwbuild  -v 0.20.2 --with-ffmpeg -p linux32 -o C:\tmp\pi-musicoin --side-by-side
+call nwb nwbuild  -v 0.20.2 --with-ffmpeg -p win32,win64,osx64,linux64,linux32 -o C:\tmp\pi-musicoin --side-by-side
+REM call nwb nwbuild  -v 0.20.2 --with-ffmpeg -p linux32 -o C:\tmp\pi-musicoin --side-by-side
 
 robocopy C:\tmp\pi-musicoin\dependencies\win64 C:\tmp\pi-musicoin\Musicoin-client-win-x64\bin /S
 robocopy C:\tmp\pi-musicoin\dependencies\win32 C:\tmp\pi-musicoin\Musicoin-client-win-ia32\bin /S
