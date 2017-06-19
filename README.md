@@ -16,7 +16,7 @@ The Desktop App for managing your musicoin wallet
 6.  [Update](https://github.com/nwjs/nw.js/wiki/Using-MP3-&-MP4-(H.264)-using-the--video--&--audio--tags) nw's `ffmpeg` library so you can play mp3 files (as well as many others)
 
 # Running the App
-1.  Start [gmc](https://github.com/Musicoin/go-musicoin) `gmc --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost" --testnet`
+1.  Start [gmc](https://github.com/Musicoin/go-musicoin) `gmc --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost"`
 2.  Start IPFS: `ipfs daemon`
 3.  `nw` with the path to the folder containing package.json (e.g. `nw .`)
     Note: If you're on OSX, you wouldn't be able to setup `nw` courtesy [this bug](https://github.com/nwjs/npm-installer/issues/56)
