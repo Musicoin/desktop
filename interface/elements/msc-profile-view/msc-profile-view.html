@@ -3,7 +3,7 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
     <div class="flex-center title">
-      <img src="/interface/images/icon.png" width="64px" height="64px" style="margin-right: 20px"> musicoin
+      <img src="/interface/images/icon.png" width="64px" height="64px" style="margin-right: 20px"> Musicoin
     </div>
 
     <div>
@@ -11,7 +11,7 @@
         <tr>
           <th>Account</th>
           <th>Balance</th>
-          <th>Coinbase</th>
+          <th>Primary</th>
           <th>Send</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
@@ -36,9 +36,9 @@
           {{locale.userProfileView.actions.Mining}}
         </paper-toggle-button>
         <div>
-          <paper-button raised on-tap="handleSetCustomCoinbase">set external coinbase...</paper-button>
-          <paper-button raised on-tap="handleNewAccount">new account...</paper-button>
-          <paper-button raised on-tap="handleAddPeer">add peers...</paper-button>
+          <paper-button raised on-tap="handleSetCustomCoinbase">Set External Coinbase...</paper-button>
+          <paper-button raised on-tap="handleNewAccount">New Account...</paper-button>
+          <paper-button raised on-tap="handleAddPeer">Add Peers...</paper-button>
         </div>
 
       </div>
@@ -76,7 +76,7 @@
     <paper-dialog id="setCoinbaseDialog">
       <p>Enter the wallet address of the coinbase.</p>
       <p>
-        <b class="warn">WARNING</b>: be sure you have access to the coinbase!  If you want to use one of the local
+        <b class="warn">WARNING</b>: Make sure you have access to the coinbase!  If you want to use one of the local
         accounts as the coinbase, cancel this dialog and just check the box.
       </p>
       <paper-input id=customCoinbase label="coinbase address"></paper-input>
@@ -93,8 +93,8 @@
       <paper-input id="coins" label="Amount (in musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="password"></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">ok</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
       </div>
     </paper-dialog>
 
