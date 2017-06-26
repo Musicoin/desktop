@@ -5,8 +5,6 @@ if (( $EUID != 0 )); then
     SUDO='sudo'
 fi
 $SUDO apt install libnss3
-$SUDO apt-get install gtk2.0
-# Change permissions to ensure that the app is executable
-$SUDO chmod +x Musicoin-wallet
+# Make sure several dependcies executable
+$SUDO chmod +x Musicoin-client
 $SUDO chmod +x bin/gmc/gmc
-$SUDO chmod +x bin/go-ipfs/ipfs
