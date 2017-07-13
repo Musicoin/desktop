@@ -3,12 +3,14 @@
     flex-direction: column;
     margin: 20px;
     font-weight: lighter;
-    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .title {
     font-size: 48px;
     margin-bottom: 20px;
+    font-weight: 300 !important;
+    color: #A4A4A4;
 }
 
 .section {
@@ -38,7 +40,7 @@
 
 .account {
     color: var(--msc-subtle-text-color);
-    font-family: monospace;
+    font-family: 'Ubuntu' monospace;
 }
 
 .user-message {
@@ -176,7 +178,7 @@ table {
 
 paper-button {
     text-transform: none;
-    color: white;
+    color: #A4A4A4;
 }
 
 paper-dialog {
@@ -189,4 +191,36 @@ table {
 
 .warn {
     color: red;
+}
+
+#row1{
+  position: absolute;
+  left: 5%;
+}
+#row5{
+  position: fixed;
+  top: 50%;
+  left: 47%;
+  margin-top: -50px;
+  margin-left: -100px;
+  font-size: 50px;
+}
+#row3{
+  position: absolute;
+  left: 56.5%;
+}
+#row4{
+  position: absolute;
+  left: 69%;
+}
+#addPeerDialog{
+  font-size: 18px;
+}
+.hidden{
+  visibility: hidden;
+}
+#row6{
+  position: absolute;
+  left: 45.5%;
+  top: 61.5%;
 }

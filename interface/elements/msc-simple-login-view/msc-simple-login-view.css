@@ -2,8 +2,8 @@
     display: flex;
     background-color: black;
     justify-content: center;
-    font-weight: lighter;
-    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .login-elements {
@@ -68,20 +68,20 @@ identicon-element {
 .sync-status {
     font-size: 2em;
     margin-bottom: 20px;
-    font-weight: lighter;
+    font-weight: 300;
 }
 
 .sync-detail {
     width: 50%;
     text-align: right;
-    font-weight: lighter;
+    font-weight: 300;
     color: var(--msc-subtle-text-color);
 }
 
 .peers {
     width: 50%;
     text-align: right;
-    font-weight: lighter;
+    font-weight: 300;
     color: var(--msc-subtle-text-color);
 }
 
@@ -114,6 +114,7 @@ identicon-element {
 .title {
     font-size: 48px;
     margin-bottom: 20px;
+    font-weight: 300;
 }
 
 .flex-center {
