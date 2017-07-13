@@ -8,3 +8,4 @@ $SUDO apt install libnss3
 # Make sure several dependcies executable
 $SUDO chmod +x Musicoin-client
 $SUDO chmod +x bin/gmc/gmc
+$SUDO chmod +x bin/go-ipfs/ipfs
