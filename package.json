@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-client",
-  "version": "0.0.0",
+  "version": "0.51.0",
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
@@ -32,6 +32,6 @@
     "reverse-line-reader": "^0.2.6",
     "serve-favicon": "~2.3.0",
     "tmp": "0.0.29",
-    "web3": "^0.17.0-beta"
+    "web3": "^0.20.0"
   }
 }
