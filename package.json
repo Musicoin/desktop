@@ -1,5 +1,5 @@
 {
-  "name": "Musicoin-client",
+  "name": "Musicoin-wallet",
   "version": "0.51.0",
   "private": true,
   "node-main": "./hub/msc.js",

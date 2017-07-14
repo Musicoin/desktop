@@ -1,13 +1,53 @@
-// reuse the gulp task that runs our app
-var run = require('.')
+var assert = require('assert')
+var chai = require("chai");
+var chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
+chai.should();
+var wd = require('wd');
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('my app', function () {
-    var nw, cri
+describe('mocha spec examples', function() {
+  this.timeout(10000);
 
-    it('sends a message to the server', function (done) {
-        // soon we will replace this with the instrumentation code
-        setTimeout(done, 5000)
-        nw = run()
-    })
+  describe("using promises and chai-as-promised", function() {
+    var browser;
 
-})
+    before(function() {
+      browser = wd.promiseChainRemote();
+
+      // optional extra logging
+      browser.on('status', function(info) {
+        console.log(info.cyan);
+      });
+      browser.on('command', function(eventType, command, response) {
+        console.log(' > ' + eventType.cyan, command, (response || '').grey);
+      });
+      browser.on('http', function(meth, path, data) {
+        console.log(' > ' + meth.magenta, path, (data || '').grey);
+      });
+
+      return browser
+        .init({browserName:'chrome'});
+    });
+
+    beforeEach(function() {
+			return browser;
+    });
+
+    after(function() {
+      return browser
+        .quit();
+    });
+
+    it("should retrieve the page title", function() {
+      return browser
+        .title().should.become("Hello World!");
+    });
+  });
+});
+describe(' Is 1 == 2?', function(){
+  it('obviously no', function()
+    {
+      assert.equal(1,2)
+    });
+});
