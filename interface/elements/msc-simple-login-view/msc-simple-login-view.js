@@ -1,4 +1,6 @@
 var fs = require('fs');
+var ngui = require('nw.gui');
+var nwin = ngui.Window.get();
 Polymer({
   is: 'msc-simple-login-view',
   properties: {
@@ -28,6 +30,7 @@ Polymer({
       .to('chainVersion')
       .to('syncStatus')
 
+    //nwin.maximize();
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];
     for(var i = 0; i< obj['nodes'].length; i++) {
