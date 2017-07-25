@@ -199,19 +199,50 @@ table {
 }
 #row5{
   position: fixed;
-  top: 50%;
-  left: 47%;
-  margin-top: -50px;
-  margin-left: -100px;
-  font-size: 50px;
+  top: 15px;
+  right: 3%;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  color: #F7DC6F;
+  font-size: 17px;
 }
 #row3{
-  position: absolute;
-  left: 56.5%;
+    background: none;
+    width: 130px;
+    margin: 0px;
+}
+#tableheader{
+    height: 45px;
+    font-size: 13px;
+    background: #2C2C2C;
+    border: 2px #2C2C2C solid;
+}
+#newWallet {
+    position: absolute;
+    right: 18%;
+    background: #F7DC6F;
+    width: 130px;
+    height: 33px;
+    font-family: 'Lato' sans-serif;
+    font-weight: 900 !important;
+    font-size: 13px;
+    border-radius: 5px;
 }
 #row4{
-  position: absolute;
-  left: 69%;
+    background: none;
+    width: 190px;
+    margin: 0px;
+}
+#oldWallet {
+    position: absolute;
+    right: 2%;
+    background: #fff;
+    width: 190px;
+    height: 33px;
+    font-family: 'Lato' sans-serif;
+    font-weight: 900 !important;
+    font-size: 13px;
+    border-radius: 5px;
 }
 #addPeerDialog{
   font-size: 18px;

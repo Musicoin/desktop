@@ -2,22 +2,33 @@
   <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="import" type="css" href="msc-profile-view.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <script type="text/javascript" src="build/nwjs-open-link-in-browser.js"></script>
-
+  <style>
+    #contentContainer {
+      background: transparent;
+      height: 0px !important;
+      width: 0px !important;
+      position: absolute;
+      top: -1000px;
+    }
+  </style>
   <template>
     <div class="flex-center title">
-      <img src="/interface/images/icon.png" width="64px" height="64px" style="margin-right: 20px"> musicoin
+      <img src="/interface/images/logon.svg" width="256" style="position: absolute; top: 10px; left: 10px; margin-right: 20px">
     </div>
 
     <div>
       <table width="100%">
-        <tr>
-          <th>Account</th>
-          <th>Balance</th>
-          <th>Primary</th>
-          <th>Send</th>
+        <div style="position: absolute; top: 150px !important;">
+        <tr id ="tableheader">
+          <th>ACCOUNT</th>
+          <th>BALANCE</th>
+          <th>PRIMARY</th>
+          <th>SEND</th>
         </tr>
+        </div>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr coinbase$="[[account.isCoinbase]]">
             <td class="account">[[account.address]]</td>
@@ -42,9 +53,13 @@
         </paper-toggle-button>
       </div>
         <div>
-          <paper-button raised on-tap="handleNewAccount" id="row3">New Wallet</paper-button>
-          <paper-button raised on-tap="handleSetCustomCoinbase" id="row4">Add Existing<br>Wallet</paper-button>
-          <paper-button raised on-tap="handleAddPeer" id="row5">Add Peers</paper-button>
+          <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
+          <div id="newWallet">
+            <paper-button raised on-tap="handleNewAccount" id="row3" style="color: black">NEW WALLET</paper-button>
+          </div>
+          <div id="oldWallet">
+            <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: black">ADD EXISTING WALLET</paper-button>
+          </div>
         </div>
         <div>
           <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'id="row6">Nodes List</paper-button>
