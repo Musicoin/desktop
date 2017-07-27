@@ -1,8 +1,7 @@
 <dom-module id="msc-profile-view">
   <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="import" type="css" href="msc-profile-view.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <script type="text/javascript" src="build/nwjs-open-link-in-browser.js"></script>
   <style>
@@ -15,22 +14,44 @@
     }
   </style>
   <template>
-    <div class="flex-center title">
-      <img src="/interface/images/logon.svg" width="256" style="position: absolute; top: 10px; left: 10px; margin-right: 20px">
+    <div class="flex-center title" style="margin-bottom: 70px;">
+      <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
     </div>
 
     <div>
-      <table width="100%">
-        <div style="position: absolute; top: 150px !important;">
-        <tr id ="tableheader">
-          <th>ACCOUNT</th>
-          <th>BALANCE</th>
+      <table width="100%" style="border: none; text-align: center;">
+        <tr id ="tableheader" style="background-color: #333 !important;">
+          <th style="width: 40vw">ACCOUNT</th>
+          <th style="width: 38vw">BALANCE</th>
           <th>PRIMARY</th>
           <th>SEND</th>
         </tr>
-        </div>
-        <template is="dom-repeat" items="[[accounts]]" as="account">
-          <tr coinbase$="[[account.isCoinbase]]">
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td>Random1</td>
+            <td>Random2</td>
+
+          </tr>
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td>Random1</td>
+            <td>Random2</td>
+          </tr>
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td class="clickable">
+              <iron-icon icon="{{_computeCheckboxIcon}}" on-tap="changeCoinbase"></iron-icon>
+            </td>
+            <td class="td-button">
+              <template is="dom-if" if="[[account.canSend]]">
+                <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
+              </template>
+            </td>
+
+            <!--
             <td class="account">[[account.address]]</td>
             <td title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
@@ -41,8 +62,8 @@
                 <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
               </template>
             </td>
+          -->
           </tr>
-        </template>
       </table>
       <div class="flex-between">
         <div id="row1">
@@ -52,17 +73,17 @@
           {{locale.userProfileView.actions.Mining}}
         </paper-toggle-button>
       </div>
-        <div>
+        <div style="padding-top: 15px;">
           <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
           <div id="newWallet">
-            <paper-button raised on-tap="handleNewAccount" id="row3" style="color: black">NEW WALLET</paper-button>
+            <paper-button raised on-tap="handleNewAccount" id="row3" style="color: #302d38">NEW WALLET</paper-button>
           </div>
           <div id="oldWallet">
-            <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: black">ADD EXISTING WALLET</paper-button>
+            <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: #777777">ADD EXISTING WALLET</paper-button>
           </div>
         </div>
-        <div>
-          <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'id="row6">Nodes List</paper-button>
+        <div style="padding-top: 10px;">
+          <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'id="row6">NODES LIST</paper-button>
         </div>
 
       </div>

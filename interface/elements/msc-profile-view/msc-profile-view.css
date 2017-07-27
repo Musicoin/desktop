@@ -1,261 +1,298 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    font-weight: lighter;
-    font-family: 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  font-weight: lighter;
+  font-family: 'Lato', sans-serif;
 }
 
 .title {
-    font-size: 48px;
-    margin-bottom: 20px;
-    font-weight: 300 !important;
-    color: #A4A4A4;
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: 300 !important;
+  color: #A4A4A4;
 }
 
 .section {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .top {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .name-area {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .name {
-    font-size: 40px;
-    font-weight: lighter;
-    display: flex;
-    align-items: center;
-    line-height: 1;
+  font-size: 40px;
+  font-weight: lighter;
+  display: flex;
+  align-items: center;
+  line-height: 1;
 }
 
 .account {
-    color: var(--msc-subtle-text-color);
-    font-family: 'Ubuntu' monospace;
+  color: var(--msc-subtle-text-color);
+  font-family: 'Ubuntu' monospace;
 }
 
 .user-message {
-    font-weight: lighter;
-    text-align: justify;
-    font-size: 20px;
+  font-weight: lighter;
+  text-align: justify;
+  font-size: 20px;
 }
 
 .call-to-action {
-    display: inline-block;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: lighter;
+  display: inline-block;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: lighter;
 }
 
 .action-area {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .settings {
-    display: flex;
+  display: flex;
 }
 
 .action {
-    width: 300px;
-    height: 32px;
-    background-color: #00b050;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: larger;
-    font-weight: lighter;
-    border-radius: 4px;
-    cursor: pointer;
-    border: 1px solid #abbab2;
-    text-transform: none;
+  width: 300px;
+  height: 32px;
+  background-color: #00b050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: larger;
+  font-weight: lighter;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #abbab2;
+  text-transform: none;
 }
 
 .follow {
-    background-color: #3b3838;
+  background-color: #3b3838;
 }
 
 .follow[following] {
-    background-color: #00b050;
+  background-color: #00b050;
 }
 
 paper-toggle-button {
-    margin: 10px;
-    font-size: 1.5em;
-    font-weight: lighter;
+  margin: 10px;
+  font-size: 1.5em;
+  font-weight: lighter;
 }
 
 th {
-    font-weight: inherit;
+  font-weight: inherit;
 }
 
 td {
-    font-weight: lighter;
-    font-size: larger;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
+  font-weight: lighter;
+  font-size: larger;
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
 }
 
 tr {
-    background-color: rgba(255,255,255,0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 tr[coinbase] {
-    background-color: rgba(200,255,200,0.2);
+  background-color: rgba(200, 255, 200, 0.2);
 }
 
 table {
-    background-color: var(--msc-background-hightlight);
+  background-color: var(--msc-background-hightlight);
 }
 
-.action {
-}
+.action {}
 
 .action[failed] {
-    background-color: #81281b;
+  background-color: #81281b;
 }
 
 .action[pending] {
-    background-color: #3e4e3e;
-    background-size: 64px 64px;
-    background-image: linear-gradient(135deg,
-    rgba(255, 255, 255, .05) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, .05) 50%,
-    rgba(255, 255, 255, .05) 75%,
-    transparent 75%,
-    transparent);
-
-    animation: animate-stripes 3s linear infinite;
+  background-color: #3e4e3e;
+  background-size: 64px 64px;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+  animation: animate-stripes 3s linear infinite;
 }
 
 @keyframes animate-stripes {
-    0% {background-position: 0 0;} 100% {background-position: 128px 0;}
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 128px 0;
+  }
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .link {
-    cursor: pointer;
-    display: inline-block;
-    font-weight: normal;
-    color: #abcdef;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: normal;
+  color: #abcdef;
 }
 
 .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .flex-right {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .flex-center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .flex-between {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 paper-button {
-    text-transform: none;
-    color: #A4A4A4;
+  text-transform: none;
+  color: #A4A4A4;
 }
 
 paper-dialog {
-    background-color: rgb(36, 36, 36);
+  background-color: rgb(36, 36, 36);
 }
 
 table {
-    border-radius: 4px;
+  border-radius: 4px;
 }
 
 .warn {
-    color: red;
+  color: red;
 }
 
-#row1{
+#row1 {
   position: absolute;
   left: 5%;
 }
-#row5{
+
+#row5 {
   position: fixed;
-  top: 15px;
+  top: 35px;
   right: 3%;
   font-family: 'Lato' sans-serif;
   font-weight: 900 !important;
-  color: #F7DC6F;
+  color: #f6d951;
   font-size: 17px;
 }
-#row3{
-    background: none;
-    width: 130px;
-    margin: 0px;
+
+#row3 {
+  background: none;
+  width: 130px;
+  margin: 0px;
 }
-#tableheader{
-    height: 45px;
-    font-size: 13px;
-    background: #2C2C2C;
-    border: 2px #2C2C2C solid;
+
+#tableheader {
+  height: 50px;
+  font-size: 12px;
+  background: #2C2C2C;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900;
+  border: 2px #2C2C2C solid;
 }
+
 #newWallet {
-    position: absolute;
-    right: 18%;
-    background: #F7DC6F;
-    width: 130px;
-    height: 33px;
-    font-family: 'Lato' sans-serif;
-    font-weight: 900 !important;
-    font-size: 13px;
-    border-radius: 5px;
+  position: absolute;
+  right: 18%;
+  background: #fad644;
+  width: 130px;
+  height: 33px;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  font-size: 13px;
+  border-radius: 5px;
 }
-#row4{
-    background: none;
-    width: 190px;
-    margin: 0px;
+
+#row4 {
+  background: none;
+  width: 190px;
+  margin: 0px;
 }
+
 #oldWallet {
-    position: absolute;
-    right: 2%;
-    background: #fff;
-    width: 190px;
-    height: 33px;
-    font-family: 'Lato' sans-serif;
-    font-weight: 900 !important;
-    font-size: 13px;
-    border-radius: 5px;
+  position: absolute;
+  right: 2%;
+  background: #fff;
+  width: 190px;
+  height: 33px;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  font-size: 13px;
+  border-radius: 5px;
 }
-#addPeerDialog{
+
+#addPeerDialog {
   font-size: 18px;
 }
-.hidden{
+
+.hidden {
   visibility: hidden;
 }
-#row6{
-  position: absolute;
-  left: 45.5%;
-  top: 61.5%;
+
+#row6 {
+  position: relative;
+  top: 15%;
+  left: -85vw !important;
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 15px;
+  color: #fcd345;
 }
+
 .sync-status {
   font-family: 'Lato', sans-serif !important;
   font-weight: 900 !important;
+}
+
+#data1 {
+  font-family: 'Lato', sans-serif !important;
+  color: #393a3c;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  height: 50px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(odd){
+  background-color: #f5f6fa !important;
+}
+tr:nth-child(even) {
+  background-color: #eaebef !important;
 }
