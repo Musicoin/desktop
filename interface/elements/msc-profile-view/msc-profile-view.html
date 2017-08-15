@@ -28,7 +28,7 @@
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
-            <td class="account">[[account.address]]</td>
+            <td class="account" style="color: #393a3c !important;">[[account.address]]</td>
             <td title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
