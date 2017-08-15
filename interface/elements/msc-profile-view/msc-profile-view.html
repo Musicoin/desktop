@@ -1,21 +1,57 @@
 <dom-module id="msc-profile-view">
   <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="import" type="css" href="msc-profile-view.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <script type="text/javascript" src="build/nwjs-open-link-in-browser.js"></script>
+  <style>
+    #contentContainer {
+      background: transparent;
+      height: 0px !important;
+      width: 0px !important;
+      position: absolute;
+      top: -1000px;
+    }
+  </style>
   <template>
-    <div class="flex-center title">
-      <img src="/interface/images/icon.png" width="64px" height="64px" style="margin-right: 20px"> Musicoin
+    <div class="flex-center title" style="margin-bottom: 70px;">
+      <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
     </div>
 
     <div>
-      <table width="100%">
-        <tr>
-          <th>Account</th>
-          <th>Balance</th>
-          <th>Primary</th>
-          <th>Send</th>
+      <table width="100%" style="border: none; text-align: center;">
+        <tr id ="tableheader" style="background-color: #333 !important;">
+          <th style="width: 40vw">ACCOUNT</th>
+          <th style="width: 38vw">BALANCE</th>
+          <th>PRIMARY</th>
+          <th>SEND</th>
         </tr>
-        <template is="dom-repeat" items="[[accounts]]" as="account">
-          <tr coinbase$="[[account.isCoinbase]]">
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td>Random1</td>
+            <td>Random2</td>
+
+          </tr>
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td>Random1</td>
+            <td>Random2</td>
+          </tr>
+          <tr id="data1">
+            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
+            <td>1000000</td>
+            <td class="clickable">
+              <iron-icon icon="{{_computeCheckboxIcon}}" on-tap="changeCoinbase"></iron-icon>
+            </td>
+            <td class="td-button">
+              <template is="dom-if" if="[[account.canSend]]">
+                <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
+              </template>
+            </td>
+
+            <!--
             <td class="account">[[account.address]]</td>
             <td title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
@@ -26,19 +62,28 @@
                 <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
               </template>
             </td>
+          -->
           </tr>
-        </template>
       </table>
       <div class="flex-between">
+        <div id="row1">
         <paper-toggle-button
                 id="isMining"
-                on-tap="toggleMiningState">
+                on-tap="toggleMiningState" class="hidden">
           {{locale.userProfileView.actions.Mining}}
         </paper-toggle-button>
-        <div>
-          <paper-button raised on-tap="handleSetCustomCoinbase">Set External Coinbase...</paper-button>
-          <paper-button raised on-tap="handleNewAccount">New Account...</paper-button>
-          <paper-button raised on-tap="handleAddPeer">Add Peers...</paper-button>
+      </div>
+        <div style="padding-top: 15px;">
+          <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
+          <div id="newWallet">
+            <paper-button raised on-tap="handleNewAccount" id="row3" style="color: #302d38">NEW WALLET</paper-button>
+          </div>
+          <div id="oldWallet">
+            <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: #777777">ADD EXISTING WALLET</paper-button>
+          </div>
+        </div>
+        <div style="padding-top: 10px;">
+          <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'id="row6">NODES LIST</paper-button>
         </div>
 
       </div>
@@ -59,25 +104,24 @@
     </paper-dialog>
 
     <paper-dialog id="addPeerDialog">
-      <p>Paste in comma delimited enode addresses, for example:
-        <br>enode://fe9f2aea74c5e6f9cc1eff4e6cb519159db349...@101.102.103.104:30303,
-        <br>enode://eeeeeaea74c5e6f9cc1eff4e6cb519159db349...@101.102.103.104:30303
+      <p>Paste one or more enodes separated by commas as follows:
+        <br>enode://abcdefg@101.102.103.104:30303,
+        <br>enode://zyxwvu@101.102.103.104:30303
       </p>
-      <p>Your enode address is:</p>
+      <p>Your Enode address is:</p>
       <div style="color: #ddd; width: 600px; overflow-wrap: break-word; word-wrap: break-word;">{{nodeId}}</div>
-
       <iron-autogrow-textarea id=newPeerEnodeAddress label="enode address" style="height: 200px; width: 600px"></iron-autogrow-textarea>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button autofocus on-tap="addPeers">Ok</paper-button>
+        <paper-button autofocus on-tap="addPeers">Add Enode(s)</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog id="setCoinbaseDialog">
-      <p>Enter the wallet address of the coinbase.</p>
+      <p>Enter the Wallet Address of the coinbase.</p>
       <p>
         <b class="warn">WARNING</b>: Make sure you have access to the coinbase!  If you want to use one of the local
-        accounts as the coinbase, cancel this dialog and just check the box.
+        accounts as the coinbase, cancel this dialog and check the account list column.
       </p>
       <paper-input id=customCoinbase label="coinbase address"></paper-input>
       <div class="buttons">
@@ -88,10 +132,10 @@
 
     <paper-dialog id="sendDialog">
       <p>Enter the recipient address, the amount to send, and your password.</p>
-      <paper-input disabled id="sender" label="from"></paper-input>
-      <paper-input id="recipient" label="recipient"></paper-input>
-      <paper-input id="coins" label="Amount (in musicoins)"></paper-input>
-      <paper-input id=sendPassword type="password" label="password"></paper-input>
+      <paper-input disabled id="sender" label="From"></paper-input>
+      <paper-input id="recipient" label="Recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>

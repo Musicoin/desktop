@@ -4,7 +4,7 @@
 <dom-module id="msc-element">
   <link rel="import" type="css" href="msc-element-general.css">
   <template>
-    <div id="background" style="background-image:url('/interface/images/concert.jpg')"></div>
+    <div id="background" style="background-image:url('/interface/images/concert1.jpg'); opacity: 1"></div>
     <msc-chain-status></msc-chain-status>
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
@@ -25,12 +25,6 @@
         <!--</app-drawer>-->
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-        <app-header shadow fixed condenses reveals effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div></div>
-          </app-toolbar>
-        </app-header>
         <msc-profile-view></msc-profile-view>
       </app-header-layout>
     </app-drawer-layout>

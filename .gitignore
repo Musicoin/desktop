@@ -7,6 +7,7 @@ switchworkspace.sh
 node_modules/*
 !node_modules/sha3/
 !node_modules/secp256k1/
+node_modules/
 .atomignore
 hub/ether.settings.js
 config/config.ext.js
