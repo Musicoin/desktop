@@ -1,4 +1,4 @@
-# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.70-green.svg)
+# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.60-green.svg)
 
 The official Musicoin Wallet
 
@@ -9,7 +9,6 @@ The official Musicoin Wallet
 3. Install bower: `npm install -g bower`
 4. Install bower packages: `bower install` Note: If this doesn't work, try manually navigating to `/interface` and then try running `bower install`
 5. Download the SDK version of [nw.js](http://nwjs.io/), install it and put it into executable `PATH`
-6. [Update](https://github.com/nwjs/nw.js/wiki/Using-MP3-&-MP4-(H.264)-using-the--video--&--audio--tags) nw's `ffmpeg` library so you can play mp3 files (as well as many others)
 
 # Running the App
 
@@ -20,7 +19,7 @@ The official Musicoin Wallet
 # Packaging the App
 
 1. Install nwjs-builder: `npm install nwjs-builder -g`
-2. Package the app: `nwb nwbuild -v 0.17.4 --with-ffmpeg -p win64,osx64,linux64 -o build --side-by-side`
+2. Package the app: `nwb nwbuild -v 0.17.4 -p win64,osx64,linux64 -o build --side-by-side`
 3. Update `geth` and `ipfs` executables for each platform. See links below for obtaining the files
 
 # Packaging Dependencies
