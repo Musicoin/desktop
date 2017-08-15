@@ -10,6 +10,7 @@ The official Musicoin Wallet
 4. Install bower packages: `bower install` Note: If this doesn't work, try manually navigating to `/interface` and then try running `bower install`
 5. Download the SDK version of [nw.js](http://nwjs.io/), install it and put it into executable `PATH`
 
+
 # Running the App
 
 1. Start [gmc](https://github.com/Musicoin/go-musicoin) `gmc --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost"`
