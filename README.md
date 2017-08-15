@@ -3,12 +3,21 @@
 The official Musicoin Wallet
 
 # Getting Started
+<<<<<<< HEAD
 
 1. Download or Clone this repository
 2. Install NodeJS packages: `npm install`
 3. Install bower: `npm install -g bower`
 4. Install bower packages: `bower install` Note: If this doesn't work, try manually navigating to `/interface` and then try running `bower install`
 5. Download the SDK version of [nw.js](http://nwjs.io/), install it and put it into executable `PATH`
+=======
+1.  Download or Clone this repository
+2.  Install NodeJS packages:  `npm install`
+3.  Install bower: `npm install -g bower`
+4.  Install bower packages:  `bower install`
+    Note: If this doesn't work, try manually navigating to `/interface` and then try running `bower install`
+5.  Download the SDK version of [nw.js](http://nwjs.io/), install it and put it into executable `PATH`
+>>>>>>> remove ffmpeg dependency
 
 # Running the App
 
@@ -17,10 +26,16 @@ The official Musicoin Wallet
 3. Run `nw` in the root of the repo. Note: If you're on macOS/OSX, you wouldn't be able to setup `nw` courtesy [this bug](https://github.com/nwjs/npm-installer/issues/56). In this case, download `nwjs@0.20.0` for testing
 
 # Packaging the App
+<<<<<<< HEAD
 
 1. Install nwjs-builder: `npm install nwjs-builder -g`
 2. Package the app: `nwb nwbuild -v 0.17.4 -p win64,osx64,linux64 -o build --side-by-side`
 3. Update `geth` and `ipfs` executables for each platform. See links below for obtaining the files
+=======
+1.  Install nwjs-builder: `npm install nwjs-builder -g`
+2.  Package the app: `nwb nwbuild  -v 0.17.4 -p win64,osx64,linux64 -o build --side-by-side`
+3.  Update `gmc` and `ipfs` executables for each platform.  See links below for obtaining the files
+>>>>>>> remove ffmpeg dependency
 
 # Packaging Dependencies
 
