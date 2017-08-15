@@ -26,32 +26,8 @@
           <th>PRIMARY</th>
           <th>SEND</th>
         </tr>
-          <tr id="data1">
-            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
-            <td>1000000</td>
-            <td>Random1</td>
-            <td>Random2</td>
-
-          </tr>
-          <tr id="data1">
-            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
-            <td>1000000</td>
-            <td>Random1</td>
-            <td>Random2</td>
-          </tr>
-          <tr id="data1">
-            <td>0xANASKASDLASLDASDLASDASDAASDS</td>
-            <td>1000000</td>
-            <td class="clickable">
-              <iron-icon icon="{{_computeCheckboxIcon}}" on-tap="changeCoinbase"></iron-icon>
-            </td>
-            <td class="td-button">
-              <template is="dom-if" if="[[account.canSend]]">
-                <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
-              </template>
-            </td>
-
-            <!--
+        <template is="dom-repeat" items="[[accounts]]" as="account">
+          <tr id="data1" coinbase$="[[account.isCoinbase]]">
             <td class="account">[[account.address]]</td>
             <td title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
@@ -62,8 +38,8 @@
                 <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
               </template>
             </td>
-          -->
           </tr>
+        </template>
       </table>
       <div class="flex-between">
         <div id="row1">
