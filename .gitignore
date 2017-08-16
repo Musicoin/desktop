@@ -10,4 +10,5 @@ node_modules/*
 node_modules/
 .atomignore
 hub/ether.settings.js
+build/
 config/config.ext.js
