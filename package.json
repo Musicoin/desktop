@@ -32,6 +32,9 @@
     "reverse-line-reader": "^0.2.6",
     "serve-favicon": "~2.3.0",
     "tmp": "0.0.29",
+    "username": "*",
+    "os": "*",
+    "path": "*",
     "web3": "^0.17.0-beta"
   }
 }

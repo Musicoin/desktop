@@ -1,5 +1,8 @@
 var gui = require('nw.gui');
 var fs = require('fs');
+var path = require('path');
+var os = require('os');
+var username = require('username');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -58,6 +61,24 @@ Polymer({
   handleAddPeer: function() {
     this.$.addPeerDialog.open();
   },
+  /*
+  backupWallet: function() {
+    var currentPath = path.dirname(process.execPath);
+    var platform = os.platform();
+    var usernames = [];
+    username().then(usernam => {
+      usernames.push(username); // username stored in usernames[0]
+    });
+
+    if platform.includes("win32") {
+      var pathOfKey = 'C:\\Users\\' + usernames[0] + '\\AppData\\Roaming\\Musicoin\\keystore';
+    } else if platform.includes("darwin") {
+      var pathOfKey = '/Users/' + usernames[0] + '/Library/Musicoin/keystore';
+    } else if (platform.includes()){ //linux
+      var pathOfKey = '/' + usernames[0] + '/.musicoin/keystore';
+    }
+  },
+  */
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
