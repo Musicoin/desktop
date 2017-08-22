@@ -221,7 +221,7 @@ table {
 
 #newWallet {
   position: absolute;
-  right: 18%;
+  right: 27.5%;
   background: #fad644;
   width: 130px;
   height: 33px;
@@ -230,7 +230,23 @@ table {
   font-size: 13px;
   border-radius: 5px;
 }
-
+#backup{
+  position: absolute;
+  right: 2%;
+  background: orange;
+  width: 130px;
+  height: 33px;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  font-size: 13px;
+  border-radius: 5px;
+}
+#bkp1{
+  background: none;
+  width: 130px;
+  margin: 0px;
+  color: #302d38;
+}
 #row4 {
   background: none;
   width: 190px;
@@ -239,7 +255,7 @@ table {
 
 #oldWallet {
   position: absolute;
-  right: 2%;
+  right: 12.5%;
   background: #fff;
   width: 190px;
   height: 33px;

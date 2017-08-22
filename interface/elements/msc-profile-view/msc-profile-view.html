@@ -51,9 +51,11 @@
       </div>
         <div style="padding-top: 15px;">
           <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
-          <input type="file" nwsaveas="backup.txt"></input>
           <div id="newWallet">
             <paper-button raised on-tap="handleNewAccount" id="row3" style="color: #302d38">NEW WALLET</paper-button>
+          </div>
+          <div id="backup">
+            <paper-button raised on-tap="backupWallet" id="bkp1">KEY BACKUP</paper-button>
           </div>
           <div id="oldWallet">
             <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: #777777">ADD EXISTING WALLET</paper-button>

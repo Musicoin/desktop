@@ -61,24 +61,20 @@ Polymer({
   handleAddPeer: function() {
     this.$.addPeerDialog.open();
   },
-  /*
   backupWallet: function() {
-    var currentPath = path.dirname(process.execPath);
     var platform = os.platform();
-    var usernames = [];
-    username().then(usernam => {
-      usernames.push(username); // username stored in usernames[0]
+    username().then(username => {
+      if (platform.includes("win32")) {
+        var pathOfKey = 'C:\\Users\\' + username + '\\AppData\\Roaming\\Musicoin\\keystore';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = '/Users/' + username + '/Library/Musicoin/keystore';
+      } else if (platform.includes()){ //linux
+        var pathOfKey = '/' + username + '/.musicoin/keystore';
+      }
+      alert("Please Backup your key in a safe place to avoid it from being stolen. If your key is stolen, there is NO WAY to retrieve your lost funds.");
+      gui.Shell.showItemInFolder(pathOfKey);
     });
-
-    if platform.includes("win32") {
-      var pathOfKey = 'C:\\Users\\' + usernames[0] + '\\AppData\\Roaming\\Musicoin\\keystore';
-    } else if platform.includes("darwin") {
-      var pathOfKey = '/Users/' + usernames[0] + '/Library/Musicoin/keystore';
-    } else if (platform.includes()){ //linux
-      var pathOfKey = '/' + usernames[0] + '/.musicoin/keystore';
-    }
   },
-  */
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
