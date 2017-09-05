@@ -14,9 +14,6 @@
         <div class="item-area mining-area" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
           {{_computeHashRate(syncStatus)}}&nbsp;
         </div>
-        <div class="item-area mining-area" on-tap="toggleMiningState" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
-          <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
-        </div>
         <div class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
           Last block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
         </div>
