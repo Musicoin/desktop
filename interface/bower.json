@@ -1,15 +1,18 @@
 {
-  "name": "musicoin",
-  "homepage": "https://github.com/Musicoin/client-reworked",
+  "name": "Musicoin",
+  "homepage": "https://github.com/Musicoin/desktop",
   "authors": [
-    "Hibryda <cryptohibryda@gmail.com>"
+    "Varunram <varunram@musicoin.org>",
+    "Isaac <isaac@musicoin.org>"
   ],
-  "description": "client for musicoin",
+  "description": "The Official Desktop App of Musicoin",
   "main": "index.html",
   "keywords": [
     "music",
     "client",
-    "blockchain"
+    "blockchain",
+    "wallet",
+    "musicoin"
   ],
   "license": "HIB",
   "private": true,

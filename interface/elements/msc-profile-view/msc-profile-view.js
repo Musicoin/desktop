@@ -1,4 +1,8 @@
 var gui = require('nw.gui');
+var fs = require('fs');
+var path = require('path');
+var os = require('os');
+var username = require('username');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -13,8 +17,7 @@ Polymer({
       value: "None"
     }
   },
-  attached: function() {
-  },
+  attached: function() {},
   ready: function() {
     mscIntf.attach(this)
       .to('locale')
@@ -32,13 +35,12 @@ Polymer({
       .to('username')
 
     this.nodeId = "Fetching...";
-      mscIntf.accountModule.getNodeId()
+    mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
       });
   },
-  _updateUserName: function() {
-  },
+  _updateUserName: function() {},
 
   changeCoinbase: function(e) {
     mscIntf.accountModule.setCoinbase(e.model.account.address);
@@ -46,8 +48,7 @@ Polymer({
   toggleMiningState: function() {
     if (this.$.isMining.checked) {
       mscIntf.accountModule.startMining();
-    }
-    else {
+    } else {
       mscIntf.accountModule.stopMining();
     }
   },
@@ -60,6 +61,20 @@ Polymer({
   handleAddPeer: function() {
     this.$.addPeerDialog.open();
   },
+  backupWallet: function() {
+    var platform = os.platform();
+    username().then(username => {
+      if (platform.includes("win32")) {
+        var pathOfKey = 'C:\\Users\\' + username + '\\AppData\\Roaming\\Musicoin\\keystore';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = '/Users/' + username + '/Library/Musicoin/keystore';
+      } else if (platform.includes()){ //linux
+        var pathOfKey = '/' + username + '/.musicoin/keystore';
+      }
+      alert("Please Backup your key in a safe place to avoid it from being stolen. If your key is stolen, there is NO WAY to retrieve your lost funds.");
+      gui.Shell.showItemInFolder(pathOfKey);
+    });
+  },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
@@ -68,30 +83,50 @@ Polymer({
     this.$.sendDialog.open();
   },
   addPeers: function(e) {
+    var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+    var remoteNodes = [];
+    for(var i = 0; i< obj['nodes'].length; i++) {
+      remoteNodes.push(obj['nodes'][i]);
+    }
+    // alert(remoteNodes);
     mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
       });
     var addresses = this.$.newPeerEnodeAddress.value;
     if (addresses) {
-        var array = addresses.split(/[\n ,;]+/).map(s => s.trim()).filter(s => s)
-            .map(peer => {
-              if (peer.startsWith("admin.addPeer(") && peer.endsWith(")"))
-                return peer.substring(15, peer.length - 2);
-              return peer;
-            })
-        if (array.length > 0) {
-            mscIntf.accountModule.addPeers(array)
-                .then(() => this.txStatus = array.length + " peer(s) will be contacted")
-                .delay(5000)
-                .then(() => this.txStatus = "")
-                .catch(err => this.txStatus = "Failed to add peer: " + err);
-        }
-        this.$.addPeerDialog.close();
-        return;
+      var array = addresses.split(/[\n ,;]+/).map(s => s.trim()).filter(s => s)
+        .map(peer => {
+          if (peer.startsWith("admin.addPeer(") && peer.endsWith(")"))
+            return peer.substring(15, peer.length - 2);
+          return peer;
+        })
+      var finArray = array.concat(remoteNodes);
+      if (array.length > 0) {
+        mscIntf.accountModule.addPeers(finArray)
+          .then(() => this.txStatus = "Connecting" + array.length + "peers along with default remore Nodes")
+          .delay(5000)
+          .then(() => this.txStatus = "")
+          .catch(err => this.txStatus = "Failed to add peer: " + err);
+      } else {
+        mscIntf.accountModule.addPeers(remoteNodes)
+          .then(() => this.txStatus = "Default list of remote nodes loaded")
+          .delay(5000)
+          .then(() => this.txStatus = "")
+          .catch(err => this.txStatus = "Failed to load default list: " + err);
+      }
+      this.$.addPeerDialog.close();
+      return;
+    } else {
+      this.txStatus = "No manual enodes provided. Loading default remote Node list";
+      mscIntf.accountModule.addPeers(remoteNodes)
+        .then(() => this.txStatus = "Default list of remote nodes loaded")
+        .delay(5000)
+        .then(() => this.txStatus = "")
+        .catch(err => this.txStatus = "Failed to load default list: " + err);
+      this.$.addPeerDialog.close();
+      return;
     }
-    this.txStatus = "Please enter at least one enode address";
-    this.$.addPeerDialog.close();
   },
   createNewAccount: function(e) {
     var v1 = this.$.newAccountPassword.value;
@@ -102,8 +137,7 @@ Polymer({
         .catch(err => this.txStatus = "Failed to create account: " + err);
       this.clearNewAccountFields();
       this.$.newAccountDialog.close();
-    }
-    else {
+    } else {
       alert("Passwords do not match!");
       return false;
     }
@@ -122,10 +156,10 @@ Polymer({
       this.$.sender.value,
       this.$.sendPassword.value
     ).
-      then((tx) => {
+    then((tx) => {
         this.txStatus = "Waiting for transaction " + tx;
         return mscIntf.accountModule.waitForTransaction(tx);
-    })
+      })
       .then(() => {
         this.txStatus = "Success!";
       })

@@ -4,8 +4,7 @@ const fs = require('fs');
 var musicoinRoot = os.homedir() + "/.musicoin";
 if (process.platform == 'darwin') {
   musicoinRoot = process.env.HOME + '/Library/Musicoin';
-}
-else if (process.platform && process.platform.startsWith("win")) {
+} else if (process.platform && process.platform.startsWith("win")) {
   musicoinRoot = process.env.APPDATA + '/Musicoin';
 }
 var appData = musicoinRoot + "/wallet-ui";
@@ -63,7 +62,10 @@ pcsFinData.addObservable('userBalance', 0);
 var Web3Connector = require('./web3-connector.js');
 pcs.addObservable('syncStatus', {});
 
-var web3Connector = new Web3Connector(settings.chain, mschub, function(connected) {
+var web3Connector = new Web3Connector(settings.chain, mschub, function(connected, err) {
+  if (err) {
+    throw err;
+  }
   if (connected) {
     mschub.financialData.accounts = web3Connector.getAccounts();
     console.log(web3Connector.getAccounts());
@@ -88,8 +90,7 @@ fs.exists("version.txt", function(exists) {
       console.log("Version " + result);
       mschub.version = result;
     })
-  }
-  else {
+  } else {
     console.log("Checking version failed... version file does not exist");
   }
 });

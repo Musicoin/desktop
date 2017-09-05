@@ -18,7 +18,7 @@
           <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
         </div>
         <div class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
-          Last block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+          Last Block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
         </div>
         <div class="item-area" title="{{syncStatus.peers}} peers">
           <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>{{syncStatus.peers}}
