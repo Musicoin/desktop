@@ -3,7 +3,7 @@ module.exports = {
     chain: true,
   },
   chain: {
-    name: "Musicoin - Pi",
+    name: "Musicoin Wallet",
     path: "{process.cwd}/bin/gmc/",
     command: './gmc',
     args: [

@@ -68,7 +68,7 @@ Polymer({
         var pathOfKey = 'C:\\Users\\' + username + '\\AppData\\Roaming\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username + '/Library/Musicoin/keystore';
-      } else if (platform.includes()){ //linux
+      } else if (platform.includes("linux")){ //linux
         var pathOfKey = '/' + username + '/.musicoin/keystore';
       }
       alert("Please Backup your key in a safe place to avoid it from being stolen. If your key is stolen, there is NO WAY to retrieve your lost funds.");
