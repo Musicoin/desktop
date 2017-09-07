@@ -19,7 +19,7 @@
     </div>
 
 
-      <div style="padding-top: 15px;">
+      <div>
           <div id="newWallet">
             <paper-button raised on-tap="handleNewAccount" id="row3" style="color: #302d38">NEW ACCOUNT</paper-button>
           </div>
@@ -30,12 +30,14 @@
             <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: #777777">ADD EXISTING ACCOUNT</paper-button>
           </div>
         </div>
-        <div style="padding-top: 10px;">
-          <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'id="row6">NODES LIST</paper-button>
-        </div>
 
-    <div>
-      <table width="100%" style="border: none; text-align: center;">
+    <div>&nbsp</div>
+    <div>&nbsp</div>
+    <div>&nbsp</div>
+    <div>&nbsp</div>
+
+    <div id="accounts">
+      <table width="100%" style="font-size:120%;border: none; text-align: center;">
         <tr id ="tableheader" style="background-color: #333 !important;">
           <th style="width: 40vw">ACCOUNT</th>
           <th style="width: 38vw">BALANCE</th>
@@ -45,7 +47,7 @@
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
             <td class="account" style="color: #393a3c !important;">[[account.address]]</td>
-            <td title="[[account.balance]]">[[account.displayBalance]]</td>
+            <td class="account" title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
             </td>
@@ -68,10 +70,13 @@
 
       </div>
     </div>
+    <div style="padding-top: 200px;">
+    </div>
     <div>
       <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
     </div>
     <div>
+
       <div id="status">{{txStatus}}</div>
     </div>
 
@@ -89,10 +94,10 @@
       <div>Paste one or more enodes separated by commas as follows:
         <br>enode://abcdefg@101.102.103.104:30303,
         <br>enode://zyxwvu@101.102.103.104:30303
-        <br>(your enode: {{nodeId}})
       </div>
       <iron-autogrow-textarea id=newPeerEnodeAddress label="enode address" style="height: 200px; width: 600px"></iron-autogrow-textarea>
       <div class="buttons">
+        <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'>NODES LIST</paper-button>
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button autofocus on-tap="addPeers">Add Enode(s)</paper-button>
       </div>
