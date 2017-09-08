@@ -96,6 +96,8 @@ Web3Connector.prototype.getNodeId = function () {
     return this.rpcCall("admin_nodeInfo", [])
       .then(nodeInfo => {
         var nodeInfoObj = JSON.parse(nodeInfo);
+        return nodeInfoObj.result.enode;
+
         if (nodeInfoObj && nodeInfoObj.result && nodeInfoObj.result.enode) {
           return nodeInfoObj.result.enode;
         }
@@ -104,7 +106,7 @@ Web3Connector.prototype.getNodeId = function () {
       })
       .catch(e => {
         console.log("Could not fetch nodeId: " + e);
-        return "Error";
+        return "unknown";
       });
 };
 
