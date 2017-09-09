@@ -2,7 +2,7 @@ var gui = require('nw.gui');
 var fs = require('fs');
 var path = require('path');
 var os = require('os');
-var username = require('username');
+var username1 = require('username');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -63,13 +63,13 @@ Polymer({
   },
   backupWallet: function() {
     var platform = os.platform();
-    username().then(username => {
+    username1().then(username1 => {
       if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username + '\\AppData\\Roaming\\Musicoin\\keystore';
+        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username + '/Library/Musicoin/keystore';
+        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
       } else if (platform.includes("linux")){ //linux
-        var pathOfKey = '/' + username + '/.musicoin/keystore';
+        var pathOfKey = '/' + username1 + '/.musicoin/keystore';
       }
       alert("Please Backup your key in a safe place to avoid it from being stolen. If your key is stolen, there is NO WAY to retrieve your lost funds.");
       gui.Shell.showItemInFolder(pathOfKey);
