@@ -2,7 +2,16 @@
 
 The official Musicoin Wallet
 
-# Getting Started
+# Running on Ubuntu (for Window/Mac, just download, unzip and run up Musicoin-wallet)
+
+Step 1: Download wallet:
+https://github.com/Musicoin/desktop/releases (find the latest version for Linux)
+Step 2: Unzip the tar file
+Step 3: Open terminal in the root folder of the MusiCoin folder
+Step 4: type ./Musicoin-wallet and hit enter
+Step 5: Enjoy [MUSIC](https://musicoin.org/welcome)
+
+# Build from scratch
 
 1. Download or Clone this repository
 2. Install NodeJS packages: `npm install`
