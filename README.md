@@ -4,12 +4,12 @@ The official Musicoin Wallet
 
 # Running on Ubuntu (for Window/Mac, just download, unzip and run up Musicoin-wallet)
 
-Step 1: Download wallet:
-https://github.com/Musicoin/desktop/releases (find the latest version for Linux)
-Step 2: Unzip the tar file
-Step 3: Open terminal in the root folder of the MusiCoin folder
-Step 4: type ./Musicoin-wallet and hit enter
-Step 5: Enjoy [MUSIC](https://musicoin.org/welcome)
+1. Download wallet: https://github.com/Musicoin/desktop/releases (find the latest version for Linux)
+2. Unzip the tar file
+3. Open terminal in the root folder of the MusiCoin folder
+4. run `sudo linux-setup.sh` (requires root privileges) and install any missing libraries
+5. type ./Musicoin-wallet and hit enter
+6. Enjoy [MUSIC](https://musicoin.org/welcome)
 
 # Build from scratch
 
