@@ -6,5 +6,5 @@ if (( $EUID != 0 )); then
 fi
 $SUDO apt install libnss3
 $SUDO apt-get install gtk2.0
-$SUDO chmod +x Musicoin-client
+$SUDO chmod +x Musicoin-wallet
 $SUDO chmod +x bin/gmc/gmc
