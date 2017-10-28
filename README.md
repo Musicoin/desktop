@@ -1,4 +1,4 @@
-# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.60-green.svg)
+# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.70-%23ffff00.svg)
 
 The official Musicoin Wallet
 
