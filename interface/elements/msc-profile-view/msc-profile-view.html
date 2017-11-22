@@ -18,18 +18,11 @@
       <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
     </div>
 
-
-      <div>
-          <div id="newWallet">
-            <paper-button raised on-tap="handleNewAccount" id="row3" style="color: #302d38">NEW ACCOUNT</paper-button>
-          </div>
-          <div id="backup">
-            <paper-button raised on-tap="backupWallet" id="bkp1">KEY BACKUP</paper-button>
-          </div>
-          <div id="oldWallet">
-            <paper-button raised on-tap="handleSetCustomCoinbase" id="row4" style="color: #777777">ADD EXISTING ACCOUNT</paper-button>
-          </div>
-        </div>
+    <div class="buttons-style">
+    <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
+    <paper-button raised on-tap="handleSetCustomCoinbase" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
+    <paper-button raised on-tap="backupWallet" id="key-backup">KEY BACKUP</paper-button>
+    </div>
 
     <div>&nbsp</div>
     <div>&nbsp</div>
