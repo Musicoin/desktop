@@ -175,7 +175,8 @@ table {
 
 paper-button {
   text-transform: none;
-  color: #A4A4A4;
+  color: #FAFAFA;
+  margin: 8px;
 }
 
 paper-dialog {
@@ -204,12 +205,6 @@ table {
   font-size: 17px;
 }
 
-#row3 {
-  background: none;
-  width: 130px;
-  margin: 0px;
-}
-
 #tableheader {
   height: 50px;
   font-size: 12px;
@@ -219,50 +214,28 @@ table {
   border: 2px #2C2C2C solid;
 }
 
-#newWallet {
-  position: absolute;
-  right: 27.5%;
-  background: #fad644;
-  width: 130px;
-  height: 33px;
+.buttons-style {
   font-family: 'Lato' sans-serif;
   font-weight: 900 !important;
   font-size: 13px;
   border-radius: 5px;
-}
-#backup{
   position: absolute;
-  right: 2%;
-  background: orange;
-  width: 130px;
-  height: 33px;
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  font-size: 13px;
-  border-radius: 5px;
-}
-#bkp1{
-  background: none;
-  width: 130px;
-  margin: 0px;
-  color: #302d38;
-}
-#row4 {
-  background: none;
-  width: 190px;
-  margin: 0px;
+  right: 8%;
 }
 
-#oldWallet {
-  position: absolute;
-  right: 12.5%;
+#new-account {
+  background: #fad644;
+  color: #302d38;
+}
+
+#old-wallet {
   background: #fff;
-  width: 190px;
-  height: 33px;
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  font-size: 13px;
-  border-radius: 5px;
+  color: #302d38;
+}
+
+#key-backup {
+  background: orange;
+  color: #302d38;
 }
 
 #addPeerDialog {
