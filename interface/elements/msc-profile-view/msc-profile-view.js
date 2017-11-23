@@ -71,7 +71,13 @@ Polymer({
       } else if (platform.includes("linux")){ //linux
         var pathOfKey = '/' + username1 + '/.musicoin/keystore';
       }
-      alert("Please Backup your key in a safe place to avoid it from being stolen. If your key is stolen, there is NO WAY to retrieve your lost funds.");
+      var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+      var alert = {
+        icon: iconPath,
+        body: "Please backup your key in a safe place to avoid it from being stolen. Otherwise, there is NO WAY to retrieve your lost funds." +
+        " You can locate your keys in: \n" + pathOfKey + " directory."
+};
+      new Notification("Please backup your key", alert);
       gui.Shell.showItemInFolder(pathOfKey);
     });
   },
