@@ -88,6 +88,9 @@ Polymer({
     this.$.sender.value = e.model.dataHost.dataHost.account.address;
     this.$.sendDialog.open();
   },
+  showExplorerWindow: function(e) {
+    gui.Window.open('https://orbiter.musicoin.org/addr/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
+  },
   addPeers: function(e) {
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];

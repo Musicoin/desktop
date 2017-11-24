@@ -36,6 +36,7 @@
           <th style="width: 38vw">BALANCE</th>
           <th>PRIMARY</th>
           <th>SEND</th>
+          <th>EXPLORER</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
@@ -48,6 +49,9 @@
               <template is="dom-if" if="[[account.canSend]]">
                 <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
               </template>
+            </td>
+            <td class="td-button">
+                <iron-icon icon="icons:explore" class=clickable on-tap="showExplorerWindow"></iron-icon>
             </td>
           </tr>
         </template>
