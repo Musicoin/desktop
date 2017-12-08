@@ -19,3 +19,7 @@ Some general guidelines towards the same are:
 6. General guidelines like DRY and comments are strongly encouraged.
 
 The bounty program is open for all, beginner or experienced - Beginner issues will be labelled with a "good first issue" tag and assigned a small amount of bounty. The bounty amount may increase depending on the difficulty and urgency of the issue presented. All final calls regarding awarding bounty strictly lie within the Musicoin team and will not be subject to discussion.
+
+## Frequently Asked Questions
+
+FAQs regarding the program can be found over at https://musicoin.org/bounty
