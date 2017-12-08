@@ -48,7 +48,11 @@ robocopy C:\tmp\mc-mvp3\dependencies\linux64 C:\tmp\mc-mvp3\Musicoin-wallet-linu
 
 # Contributing
 
-Pull Requests and Bug Reports for common issues via GitHub are most welcome. For security related issues however, please do not open a GitHub Issue and send a brief report over to `team@musicoin.org` with the concerned details.
+Pull Requests and Bug Reports for common issues via GitHub are most welcome. For security related issues however, please do not open a GitHub Issue and send a brief report over to `team@musicoin.org` with the concerned details, we shall award you with a boutny as per the bounty program guidelines.
+
+# Bounty program
+
+Information regarding the bounty program can be found over at BOUNTY.md.
 
 # Additional Resources
 
