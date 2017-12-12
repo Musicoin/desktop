@@ -196,15 +196,6 @@ table {
   left: 5%;
 }
 
-#row5 {
-  position: fixed;
-  right: 3%;
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  color: #f6d951;
-  font-size: 17px;
-}
-
 #tableheader {
   height: 50px;
   font-size: 12px;
@@ -235,6 +226,11 @@ table {
 
 #key-backup {
   background: orange;
+  color: #302d38;
+}
+
+#add-peers {
+  background: rgba(255,255,255,0.4);
   color: #302d38;
 }
 

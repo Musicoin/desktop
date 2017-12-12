@@ -4,7 +4,7 @@
     <div class="container">
       <div class="left">
         <div class="item-area version">
-          {{chainVersion}} {{version}}
+           <a onclick='gui.Shell.openExternal("https://musicoin.org/")'>{{chainVersion}}</a><div>&nbsp</div><a onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/releases")'>{{version}}</a>
         </div>
       </div>
       <div class="right">
@@ -24,7 +24,7 @@
           <iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon>{{syncStatus.peers}}
         </div>
         <div class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}">
-          <iron-icon class="item-icon" icon="maps:layers"></iron-icon>{{_formatBlockNumber(syncStatus)}}
+          <a onclick='gui.Shell.openExternal("https://orbiter.musicoin.org/")'><iron-icon class="item-icon" icon="maps:layers"></iron-icon>{{_formatBlockNumber(syncStatus)}}</a>
         </div>
       </div>
     </div>

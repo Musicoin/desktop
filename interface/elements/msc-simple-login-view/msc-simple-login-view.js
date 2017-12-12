@@ -30,7 +30,7 @@ Polymer({
       .to('chainVersion')
       .to('syncStatus')
 
-    nwin.maximize();
+    //nwin.maximize();
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];
     for(var i = 0; i< obj['nodes'].length; i++) {
