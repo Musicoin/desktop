@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var os = require('os');
 var username1 = require('username');
+var copyFile = require('quickly-copy-file');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -69,7 +70,7 @@ Polymer({
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
       } else if (platform.includes("linux")){ //linux
-        var pathOfKey = '/' + username1 + '/.musicoin/keystore';
+        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore';
       }
       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
@@ -83,6 +84,26 @@ Polymer({
   },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
+  },
+  addExistingAccount: function() {
+    document.querySelector('#fileDialog')
+  .addEventListener("change", function() {
+    var filePath = this.value;
+    var platform = os.platform();
+    username1().then(username1 => {
+      if (platform.includes("win32")) {
+        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
+      } else if (platform.includes("linux")){ //linux
+        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/' + path.basename(filePath);
+      }
+    copyFile(filePath, pathOfKey, function(error) {
+      if (error) return console.error(error);
+       console.log('File was copied!')
+      });
+    });
+  });
   },
   showSendDialog: function(e) {
     this.$.sender.value = e.model.dataHost.dataHost.account.address;

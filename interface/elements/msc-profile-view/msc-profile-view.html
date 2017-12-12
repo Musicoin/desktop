@@ -20,7 +20,8 @@
 
     <div class="buttons-style">
     <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
-    <paper-button raised on-tap="handleSetCustomCoinbase" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
+    <input id="fileDialog" type="file" on-tap="addExistingAccount" style="display: none;">
+    <paper-button raised onclick="document.getElementById('fileDialog').click();" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
     <paper-button raised on-tap="backupWallet" id="key-backup">KEY BACKUP</paper-button>
     </div>
 
