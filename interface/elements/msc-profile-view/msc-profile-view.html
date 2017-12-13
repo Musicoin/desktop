@@ -3,7 +3,6 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <script type="text/javascript" src="build/nwjs-open-link-in-browser.js"></script>
   <style>
     #contentContainer {
       background: transparent;
@@ -70,10 +69,9 @@
     </div>
     <div style="padding-top: 200px;">
     </div>
-    <div>
-      <paper-button raised on-tap="handleAddPeer" id="row5">ADD PEERS</paper-button>
+    <div class="buttons-style">
+    <paper-button raised on-tap="handleAddPeer" id="add-peers">ADD PEERS</paper-button>
     </div>
-    <div>
 
       <div id="status">{{txStatus}}</div>
     </div>
