@@ -17,17 +17,16 @@
       <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
     </div>
 
-    <div class="buttons-style">
-    <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
-    <input id="fileDialog" type="file" on-tap="addExistingAccount" style="display: none;">
-    <paper-button raised onclick="document.getElementById('fileDialog').click();" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
-    <paper-button raised on-tap="backupWallet" id="key-backup">KEY BACKUP</paper-button>
+    <msc-main-status></msc-main-status>
+    <div class="buttons-style top-buttons">
+      <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
+      <input id="fileDialog" type="file" on-tap="addExistingAccount" style="display: none;">
+      <paper-button raised onclick="document.getElementById('fileDialog').click();" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
+      <paper-button raised on-tap="backupWallet" id="key-backup">KEY BACKUP</paper-button>
     </div>
 
-    <div>&nbsp</div>
-    <div>&nbsp</div>
-    <div>&nbsp</div>
-    <div>&nbsp</div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
 
     <div id="accounts">
       <table width="100%" style="font-size:120%;border: none; text-align: center;">
@@ -67,11 +66,13 @@
 
       </div>
     </div>
-    <div style="padding-top: 200px;">
+    <div style="padding-top: 40px;">
     </div>
+    
     <div class="buttons-style">
-    <paper-button raised on-tap="handleAddPeer" id="add-peers">ADD PEERS</paper-button>
+      <paper-button raised on-tap="handleAddPeer" id="add-peers">ADD PEERS</paper-button>
     </div>
+    
 
       <div id="status">{{txStatus}}</div>
     </div>

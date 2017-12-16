@@ -24,7 +24,7 @@ The official Musicoin Wallet
 
 1. Start [gmc](https://github.com/Musicoin/go-musicoin) `gmc --rpc --rpcapi="db,eth,net,web3,personal" --rpcport "8545" --rpcaddr "127.0.0.1" --rpccorsdomain "localhost"`
 2. Start IPFS: `ipfs daemon`
-3. Run `nw` in the root of the repo. Note: If you're on macOS/OSX, you wouldn't be able to setup `nw` courtesy [this bug](https://github.com/nwjs/npm-installer/issues/56). In this case, download `nwjs@0.20.0` for testing
+3. Run `nw .` in the root of the repo. Note: If you're on macOS/OSX, you wouldn't be able to setup `nw` courtesy [this bug](https://github.com/nwjs/npm-installer/issues/56). In this case, download `nwjs@0.20.0` for testing
 
 # Packaging the App
 
