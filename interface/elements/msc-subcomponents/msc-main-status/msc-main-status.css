@@ -1,0 +1,104 @@
+:host {
+}
+/* Absolute floating element positioning*/
+#chainVersion {
+    position: absolute;
+    top: 150px;
+    left: 25px;
+}
+
+.mainStatus {
+    
+}
+
+.blocks { margin-top: 5px; margin-bottom: 2px; }
+
+#lastBlock {
+    float: left;
+}
+
+#blockNumber {
+    margin-right: 10px;
+}
+
+.syncStatus {
+    position: absolute;
+    top: 50px;
+    left: 250px;
+}
+
+.syncStatus div {
+    float: left;
+}
+
+#syncing {
+
+}
+
+#peers { justify-content: unset }
+
+
+.right {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.container {
+    font-weight: lighter;
+    color: rgba(255,255,255,0.6);
+    padding-right: 15px;
+    padding-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+
+.time-area {
+
+}
+
+.item-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.sync-area {
+    visibility: hidden;
+}
+
+a {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;  
+}
+
+.mining-area {
+    color: rgba(255,255,255,0.05);
+    cursor: pointer;
+}
+
+.mining-area[mining] {
+    color: rgba(255,255,255,0.4);
+}
+
+.sync-area[syncing] {
+    visibility: visible;
+}
+
+.item-icon {
+}
+
+.version {
+    margin-left: 10px;
+}

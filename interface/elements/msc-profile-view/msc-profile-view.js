@@ -134,7 +134,7 @@ Polymer({
       var finArray = array.concat(remoteNodes);
       if (array.length > 0) {
         mscIntf.accountModule.addPeers(finArray)
-          .then(() => this.txStatus = "Connecting" + array.length + "peers along with default remore Nodes")
+          .then(() => this.txStatus = "Connecting " + array.length + " peers along with default remote Nodes")
           .delay(5000)
           .then(() => this.txStatus = "")
           .catch(err => this.txStatus = "Failed to add peer: " + err);

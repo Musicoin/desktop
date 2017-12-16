@@ -41,7 +41,7 @@
 .account {
   color: var(--msc-subtle-text-color);
   font-family: 'Ubuntu' monospace;
-  font-size: 28px;
+  font-size: 22px;
 }
 
 .user-message {
@@ -198,11 +198,15 @@ table {
 
 #tableheader {
   height: 50px;
-  font-size: 12px;
+  font-size: 14px;
   background: #2C2C2C;
   font-family: 'Lato' sans-serif;
   font-weight: 900;
   border: 2px #2C2C2C solid;
+}
+
+.top-buttons {
+  top: 35px;
 }
 
 .buttons-style {
@@ -211,7 +215,7 @@ table {
   font-size: 13px;
   border-radius: 5px;
   position: absolute;
-  right: 8%;
+  right: 1.5%;
 }
 
 #new-account {
@@ -230,7 +234,13 @@ table {
 }
 
 #add-peers {
-  background: rgba(255,255,255,0.4);
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  font-size: 13px;
+  border-radius: 5px;
+
+
+  background: rgba(255,255,255,0.6);
   color: #302d38;
 }
 

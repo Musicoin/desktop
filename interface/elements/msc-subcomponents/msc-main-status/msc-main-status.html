@@ -1,0 +1,43 @@
+<dom-module id="msc-main-status">
+  <link rel="import" type="css" href="msc-main-status.css">
+  <template>
+    <div class="container">
+      <div id="chainVersion" class="">
+        <div class="item-area version">
+           <a onclick='gui.Shell.openExternal("https://musicoin.org/")'>{{chainVersion}}</a><div>&nbsp;</div><a onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/releases")'>{{version}}</a>
+        </div>
+      </div>
+
+      <div class="mainStatus">
+
+        <div class="blocks">
+          <div id="lastBlock" class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
+            Last Block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+          </div>
+          <div id="blockNumber" class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}">
+            <a onclick='gui.Shell.openExternal("https://orbiter.musicoin.org/")'><!-- iron-icon class="item-icon" icon="maps:layers"></iron-icon -->{{_formatBlockNumber(syncStatus)}}</a>
+          </div>
+        </div>
+        <div id="peers" class="item-area" title="{{syncStatus.peers}} peers">Connected to:    
+          <!-- iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon -->{{syncStatus.peers}} Peers
+        </div>
+
+        <div class="syncStatus">
+          <div id="syncing" class="item-area sync-area" title="Syncing..." syncing$="{{_computeIsSyncing(syncStatus)}}">
+            <iron-icon class="item-icon" icon="notification:sync"></iron-icon>{{_computeIsSyncingText(syncStatus)}}
+          </div>
+          
+          <div id="mining" class="item-area mining-area" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
+            {{_computeHashRate(syncStatus)}}&nbsp;
+          </div>
+
+          <div id="toggleMining" class="item-area mining-area" on-tap="toggleMiningState" title="{{_computeMiningTooltip(syncStatus)}}" mining$="{{_computeIsMining(syncStatus)}}">
+            <iron-icon class="item-icon" icon="icons:gavel"></iron-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </template>
+  <script src="msc-main-status.js"></script>
+</dom-module>
