@@ -31,12 +31,13 @@ Polymer({
       .to('syncStatus')
 
     //nwin.maximize();
+    mscIntf.hideSyncWindow = true;
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];
     for(var i = 0; i< obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);
     }
-    // alert(remoteNodes);
+    //console.log(remoteNodes);
     mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
