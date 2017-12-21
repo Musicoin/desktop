@@ -15,7 +15,7 @@ Polymer({
         return this.syncStatus && this.syncStatus.syncing;
     },
     _computeIsSyncingText: function() {
-        return (this.syncStatus && this.syncStatus.syncing) ? "Sync in progress..." : "";
+        return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "%": "";
 
     },
     _computeIsMining: function() {
@@ -29,6 +29,10 @@ Polymer({
     _formatBlockNumber: function() {
         if (!this.syncStatus || !this.syncStatus.currentBlock) return "0";
         return this.syncStatus.currentBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    _formatHighBlockNumber: function() {
+        if (!this.syncStatus || !this.syncStatus.highestBlock) return "0";
+        return this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     _computeMiningTooltip: function() {
         return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";
@@ -46,7 +50,7 @@ Polymer({
       return this.formatHashRate(this.syncStatus.hashrate);
     },
     _computeTimeSinceLastBlockMessage: function() {
-      console.log(this.syncStatus);
+      //console.log(this.syncStatus);
       if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
       return this._timeSince(this.syncStatus.mostRecentBlockTime);
     },

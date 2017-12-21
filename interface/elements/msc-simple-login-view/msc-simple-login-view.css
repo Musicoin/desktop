@@ -123,8 +123,19 @@ identicon-element {
 }
 
 .peers {
-  width: 50%;
+  display: inline-block;
+  width: 75%;
   text-align: right;
+  font-weight: 300;
+  color: var(--msc-subtle-text-color);
+  font-weight: 400;
+  font-size: 21px;
+}
+
+.sync {
+  display: inline;
+  width: 50%;
+  text-align: left;
   font-weight: 300;
   color: var(--msc-subtle-text-color);
   font-weight: 400;
@@ -143,4 +154,8 @@ identicon-element {
   font-weight: 300;
   color: var(--msc-subtle-text-color);
   font-size: 21px;
+}
+
+paper-progress {
+  --paper-progress-height: 6px;
 }

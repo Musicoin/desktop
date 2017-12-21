@@ -12,7 +12,10 @@
       <div class="sync-status" style="">PLEASE WAIT</div>
       <paper-progress value="{{_computeSyncProgress(syncStatus)}}" id="syncProgress" class="sync-progress"></paper-progress>
       <div class="sync-detail">{{_computeSyncStatusMessage(syncStatus)}}</div>
-      <div class="peers">{{syncStatus.peers}} Peers</div>
+      <div style="width: 50%">
+        <div class="sync">{{_computeIsSyncingText(syncStatus)}}</div>
+        <div class="peers">{{syncStatus.peers}} Peers</div>
+      </div>
       <div class="flex-center mt40 clickable" on-tap="hideSyncWindow">
         Open wallet before sync is complete
       </div>

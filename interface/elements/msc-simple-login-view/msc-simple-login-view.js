@@ -52,15 +52,23 @@ Polymer({
   hideSyncWindow: function() {
     mscIntf.hideSyncWindow = true;
   },
+
   _computeSyncProgress: function() {
     if (this.syncStatus) {
       if (!this.syncStatus.syncing)
         return 0;
 
       var start = this.syncStatus.startingBlock;
-      return (100 * (this.syncStatus.currentBlock - start)) / (this.syncStatus.highestBlock - start);
+      //console.log((100 * (this.syncStatus.currentBlock - start)) / (this.syncStatus.highestBlock - start));
+      //return (100 * (this.syncStatus.currentBlock - start)) / (this.syncStatus.highestBlock - start);
+      return ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock));
     }
+    console.log('returning with nothing');
     return 0;
+  },
+  _computeIsSyncingText: function() {
+      return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "%": "Sync: 0%";
+
   },
   _hideSyncingStatus: function() {
     if (this._computeHideSyncStatus()) {
