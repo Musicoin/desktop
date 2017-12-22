@@ -20,7 +20,7 @@ function Web3Connector(chainConfig, mschub, connectionCallback) {
       this.connected = this.web3.isConnected() && this.web3.eth;
       var newStatus = this.web3.eth.syncing ? this.web3.eth.syncing : {};
       newStatus.peers = this.web3.net.peerCount;
-      newStatus.currentBlock = this.web3.eth.blockNumber;
+      newStatus.currentBlock = this.web3.eth.syncing.currentBlock;
       if (newStatus.currentBlock > this.highestBlock) {
         this.highestBlock = newStatus.currentBlock;
         this.mostRecentBlockTime = Date.now();
