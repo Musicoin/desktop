@@ -1,3 +1,7 @@
+var timesync = require('timesync');
+var ts = timesync.create({
+  server: 'time.is',  // either a single server,
+})
 Polymer({
     is: 'msc-main-status',
     properties: {
@@ -65,7 +69,7 @@ Polymer({
     },
   _timeSince: function(date) {
 
-    const seconds = Math.floor((Date.now() - date) / 1000);
+    const seconds = Math.floor((Date(ts.now()) - date) / 1000);
 
     const intervals = [
       {value: 60, unit: "m"},
