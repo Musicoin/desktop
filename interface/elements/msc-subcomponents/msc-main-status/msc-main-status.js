@@ -1,7 +1,8 @@
 var timesync = require('timesync');
 var ts = timesync.create({
-  server: 'time.is',  // either a single server,
-})
+  server: 'http://time.is',  // either a single server,
+});
+
 Polymer({
     is: 'msc-main-status',
     properties: {

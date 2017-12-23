@@ -1,6 +1,12 @@
 var fs = require('fs');
 var ngui = require('nw.gui');
 var nwin = ngui.Window.get();
+
+var timesync = require('timesync');
+var ts = timesync.create({
+  server: 'http://time.is',  // either a single server,
+});
+
 Polymer({
   is: 'msc-simple-login-view',
   properties: {
@@ -100,5 +106,26 @@ Polymer({
       if (this.syncStatus.syncing) return "Downloading from the Musicoin network";
       return "Looking for peers";
     }
-  }
+  },
+    _formatSecondsText: function() {
+      var diff = Date.now() - ts.now();
+      var msg = 'You are ';
+      if (Date.now() - ts.now() > 0) {
+        // late
+        msg += diff + ' seconds late.';
+
+      } else if ( diff == 0) {
+        msg += 'in time';
+
+      } else if (diff < 0) {
+        // early
+        msg += diff + ' seconds early.';
+      }
+
+      if (diff != 0){
+        this.$.timeSyncDialog.open();
+      }
+      
+      return msg;
+    }
 });

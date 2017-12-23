@@ -1,4 +1,7 @@
-
+var timesync = require('timesync');
+var ts = timesync.create({
+  server: 'time.is',  // either a single server,
+})
     Polymer({
       is: 'msc-element',
       ready:function(){
@@ -43,3 +46,5 @@
       _langChanged:function(newValue) {
       }
 });
+
+Date.now() - ts.now()
