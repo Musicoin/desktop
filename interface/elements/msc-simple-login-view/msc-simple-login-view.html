@@ -10,8 +10,8 @@
       <h2>Time is not in Sync.</h2>
       <paper-dialog-scrollable>
         Warning: Your computer clock is not in sync.
-        {{_formatSecondsText()}}
-        Please adjust your computer's clock from within the OS or inside the BIOS/UEFI settings.
+        {{_formatTime()}}
+        <br>Please adjust your computer's clock from within the OS or inside the BIOS/UEFI settings.
       </paper-dialog-scrollable>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
@@ -36,8 +36,8 @@
   </template>
   <script src="msc-simple-login-view.js"></script>
   <script>
-  console.log(this);
-  this._syncTime();  
+    console.log(this);
+    this._formatTime();
   </script>
 
 </dom-module>
