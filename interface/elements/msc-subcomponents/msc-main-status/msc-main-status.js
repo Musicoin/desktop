@@ -1,7 +1,3 @@
-var timesync = require('timesync');
-var ts = timesync.create({
-  peers: ['216.239.35.0']
-});
 Polymer({
   is: 'msc-main-status',
   properties: {
@@ -67,7 +63,7 @@ Polymer({
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _timeSince: function(date) {
-    const seconds = Math.floor((Date(ts.now()) - date) / 1000);
+    const seconds = Math.floor((ts.now() - date) / 1000);
     const intervals = [{
         value: 60,
         unit: "m"
