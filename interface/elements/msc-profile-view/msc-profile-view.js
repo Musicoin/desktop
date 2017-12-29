@@ -4,6 +4,9 @@ var path = require('path');
 var os = require('os');
 var username1 = require('username');
 var copyFile = require('quickly-copy-file');
+var Finder = require('fs-finder');
+var jayson = require('jayson');
+var _ = require('lodash');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -21,6 +24,7 @@ Polymer({
   attached: function() {},
   ready: function() {
     mscIntf.attach(this)
+      .to('syncStatus')
       .to('locale')
       .to('syncStatus', function(oldValue, newValue) {
         if (newValue) {
@@ -69,25 +73,42 @@ Polymer({
         var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
-      } else if (platform.includes("linux")){ //linux
+      } else if (platform.includes("linux")){  //linux
         var pathOfKey = '/home/' + username1 + '/.musicoin/keystore';
       }
       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
         icon: iconPath,
-        body: "Please backup your key in a safe place to avoid it from being stolen. Otherwise, there is NO WAY to retrieve your lost funds." +
-        " You can locate your keys in: \n" + pathOfKey + " directory."
-};
-      new Notification("Please backup your key", alert);
+        body: "You need to KNOW password for every account to unlock it." +
+        " You can locate your accounts in: " + pathOfKey + " directory."};
+      new Notification("Please backup your accounts in a safe place", alert);
       gui.Shell.showItemInFolder(pathOfKey);
     });
+  },
+  gmcOverwriteCache: function(size) {
+      var platform = os.platform();
+      if (platform.includes("win32")) {
+        var defaultCache = nw.__dirname + '\\config\\config.std.js';
+        var newCache =  nw.__dirname + '\\config\\' + 'config.' + size + '.js';
+      } else if (platform.includes("darwin")) {
+        var defaultCache = nw.__dirname + '/config/config.std.js';
+        var newCache =  nw.__dirname + '/config/' + 'config.' + size + '.js';
+      } else if (platform.includes("linux")) { //linux
+        var defaultCache = nw.__dirname + '/config/config.std.js';
+        var newCache =  nw.__dirname + '/config/' + 'config.' + size + '.js';
+      }
+      
+    copyFile(newCache, defaultCache, function(error) {
+      if (error) return console.error(error);
+       console.log('File was copied!')
+      });
   },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
   addExistingAccount: function() {
-    document.querySelector('#fileDialog')
-  .addEventListener("change", function() {
+    document.getElementById('fileDialog').click();
+    document.querySelector('#fileDialog').addEventListener("change", function() {
     var filePath = this.value;
     var platform = os.platform();
     username1().then(username1 => {
@@ -95,7 +116,7 @@ Polymer({
         var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
-      } else if (platform.includes("linux")){ //linux
+      } else if (platform.includes("linux")) { //linux
         var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/' + path.basename(filePath);
       }
     copyFile(filePath, pathOfKey, function(error) {
@@ -106,11 +127,74 @@ Polymer({
   });
   },
   showSendDialog: function(e) {
-    this.$.sender.value = e.model.dataHost.dataHost.account.address;
-    this.$.sendDialog.open();
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
+    if (this.syncStatus.initialSyncEnded == true) {
+      this.$.sender.value = e.model.dataHost.dataHost.account.address;
+      this.$.sendDialog.open();
+    } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
+      new Notification("Send function locked", alert);
+    } else if (this.syncStatus.currentBlock == undefined) {
+      new Notification("Gmc not started synchronization yet", alert);
+    } else {
+      this.$.sender.value = e.model.dataHost.dataHost.account.address;
+      this.$.sendDialog.open();
+    }
+  },
+  backupAccount: function(e) {
+    var account = e.model.account.address.slice(2);
+    document.getElementById('fileDialogBackup').click();
+    document.querySelector('#fileDialogBackup').addEventListener("change", function() {
+    var tmpPath = this.value;
+    var platform = os.platform();
+    username1().then(username1 => {
+      if (platform.includes("win32")) {
+        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/';
+      }
+    Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
+    var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
+    copyFile(String(pathOfAccount), filePath, function(error) {
+      if (error) return console.error(error);
+       console.log('File was copied!')
+      });
+      var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+      var alert = {
+        icon: iconPath,
+        body: "You need to KNOW password for every account to unlock it." +
+        " You can locate your account in: \n" + tmpPath + " directory."};
+      new Notification("Backup in " + tmpPath, alert);
+      var win = nw.Window.get();
+      win.reloadIgnoringCache();
+      });
+    });
+  });
   },
   showExplorerWindow: function(e) {
     gui.Window.open('https://orbiter.musicoin.org/addr/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
+  },
+  activePeers: function() {
+    var bootnodes = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+    var client = jayson.client.http('http://localhost:8545');
+    client.request('admin_peers', [], function(err, response) {
+      if(err) throw err;
+    var aPeers = JSON.parse(JSON.stringify(response.result));
+    for(var i = 0; i < aPeers.length; i++) {
+    document.querySelector("msc-profile-view").addOrRemove(bootnodes.nodes, "enode://" + aPeers[i].id + "@" + aPeers[i].network.remoteAddress);
+    fs.writeFile('bootnodes.json', JSON.stringify(bootnodes, null, 4), 'utf-8');
+    }
+    });
+  },
+  addOrRemove: function(arr, val) {
+    if (!_.includes(arr, val)) {
+    arr.unshift(val);
+    } else {
+    //_.remove(arr, item => item === val);
+    }
+    console.log(arr);
   },
   addPeers: function(e) {
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
@@ -118,7 +202,7 @@ Polymer({
     for(var i = 0; i< obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);
     }
-    // alert(remoteNodes);
+    console.log(remoteNodes);
     mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
@@ -215,3 +299,68 @@ Polymer({
     this.$.sender.value = "";
   }
 });
+  
+    var menu = new nw.Menu({ type: 'menubar' });
+    var account = new nw.Menu();
+    account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
+    account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
+    account.append(new nw.MenuItem({ type: 'separator' }));
+    account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
+    account.append(new nw.MenuItem({ type: 'separator' }));
+    account.append(new nw.MenuItem({ label: 'Quit', key: 'q', modifiers: 'ctrl', click: function() { require('process').exit(0); } }));
+    menu.append(new nw.MenuItem({label: 'Account', submenu: account }));
+    var explorer = new nw.Menu();
+    explorer.append(new nw.MenuItem({ label: 'Open Explorer #1', key: 'e', modifiers: 'ctrl', click: function() { gui.Window.open('https://orbiter.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    explorer.append(new nw.MenuItem({ label: 'Open Explorer #2', key: 'e', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    menu.append(new nw.MenuItem({label: 'Explorer', submenu: explorer }));
+    var markets = new nw.Menu();
+    markets.append(new nw.MenuItem({ label: 'CoinMarketCap Charts', key: 'm', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ type: 'separator' }));
+    markets.append(new nw.MenuItem({ label: 'Bittrex: MUSIC/BTC', click: function() { gui.Shell.openExternal('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/BTC', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_BTC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/LTC', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/DOGE', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE',{position: 'center', width: 1000, height: 600}); } }));
+    menu.append(new nw.MenuItem({label: 'Markets', submenu: markets }));
+    var official = new nw.Menu();
+    official.append(new nw.MenuItem({ label: 'Musicoin', key: 'm', modifiers: 'ctrl', click: function() { gui.Window.open('https://www.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ type: 'separator' }));
+    official.append(new nw.MenuItem({ label: 'Bitcointalk: Musicoin', key: 'f', modifiers: 'ctrl', click: function() { gui.Window.open('https://bitcointalk.org/index.php?topic=1776113.0',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ type: 'separator' }));
+    official.append(new nw.MenuItem({ label: 'Medium', click: function() { gui.Shell.openExternal('https://medium.com/@musicoin',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Twitter', click: function() { gui.Shell.openExternal('https://twitter.com/musicoins',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Instagram', click: function() { gui.Shell.openExternal('https://www.instagram.com/musicoinofficial/',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Facebook', click: function() { gui.Shell.openExternal('https://www.facebook.com/lovemusicoin',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Shell.openExternal('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ type: 'separator' }));
+    official.append(new nw.MenuItem({ label: 'GitHub', key: 'g', modifiers: 'ctrl', click: function() { gui.Window.open('https://github.com/Musicoin',{position: 'center', width: 1000, height: 600}); } }));
+    menu.append(new nw.MenuItem({label: 'Official', submenu: official }));
+    var advanced = new nw.Menu();
+    advanced.append(new nw.MenuItem({ label: 'Add Peers', key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
+    advanced.append(new nw.MenuItem({ type: 'separator' }));
+    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 512MB (default)', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('512'); } }));
+    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 1024MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('1024'); } }));
+    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 2048MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('2048'); } }));
+    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 4096MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('4096'); } }));
+    menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
+    var help = new nw.Menu();
+    help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
+    help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
+    help.append(new nw.MenuItem({ type: 'separator' }));
+    help.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Shell.openExternal('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ type: 'separator' }));
+    help.append(new nw.MenuItem({ label: 'How It Works', click: function() { gui.Shell.openExternal('https://www.musicoin.org/how-it-works',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'Whitepaper', click: function() { gui.Shell.openExternal('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'FAQ', click: function() { gui.Shell.openExternal('https://www.musicoin.org/faq',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ type: 'separator' }));
+    help.append(new nw.MenuItem({ label: 'Mining Pools List', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools',{position: 'center', width: 1000, height: 600}); } }));
+    menu.append(new nw.MenuItem({label: 'Help', submenu: help }));
+    nw.Window.get().menu = menu;
+    
+    document.addEventListener("DOMContentLoaded", function(event) {
+    setTimeout(function(){document.querySelector("msc-profile-view").addPeers()},30000);        
+    var minutes = 2;
+    var interval = minutes * 60 * 1000;
+    setInterval(function() {
+      document.querySelector("msc-profile-view").activePeers();
+    }, interval);
+    });

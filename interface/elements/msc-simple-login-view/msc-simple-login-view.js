@@ -58,23 +58,7 @@ Polymer({
       .to('syncStatus')
 
     //nwin.maximize();
-    var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
-    var remoteNodes = [];
-    for (var i = 0; i < obj['nodes'].length; i++) {
-      remoteNodes.push(obj['nodes'][i]);
-    }
-    // alert(remoteNodes);
-    mscIntf.accountModule.getNodeId()
-      .then(result => {
-        this.nodeId = result;
-      });
-
-    this.txStatus = "Loading default remote Node list";
-    mscIntf.accountModule.addPeers(remoteNodes)
-      .then(() => this.txStatus = "Default list of remote nodes loaded")
-      .delay(5000)
-      .then(() => this.txStatus = "")
-      .catch(err => this.txStatus = "Failed to load default list: " + err);
+    mscIntf.hideSyncWindow = true;
   },
   hideSyncWindow: function() {
     mscIntf.hideSyncWindow = true;
