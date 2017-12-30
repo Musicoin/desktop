@@ -1,11 +1,5 @@
 :host {
 }
-/* Absolute floating element positioning*/
-#chainVersion {
-    position: absolute;
-    top: 150px;
-    left: 25px;
-}
 
 .mainStatus {
     
@@ -21,6 +15,12 @@
     margin-right: 10px;
 }
 
+#chainVersion {
+    position: absolute;
+    top: 96%;
+    left: 25px;
+}
+
 .syncStatus {
     position: absolute;
     top: 50px;
@@ -29,10 +29,6 @@
 
 .syncStatus div {
     float: left;
-}
-
-#syncing {
-
 }
 
 #peers { justify-content: unset }
@@ -80,7 +76,8 @@
 
 a {
   color: rgba(255,255,255,0.4);
-  text-decoration: none;  
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .mining-area {
