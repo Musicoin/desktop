@@ -346,10 +346,7 @@ Polymer({
     var advanced = new nw.Menu();
     advanced.append(new nw.MenuItem({ label: 'Add Peers', key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
-    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 512MB (default)', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('512'); } }));
-    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 1024MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('1024'); } }));
-    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 2048MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('2048'); } }));
-    advanced.append(new nw.MenuItem({ label: 'Gmc cache size 4096MB', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCache('4096'); } }));
+    advanced.append(new nw.MenuItem({ label: 'Select Gmc cache size', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
     menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
     var help = new nw.Menu();
     help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
