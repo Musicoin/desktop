@@ -144,6 +144,19 @@ Polymer({
       this.$.sendDialog.open();
     }
   },
+  showSendDialogFromMenu: function() {
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
+    if (this.syncStatus.initialSyncEnded == true) {
+      this.$.sendDialogMenu.open();
+    } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
+      new Notification("Send function locked", alert);
+    } else if (this.syncStatus.currentBlock == undefined) {
+      new Notification("Gmc not started synchronization yet", alert);
+    } else {
+      this.$.sendDialogMenu.open();
+    }
+  },
   backupAccount: function(e) {
     var account = e.model.account.address.slice(2);
     document.getElementById('fileDialogBackup').click();
@@ -313,6 +326,8 @@ Polymer({
     var account = new nw.Menu();
     account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
     account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
+    account.append(new nw.MenuItem({ type: 'separator' }));
+    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialogFromMenu(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));

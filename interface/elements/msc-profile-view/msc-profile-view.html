@@ -111,8 +111,20 @@
     </paper-dialog>
 
     <paper-dialog id="sendDialog">
-      <p>Enter the recipient address, the amount to send, and your password.</p>
-      <paper-input disabled id="sender" label="From"></paper-input>
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <paper-input disabled id="sender" label="From Account"></paper-input>
+      <paper-input id="recipient" label="Recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="sendDialogMenu">
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <paper-input id="sender" label="From Account"></paper-input>
       <paper-input id="recipient" label="Recipient"></paper-input>
       <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="Password"></paper-input>
