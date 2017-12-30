@@ -121,6 +121,19 @@
         <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
       </div>
     </paper-dialog>
+    
+    <paper-dialog id="gmcOverwriteCache">
+      <p>Select Gmc (in memory) cache size</p>
+      <paper-radio-group selected="gmc-512">
+        <paper-radio-button name="gmc-512" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(512)>512MB (default) </paper-radio-button>
+        <paper-radio-button name="gmc-1024" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(1024)>1024MB </paper-radio-button>
+        <paper-radio-button name="gmc-2048" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(2048)>2048MB </paper-radio-button>
+        <paper-radio-button name="gmc-4096" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(4096)>4096MB </paper-radio-button>
+      </paper-radio-group>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Cancel</paper-button>
+      </div>
+    </paper-dialog>
 
   </template>
   <script src="msc-profile-view.js"></script>

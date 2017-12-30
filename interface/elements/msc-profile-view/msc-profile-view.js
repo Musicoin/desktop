@@ -103,6 +103,9 @@ Polymer({
        console.log('File was copied!')
       });
   },
+  gmcOverwriteCacheDialog: function() {
+      this.$.gmcOverwriteCache.open();
+  },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
   },
