@@ -40,7 +40,7 @@
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
             <td class="account" style="color: #393a3c !important;">[[account.address]]</td>
-            <td class="account" title="[[account.balance]]">[[account.displayBalance]]</td>
+            <td class="account" style="color: #393a3c !important;" title="[[account.balance]]">[[account.displayBalance]]</td>
             <td class="clickable">
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
             </td>
@@ -68,11 +68,11 @@
     </div>
     <div style="padding-top: 40px;">
     </div>
-    
+
     <div class="buttons-style">
       <paper-button raised on-tap="handleAddPeer" id="add-peers">ADD PEERS</paper-button>
     </div>
-    
+
 
       <div id="status">{{txStatus}}</div>
     </div>

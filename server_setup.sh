@@ -28,5 +28,5 @@ npm install -g bower
 cd interfaces/
 bower install
 cd ..
-npm install -g nw@0.20.0 # Version is important since 0.23 (as of updating this has a bug on SX preventing us from using it)
+npm install -g nw@0.20.0 # Version is important since 0.23 (as of updating this has a bug on macOS preventing us from using it)
 nw .

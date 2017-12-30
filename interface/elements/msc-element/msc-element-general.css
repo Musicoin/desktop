@@ -290,7 +290,6 @@ msc-simple-login-view {
     right: 0;
     position: absolute;
     background-size: cover;
-    opacity: 0.3;
     overflow: hidden;
 }
 

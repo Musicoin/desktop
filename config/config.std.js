@@ -11,7 +11,9 @@ module.exports = {
       '--rpcapi=admin,db,eth,net,web3,personal,miner',
       '--rpcport', '8545',
       '--rpcaddr', '127.0.0.1',
-      '--rpccorsdomain', 'localhost'],
+      '--rpccorsdomain', 'localhost',
+      '--fast',
+      '--cache=1024'],
     rpcServer: 'http://localhost:8545'
   }
 }

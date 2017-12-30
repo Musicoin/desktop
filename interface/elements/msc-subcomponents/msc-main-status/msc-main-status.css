@@ -8,7 +8,7 @@
 }
 
 .mainStatus {
-    
+
 }
 
 .blocks { margin-top: 5px; margin-bottom: 2px; }
@@ -54,7 +54,7 @@
 
 .container {
     font-weight: lighter;
-    color: rgba(255,255,255,0.6);
+    color: white;
     padding-right: 15px;
     padding-left: 15px;
     display: flex;
@@ -79,17 +79,17 @@
 }
 
 a {
-  color: rgba(255,255,255,0.4);
-  text-decoration: none;  
+  color: white;
+  text-decoration: none;
 }
 
 .mining-area {
-    color: rgba(255,255,255,0.05);
+    color: white;
     cursor: pointer;
 }
 
 .mining-area[mining] {
-    color: rgba(255,255,255,0.4);
+  color: white;
 }
 
 .sync-area[syncing] {
