@@ -301,6 +301,12 @@ Polymer({
 });
   
     var menu = new nw.Menu({ type: 'menubar' });
+    var platform = os.platform();
+      if (platform.includes("win32")) {
+      } else if (platform.includes("darwin")) {
+      menu.createMacBuiltin('Musicoin-wallet',{hideEdit: true, hideWindow: true});
+      } else if (platform.includes("linux")) { //linux
+      }
     var account = new nw.Menu();
     account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
     account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
