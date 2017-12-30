@@ -377,8 +377,7 @@ Polymer({
     menu.append(new nw.MenuItem({label: 'Help', submenu: help }));
     nw.Window.get().menu = menu;
     
-    document.addEventListener("DOMContentLoaded", function(event) {
-    setTimeout(function(){document.querySelector("msc-profile-view").addPeers()},30000);        
+    document.addEventListener("DOMContentLoaded", function(event) {      
     var minutes = 2;
     var interval = minutes * 60 * 1000;
     setInterval(function() {

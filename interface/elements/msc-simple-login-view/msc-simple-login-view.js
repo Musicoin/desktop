@@ -58,12 +58,29 @@ Polymer({
       .to('syncStatus')
 
     //nwin.maximize();
-    mscIntf.hideSyncWindow = true;
+    setTimeout(function() {
+    var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+    var remoteNodes = [];
+    for (var i = 0; i < obj['nodes'].length; i++) {
+      remoteNodes.push(obj['nodes'][i]);
+    }
+    //console.log(remoteNodes);
+    mscIntf.accountModule.getNodeId()
+      .then(result => {
+        this.nodeId = result;
+      });
+
+    this.txStatus = "Loading default remote Node list";
+    mscIntf.accountModule.addPeers(remoteNodes)
+      .then(() => this.txStatus = "Default list of remote nodes loaded")
+      .delay(5000)
+      .then(() => this.txStatus = "")
+      .catch(err => this.txStatus = "Failed to load default list: " + err);
+    },20000);
   },
   hideSyncWindow: function() {
     mscIntf.hideSyncWindow = true;
   },
-
   _computeSyncProgress: function() {
     if (this.syncStatus) {
       if (!this.syncStatus.syncing)
