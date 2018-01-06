@@ -63,3 +63,7 @@ Information regarding the bounty program can be found over at BOUNTY.md.
 ## Builds for Blockchain - gmc
 
 <https://github.com/Musicoin/go-musicoin>
+
+## License
+
+MIT
