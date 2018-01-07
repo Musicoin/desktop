@@ -156,6 +156,23 @@ Polymer({
       this.$.sendDialogMenu.open();
     }
   },
+  restoreDefaultNodeList: function() {
+      if (platform.includes("win32")) {
+        var oldList = nw.__dirname + '\\bootnodes.json.org';
+        var actualtList =  nw.__dirname + '\\bootnodes.json';
+      } else if (platform.includes("darwin")) {
+        var oldList = nw.__dirname + '/bootnodes.json.org';
+        var actualtList =  nw.__dirname + '/bootnodes.json';
+      } else if (platform.includes("linux")) { //linux
+        var oldList = nw.__dirname + '/bootnodes.json.org';
+        var actualtList =  nw.__dirname + '/bootnodes.json';
+      }
+      
+    copyFile(oldList, actualtList, function(error) {
+      if (error) return console.error(error);
+       console.log('File was copied!')
+      });
+  },
   backupAccount: function(e) {
     var account = e.model.account.address.slice(2);
     document.getElementById('fileDialogBackup').click();
@@ -386,6 +403,7 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: 'Add Peers', key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: 'Select Gmc cache size', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
+    advanced.append(new nw.MenuItem({ label: 'Restore default nodes list', click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
     menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
     var help = new nw.Menu();
     help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
