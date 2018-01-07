@@ -97,7 +97,7 @@ Polymer({
         var defaultCache = nw.__dirname + '/config/config.std.js';
         var newCache =  nw.__dirname + '/config/' + 'config.' + size + '.js';
       }
-
+      
     copyFile(newCache, defaultCache, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
@@ -315,7 +315,7 @@ Polymer({
     this.$.sender.value = "";
   }
 });
-
+  
     var menu = new nw.Menu({ type: 'menubar' });
     var platform = os.platform();
       if (platform.includes("win32")) {
@@ -338,23 +338,23 @@ Polymer({
     explorer.append(new nw.MenuItem({ label: 'Open Explorer #2', key: 'e', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
     menu.append(new nw.MenuItem({label: 'Explorer', submenu: explorer }));
     var markets = new nw.Menu();
-    markets.append(new nw.MenuItem({ label: 'CoinMarketCap Charts', key: 'm', modifiers: 'ctrl', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'CoinMarketCap Charts', key: 'm', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
     markets.append(new nw.MenuItem({ type: 'separator' }));
-    markets.append(new nw.MenuItem({ label: 'Bittrex: MUSIC/BTC', click: function() { gui.Window.open('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC',{position: 'center', width: 1000, height: 600}); } }));
-    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/BTC', click: function() { gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_BTC',{position: 'center', width: 1000, height: 600}); } }));
-    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/LTC', click: function() { gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC',{position: 'center', width: 1000, height: 600}); } }));
-    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/DOGE', click: function() { gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Bittrex: MUSIC/BTC', click: function() { gui.Shell.openExternal('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/BTC', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_BTC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/LTC', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/DOGE', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE',{position: 'center', width: 1000, height: 600}); } }));
     menu.append(new nw.MenuItem({label: 'Markets', submenu: markets }));
     var official = new nw.Menu();
     official.append(new nw.MenuItem({ label: 'Musicoin', key: 'm', modifiers: 'ctrl', click: function() { gui.Window.open('https://www.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
     official.append(new nw.MenuItem({ label: 'Bitcointalk: Musicoin', key: 'f', modifiers: 'ctrl', click: function() { gui.Window.open('https://bitcointalk.org/index.php?topic=1776113.0',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
-    official.append(new nw.MenuItem({ label: 'Medium', click: function() { gui.Window.open('https://medium.com/@musicoin',{position: 'center', width: 1000, height: 600}); } }));
-    official.append(new nw.MenuItem({ label: 'Twitter', click: function() { gui.Window.open('https://twitter.com/musicoins',{position: 'center', width: 1000, height: 600}); } }));
-    official.append(new nw.MenuItem({ label: 'Instagram', click: function() { gui.Window.open('https://www.instagram.com/musicoinofficial/',{position: 'center', width: 1000, height: 600}); } }));
-    official.append(new nw.MenuItem({ label: 'Facebook', click: function() { gui.Window.open('https://www.facebook.com/lovemusicoin',{position: 'center', width: 1000, height: 600}); } }));
-    official.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Window.open('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Medium', click: function() { gui.Shell.openExternal('https://medium.com/@musicoin',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Twitter', click: function() { gui.Shell.openExternal('https://twitter.com/musicoins',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Instagram', click: function() { gui.Shell.openExternal('https://www.instagram.com/musicoinofficial/',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Facebook', click: function() { gui.Shell.openExternal('https://www.facebook.com/lovemusicoin',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Shell.openExternal('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
     official.append(new nw.MenuItem({ label: 'GitHub', key: 'g', modifiers: 'ctrl', click: function() { gui.Window.open('https://github.com/Musicoin',{position: 'center', width: 1000, height: 600}); } }));
     menu.append(new nw.MenuItem({label: 'Official', submenu: official }));
@@ -365,19 +365,19 @@ Polymer({
     menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
     var help = new nw.Menu();
     help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
-    help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Window.open('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
+    help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
     help.append(new nw.MenuItem({ type: 'separator' }));
-    help.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Window.open('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Shell.openExternal('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
     help.append(new nw.MenuItem({ type: 'separator' }));
-    help.append(new nw.MenuItem({ label: 'How It Works', click: function() { gui.Window.open('https://www.musicoin.org/how-it-works',{position: 'center', width: 1000, height: 600}); } }));
-    help.append(new nw.MenuItem({ label: 'Whitepaper', click: function() { gui.Window.open('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b',{position: 'center', width: 1000, height: 600}); } }));
-    help.append(new nw.MenuItem({ label: 'FAQ', click: function() { gui.Window.open('https://www.musicoin.org/faq',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'How It Works', click: function() { gui.Shell.openExternal('https://www.musicoin.org/how-it-works',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'Whitepaper', click: function() { gui.Shell.openExternal('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'FAQ', click: function() { gui.Shell.openExternal('https://www.musicoin.org/faq',{position: 'center', width: 1000, height: 600}); } }));
     help.append(new nw.MenuItem({ type: 'separator' }));
-    help.append(new nw.MenuItem({ label: 'Mining Pools List', click: function() { gui.Window.open('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools',{position: 'center', width: 1000, height: 600}); } }));
+    help.append(new nw.MenuItem({ label: 'Mining Pools List', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools',{position: 'center', width: 1000, height: 600}); } }));
     menu.append(new nw.MenuItem({label: 'Help', submenu: help }));
     nw.Window.get().menu = menu;
-
-    document.addEventListener("DOMContentLoaded", function(event) {
+    
+    document.addEventListener("DOMContentLoaded", function(event) {      
     var minutes = 2;
     var interval = minutes * 60 * 1000;
     setInterval(function() {
