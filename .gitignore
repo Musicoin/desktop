@@ -10,3 +10,4 @@ node_modules/*
 hub/ether.settings.js
 build/
 config/config.ext.js
+.DS_Store

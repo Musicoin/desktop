@@ -13,7 +13,7 @@ module.exports = {
       '--rpcaddr', '127.0.0.1',
       '--rpccorsdomain', 'localhost',
       '--fast',
-      '--cache=1024'],
+      '--cache=512'],
     rpcServer: 'http://localhost:8545'
   }
 }

@@ -20,12 +20,10 @@
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
-      <input id="fileDialog" type="file" on-tap="addExistingAccount" style="display: none;">
-      <paper-button raised onclick="document.getElementById('fileDialog').click();" id="old-wallet">ADD EXISTING ACCOUNT</paper-button>
-      <paper-button raised on-tap="backupWallet" id="key-backup">KEY BACKUP</paper-button>
+      <input id="fileDialog" type="file" style="display: none;">
+      <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
     </div>
 
-    <div>&nbsp;</div>
     <div>&nbsp;</div>
 
     <div id="accounts">
@@ -36,6 +34,7 @@
           <th>PRIMARY</th>
           <th>SEND</th>
           <th>EXPLORER</th>
+          <th>BACKUP</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
@@ -51,6 +50,10 @@
             </td>
             <td class="td-button">
                 <iron-icon icon="icons:explore" class=clickable on-tap="showExplorerWindow"></iron-icon>
+            </td>
+            <td class="td-button">
+                <iron-icon icon="icons:backup" class=clickable on-tap="backupAccount"></iron-icon>
+                <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
             </td>
           </tr>
         </template>
@@ -68,12 +71,6 @@
     </div>
     <div style="padding-top: 40px;">
     </div>
-
-    <div class="buttons-style">
-      <paper-button raised on-tap="handleAddPeer" id="add-peers">ADD PEERS</paper-button>
-    </div>
-
-
       <div id="status">{{txStatus}}</div>
     </div>
 
@@ -114,14 +111,39 @@
     </paper-dialog>
 
     <paper-dialog id="sendDialog">
-      <p>Enter the recipient address, the amount to send, and your password.</p>
-      <paper-input disabled id="sender" label="From"></paper-input>
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <paper-input disabled id="sender" label="From Account"></paper-input>
       <paper-input id="recipient" label="Recipient"></paper-input>
       <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="sendDialogMenu">
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <paper-input id="sender" label="From Account"></paper-input>
+      <paper-input id="recipient" label="Recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="gmcOverwriteCache">
+      <p>Select Gmc (in memory) cache size</p>
+      <paper-radio-group selected="gmc-512">
+        <paper-radio-button name="gmc-512" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(512)>512MB (default) </paper-radio-button>
+        <paper-radio-button name="gmc-1024" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(1024)>1024MB </paper-radio-button>
+        <paper-radio-button name="gmc-2048" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(2048)>2048MB </paper-radio-button>
+        <paper-radio-button name="gmc-4096" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(4096)>4096MB </paper-radio-button>
+      </paper-radio-group>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Cancel</paper-button>
       </div>
     </paper-dialog>
 

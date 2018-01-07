@@ -2,32 +2,6 @@ var fs = require('fs');
 var ngui = require('nw.gui');
 var nwin = ngui.Window.get();
 
-var timesync = require('timesync');
-var ts = timesync.create({
-  peers: ['216.239.35.0'], // time.google.com
-  interval: 12000 // 2 minutes, sync once
-});
-
-ts.on('sync', function(mode) {
-  if (mode == 'end') {
-    // diff thing
-    diff = this.checkTimeSync();
-
-    var msg = 'You are ';
-    if (diff > 0) {
-      msg += diff + ' milliseconds after.';
-    } else if (diff < 0) {
-      msg += diff + ' milliseconds too early.';
-    }
-    if (diff != 0) {
-      this.$.timeSyncDialog.open();
-    } else {
-      //alert("Works");
-    }
-    return msg;
-  }
-});
-
 Polymer({
   is: 'msc-simple-login-view',
   properties: {
@@ -58,12 +32,14 @@ Polymer({
       .to('syncStatus')
 
     //nwin.maximize();
+    mscIntf.hideSyncWindow = true;
+    setTimeout(function() {
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];
     for (var i = 0; i < obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);
     }
-    // alert(remoteNodes);
+    //console.log(remoteNodes);
     mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
@@ -75,11 +51,11 @@ Polymer({
       .delay(5000)
       .then(() => this.txStatus = "")
       .catch(err => this.txStatus = "Failed to load default list: " + err);
+    },20000);
   },
   hideSyncWindow: function() {
     mscIntf.hideSyncWindow = true;
   },
-
   _computeSyncProgress: function() {
     if (this.syncStatus) {
       if (!this.syncStatus.syncing)
@@ -125,38 +101,5 @@ Polymer({
       if (this.syncStatus.syncing) return "Downloading from the Musicoin network";
       return "Looking for peers";
     }
-  },
-  _formatTime: function() {
-
-    //console.log(Date.now());
-    //console.log(ts.now());
-    var diff = Date.now() - ts.now();
-    //console.log('DIFF:', diff);
-    var msg = 'You are ';
-    if (diff > 0) {
-      msg += diff + ' milliseconds after.';
-    } else if (diff < 0) {
-      msg += diff + ' milliseconds too early.';
-    }
-    if (diff != 0) {
-      this.$.timeSyncDialog.open();
-    } else {
-      //alert("Works");
-    }
-    return msg;
   }
 });
-
-function checkTimeSync() {
-  //console.log(Date.now());
-  //console.log(ts.now());
-  var diff = Date.now() - ts.now();
-  //console.log('DIFF:', diff);
-  var msg = 'You are ';
-  if (diff > 0) {
-    msg += diff + ' milliseconds after.';
-  } else if (diff < 0) {
-    msg += diff + ' milliseconds too early.';
-  }
-  return diff;
-}

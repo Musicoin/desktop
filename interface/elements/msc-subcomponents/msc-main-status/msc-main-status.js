@@ -15,7 +15,7 @@ Polymer({
     return this.syncStatus && this.syncStatus.syncing;
   },
   _computeIsSyncingText: function() {
-    return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "%" : "";
+    return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "% complete": "";
 
   },
   _computeIsMining: function() {
@@ -27,12 +27,12 @@ Polymer({
     return "social:people";
   },
   _formatBlockNumber: function() {
-    if (!this.syncStatus || !this.syncStatus.currentBlock) return "0";
+    if (!this.syncStatus || !this.syncStatus.currentBlock) return "";
     return this.syncStatus.currentBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _formatHighBlockNumber: function() {
-    if (!this.syncStatus || !this.syncStatus.highestBlock) return "0";
-    return this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (!this.syncStatus || !this.syncStatus.highestBlock) return "";
+    return "/" + this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _computeMiningTooltip: function() {
     return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";
@@ -51,7 +51,7 @@ Polymer({
   _computeTimeSinceLastBlockMessage: function() {
     //console.log(this.syncStatus);
     if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
-    return this._timeSince(this.syncStatus.mostRecentBlockTime);
+    return "Last Block: " + this._timeSince(this.syncStatus.mostRecentBlockTime);
   },
   formatHashRate: function(value) {
     const lookup = ["h/s", "kh/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s"];
@@ -63,7 +63,7 @@ Polymer({
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _timeSince: function(date) {
-    const seconds = Math.floor((ts.now() - date) / 1000);
+    const seconds = Math.floor((Date.now() - date) / 1000);
     const intervals = [{
         value: 60,
         unit: "m"
