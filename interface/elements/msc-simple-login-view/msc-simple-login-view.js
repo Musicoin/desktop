@@ -1,31 +1,21 @@
 var fs = require('fs');
 var ngui = require('nw.gui');
 var nwin = ngui.Window.get();
+var ntpClient = require('ntp-client');
 
 var timesync = require('timesync');
+var ntpClient = require('ntp-client');
 var ts = timesync.create({
-  peers: ['216.239.35.0'], // time.google.com
-  interval: 12000 // 2 minutes, sync once
+  server: 'time.nist.gov',
+  interval: 1000 // 2 minutes, sync once
 });
 
-ts.on('sync', function(mode) {
-  if (mode == 'end') {
-    // diff thing
-    diff = this.checkTimeSync();
-
-    var msg = 'You are ';
-    if (diff > 0) {
-      msg += diff + ' milliseconds after.';
-    } else if (diff < 0) {
-      msg += diff + ' milliseconds too early.';
-    }
-    if (diff != 0) {
-      this.$.timeSyncDialog.open();
-    } else {
-      //alert("Works");
-    }
-    return msg;
-  }
+document.addEventListener("DOMContentLoaded", function(event) {
+  var minutes = 0.1;
+  var interval = minutes * 60 * 1000;
+  setInterval(function() {
+    document.querySelector("msc-simple-login-view")._formatTime();
+  }, interval);
 });
 
 Polymer({
@@ -56,7 +46,6 @@ Polymer({
       .to('version')
       .to('chainVersion')
       .to('syncStatus')
-
     //nwin.maximize();
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
     var remoteNodes = [];
@@ -127,36 +116,27 @@ Polymer({
     }
   },
   _formatTime: function() {
-
-    //console.log(Date.now());
-    //console.log(ts.now());
-    var diff = Date.now() - ts.now();
-    //console.log('DIFF:', diff);
-    var msg = 'You are ';
-    if (diff > 0) {
-      msg += diff + ' milliseconds after.';
-    } else if (diff < 0) {
-      msg += diff + ' milliseconds too early.';
-    }
-    if (diff != 0) {
-      this.$.timeSyncDialog.open();
-    } else {
-      //alert("Works");
-    }
-    return msg;
+    var flag = 0;
+    ntpClient.getNetworkTime("time.nist.gov", 123, function(err, date) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      //console.log("Current time : ", date.getTime());
+      //console.log("System time: ", Date.now());
+      var diff = (date.getTime() - Date.now()) / 1000;
+      var msg = 'Your computer time is ';
+      if (diff < 0) {
+        msg += diff + ' milliseconds after.';
+      } else if (diff > 0) {
+        msg += diff + ' milliseconds late';
+      }
+      msg += ' compared to network time'
+      new Notification(msg);
+      if (diff != 0) {
+        document.getElementById("timeSyncDialog").open();
+      } else {}
+      return msg;
+    });
   }
 });
-
-function checkTimeSync() {
-  //console.log(Date.now());
-  //console.log(ts.now());
-  var diff = Date.now() - ts.now();
-  //console.log('DIFF:', diff);
-  var msg = 'You are ';
-  if (diff > 0) {
-    msg += diff + ' milliseconds after.';
-  } else if (diff < 0) {
-    msg += diff + ' milliseconds too early.';
-  }
-  return diff;
-}
