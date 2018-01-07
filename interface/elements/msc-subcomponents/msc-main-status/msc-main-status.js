@@ -63,7 +63,7 @@ Polymer({
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _timeSince: function(date) {
-    const seconds = Math.floor((ts.now() - date) / 1000);
+    const seconds = Math.floor((Date.now() - date) / 1000);
     const intervals = [{
         value: 60,
         unit: "m"

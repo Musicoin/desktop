@@ -7,6 +7,7 @@ var copyFile = require('quickly-copy-file');
 var Finder = require('fs-finder');
 var jayson = require('jayson');
 var _ = require('lodash');
+var ntpClient = require('ntp-client');
 var platform = os.platform();
 Polymer({
   is: 'msc-profile-view',
@@ -299,17 +300,31 @@ Polymer({
       });
     this.clearSendFields();
   },
-
   clearNewAccountFields: function() {
     this.$.newAccountPasswordVerify.value = "";
     this.$.newAccountPassword.value = "";
   },
-
   clearSendFields: function() {
     this.$.recipient.value = "";
     this.$.coins.value = "";
     this.$.sendPassword.value = "";
     this.$.sender.value = "";
+  },
+  checkTimeSync: function() {
+    var ts = timesync.create({peers: ['216.239.35.0'],interval: 12000});
+    var diff = Date.now() - ts.now();
+    var msg = 'You are ';
+    if (diff > 0) {
+      msg += diff + ' milliseconds after.';
+    } else if (diff < 0) {
+      msg += diff + ' milliseconds too early.';
+    }
+    if (diff != 0) {
+      this.$.timeSyncDialog.open();
+    } else {
+      //alert("Works");
+    }
+    return msg;
   }
 });
   
@@ -398,10 +413,31 @@ Polymer({
     menu.append(new nw.MenuItem({label: 'Help', submenu: help }));
     nw.Window.get().menu = menu;
     
-    document.addEventListener("DOMContentLoaded", function(event) {   
+    document.addEventListener("DOMContentLoaded", function(event) {
     var minutes = 2;
     var interval = minutes * 60 * 1000;
     setInterval(function() {
       document.querySelector("msc-profile-view").activePeers();
     }, interval);
     });
+    
+    ntpClient.getNetworkTime("pool.ntp.org", 123, function(err, date) {
+    //console.log("  System time  :" + new Date());
+    //console.log("  Network time :" + date);
+    var nDate = date.setSeconds(0,0);
+    var sDate = (new Date()).setSeconds(0,0);
+    
+    if(err) {
+        console.error(err);
+        return;
+    } else if (nDate != sDate) {
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+      var alert = {
+        icon: iconPath,
+        body: "Please enable network time synchronisation in system settings. \n" +
+        (date.toString()).slice(0, -18) + " UTC +0"};
+      new Notification("System clock seems incorrect", alert);
+    } else {}
+    });
+    
+    
