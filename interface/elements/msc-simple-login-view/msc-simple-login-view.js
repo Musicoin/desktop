@@ -3,13 +3,6 @@ var ngui = require('nw.gui');
 var nwin = ngui.Window.get();
 var ntpClient = require('ntp-client');
 
-var timesync = require('timesync');
-var ntpClient = require('ntp-client');
-var ts = timesync.create({
-  server: 'time.nist.gov',
-  interval: 1000 // 2 minutes, sync once
-});
-
 document.addEventListener("DOMContentLoaded", function(event) {
   var minutes = 0.1;
   var interval = minutes * 60 * 1000;
