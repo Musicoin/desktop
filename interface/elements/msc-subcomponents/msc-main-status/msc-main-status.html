@@ -2,20 +2,18 @@
   <link rel="import" type="css" href="msc-main-status.css">
   <template>
     <div class="container">
-      <div id="chainVersion" class="">
+    <div id="chainVersion">
         <div class="item-area version">
            <a onclick='gui.Shell.openExternal("https://musicoin.org/")'>{{chainVersion}}</a><div>&nbsp;</div><a onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/releases")'>{{version}}</a>
         </div>
       </div>
-
       <div class="mainStatus">
-
         <div class="blocks">
           <div id="lastBlock" class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
-            Last Block: {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+          {{_computeTimeSinceLastBlockMessage(syncStatus)}}
           </div>
-          <div id="blockNumber" class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}">
-            <a onclick='gui.Shell.openExternal("https://explorer.musicoin.org/")'><!-- iron-icon class="item-icon" icon="maps:layers"></iron-icon -->{{_formatBlockNumber(syncStatus)}}/{{_formatHighBlockNumber(syncStatus)}}</a>
+          <div id="blockNumber" class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}{{_formatHighBlockNumber(syncStatus)}}">
+            <a onclick='gui.Shell.openExternal("https://explorer.musicoin.org/")'><!-- iron-icon class="item-icon" icon="maps:layers"></iron-icon -->{{_formatBlockNumber(syncStatus)}}{{_formatHighBlockNumber(syncStatus)}}</a>
           </div>
         </div>
         <div id="peers" class="item-area" title="{{syncStatus.peers}} peers">Connected to:

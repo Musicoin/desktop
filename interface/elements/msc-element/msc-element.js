@@ -1,7 +1,3 @@
-var timesync = require('timesync');
-var ts = timesync.create({
-  peers: ['216.239.35.0']
-});
 Polymer({
   is: 'msc-element',
   ready: function() {
@@ -43,4 +39,3 @@ Polymer({
   },
   _langChanged: function(newValue) {}
 });
-Date.now() - ts.now()
