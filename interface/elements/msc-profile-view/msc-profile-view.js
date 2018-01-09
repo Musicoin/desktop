@@ -71,7 +71,7 @@ Polymer({
   backupWallet: function() {
     username1().then(username1 => {
       if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore';
+        var pathOfKey = 'C:\\Documents and Settings\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
       } else if (platform.includes("linux")){  //linux
@@ -115,7 +115,7 @@ Polymer({
     var filePath = this.value;
     username1().then(username1 => {
       if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+        var pathOfKey = 'C:\\Documents and Settings\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
@@ -180,7 +180,7 @@ Polymer({
     var tmpPath = this.value;
     username1().then(username1 => {
       if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+        var pathOfKey = 'C:\\Documents and Settings\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
       } else if (platform.includes("linux")) { //linux
