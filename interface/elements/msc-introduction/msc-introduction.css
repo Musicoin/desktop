@@ -52,24 +52,6 @@ identicon-element {
   background-color: var(--msc-opaque-background);
 }
 
-.sync-progress {
-  width: 50%;
-  margin-bottom: 10px;
-}
-
-.syncing {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 #background {
   bottom: 0;
   top: 0;
@@ -78,7 +60,7 @@ identicon-element {
   position: absolute;
   background-size: cover;
   overflow: hidden;
-  background-image: url('/interface/images/wallpaper/concert1.jpg');
+  background-image: url('/interface/images/wallpaper/concert2.jpg');
   opacity: 1 !important;
   background-size: cover;
 }
@@ -107,53 +89,29 @@ identicon-element {
   cursor: pointer;
 }
 
-.sync-status {
-  margin-bottom: 20px;
-  font-weight: 900 !important;
-  font-size: 49px;
-}
-
-.version {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 3;
+.mt20 {
+  margin-top: 20px;
   font-weight: 400;
   font-size: 23px;
+  padding-bottom: 6px;
 }
 
-.peers {
-  display: inline-block;
-  width: 75%;
-  text-align: right;
-  font-weight: 300;
-  color: var(--msc-subtle-text-color);
+.mt80 {
+  margin-top: 18%;
   font-weight: 400;
-  font-size: 21px;
+  font-size: 38px;
 }
 
-.sync {
-  display: inline;
-  width: 50%;
-  text-align: left;
-  font-weight: 300;
-  color: var(--msc-subtle-text-color);
+#status {
+  padding-top: 6px;
+  font-family: 'Lato' sans-serif;
   font-weight: 400;
-  font-size: 21px;
-}
-
-.mt40 {
-  margin-top: 40px;
-  font-weight: 400;
-  font-size: 23px;
-}
-
-.sync-detail {
-  width: 50%;
-  text-align: right;
-  font-weight: 300;
-  color: var(--msc-subtle-text-color);
-  font-size: 21px;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  color: lightgrey;
+  background: rgba(0,0,0,0.4);
+  
 }
 
 paper-progress {
@@ -163,3 +121,36 @@ paper-progress {
 paper-dialog {
   background-color: rgb(36, 36, 36);
 }
+
+paper-button {
+  text-transform: none;
+  color: #FAFAFA;
+  margin: 8px;
+}
+
+.buttons-style {
+  display: flex;
+  justify-content: center;
+  font-family: 'Lato' sans-serif;
+  font-weight: 900 !important;
+  font-size: 18px;
+  border-radius: 5px;
+  padding-bottom: 4px;
+}
+
+#new-account {
+  background: #fad644;
+  color: #302d38;
+}
+
+#old-wallet {
+  background: #fff;
+  color: #302d38;
+}
+
+#continue {
+  background: rgb(122, 182, 12);
+  color: #302d38;
+  font-size: 24px;
+}
+
