@@ -4,6 +4,7 @@ var path = require('path');
 var username1 = require('username');
 var copyFile = require('quickly-copy-file');
 var Finder = require('fs-finder');
+var os = require('os');
 var platform = os.platform();
 var introduction = os.homedir() + "/.musicoin/introduction.intro";
 
