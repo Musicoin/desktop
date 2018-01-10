@@ -9,6 +9,8 @@ var jayson = require('jayson');
 var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
+var CoinMarketCap = require('coinmarketcap-api');
+var market = new CoinMarketCap();
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -17,6 +19,8 @@ Polymer({
     userImage: String,
     locale: Object,
     txStatus: String,
+    musicUsd: String,
+    musicBtc: String,
     nodeId: String,
     actionState: {
       type: String,
@@ -288,6 +292,16 @@ Polymer({
     }
 
   },
+  getMarketValue: function() {   
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => resultObj = JSON.parse(JSON.stringify(result)))
+      .then(usd => this.musicUsd = JSON.parse(JSON.stringify(usd[0].price_usd)))
+      .catch(error => console.log(error));
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => resultObj = JSON.parse(JSON.stringify(result)))
+      .then(btc => this.musicBtc = JSON.parse(JSON.stringify(btc[0].price_btc)))
+      .catch(error => console.log(error));
+  },
   setCustomCoinbase: function() {
     if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
       mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
@@ -421,8 +435,6 @@ Polymer({
     setInterval(function() {
       document.querySelector("msc-profile-view").activePeers();
     }, interval);
-    });
-    
     ntpClient.getNetworkTime("pool.ntp.org", 123, function(err, date) {
     //console.log("  System time  :" + new Date());
     //console.log("  Network time :" + date);
@@ -440,6 +452,7 @@ Polymer({
         (date.toString()).slice(0, -18) + " UTC +0"};
       new Notification("System clock seems incorrect", alert);
     } else {}
+      });
     });
     
     

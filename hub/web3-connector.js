@@ -165,6 +165,8 @@ Web3Connector.prototype.getAccountDetails = function(account, _coinbase) {
       return {
         address: account,
         displayBalance: this.mchub.clientUtils.formatBalance(balance),
+        displayBalanceUsd: this.mchub.clientUtils.formatBalanceUsd(balance),
+        displayBalanceBtc: this.mchub.clientUtils.formatBalanceBtc(balance),
         balance: balance,
         isCoinbase: account == coinbase
       }
