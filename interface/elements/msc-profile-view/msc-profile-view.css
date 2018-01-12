@@ -38,7 +38,7 @@
   line-height: 1;
 }
 
-.account {
+.account, .account-music, .account-btc, .account-usd {
   color: var(--msc-subtle-text-color);
   font-family: 'Ubuntu' monospace;
   font-size: 22px;
@@ -189,6 +189,10 @@ table {
 
 .warn {
   color: red;
+}
+
+#accounts {
+  margin-top: 8px;
 }
 
 #row1 {

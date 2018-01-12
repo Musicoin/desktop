@@ -9,6 +9,8 @@ var jayson = require('jayson');
 var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
+var CoinMarketCap = require("coinmarketcap-api");
+var market = new CoinMarketCap();
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -17,6 +19,8 @@ Polymer({
     userImage: String,
     locale: Object,
     txStatus: String,
+    musicUsd: String,
+    musicBtc: String,
     nodeId: String,
     actionState: {
       type: String,
@@ -288,6 +292,44 @@ Polymer({
     }
 
   },
+  getMarketValue: function() {  
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(usd => this.musicUsd = usd[0].price_usd)
+      .catch(error => console.log(error));
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(btc => this.musicBtc = btc[0].price_btc)
+      .catch(error => console.log(error));
+  },
+  marketRates: function() {
+    document.querySelector("msc-profile-view").getMarketValue();
+    this.$.marketRatesDialog.open();
+  },
+  displayBalanceInBtc: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = 'none';}
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = '';}
+  },
+  displayBalanceInUsd: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = 'none';}
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = '';}
+  },
+  displayBalanceInMusic: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = 'none';}
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = '';}
+  },
   setCustomCoinbase: function() {
     if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
       mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
@@ -390,7 +432,6 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: 'Restore default nodes list', click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
     menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
     var help = new nw.Menu();
-    help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
     if (platform.includes("darwin")) {
         help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Window.open('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
         help.append(new nw.MenuItem({ type: 'separator' }));
