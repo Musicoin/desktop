@@ -14,6 +14,7 @@
           <div id="lastBlock" class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}} since last block">
           {{_computeTimeSinceLastBlockMessage(syncStatus)}}
           </div>
+          <div id="showBalanceIn" class="item-area">Balance in:</div>
           <div id="blockNumber" class="item-area" title="Block: {{_formatBlockNumber(syncStatus)}}{{_formatHighBlockNumber(syncStatus)}}">
             <a onclick='gui.Shell.openExternal("https://explorer.musicoin.org/")'><!-- iron-icon class="item-icon" icon="maps:layers"></iron-icon -->{{_formatBlockNumber(syncStatus)}}{{_formatHighBlockNumber(syncStatus)}}</a>
           </div>
@@ -21,7 +22,6 @@
         <div id="peers" class="item-area" title="{{syncStatus.peers}} peers">Connected to:
           <!-- iron-icon class="item-icon" icon="{{_computePeerIcon(syncStatus)}}"></iron-icon -->{{syncStatus.peers}} Peers
         </div>
-
         <div class="syncStatus">
           <div id="syncing" class="item-area sync-area" title="Syncing..." syncing$="{{_computeIsSyncing(syncStatus)}}">
             <iron-icon class="item-icon" icon="notification:sync"></iron-icon>{{_computeIsSyncingText(syncStatus)}}

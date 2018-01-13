@@ -16,15 +16,16 @@
     <div class="flex-center title" style="margin-bottom: 70px;">
       <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
     </div>
-
+    <img src="/interface/images/icons/musicoin.png" class="clickable" title="Display Balance In MUSIC" style="position: absolute; right: 140px;" on-tap="displayBalanceInMusic">
+    <img src="/interface/images/icons/bitcoin.png" class="clickable" title="Display Balance In BTC" style="position: absolute; right: 100px;" on-tap="displayBalanceInBtc">
+    <img src="/interface/images/icons/dollar.png" class="clickable" title="Display Balance In USD" style="position: absolute; right: 60px;" on-tap="displayBalanceInUsd">
+    <img src="/interface/images/icons/mark.png" class="clickable" title="Market Conversion Rates" style="position: absolute; right: 20px;" on-tap="marketRates">
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
     </div>
-
-    <div>&nbsp;</div>
 
     <div id="accounts">
       <table width="100%" style="font-size:120%;border: none; text-align: center;">
@@ -39,7 +40,9 @@
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
             <td class="account" style="color: #393a3c !important;">[[account.address]]</td>
-            <td class="account" style="color: #393a3c !important;" title="[[account.balance]]">[[account.displayBalance]]</td>
+            <td class="account-music" style="color: #393a3c !important;" title="[[account.balance]]">[[account.displayBalance]]</td>
+            <td class="account-btc" style="color: #393a3c !important; display: none;" title="[[account.balance]]">[[account.displayBalanceBtc]]</td>
+            <td class="account-usd" style="color: #393a3c !important; display: none;" title="[[account.balance]]">[[account.displayBalanceUsd]]</td>
             <td class="clickable">
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
             </td>
@@ -74,6 +77,16 @@
       <div id="status">{{txStatus}}</div>
     </div>
 
+    <paper-dialog id="marketRatesDialog">
+      <p>Current rates (for 1 MUSIC):</p>
+      <p>BTC: {{musicBtc}}</p>
+      <p>USD: {{musicUsd}}</p>
+      <p>* We use CoinMarketCap API to display conversion rates, real exhange rates could be slightly different.</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
     <paper-dialog id="newAccountDialog">
       <p>Enter a password for the new account.  Please note that there is no way to recover this password later.</p>
       <paper-input id=newAccountPassword type="password" label="Password"></paper-input>

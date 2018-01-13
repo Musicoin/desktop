@@ -17,6 +17,7 @@
   "dependencies": {
     "bignumber.js": "^2.4.0",
     "bluebird": "^3.4.0",
+    "coinmarketcap-api": "^2.0.0",
     "crypto": "0.0.3",
     "debug": "~2.2.0",
     "eth-lightwallet-nwjs": "^2.5.2",
