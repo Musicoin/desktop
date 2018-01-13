@@ -21,6 +21,7 @@ Polymer({
     txStatus: String,
     musicUsd: String,
     musicBtc: String,
+    getAccounts: Array,
     nodeId: String,
     actionState: {
       type: String,
@@ -132,31 +133,18 @@ Polymer({
     });
   });
   },
-  showSendDialog: function(e) {
+  showSendDialog: function() {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
     if (this.syncStatus.initialSyncEnded == true) {
-      this.$.sender.value = e.model.dataHost.dataHost.account.address;
-      this.$.sendDialog.open();
-    } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
-      new Notification("Send function locked", alert);
-    } else if (this.syncStatus.currentBlock == undefined) {
-      new Notification("Gmc not started synchronization yet", alert);
-    } else {
-      this.$.sender.value = e.model.dataHost.dataHost.account.address;
-      this.$.sendDialog.open();
-    }
-  },
-  showSendDialogFromMenu: function() {
-    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
-    if (this.syncStatus.initialSyncEnded == true) {
+      this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
     } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
       new Notification("Send function locked", alert);
     } else if (this.syncStatus.currentBlock == undefined) {
       new Notification("Gmc not started synchronization yet", alert);
     } else {
+      this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
     }
   },
@@ -379,7 +367,7 @@ Polymer({
     account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
     account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialogFromMenu(); } }));
+    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
