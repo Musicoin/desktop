@@ -3,7 +3,7 @@ Polymer({
   ready: function() {
     mscIntf.attach(this)
       .to('locale')
-      .to('hideSyncWindow')
+      .to('hideIntroWindow')
       .to('selectedPage');
   },
   attached: function() {},
