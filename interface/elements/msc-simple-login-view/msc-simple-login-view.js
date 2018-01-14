@@ -125,9 +125,9 @@ Polymer({
         msg += diff + ' milliseconds late';
       }
       msg += ' compared to network time'
-      new Notification(msg);
-      if (diff != 0) {
+      if ((diff > 1) || (diff < -1)) {
         document.getElementById("timeSyncDialog").open();
+        new Notification(msg);
       } else {}
       return msg;
     });

@@ -1,3 +1,4 @@
+var ntpClient = require('ntp-client');
 Polymer({
   is: 'msc-main-status',
   properties: {
@@ -49,7 +50,6 @@ Polymer({
     return this.formatHashRate(this.syncStatus.hashrate);
   },
   _computeTimeSinceLastBlockMessage: function() {
-    //console.log(this.syncStatus);
     if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
     return this._timeSince(this.syncStatus.mostRecentBlockTime);
   },
@@ -62,42 +62,48 @@ Polymer({
   formatNumber: function(number, decimals) {
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
-  _timeSince: function(date) {
-    const seconds = Math.floor((ts.now() - date) / 1000);
-    const intervals = [{
-        value: 60,
-        unit: "m"
-      },
-      {
-        value: 60,
-        unit: "h"
-      },
-      {
-        value: 24,
-        unit: "d"
-      },
-      {
-        value: 30,
-        unit: "mon"
-      },
-      {
-        value: 12,
-        unit: "yr"
-      },
-    ]
-    let unit = "s";
-    let value = seconds;
-    for (let i = 0; i < intervals.length; i++) {
-      const interval = intervals[i];
-      if (value > interval.value) {
-        unit = interval.unit;
-        value = value / interval.value;
-      } else {
-        break;
-      }
-    }
+  _timeSince: function(syncDate) {
 
-    const rounded = Math.round(value);
-    return `${rounded}${unit}`;
+    ntpClient.getNetworkTime("time.nist.gov", 123, function(err, date) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const seconds = Math.floor((date.getTime() - syncDate) / 1000);
+      const intervals = [{
+          value: 60,
+          unit: "m"
+        },
+        {
+          value: 60,
+          unit: "h"
+        },
+        {
+          value: 24,
+          unit: "d"
+        },
+        {
+          value: 30,
+          unit: "mon"
+        },
+        {
+          value: 12,
+          unit: "yr"
+        },
+      ]
+      let unit = "s";
+      let value = seconds;
+      for (let i = 0; i < intervals.length; i++) {
+        const interval = intervals[i];
+        if (value > interval.value) {
+          unit = interval.unit;
+          value = value / interval.value;
+        } else {
+          break;
+        }
+      }
+      const rounded = Math.round(value);
+      return `${rounded}${unit}`;
+    });
   }
 });
