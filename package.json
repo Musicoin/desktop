@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-wallet",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
@@ -35,7 +35,6 @@
     "request": "^2.75.0",
     "reverse-line-reader": "^0.2.6",
     "serve-favicon": "~2.3.0",
-    "timesync": "^0.4.2",
     "tmp": "0.0.29",
     "username": "^3.0.0",
     "web3": "^0.17.0-beta"

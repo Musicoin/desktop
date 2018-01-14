@@ -44,11 +44,11 @@ robocopy C:\tmp\mc-mvp3\dependencies\linux64 C:\tmp\mc-mvp3\Musicoin-wallet-linu
 
 # Screenshots
 
-![image](https://github.com/Musicoin/desktop/blob/master/images/1.png) ![image](https://github.com/Musicoin/desktop/blob/master/images/2.png) ![image](https://github.com/Musicoin/desktop/blob/master/images/3.png)
+![image](https://github.com/Musicoin/desktop/blob/master/images/1.png) ![image](https://github.com/Musicoin/desktop/blob/master/images/2.png)
 
 # Contributing
 
-Pull Requests and Bug Reports for common issues via GitHub are most welcome. For security related issues however, please do not open a GitHub Issue and send a brief report over to `team@musicoin.org` with the concerned details, we shall award you with a boutny as per the bounty program guidelines.
+Pull Requests and Bug Reports for common issues via GitHub are most welcome. For security related issues however, please do not open a GitHub Issue and send a brief report over to `team@musicoin.org` with the concerned details, we shall award you with a bounty as per the bounty program guidelines.
 
 # Bounty program
 
