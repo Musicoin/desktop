@@ -110,7 +110,7 @@ Polymer({
     this.$.sendDialog.open();
   },
   showExplorerWindow: function(e) {
-    gui.Window.open('https://orbiter.musicoin.org/addr/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
+    gui.Window.open('https://explorer.musicoin.org/account/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
   },
   addPeers: function(e) {
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
