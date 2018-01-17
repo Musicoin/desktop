@@ -1,7 +1,6 @@
-const os = require('os');
 const fs = require('fs');
 
-var musicoinRoot = os.homedir() + "/.musicoin";
+var musicoinRoot = process.env.HOME + "/.musicoin";
 if (process.platform == 'darwin') {
   musicoinRoot = process.env.HOME + '/Library/Musicoin';
 } else if (process.platform && process.platform.startsWith("win")) {

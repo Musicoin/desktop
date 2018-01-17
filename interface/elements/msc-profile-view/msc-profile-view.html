@@ -3,19 +3,18 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <style>
-    #contentContainer {
-      background: transparent;
-      height: 0px !important;
-      width: 0px !important;
-      position: absolute;
-      top: -1000px;
-    }
-  </style>
   <template>
+  <div class="tab flex-top">
+  <button class="tablinks" onclick="activeTabs(event, 'wallet')" id="defaultOpen">Wallet</button>
+  <button class="tablinks" onclick="activeTabs(event, 'pMusic')">Play Music</button>
+  <button class="tablinks" id="mute" on-tap="muteAudio"><img src="/interface/images/icons/audio-volume.svg"></button>
+  <button class="tablinks" id="unmute" on-tap="unmuteAudio" style="display: none;"><img src="/interface/images/icons/audio-volume-muted.svg"></button>
+  <button class="tablinks" id="maximize" on-tap="maxWindow"><img src="/interface/images/icons/maximize.svg"></button>
+  <button class="tablinks" id="unmaximize" on-tap="maxWindow" style="display: none;"><img src="/interface/images/icons/unmaximize.svg"></button>
+  </div>
+    <div id="wallet" class="tabcontent">
     <div class="flex-center title" style="margin-bottom: 70px;">
-      <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px; margin-right: 20px">
-    </div>
+    <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px;"></div>
     <img src="/interface/images/icons/musicoin.png" class="clickable" title="Display Balance In MUSIC" style="position: absolute; right: 140px;" on-tap="displayBalanceInMusic">
     <img src="/interface/images/icons/bitcoin.png" class="clickable" title="Display Balance In BTC" style="position: absolute; right: 100px;" on-tap="displayBalanceInBtc">
     <img src="/interface/images/icons/dollar.png" class="clickable" title="Display Balance In USD" style="position: absolute; right: 60px;" on-tap="displayBalanceInUsd">
@@ -160,7 +159,10 @@
         <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
       </div>
     </paper-dialog>
-
+    </div>
+    <div id="pMusic" class="tabcontent">
+    <webview id="mPlayer" src="https://musicoin.org/login"></webview>
+    </div>
   </template>
   <script src="msc-profile-view.js"></script>
 </dom-module>
