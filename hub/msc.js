@@ -51,7 +51,7 @@ var pcs = new PropertyChangeSupport(mschub);
 
 pcs.addObservable('lang', 'en');
 pcs.addObservable('selectedPage', '');
-pcs.addObservable('hideSyncWindow', false);
+pcs.addObservable('hideIntroWindow', false);
 pcs.addObservable('chainVersion', settings.chain.name);
 pcs.addObservable('locale', locale[mschub.lang]);
 

@@ -68,7 +68,8 @@
     "paper-stepper": "Zecat/paper-stepper#^1.1.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
     "paper-steps": "^0.2.0",
-    "identicon-element": "^1.0.0"
+    "identicon-element": "^1.0.0",
+    "paper-autocomplete": "^3.4.0"
   },
   "resolutions": {
     "iron-dropdown": "^1.5.2",

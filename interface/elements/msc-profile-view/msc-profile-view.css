@@ -38,7 +38,7 @@
   line-height: 1;
 }
 
-.account {
+.account, .account-music, .account-btc, .account-usd {
   color: var(--msc-subtle-text-color);
   font-family: 'Ubuntu' monospace;
   font-size: 22px;
@@ -191,6 +191,10 @@ table {
   color: red;
 }
 
+#accounts {
+  margin-top: 8px;
+}
+
 #row1 {
   position: absolute;
   left: 5%;
@@ -228,19 +232,8 @@ table {
   color: #302d38;
 }
 
-#key-backup {
-  background: orange;
-  color: #302d38;
-}
-
-#add-peers {
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  font-size: 13px;
-  border-radius: 5px;
-
-
-  background: rgba(255,255,255,0.6);
+#send-funds {
+  background: #f19ff7;
   color: #302d38;
 }
 

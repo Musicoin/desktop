@@ -9,6 +9,8 @@ var jayson = require('jayson');
 var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
+var CoinMarketCap = require("coinmarketcap-api");
+var market = new CoinMarketCap();
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -17,6 +19,9 @@ Polymer({
     userImage: String,
     locale: Object,
     txStatus: String,
+    musicUsd: String,
+    musicBtc: String,
+    getAccounts: Array,
     nodeId: String,
     actionState: {
       type: String,
@@ -128,31 +133,18 @@ Polymer({
     });
   });
   },
-  showSendDialog: function(e) {
+  showSendDialog: function() {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
     if (this.syncStatus.initialSyncEnded == true) {
-      this.$.sender.value = e.model.dataHost.dataHost.account.address;
-      this.$.sendDialog.open();
-    } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
-      new Notification("Send function locked", alert);
-    } else if (this.syncStatus.currentBlock == undefined) {
-      new Notification("Gmc not started synchronization yet", alert);
-    } else {
-      this.$.sender.value = e.model.dataHost.dataHost.account.address;
-      this.$.sendDialog.open();
-    }
-  },
-  showSendDialogFromMenu: function() {
-    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
-    if (this.syncStatus.initialSyncEnded == true) {
+      this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
     } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
       new Notification("Send function locked", alert);
     } else if (this.syncStatus.currentBlock == undefined) {
       new Notification("Gmc not started synchronization yet", alert);
     } else {
+      this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
     }
   },
@@ -288,6 +280,44 @@ Polymer({
     }
 
   },
+  getMarketValue: function() {  
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(usd => this.musicUsd = usd[0].price_usd)
+      .catch(error => console.log(error));
+    market.getTicker({ limit: 1, currency: 'musicoin' })
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(btc => this.musicBtc = btc[0].price_btc)
+      .catch(error => console.log(error));
+  },
+  marketRates: function() {
+    document.querySelector("msc-profile-view").getMarketValue();
+    this.$.marketRatesDialog.open();
+  },
+  displayBalanceInBtc: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = 'none';}
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = '';}
+  },
+  displayBalanceInUsd: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = 'none';}
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = '';}
+  },
+  displayBalanceInMusic: function() {
+    var accountMusic = document.getElementsByClassName('account-music');
+    var accountBtc = document.getElementsByClassName('account-btc');
+    var accountUsd = document.getElementsByClassName('account-usd');
+    for (var i=0;i<accountBtc.length;i+=1){accountBtc[i].style.display = 'none';}
+    for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = 'none';}
+    for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = '';}
+  },
   setCustomCoinbase: function() {
     if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
       mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
@@ -337,7 +367,7 @@ Polymer({
     account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
     account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialogFromMenu(); } }));
+    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
@@ -390,7 +420,6 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: 'Restore default nodes list', click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
     menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
     var help = new nw.Menu();
-    help.append(new nw.MenuItem({ label: 'Wallet Quickstart', key: 'F1', modifiers: 'ctrl', click: function() { alert('blank') } }));
     if (platform.includes("darwin")) {
         help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Window.open('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
         help.append(new nw.MenuItem({ type: 'separator' }));
