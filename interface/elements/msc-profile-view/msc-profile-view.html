@@ -25,6 +25,7 @@
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
+      <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
     </div>
 
     <div id="accounts">
@@ -33,7 +34,6 @@
           <th style="width: 40vw">ACCOUNT</th>
           <th style="width: 38vw">BALANCE</th>
           <th>PRIMARY</th>
-          <th>SEND</th>
           <th>EXPLORER</th>
           <th>BACKUP</th>
         </tr>
@@ -45,11 +45,6 @@
             <td class="account-usd" style="color: #393a3c !important; display: none;" title="[[account.balance]]">[[account.displayBalanceUsd]]</td>
             <td class="clickable">
               <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
-            </td>
-            <td class="td-button">
-              <template is="dom-if" if="[[account.canSend]]">
-                <iron-icon icon="icons:send" class=clickable on-tap="showSendDialog"></iron-icon>
-              </template>
             </td>
             <td class="td-button">
                 <iron-icon icon="icons:explore" class=clickable on-tap="showExplorerWindow"></iron-icon>
@@ -135,18 +130,6 @@
       </div>
     </paper-dialog>
     
-    <paper-dialog id="sendDialogMenu">
-      <p>Enter the recipient address, the amount to send, and your password</p>
-      <paper-input id="sender" label="From Account"></paper-input>
-      <paper-input id="recipient" label="Recipient"></paper-input>
-      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id=sendPassword type="password" label="Password"></paper-input>
-      <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
-      </div>
-    </paper-dialog>
-    
     <paper-dialog id="gmcOverwriteCache">
       <p>Select Gmc (in memory) cache size</p>
       <paper-radio-group selected="gmc-512">
@@ -157,6 +140,24 @@
       </paper-radio-group>
       <div class="buttons">
       <paper-button dialog-dismiss>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <style>:host {--primary-text-color: grey;}</style>
+    <paper-dialog id="sendDialogMenu">
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <div class="autocomplete-wrapper">
+      <paper-input id="sender" label="From Account"></paper-input>
+      <paper-autocomplete-suggestions
+      for="sender"
+      source="[[getAccounts]]"></paper-autocomplete-suggestions>
+      </div>
+      <paper-input id="recipient" label="Recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
       </div>
     </paper-dialog>
 

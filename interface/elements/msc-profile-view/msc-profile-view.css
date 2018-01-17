@@ -232,19 +232,8 @@ table {
   color: #302d38;
 }
 
-#key-backup {
-  background: orange;
-  color: #302d38;
-}
-
-#add-peers {
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  font-size: 13px;
-  border-radius: 5px;
-
-
-  background: rgba(255,255,255,0.6);
+#send-funds {
+  background: #f19ff7;
   color: #302d38;
 }
 
