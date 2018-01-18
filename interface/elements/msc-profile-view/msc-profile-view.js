@@ -11,6 +11,7 @@ var ntpClient = require('ntp-client');
 var platform = os.platform();
 var CoinMarketCap = require("coinmarketcap-api");
 var market = new CoinMarketCap();
+var nwin = gui.Window.get();
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -75,12 +76,14 @@ Polymer({
   },
   backupWallet: function() {
     username1().then(username1 => {
-      if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore';
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
-      } else if (platform.includes("linux")){  //linux
-        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore';
+      } else if (platform.includes("linux")) {  //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore';
       }
       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
@@ -119,12 +122,14 @@ Polymer({
     document.querySelector('#fileDialog').addEventListener("change", function() {
     var filePath = this.value;
     username1().then(username1 => {
-      if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
-        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/' + path.basename(filePath);
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/' + path.basename(filePath);
       }
     copyFile(filePath, pathOfKey, function(error) {
       if (error) return console.error(error);
@@ -171,12 +176,14 @@ Polymer({
     document.querySelector('#fileDialogBackup').addEventListener("change", function() {
     var tmpPath = this.value;
     username1().then(username1 => {
-      if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
       } else if (platform.includes("linux")) { //linux
-        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/';
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
     Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
@@ -197,7 +204,7 @@ Polymer({
   });
   },
   showExplorerWindow: function(e) {
-    gui.Window.open('https://orbiter.musicoin.org/addr/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
+    gui.Window.open('https://explorer.musicoin.org/account/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
   },
   activePeers: function() {
     var bootnodes = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
@@ -218,6 +225,33 @@ Polymer({
     //_.remove(arr, item => item === val);
     }
     console.log(arr);
+  },
+  maxWindow: function() {
+    if ( nwin.width > 1000 ) {
+      document.getElementById('unmaximize').style.display = 'none';
+      document.getElementById('maximize').style.display = '';
+      nwin.restore();
+      } else {
+      nwin.maximize();
+      document.getElementById('maximize').style.display = 'none';
+      document.getElementById('unmaximize').style.display = ''
+    }
+  },
+  muteAudio: function() {
+    document.getElementById('mute').style.display = 'none';
+    document.getElementById('unmute').style.display = '';
+    var webview = document.getElementById('mPlayer');
+    webview.executeScript({ code: "audio = document.getElementById('playerFrame').contentWindow.document.getElementsByTagName('audio'); for (var j = 0; j < audio.length; j++) {audio[j].muted = true;}" });
+  },
+  unmuteAudio: function() {
+    document.getElementById('unmute').style.display = 'none';
+    document.getElementById('mute').style.display = '';
+    var webview = document.getElementById('mPlayer');
+    webview.executeScript({ code: "audio = document.getElementById('playerFrame').contentWindow.document.getElementsByTagName('audio'); for (var j = 0; j < audio.length; j++) {audio[j].muted = false;}" });
+  },
+  webviewDetectChange: function() {
+    var webview = document.getElementById('mPlayer');
+    webview.executeScript({ code: "cover = document.getElementById('playerFrame').contentWindow.document.getElementById('player-badge-image'); trackCover = 'https://musicoin.org' + cover.getAttribute('src'); title = document.getElementById('playerFrame').contentWindow.document.getElementById('player-title').textContent; artist = document.getElementById('playerFrame').contentWindow.document.getElementById('player-artist').textContent; playTime = document.getElementById('playerFrame').contentWindow.document.getElementById('player-time-played').textContent; var alert = { icon: trackCover, body: artist }; if (playTime != '00:00' && playTime < '00:03') new Notification(title, alert);" });
   },
   addPeers: function(e) {
     var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
@@ -374,8 +408,8 @@ Polymer({
     account.append(new nw.MenuItem({ label: 'Quit', key: 'q', modifiers: 'ctrl', click: function() { require('process').exit(0); } }));
     menu.append(new nw.MenuItem({label: 'Account', submenu: account }));
     var explorer = new nw.Menu();
-    explorer.append(new nw.MenuItem({ label: 'Open Explorer #1', key: 'e', modifiers: 'ctrl', click: function() { gui.Window.open('https://orbiter.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
-    explorer.append(new nw.MenuItem({ label: 'Open Explorer #2', key: 'e', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    explorer.append(new nw.MenuItem({ label: 'Open Explorer #1', key: 'e', modifiers: 'ctrl', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    explorer.append(new nw.MenuItem({ label: 'Open Explorer #2', key: 'e', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://orbiter.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
     menu.append(new nw.MenuItem({label: 'Explorer', submenu: explorer }));
     var markets = new nw.Menu();
     markets.append(new nw.MenuItem({ label: 'CoinMarketCap Charts', key: 'm', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
@@ -395,7 +429,7 @@ Polymer({
     var official = new nw.Menu();
     official.append(new nw.MenuItem({ label: 'Musicoin', key: 'm', modifiers: 'ctrl', click: function() { gui.Window.open('https://www.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
-    official.append(new nw.MenuItem({ label: 'Bitcointalk: Musicoin', key: 'f', modifiers: 'ctrl', click: function() { gui.Window.open('https://bitcointalk.org/index.php?topic=1776113.0',{position: 'center', width: 1000, height: 600}); } }));
+    official.append(new nw.MenuItem({ label: 'Bitcointalk: Musicoin', key: 'f', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://bitcointalk.org/index.php?topic=1776113.0',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
     if (platform.includes("darwin")) {
         official.append(new nw.MenuItem({ label: 'Medium', click: function() { gui.Window.open('https://medium.com/@musicoin',{position: 'center', width: 1000, height: 600}); } }));
@@ -445,11 +479,16 @@ Polymer({
     nw.Window.get().menu = menu;
     
     document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("defaultOpen").click();
+    var quick = 1700;
     var minutes = 2;
     var interval = minutes * 60 * 1000;
     setInterval(function() {
       document.querySelector("msc-profile-view").activePeers();
     }, interval);
+    setInterval(function() {
+      document.querySelector("msc-profile-view").webviewDetectChange();
+    }, quick);
     });
     
     ntpClient.getNetworkTime("pool.ntp.org", 123, function(err, date) {
@@ -471,4 +510,16 @@ Polymer({
     } else {}
     });
     
-    
+    function activeTabs(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }

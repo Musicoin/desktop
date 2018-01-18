@@ -25,7 +25,6 @@
 .name-area {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
   justify-content: space-around;
   align-items: center;
 }
@@ -173,6 +172,15 @@ table {
   justify-content: space-between;
 }
 
+.flex-top {
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 98%;
+  justify-content: center;
+  z-index: 1000;
+}
+
 paper-button {
   text-transform: none;
   color: #FAFAFA;
@@ -283,4 +291,38 @@ tr:nth-child(odd){
 }
 tr:nth-child(even) {
   background-color: #eaebef !important;
+}
+
+.tab button {
+  background-color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'Lato' sans-serif;
+  font-size: 18px;
+  font-weight: 700 !important;
+  border: 1px solid #f2c455;  
+}
+
+.tab button:hover {
+  background-color: #f2bcf7;
+}
+
+.tab button.active {
+  background-color: #f2c455;
+}
+
+.tabcontent {
+  display: none;
+}
+
+#mPlayer {
+ position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
 }

@@ -12,7 +12,8 @@
     "height": 600
   },
   "webkit": {
-    "plugin": true
+    "plugin": true,
+    "page-cache": true
   },
   "dependencies": {
     "bignumber.js": "^2.4.0",

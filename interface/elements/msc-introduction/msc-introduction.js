@@ -4,9 +4,8 @@ var path = require('path');
 var username1 = require('username');
 var copyFile = require('quickly-copy-file');
 var Finder = require('fs-finder');
-var os = require('os');
 var platform = os.platform();
-var introduction = os.homedir() + "/.musicoin/introduction.intro";
+var introduction = process.env.HOME + "/.musicoin/introduction.intro";
 
 if (process.platform == 'darwin') {
     introduction = process.env.HOME + '/Library/Musicoin/introduction.intro';
@@ -77,12 +76,14 @@ Polymer({
     document.querySelector('#fileDialog').addEventListener("change", function() {
     var filePath = this.value;
     username1().then(username1 => {
-      if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + 'Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
-        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/' + path.basename(filePath);
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/' + path.basename(filePath);
       }
     copyFile(filePath, pathOfKey, function(error) {
       if (error) return console.error(error);
@@ -125,12 +126,14 @@ Polymer({
     document.querySelector('#fileDialogBackup').addEventListener("change", function() {
     var tmpPath = this.value;
     username1().then(username1 => {
-      if (platform.includes("win32")) {
-        var pathOfKey = 'C:\\Users\\' + username1 + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
       } else if (platform.includes("darwin")) {
         var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
       } else if (platform.includes("linux")) { //linux
-        var pathOfKey = '/home/' + username1 + '/.musicoin/keystore/';
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
     Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
