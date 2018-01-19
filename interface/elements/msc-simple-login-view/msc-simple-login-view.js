@@ -4,7 +4,7 @@ var nwin = ngui.Window.get();
 var ntpClient = require('ntp-client');
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  var minutes = 0.1;
+  var minutes = 2;
   var interval = minutes * 60 * 1000;
   setInterval(function() {
     document.querySelector("msc-simple-login-view")._formatTime();
@@ -125,7 +125,7 @@ Polymer({
         msg += diff + ' milliseconds late';
       }
       msg += ' compared to network time'
-      if ((diff > 1) || (diff < -1)) {
+      if ((diff > 100) || (diff < -100)) {
         document.getElementById("timeSyncDialog").open();
         new Notification(msg);
       } else {}
