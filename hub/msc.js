@@ -1,17 +1,31 @@
-const fs = require('fs');
+var fs = require('fs-extra');
+var os = require('os');
+var platform = os.platform();
 
-var musicoinRoot = process.env.HOME + "/.musicoin";
-if (process.platform == 'darwin') {
-  musicoinRoot = process.env.HOME + '/Library/Musicoin';
-} else if (process.platform && process.platform.startsWith("win")) {
-  musicoinRoot = process.env.APPDATA + '/Musicoin';
+if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+  var musicoinRoot = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+} else if (platform.includes("win32")) {
+  var musicoinRoot = process.env.APPDATA + '\\Musicoin';
+  var configFolderHome = musicoinRoot + '\\config';
+} else if (platform.includes("darwin")) {
+  var musicoinRoot = process.env.HOME + '/Library/Musicoin';
+  var configFolderHome = musicoinRoot + '/config';
+} else if (platform.includes("linux")) { //linux
+  var musicoinRoot = process.env.HOME + "/.musicoin";
 }
 var appData = musicoinRoot + "/wallet-ui";
 var logDir = appData + "/logs";
+var configFolder = process.cwd() + '/config';
+var pathOfNodes = musicoinRoot + '/bootnodes.json';
+var pathOfNodesSm = musicoinRoot + '/bootnodes.json.org';
+var configFolderHome = musicoinRoot + '/config';
 
 if (!fs.existsSync(musicoinRoot)) fs.mkdirSync(musicoinRoot);
 if (!fs.existsSync(appData)) fs.mkdirSync(appData);
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
+if (!fs.existsSync(pathOfNodes)) fs.copy(process.cwd() + '/bootnodes.json', pathOfNodes);
+if (!fs.existsSync(pathOfNodesSm)) fs.copy(process.cwd() + '/bootnodes.json.org', pathOfNodesSm);
+if (!fs.existsSync(configFolderHome)) fs.copy(configFolder, configFolderHome);
 
 /* console - convenience console emulation to output messages to stdout */
 const console = require('./console.log.js')(logDir);
@@ -30,7 +44,7 @@ var Promise = require('bluebird');
 /* node localstorage to ensure existence of a kind of app storage without db. Can be substituted later with a kind of encrypted store */
 var settings;
 try {
-  settings = require('../config/config.ext.js');
+  settings = require(musicoinRoot + '/config/config.ext.js');
 } catch (e) {
   settings = require('../config/config.std.js');
 }

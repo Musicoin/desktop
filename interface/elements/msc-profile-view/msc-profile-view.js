@@ -1,9 +1,7 @@
 var gui = require('nw.gui');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var os = require('os');
-var username1 = require('username');
-var copyFile = require('quickly-copy-file');
 var Finder = require('fs-finder');
 var jayson = require('jayson');
 var _ = require('lodash');
@@ -12,12 +10,15 @@ var platform = os.platform();
 var CoinMarketCap = require("coinmarketcap-api");
 var market = new CoinMarketCap();
 var nwin = gui.Window.get();
+var blockies = require('ethereum-blockies');
 Polymer({
   is: 'msc-profile-view',
   properties: {
     accounts: Array,
     username: String,
     userImage: String,
+    userAccount: String,
+    userBalance: String,
     locale: Object,
     txStatus: String,
     musicUsd: String,
@@ -75,13 +76,12 @@ Polymer({
     this.$.addPeerDialog.open();
   },
   backupWallet: function() {
-    username1().then(username1 => {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
         var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore';
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore';
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore';
       } else if (platform.includes("linux")) {  //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore';
       }
@@ -92,21 +92,23 @@ Polymer({
         " You can locate your accounts in: " + pathOfKey + " directory."};
       new Notification("Please backup your accounts in a safe place", alert);
       gui.Shell.showItemInFolder(pathOfKey);
-    });
   },
   gmcOverwriteCache: function(size) {
-      if (platform.includes("win32")) {
-        var defaultCache = nw.__dirname + '\\config\\config.std.js';
-        var newCache =  nw.__dirname + '\\config\\' + 'config.' + size + '.js';
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var defaultCache = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
+        var newCache =  process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\' + 'config.' + size + '.js';
+      } else if (platform.includes("win32")) {
+        var defaultCache = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
+        var newCache =  process.env.APPDATA + '\\Musicoin\\config\\' + 'config.' + size + '.js';
       } else if (platform.includes("darwin")) {
-        var defaultCache = nw.__dirname + '/config/config.std.js';
-        var newCache =  nw.__dirname + '/config/' + 'config.' + size + '.js';
-      } else if (platform.includes("linux")) { //linux
-        var defaultCache = nw.__dirname + '/config/config.std.js';
-        var newCache =  nw.__dirname + '/config/' + 'config.' + size + '.js';
+        var defaultCache = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+        var newCache =  process.env.HOME + '/Library/Musicoin/config/' + 'config.' + size + '.js';
+      } else if (platform.includes("linux")) {  //linux
+        var defaultCache = process.env.HOME + '/.musicoin/config/config.std.js';
+        var newCache =  process.env.HOME + '/.musicoin/config/' + 'config.' + size + '.js';
       }
       
-    copyFile(newCache, defaultCache, function(error) {
+    fs.copy(newCache, defaultCache, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
@@ -121,21 +123,19 @@ Polymer({
     document.getElementById('fileDialog').click();
     document.querySelector('#fileDialog').addEventListener("change", function() {
     var filePath = this.value;
-    username1().then(username1 => {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("win32")) {
         var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/' + path.basename(filePath);
       }
-    copyFile(filePath, pathOfKey, function(error) {
+    fs.copy(filePath, pathOfKey, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
-    });
   });
   },
   showSendDialog: function() {
@@ -153,19 +153,37 @@ Polymer({
       this.$.sendDialogMenu.open();
     }
   },
+  showSendDialogFromAccount: function() {
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
+    if (this.syncStatus.initialSyncEnded == true) {
+      this.$.sender.value = document.getElementById('AccountDialog').textContent;
+      this.$.sendDialogFromAccount.open();
+    } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
+      new Notification("Send function locked", alert);
+    } else if (this.syncStatus.currentBlock == undefined) {
+      new Notification("Gmc not started synchronization yet", alert);
+    } else {
+      this.$.sender.value = document.getElementById('AccountDialog').textContent;
+      this.$.sendDialogFromAccount.open();
+    }
+  },
   restoreDefaultNodeList: function() {
-      if (platform.includes("win32")) {
-        var oldList = nw.__dirname + '\\bootnodes.json.org';
-        var actualtList =  nw.__dirname + '\\bootnodes.json';
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var oldList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json.org';
+        var actualtList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
+      } else if (platform.includes("win32")) {
+        var oldList = process.env.APPDATA + '\\Musicoin\\bootnodes.json.org';
+        var actualtList = process.env.APPDATA + '\\Musicoin\\bootnodes.json'; 
       } else if (platform.includes("darwin")) {
-        var oldList = nw.__dirname + '/bootnodes.json.org';
-        var actualtList =  nw.__dirname + '/bootnodes.json';
+        var oldList = process.env.HOME + '/Library/Musicoin/bootnodes.json.org';
+        var actualtList = process.env.HOME + '/Library/Musicoin/bootnodes.json';
       } else if (platform.includes("linux")) { //linux
-        var oldList = nw.__dirname + '/bootnodes.json.org';
-        var actualtList =  nw.__dirname + '/bootnodes.json';
+        var oldList = process.env.HOME + '/.musicoin/bootnodes.json.org';
+        var actualtList = process.env.HOME + '/.musicoin/bootnodes.json';
       }
       
-    copyFile(oldList, actualtList, function(error) {
+    fs.copy(oldList, actualtList, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
@@ -175,19 +193,18 @@ Polymer({
     document.getElementById('fileDialogBackup').click();
     document.querySelector('#fileDialogBackup').addEventListener("change", function() {
     var tmpPath = this.value;
-    username1().then(username1 => {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
         var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
     Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    copyFile(String(pathOfAccount), filePath, function(error) {
+    fs.copy(String(pathOfAccount), filePath, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
@@ -200,21 +217,64 @@ Polymer({
       var win = nw.Window.get();
       win.reloadIgnoringCache();
       });
-    });
+  });
+  },
+  backupAccountFromDialog: function() {
+    var account = document.getElementById('AccountDialog').textContent;
+    document.getElementById('fileDialogBackup').click();
+    document.querySelector('#fileDialogBackup').addEventListener("change", function() {
+    var tmpPath = this.value;
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    Finder.in(pathOfKey).findFiles(account.slice(2), function(pathOfAccount) {
+    var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
+    fs.copy(String(pathOfAccount), filePath, function(error) {
+      if (error) return console.error(error);
+       console.log('File was copied!')
+      });
+      var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+      var alert = {
+        icon: iconPath,
+        body: "You need to KNOW password for every account to unlock it." +
+        " You can locate your account in: \n" + tmpPath + " directory."};
+      new Notification("Backup in " + tmpPath, alert);
+      var win = nw.Window.get();
+      win.reloadIgnoringCache();
+      });
   });
   },
   showExplorerWindow: function(e) {
     gui.Window.open('https://explorer.musicoin.org/account/' + e.model.account.address,{position: 'center', width: 1000, height: 600});
   },
+  showExplorerWindowFromDialog: function() {
+    var account = document.getElementById('AccountDialog').textContent;
+    gui.Window.open('https://explorer.musicoin.org/account/' + account,{position: 'center', width: 1000, height: 600});
+  },
   activePeers: function() {
-    var bootnodes = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+    var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
+    } else if (platform.includes("win32")) {
+    var pathOfNodes = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
+    } else if (platform.includes("darwin")) {
+    var pathOfNodes = process.env.HOME + '/Library/Musicoin/bootnodes.json';
+    } else if (platform.includes("linux")) { //linux
+    var pathOfNodes = process.env.HOME + '/.musicoin/bootnodes.json';
+    }
+    var bootnodes = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
     var client = jayson.client.http('http://localhost:8545');
     client.request('admin_peers', [], function(err, response) {
       if(err) throw err;
     var aPeers = JSON.parse(JSON.stringify(response.result));
     for(var i = 0; i < aPeers.length; i++) {
     document.querySelector("msc-profile-view").addOrRemove(bootnodes.nodes, "enode://" + aPeers[i].id + "@" + aPeers[i].network.remoteAddress);
-    fs.writeFile('bootnodes.json', JSON.stringify(bootnodes, null, 4), 'utf-8');
+    fs.writeFile(pathOfNodes, JSON.stringify(bootnodes, null, 4), 'utf-8');
     }
     });
   },
@@ -253,8 +313,24 @@ Polymer({
     var webview = document.getElementById('mPlayer');
     webview.executeScript({ code: "cover = document.getElementById('playerFrame').contentWindow.document.getElementById('player-badge-image'); trackCover = 'https://musicoin.org' + cover.getAttribute('src'); title = document.getElementById('playerFrame').contentWindow.document.getElementById('player-title').textContent; artist = document.getElementById('playerFrame').contentWindow.document.getElementById('player-artist').textContent; playTime = document.getElementById('playerFrame').contentWindow.document.getElementById('player-time-played').textContent; var alert = { icon: trackCover, body: artist }; if (playTime != '00:00' && playTime < '00:03') new Notification(title, alert);" });
   },
+  showAccountDetails: function(e) {
+    var account = e.model.account.address;
+    this.userAccount = account;
+    this.userBalance = document.getElementById(account).textContent;
+    this.userImage = blockies.create({ seed:account, size: 8, scale: 16, color: '#f2c455', bgcolor: '#fff'}).toDataURL();
+    this.$.showAccountDetailsDialog.open();
+  },
   addPeers: function(e) {
-    var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+   if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+    var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
+    } else if (platform.includes("win32")) {
+    var pathOfNodes = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
+    } else if (platform.includes("darwin")) {
+    var pathOfNodes = process.env.HOME + '/Library/Musicoin/bootnodes.json';
+    } else if (platform.includes("linux")) { //linux
+    var pathOfNodes = process.env.HOME + '/.musicoin/bootnodes.json';
+    }
+    var obj = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
     var remoteNodes = [];
     for(var i = 0; i< obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);

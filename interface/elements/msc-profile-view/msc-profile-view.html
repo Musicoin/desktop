@@ -15,10 +15,6 @@
     <div id="wallet" class="tabcontent">
     <div class="flex-center title" style="margin-bottom: 70px;">
     <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px;"></div>
-    <img src="/interface/images/icons/musicoin.png" class="clickable" title="Display Balance In MUSIC" style="position: absolute; right: 140px;" on-tap="displayBalanceInMusic">
-    <img src="/interface/images/icons/bitcoin.png" class="clickable" title="Display Balance In BTC" style="position: absolute; right: 100px;" on-tap="displayBalanceInBtc">
-    <img src="/interface/images/icons/dollar.png" class="clickable" title="Display Balance In USD" style="position: absolute; right: 60px;" on-tap="displayBalanceInUsd">
-    <img src="/interface/images/icons/mark.png" class="clickable" title="Market Conversion Rates" style="position: absolute; right: 20px;" on-tap="marketRates">
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
@@ -28,29 +24,32 @@
     </div>
 
     <div id="accounts">
-      <table width="100%" style="font-size:120%;border: none; text-align: center;">
-        <tr id ="tableheader" style="background-color: #333 !important;">
-          <th style="width: 40vw">ACCOUNT</th>
-          <th style="width: 38vw">BALANCE</th>
-          <th>PRIMARY</th>
-          <th>EXPLORER</th>
-          <th>BACKUP</th>
+      <table>
+        <tr id="tableheader">
+          <th style="width: 50%; color:#302d38;">ACCOUNT</th>
+          <th style="background-color: #fff; color:#302d38;">ACTIONS</th>
+          <th style="background-color: #f0a0f7; color:#302d38;">BALANCE IN</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1" coinbase$="[[account.isCoinbase]]">
-            <td class="account" style="color: #393a3c !important;">[[account.address]]</td>
-            <td class="account-music" style="color: #393a3c !important;" title="[[account.balance]]">[[account.displayBalance]]</td>
-            <td class="account-btc" style="color: #393a3c !important; display: none;" title="[[account.balance]]">[[account.displayBalanceBtc]]</td>
-            <td class="account-usd" style="color: #393a3c !important; display: none;" title="[[account.balance]]">[[account.displayBalanceUsd]]</td>
-            <td class="clickable">
-              <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" on-tap="changeCoinbase"></iron-icon>
+            <td class="account">
+              <div class="account-address">[[account.address]]</div>
+              <div class="account-music" id=[[account.address]] title="[[account.balance]]">Balance: [[account.displayBalance]] MUSIC</div>
+              <div class="account-btc" style="display: none;" title="[[account.balance]]">Balance: ~ [[account.displayBalanceBtc]] BTC</div>
+              <div class="account-usd" style="display: none;" title="[[account.balance]]">Balance: ~ $ [[account.displayBalanceUsd]]</div>
+              <img src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails">
             </td>
             <td class="td-button">
-                <iron-icon icon="icons:explore" class=clickable on-tap="showExplorerWindow"></iron-icon>
+              <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" title="Set Primary" style="left: -20px;" class=clickable on-tap="changeCoinbase"></iron-icon>
+              <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: 0px;"></iron-icon>
+              <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 20px;"></iron-icon>
+              <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
             </td>
-            <td class="td-button">
-                <iron-icon icon="icons:backup" class=clickable on-tap="backupAccount"></iron-icon>
-                <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
+            <td class="td-button" style="justify-content: center;">
+              <img src="/interface/images/icons/musicoin.svg" class="clickable" title="Display Balance In MUSIC" style="width:24px; margin-left: 12px;" on-tap="displayBalanceInMusic">
+              <img src="/interface/images/icons/bitcoin.png" class="clickable" title="Display Balance In BTC" style="width:24px; margin-left: 12px;" on-tap="displayBalanceInBtc">
+              <img src="/interface/images/icons/dollar.png" class="clickable" title="Display Balance In USD"  style="width:24px; margin-left: 12px;" on-tap="displayBalanceInUsd">
+              <img src="/interface/images/icons/mark.png" class="clickable" title="Market Conversion Rates" style="width:24px; margin-left: 12px;" on-tap="marketRates">
             </td>
           </tr>
         </template>
@@ -76,6 +75,20 @@
       <p>BTC: {{musicBtc}}</p>
       <p>USD: {{musicUsd}}</p>
       <p>* We use CoinMarketCap API to display conversion rates, real exhange rates could be slightly different.</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="showAccountDetailsDialog">
+      <img src={{userImage}} class="avatar" title={{userAccount}} style="justify-content: center;">
+      <p>Account:</p>
+      <p id="AccountDialog">{{userAccount}}</p>
+      <p>{{userBalance}}</p>
+      <p>Show Account In Explorer: <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog"></iron-icon></p>
+      <p>Backup Account: <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog"></iron-icon></p>
+      <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
+      <p><paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button></p>
       <div class="buttons">
       <paper-button dialog-dismiss>Ok</paper-button>
       </div>
@@ -151,6 +164,18 @@
       for="sender"
       source="[[getAccounts]]"></paper-autocomplete-suggestions>
       </div>
+      <paper-input id="recipient" label="Recipient"></paper-input>
+      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="sendDialogFromAccount">
+      <p>Enter the recipient address, the amount to send, and your password</p>
+      <paper-input disabled id="sender" label="From Account"></paper-input>
       <paper-input id="recipient" label="Recipient"></paper-input>
       <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="Password"></paper-input>

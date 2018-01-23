@@ -1,24 +1,28 @@
-var fs = require('fs');
+var fs = require('fs-extra');
 var gui = require('nw.gui');
 var path = require('path');
-var username1 = require('username');
-var copyFile = require('quickly-copy-file');
 var Finder = require('fs-finder');
+var os = require('os');
 var platform = os.platform();
-var introduction = process.env.HOME + "/.musicoin/introduction.intro";
 
-if (process.platform == 'darwin') {
-    introduction = process.env.HOME + '/Library/Musicoin/introduction.intro';
-} else if (process.platform && process.platform.startsWith("win")) {
-    introduction = process.env.APPDATA + '/Musicoin/introduction.intro';
+if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+  var introduction = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\introduction.intro';
+  var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
+} else if (platform.includes("win32")) {
+  var introduction = process.env.APPDATA + '\\Musicoin\\introduction.intro';
+  var pathOfNodes = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
+} else if (platform.includes("darwin")) {
+  var introduction = process.env.HOME + '/Library/Musicoin/introduction.intro';
+  var pathOfNodes = process.env.HOME + '/Library/Musicoin/bootnodes.json';
+} else if (platform.includes("linux")) { //linux
+  var introduction = process.env.HOME + '/.musicoin/introduction.intro';
+  var pathOfNodes = process.env.HOME + '/.musicoin/bootnodes.json';
 }
-
 Polymer({
   is: 'msc-introduction',
   properties: {
     accounts: String,
     username: String,
-    userImage: String,
     txStatus: String,
     nodeId: String,
     locale: Object,
@@ -41,7 +45,7 @@ Polymer({
       .to('chainVersion')
 
     setTimeout(function() {
-    var obj = JSON.parse(fs.readFileSync('bootnodes.json', 'utf-8'));
+    var obj = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
     var remoteNodes = [];
     for (var i = 0; i < obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);
@@ -75,21 +79,19 @@ Polymer({
     document.getElementById('fileDialog').click();
     document.querySelector('#fileDialog').addEventListener("change", function() {
     var filePath = this.value;
-    username1().then(username1 => {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("win32")) {
         var pathOfKey = process.env.APPDATA + 'Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/' + path.basename(filePath);
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/' + path.basename(filePath);
       }
-    copyFile(filePath, pathOfKey, function(error) {
+    fs.copy(filePath, pathOfKey, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
-    });
   });
   },
   handleNewAccount: function() {
@@ -125,19 +127,18 @@ Polymer({
     new Notification("Select directory", firstAlert);
     document.querySelector('#fileDialogBackup').addEventListener("change", function() {
     var tmpPath = this.value;
-    username1().then(username1 => {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
         var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
       } else if (platform.includes("darwin")) {
-        var pathOfKey = '/Users/' + username1 + '/Library/Musicoin/keystore/';
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
     Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    copyFile(String(pathOfAccount), filePath, function(error) {
+    fs.copy(String(pathOfAccount), filePath, function(error) {
       if (error) return console.error(error);
        console.log('File was copied!')
       });
@@ -147,7 +148,6 @@ Polymer({
         " You can locate your account in: \n" + tmpPath + " directory."};
       new Notification("Backup in " + tmpPath, alert);
       });
-    });
   });
   }
 });
