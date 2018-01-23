@@ -14,7 +14,7 @@
   </div>
     <div id="wallet" class="tabcontent">
     <div class="flex-center title" style="margin-bottom: 70px;">
-    <img src="/interface/images/logon.svg" width="210" style="position: absolute; top: 30px; left: 30px;"></div>
+    <img src="/interface/images/logon.svg" style="width: 210px; position: absolute; top: 30px; left: 30px;"></div>
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
@@ -31,7 +31,7 @@
           <th style="background-color: #f0a0f7; color:#302d38;">BALANCE IN</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
-          <tr id="data1" coinbase$="[[account.isCoinbase]]">
+          <tr id="data1">
             <td class="account">
               <div class="account-address">[[account.address]]</div>
               <div class="account-music" id=[[account.address]] title="[[account.balance]]">Balance: [[account.displayBalance]] MUSIC</div>
@@ -40,9 +40,8 @@
               <img src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails">
             </td>
             <td class="td-button">
-              <iron-icon icon="{{_computeCheckboxIcon(account.isCoinbase)}}" title="Set Primary" style="left: -20px;" class=clickable on-tap="changeCoinbase"></iron-icon>
-              <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: 0px;"></iron-icon>
-              <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 20px;"></iron-icon>
+              <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
+              <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 0px;"></iron-icon>
               <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
             </td>
             <td class="td-button" style="justify-content: center;">
@@ -81,14 +80,17 @@
     </paper-dialog>
     
     <paper-dialog id="showAccountDetailsDialog">
-      <img src={{userImage}} class="avatar" title={{userAccount}} style="justify-content: center;">
-      <p>Account:</p>
-      <p id="AccountDialog">{{userAccount}}</p>
-      <p>{{userBalance}}</p>
-      <p>Show Account In Explorer: <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog"></iron-icon></p>
-      <p>Backup Account: <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog"></iron-icon></p>
+      <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
+      <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
+      <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
+      <p style="text-align: center; padding-top: 6px;">Show Account In Explorer:
+      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p> 
+      <p style="text-align: center; padding-top: 6px;">Backup Account:
+      <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p> 
       <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
-      <p><paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button></p>
+      <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
+      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button>
+      </div>
       <div class="buttons">
       <paper-button dialog-dismiss>Ok</paper-button>
       </div>
@@ -129,18 +131,6 @@
         <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">Ok</paper-button>
       </div>
     </paper-dialog>
-
-    <paper-dialog id="sendDialog">
-      <p>Enter the recipient address, the amount to send, and your password</p>
-      <paper-input disabled id="sender" label="From Account"></paper-input>
-      <paper-input id="recipient" label="Recipient"></paper-input>
-      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id=sendPassword type="password" label="Password"></paper-input>
-      <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
-      </div>
-    </paper-dialog>
     
     <paper-dialog id="gmcOverwriteCache">
       <p>Select Gmc (in memory) cache size</p>
@@ -152,6 +142,20 @@
       </paper-radio-group>
       <div class="buttons">
       <paper-button dialog-dismiss>Cancel</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="approveSendDialog">
+      <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
+        <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
+        <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
+        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div> 
+        <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
+        <p>You are about to send <b>{{sendBalance}}</b> to <b>{{recipientAccount}}</b></p>
+      <p style="font-weight: 900; font-size: 18px;">Are you sure you want to do this?</p>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">Confirm</paper-button>
       </div>
     </paper-dialog>
     
@@ -169,19 +173,20 @@
       <paper-input id=sendPassword type="password" label="Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSend">Ok</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog id="sendDialogFromAccount">
       <p>Enter the recipient address, the amount to send, and your password</p>
+      <img src={{userImage}} class="avatar" title={{userAccount}} style="width: 64px; display: block; margin: 0 auto;">
       <paper-input disabled id="sender" label="From Account"></paper-input>
       <paper-input id="recipient" label="Recipient"></paper-input>
       <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
       <paper-input id=sendPassword type="password" label="Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">Ok</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSend">Ok</paper-button>
       </div>
     </paper-dialog>
     </div>
