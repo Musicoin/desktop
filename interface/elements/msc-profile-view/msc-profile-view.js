@@ -17,8 +17,12 @@ Polymer({
     accounts: Array,
     username: String,
     userImage: String,
+    userImageFrom: String,
+    userImageRecipient: String,
     userAccount: String,
+    recipientAccount: String,
     userBalance: String,
+    sendBalance: String,
     locale: Object,
     txStatus: String,
     musicUsd: String,
@@ -320,6 +324,16 @@ Polymer({
     this.userImage = blockies.create({ seed:account, size: 8, scale: 16, color: '#f2c455', bgcolor: '#fff'}).toDataURL();
     this.$.showAccountDetailsDialog.open();
   },
+  approveSend: function() {
+    account = document.getElementById('sender').value;
+    recipient = document.getElementById('recipient').value;
+    this.userAccount = account;
+    this.recipientAccount = recipient;
+    this.sendBalance = document.getElementById('coins').value + ' MUSIC';
+    this.userImageFrom = blockies.create({ seed:account, size: 8, scale: 16, color: '#f2c455', bgcolor: '#fff'}).toDataURL();
+    this.userImageRecipient = blockies.create({ seed:recipient, size: 8, scale: 16, color: '#f2c455', bgcolor: '#fff'}).toDataURL();
+    this.$.approveSendDialog.open();
+  },
   addPeers: function(e) {
    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
     var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
@@ -436,10 +450,10 @@ Polymer({
   sendCoins: function() {
     this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
-      this.$.recipient.value,
-      this.$.coins.value,
-      this.$.sender.value,
-      this.$.sendPassword.value
+      document.getElementById('recipient').value,
+      document.getElementById('coins').value,
+      document.getElementById('sender').value,
+      document.getElementById('sendPassword').value
     ).
     then((tx) => {
         this.txStatus = "Waiting for transaction " + tx;
@@ -458,14 +472,15 @@ Polymer({
     this.clearSendFields();
   },
   clearNewAccountFields: function() {
-    this.$.newAccountPasswordVerify.value = "";
-    this.$.newAccountPassword.value = "";
+    document.getElementById('newAccountPassword').value = "";
+    document.getElementById('newAccountPasswordVerify').value = "";
   },
   clearSendFields: function() {
-    this.$.recipient.value = "";
-    this.$.coins.value = "";
-    this.$.sendPassword.value = "";
-    this.$.sender.value = "";
+    document.getElementById('sender').value = "";
+    document.getElementById('recipient').value = "";
+    document.getElementById('coins').value = "";
+    document.getElementById('sendPassword').value = "";
+    document.getElementById('sender').value = "";
   }
 });
   

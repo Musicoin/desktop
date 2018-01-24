@@ -245,6 +245,7 @@ table {
   border-radius: 5px;
   position: absolute;
   right: 1.5%;
+  padding-top: 10px;
 }
 
 #new-account {
