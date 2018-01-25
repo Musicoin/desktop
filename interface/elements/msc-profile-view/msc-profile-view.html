@@ -19,7 +19,7 @@
     <div class="buttons-style top-buttons">
       <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
-      <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
+      <paper-button raised on-tap="importAny" id="old-wallet">IMPORT ACCOUNT</paper-button>
       <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
     </div>
 
@@ -83,10 +83,12 @@
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
-      <p style="text-align: center; padding-top: 6px;">Show Account In Explorer:
+      <p style="text-align: center;">Show Account In Explorer:
       <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p> 
-      <p style="text-align: center; padding-top: 6px;">Backup Account:
-      <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p> 
+      <p style="text-align: center;">Backup Account:
+      <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">Show Private Key:
+      <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
       <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
       <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
       <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button>
@@ -97,12 +99,27 @@
     </paper-dialog>
     
     <paper-dialog id="newAccountDialog">
-      <p>Enter a password for the new account.  Please note that there is no way to recover this password later.</p>
+      <p>Enter a password for the new account.</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
       <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
       <paper-input id=newAccountPasswordVerify type="password" label="Re Enter Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
         <paper-button autofocus on-tap="createNewAccount">Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="importAnyDialog">
+      <p>Here you can import your account</p>
+      <p><b>Import account</b> is recommended and used for accounts in <b>UTC/JSON</b> format</p>
+      <p><b>Import private key</b> used to import your <b>PRIVATE KEY</b> and automatically convert it in <b>UTC/JSON</b> format</p>
+      <div class="buttons-style top-buttons" style="position: unset;">
+        <input id="fileDialog" type="file" style="display: none;">
+        <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
+        <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">IMPORT PRIVATE KEY</paper-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>OK</paper-button>
       </div>
     </paper-dialog>
 
@@ -129,6 +146,28 @@
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">Ok</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="unlockPrivateKeyDialog">
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure no screencasting software is running!</p>
+      <p>Enter password for your account to unlock it and show private key</p>
+      <paper-input disabled id=sourceAccount label="Account" style="display: none;"></paper-input>
+      <paper-input id=unlockAccount type="password" label="Password"></paper-input>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="showPrivateKey">Show Private key</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="createKeyFromPrivateKey">
+      <p>Enter your private key and new password to store your key in secure storage and access your account</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
+      <paper-input id=dummyKey type="password" label="Private Key"></paper-input>
+      <paper-input id=dummyPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">Access your account</paper-button>
       </div>
     </paper-dialog>
     

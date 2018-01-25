@@ -11,6 +11,7 @@ var CoinMarketCap = require("coinmarketcap-api");
 var market = new CoinMarketCap();
 var nwin = gui.Window.get();
 var blockies = require('ethereum-blockies');
+var ethers = require('ethers');
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -122,6 +123,9 @@ Polymer({
   },
   handleSetCustomCoinbase: function() {
     this.$.setCoinbaseDialog.open();
+  },
+  importAny: function() {
+    this.$.importAnyDialog.open();
   },
   addExistingAccount: function() {
     document.getElementById('fileDialog').click();
@@ -404,6 +408,68 @@ Polymer({
     }
 
   },
+  unlockPrivateKeyFromAccount: function() {
+    var account = document.getElementById('AccountDialog').textContent;
+    document.getElementById('sourceAccount').value = account;
+    this.$.unlockPrivateKeyDialog.open();
+  },
+  showPrivateKey: function() {
+    var account = document.getElementById('sourceAccount').value;
+    var password = document.getElementById('unlockAccount').value;
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
+    pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
+    var accountFile = JSON.stringify(JSON.parse(fs.readFileSync((String(pathOfAccount)), 'utf-8')));
+    ethers.Wallet.fromEncryptedWallet(accountFile, password)
+      .then(wallet => alert(wallet.privateKey))
+      .catch(err => alert(err));
+    document.getElementById('sourceAccount').value = "";
+    document.getElementById('unlockAccount').value = "";
+  },
+  createKeyFromPrivateKey: function() {
+    this.$.createKeyFromPrivateKey.open();
+  },  
+  createKeyFromPrivateKeyAction: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/UTC--';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/UTC--';
+      }
+    var privateKey = (document.getElementById('dummyKey').value).replace(/\s+/g, '');
+    var password = document.getElementById('dummyPassword').value;
+    if (privateKey != undefined && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62) { 
+      var wallet = new ethers.Wallet(privateKey);
+      wallet.encrypt(password).then(function(finalAccount) {
+        finalAccountTmp = JSON.parse(finalAccount);
+        account = finalAccountTmp.address.slice(2);
+        pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+        fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+      } else if (privateKey != undefined && privateKey.length <= 64 && privateKey.length >= 60) {
+        var wallet = new ethers.Wallet("0x" + privateKey);
+        wallet.encrypt(password).then(function(finalAccount) {
+          finalAccountTmp = JSON.parse(finalAccount);
+          account = finalAccountTmp.address.slice(2);
+          pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+          fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+      } else {
+        alert("Incorrect private key provided");
+      }
+    document.getElementById('dummyKey').value = "";
+    document.getElementById('dummyPassword').value = "";
+    this.$.importAnyDialog.close();
+  },
   getMarketValue: function() {  
     market.getTicker({ limit: 1, currency: 'musicoin' })
       .then(result => JSON.parse(JSON.stringify(result)))
@@ -490,7 +556,7 @@ Polymer({
       } else {}
     var account = new nw.Menu();
     account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleNewAccount(); } }));
-    account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.getElementById('fileDialog').click(); } }));
+    account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
