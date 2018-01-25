@@ -258,6 +258,11 @@ table {
   color: #302d38;
 }
 
+#private-key {
+  background: #dc4576;
+  color: #302d38;
+}
+
 #send-funds {
   background: #f19ff7;
   color: #302d38;
