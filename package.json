@@ -44,6 +44,7 @@
     "serve-favicon": "~2.3.0",
     "tmp": "0.0.29",
     "username": "^3.0.0",
-    "web3": "^0.17.0-beta"
+    "web3": "^0.17.0-beta",
+    "zxcvbn": "^4.4.2"
   }
 }
