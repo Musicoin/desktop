@@ -647,6 +647,64 @@ Polymer({
     for (var i=0;i<accountUsd.length;i+=1){accountUsd[i].style.display = 'none';}
     for (var i=0;i<accountMusic.length;i+=1){accountMusic[i].style.display = '';}
   },
+  signMsg: function(e) {
+    var account = e.model.account.address;
+    document.getElementById('signMsgAccount').value = account;
+    this.userAccount = account;
+    this.$.signMsgDialog.open()
+  },
+  signMsgAction: function() {
+    var account = document.getElementById('signMsgAccount').value;
+    var password = document.getElementById('signPassword').value;
+    var msg = document.getElementById('signMsg').value;
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
+    pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
+    var accountFile = JSON.stringify(JSON.parse(fs.readFileSync((String(pathOfAccount)), 'utf-8')));
+    if (msg.length > 0) {
+      ethers.Wallet.fromEncryptedWallet(accountFile, password).then(function(wallet) {
+      alert(wallet.signMessage(msg)); });
+      document.getElementById('signMsgAccount').value = "";
+      document.getElementById('signPassword').value = "";
+      document.getElementById('signMsg').value = "";
+      this.$.signMsgDialog.close();
+    } else {
+      alert("You want to sign empty message");
+      return false;
+    }
+  },
+  verifyMsg: function() {
+    this.$.verifyMsgDialog.open();
+  },
+  verifyMsgAction: function() {
+    var signature = document.getElementById('signature').value;
+    var msgToVerify = document.getElementById('verifyMsg').value;
+    var account = document.getElementById('accountVerify').value;
+    console.log(account.length);
+    if (msgToVerify.length > 0 && account.includes("0x") && account.length >= 38 && signature.includes("0x")) {
+      var address = ethers.Wallet.verifyMessage(msgToVerify, signature);
+      if (address = account) {
+      alert("Message was signed with correct account: " + address);
+      document.getElementById('signature').value = "";
+      document.getElementById('verifyMsg').value = "";
+      document.getElementById('accountVerify').value = "";
+      this.$.verifyMsgDialog.close();
+      } else {
+      alert("Invalid message signature!"); 
+      }
+    } else {
+      alert("Incorrect details provided:\nPossible reasons: Empty message, not valid account or invalid signature provided");
+      return false;
+    }
+  },
   setCustomCoinbase: function() {
     if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
       mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
@@ -699,6 +757,16 @@ Polymer({
         this.txStatus = "Failed to send: " + err;
       });
     this.clearSendAccountFields();
+  },
+  clearSignMsg: function() {
+    document.getElementById('signMsgAccount').value = "";
+    document.getElementById('signPassword').value = "";
+    document.getElementById('signMsg').value = "";
+  },
+  clearverifyMsg: function() {
+    document.getElementById('signature').value = "";
+    document.getElementById('verifyMsg').value = "";
+    document.getElementById('accountVerify').value = "";
   },
   clearNewAccountFields: function() {
     document.getElementById('newAccountPassword').value = "";

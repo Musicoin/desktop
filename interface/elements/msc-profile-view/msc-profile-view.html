@@ -20,6 +20,7 @@
       <paper-button raised on-tap="createNewAccountDialog" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="importAny" id="old-wallet">IMPORT ACCOUNT</paper-button>
+      <paper-button raised on-tap="verifyMsg" id="verify-msg">VERIFY MESSAGE</paper-button>
       <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
     </div>
 
@@ -42,6 +43,7 @@
             <td class="td-button">
               <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
               <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 0px;"></iron-icon>
+              <iron-icon icon="icons:text-format" class=clickable title="Sign" on-tap="signMsg" style="left: 20px;"></iron-icon>
               <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
             </td>
             <td class="td-button" style="justify-content: center;">
@@ -150,7 +152,33 @@
         <paper-button dialog-dismiss>OK</paper-button>
       </div>
     </paper-dialog>
-
+    
+    <paper-dialog id="signMsgDialog">
+      <p>Here you can sign a message</p>
+      <p>Write a message and enter password to unlock you account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
+      <p>You signing from <b>{{userAccount}}</b></p>
+      <paper-textarea style="display: block; width: 400px;" id=signMsg label="Message To Sign"></paper-textarea>
+      <paper-input disabled id=signMsgAccount label="Account" style="display: none;"></paper-input>
+      <paper-input id=signPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSignMsg">Cancel</paper-button>
+        <paper-button autofocus on-tap="signMsgAction">Sign</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="verifyMsgDialog">
+      <p>Here you can verify a message signed with signature</p>
+      <p>Enter a signature, account address, and paste a message to verify</p>
+      <paper-input id=signature label="Signature"></paper-input>
+      <paper-input id=accountVerify label="Account"></paper-input>
+      <paper-textarea style="display: block; width: 400px;" id=verifyMsg label="Message To Verify"></paper-textarea>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearverifyMsg">Cancel</paper-button>
+        <paper-button autofocus on-tap="verifyMsgAction">Verify</paper-button>
+      </div>
+    </paper-dialog>
+      
     <paper-dialog id="addPeerDialog">
       <div>Paste one or more enodes separated by commas as follows:
         <br>enode://abcdefg@101.102.103.104:30303,
