@@ -570,7 +570,7 @@ Polymer({
       this.clearNewAccountFieldsMnemonic();
       this.$.newMnemonicAccountDialog.close();
       this.$.createNewAccountDialog.close();
-      alert(mnemonic);
+      alert("Your mnemonic is:" + "\n\n" + mnemonic + "\n\n" + "Please store this safely in order to retrieve your account in case of any failure");
     } else {
       alert("Password does not match the confirm password, was empty or just too easy to guess");
       return false;
@@ -698,7 +698,7 @@ Polymer({
       document.getElementById('accountVerify').value = "";
       this.$.verifyMsgDialog.close();
       } else {
-      alert("Invalid message signature!"); 
+      alert("Invalid message signature!");
       }
     } else {
       alert("Incorrect details provided:\nPossible reasons: Empty message, not valid account or invalid signature provided");
