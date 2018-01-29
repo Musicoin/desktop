@@ -17,9 +17,10 @@
     <img src="/interface/images/logon.svg" style="width: 210px; position: absolute; top: 30px; left: 30px;"></div>
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
-      <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
+      <paper-button raised on-tap="createNewAccountDialog" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="importAny" id="old-wallet">IMPORT ACCOUNT</paper-button>
+      <paper-button raised on-tap="verifyMsg" id="verify-msg">VERIFY MESSAGE</paper-button>
       <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
     </div>
 
@@ -42,6 +43,7 @@
             <td class="td-button">
               <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
               <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 0px;"></iron-icon>
+              <iron-icon icon="icons:text-format" class=clickable title="Sign" on-tap="signMsg" style="left: 20px;"></iron-icon>
               <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
             </td>
             <td class="td-button" style="justify-content: center;">
@@ -75,54 +77,108 @@
       <p>USD: {{musicUsd}}</p>
       <p>* We use CoinMarketCap API to display conversion rates, real exhange rates could be slightly different.</p>
       <div class="buttons">
-      <paper-button dialog-dismiss>Ok</paper-button>
+      <paper-button dialog-dismiss>OK</paper-button>
       </div>
     </paper-dialog>
-    
+
     <paper-dialog id="showAccountDetailsDialog">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
       <p style="text-align: center;">Show Account In Explorer:
-      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p> 
+      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <p style="text-align: center;">Backup Account:
       <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <p style="text-align: center;">Show Private Key:
-      <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
+      <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
       <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">REMOVE</paper-button>
       <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button>
       </div>
       <div class="buttons">
-      <paper-button dialog-dismiss>Ok</paper-button>
+      <paper-button dialog-dismiss>OK</paper-button>
       </div>
     </paper-dialog>
     
-    <paper-dialog id="newAccountDialog">
-      <p>Enter a password for the new account.</p>
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
-      <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
-      <paper-input id=newAccountPasswordVerify type="password" label="Re Enter Password"></paper-input>
-      <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
-        <paper-button autofocus on-tap="createNewAccount">Ok</paper-button>
-      </div>
-    </paper-dialog>
-    
-    <paper-dialog id="importAnyDialog">
-      <p>Here you can import your account</p>
-      <p><b>Import account</b> is recommended and used for accounts in <b>UTC/JSON</b> format</p>
-      <p><b>Import private key</b> used to import your <b>PRIVATE KEY</b> and automatically convert it in <b>UTC/JSON</b> format</p>
+    <paper-dialog id="createNewAccountDialog">
+      <p>Here you can create a new account</p>
+      <p><b>Create mnemonic account</b> is recommended and used to create account that could be restored with <b>mnemonic</b></p>
+      <p><b>Create account</b> used to create account that could be restored with <b>password</b> only</p>
       <div class="buttons-style top-buttons" style="position: unset;">
-        <input id="fileDialog" type="file" style="display: none;">
-        <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
-        <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">IMPORT PRIVATE KEY</paper-button>
+        <paper-button raised on-tap="handleMnemonicAccount" id="mnemonic-phrase">CREATE MNEMONIC ACCOUNT</paper-button>
+        <paper-button raised on-tap="handleNewAccount" id="new-account">CREATE ACCOUNT</paper-button>
       </div>
       <div class="buttons">
         <paper-button dialog-dismiss>OK</paper-button>
       </div>
     </paper-dialog>
 
+    <paper-dialog id="newAccountDialog">
+      <p>Enter a password for the new account</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
+      <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
+      <paper-input id=newAccountPasswordVerify type="password" label="Re Enter Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
+        <paper-button autofocus on-tap="createNewAccount">OK</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="newMnemonicAccountDialog">
+      <p>Enter a password for the new mnemonic account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the phrase you will see on the next step in the safe place</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
+      <paper-input id=newAccountPasswordMnemonic type="password" label="Password"></paper-input>
+      <paper-input id=newAccountPasswordMnemonicVerify type="password" label="Re Enter Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">Cancel</paper-button>
+        <paper-button autofocus on-tap="createNewMnemonicAccount">OK</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="importAnyDialog">
+      <p>Here you can import your account</p>
+      <p><b>Import account</b> is recommended and used for accounts in <b>UTC/JSON</b> format</p>
+      <p><b>Import private key</b> used to import your <b>PRIVATE KEY</b> and automatically convert it in <b>UTC/JSON</b> format</p>
+      <p><b>Mnemonic</b> used to import or generate new <b>mnemonic</b> and automatically convert it in <b>UTC/JSON</b> format</p>
+      <div class="buttons-style top-buttons" style="position: unset;">
+        <input id="fileDialog" type="file" style="display: none;">
+        <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
+        <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">IMPORT PRIVATE KEY</paper-button>
+        <paper-button raised on-tap="createKeyFromMnemonic" id="mnemonic-phrase">MNEMONIC</paper-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>OK</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="signMsgDialog">
+      <p>Here you can sign a message</p>
+      <p>Write a message and enter password to unlock you account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
+      <p>You signing from <b>{{userAccount}}</b></p>
+      <paper-textarea style="display: block; width: 400px;" id=signMsg label="Message To Sign"></paper-textarea>
+      <paper-input disabled id=signMsgAccount label="Account" style="display: none;"></paper-input>
+      <paper-input id=signPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSignMsg">Cancel</paper-button>
+        <paper-button autofocus on-tap="signMsgAction">Sign</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="verifyMsgDialog">
+      <p>Here you can verify a message signed with signature</p>
+      <p>Enter a signature, account address, and paste a message to verify</p>
+      <paper-input id=signature label="Signature"></paper-input>
+      <paper-input id=accountVerify label="Account"></paper-input>
+      <paper-textarea style="display: block; width: 400px;" id=verifyMsg label="Message To Verify"></paper-textarea>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearverifyMsg">Cancel</paper-button>
+        <paper-button autofocus on-tap="verifyMsgAction">Verify</paper-button>
+      </div>
+    </paper-dialog>
+      
     <paper-dialog id="addPeerDialog">
       <div>Paste one or more enodes separated by commas as follows:
         <br>enode://abcdefg@101.102.103.104:30303,
@@ -145,17 +201,17 @@
       <paper-input id=customCoinbase label="address"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">Ok</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">OK</paper-button>
       </div>
     </paper-dialog>
-    
+
     <paper-dialog id="unlockPrivateKeyDialog">
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure no screencasting software is running!</p>
       <p>Enter password for your account to unlock it and show private key</p>
       <paper-input disabled id=sourceAccount label="Account" style="display: none;"></paper-input>
       <paper-input id=unlockAccount type="password" label="Password"></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-dismiss on-tap="clearPrivateKey">Cancel</paper-button>
       <paper-button dialog-confirm autofocus on-tap="showPrivateKey">Show Private key</paper-button>
       </div>
     </paper-dialog>
@@ -166,8 +222,19 @@
       <paper-input id=dummyKey type="password" label="Private Key"></paper-input>
       <paper-input id=dummyPassword type="password" label="Password"></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-dismiss on-tap="clearKeyFromPrivateKey">Cancel</paper-button>
       <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">Access your account</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="createKeyFromMnemonic">
+      <p>Enter your mnemonic and new password to store your key in secure storage and access your account</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
+      <paper-input id=mnemonic label="Mnemonic" auto-validate pattern="[a-zA-Z\s]*" error-message="letters only!"></paper-input>
+      <paper-input id=mnemonicPassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+      <paper-button dialog-dismiss on-tap="clearKeyFromMnemonic">Cancel</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="createKeyFromMnemonicAction">Access your account</paper-button>
       </div>
     </paper-dialog>
     
@@ -183,12 +250,28 @@
       <paper-button dialog-dismiss>Cancel</paper-button>
       </div>
     </paper-dialog>
-    
+
+    <paper-dialog id="approveRemoveAccountDialog">
+      <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
+      <p style="font-size: 16px;">You want to remove <b>{{userAccount}}</b> with</p>
+      <p style="text-align: center; font-weight: 900; font-size: 18px;">{{userBalance}}</p>
+      <p style="font-size: 16px;">We also suggest you to check account balance in <b>Explorer</b>, before removal</p>
+      <p style="text-align: center;">Show Account In Explorer:
+      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center; font-size: 16px;">You need to provide valid <b>password</b> to process</p>
+      <paper-input disabled id=sourceAccountRemove label="Account" style="display: none;"></paper-input>
+      <paper-input id=removePassword type="password" label="Password"></paper-input>
+      <div class="buttons">
+      <paper-button dialog-dismiss on-tap="clearApproveRemoveAccount">Cancel</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="removeAccount" style="color: red;">Remove your account</paper-button>
+      </div>
+    </paper-dialog>
+
     <paper-dialog id="approveSendDialog">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
         <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
-        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div> 
+        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
         <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
         <p>You are about to send <b>{{sendBalance}}</b> to <b>{{recipientAccount}}</b></p>
       <p style="font-weight: 900; font-size: 18px;">Are you sure you want to do this?</p>
@@ -197,7 +280,21 @@
         <paper-button dialog-confirm autofocus on-tap="sendCoins">Confirm</paper-button>
       </div>
     </paper-dialog>
-    
+
+    <paper-dialog id="approveSendDialogAccount">
+      <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
+        <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
+        <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
+        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
+        <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
+        <p>You are about to send <b>{{sendBalance}}</b> to <b>{{recipientAccount}}</b></p>
+      <p style="font-weight: 900; font-size: 18px;">Are you sure you want to do this?</p>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSendAccountFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoinsFromAccount">Confirm</paper-button>
+      </div>
+    </paper-dialog>
+
     <style>:host {--primary-text-color: grey;}</style>
     <paper-dialog id="sendDialogMenu">
       <p>Enter the recipient address, the amount to send, and your password</p>
@@ -209,23 +306,23 @@
       </div>
       <paper-input id="recipient" label="Recipient"></paper-input>
       <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <paper-input id="sendPassword" type="password" label="Password"></paper-input>
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="approveSend">Ok</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSend">OK</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog id="sendDialogFromAccount">
       <p>Enter the recipient address, the amount to send, and your password</p>
       <img src={{userImage}} class="avatar" title={{userAccount}} style="width: 64px; display: block; margin: 0 auto;">
-      <paper-input disabled id="sender" label="From Account"></paper-input>
-      <paper-input id="recipient" label="Recipient"></paper-input>
-      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id=sendPassword type="password" label="Password"></paper-input>
+      <paper-input disabled id="senderAccount" label="From Account"></paper-input>
+      <paper-input id="recipientAccount" label="Recipient"></paper-input>
+      <paper-input id="coinsAccount" label="Amount (in Musicoins)"></paper-input>
+      <paper-input id="sendPasswordAccount" type="password" label="Password"></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="approveSend">Ok</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendAccountFields">Cancel</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSendAccount">OK</paper-button>
       </div>
     </paper-dialog>
     </div>

@@ -258,8 +258,23 @@ table {
   color: #302d38;
 }
 
+#verify-msg {
+  background: #aef9a5;
+  color: #302d38;
+}
+
 #private-key {
   background: #dc4576;
+  color: #302d38;
+}
+
+#mnemonic-phrase {
+  background: #5bdc89;
+  color: #302d38;
+}
+
+#approve-remove {
+  background: #da7c45;
   color: #302d38;
 }
 
@@ -310,7 +325,7 @@ tr:nth-child(even) {
   font-family: 'Lato' sans-serif;
   font-size: 18px;
   font-weight: 700 !important;
-  border: 1px solid #f2c455;  
+  border: 1px solid #f2c455;
 }
 
 .tab button:hover {
