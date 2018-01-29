@@ -471,7 +471,7 @@ Polymer({
       }
     var privateKey = (document.getElementById('dummyKey').value).replace(/\s+/g, '');
     var password = document.getElementById('dummyPassword').value;
-    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey != undefined && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62) {
+    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length > 0 && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62) {
       var wallet = new ethers.Wallet(privateKey);
       wallet.encrypt(password, { scrypt: { N: 262144 } }).then(function(finalAccount) {
         finalAccountTmp = JSON.parse(finalAccount);
@@ -557,20 +557,26 @@ Polymer({
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/UTC--';
       }
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var mnemonicNotification = {
+        icon: iconPath,
+        body: "Please save the phrase (mnemonic) in the safe place in order to retrieve your account in case of any failure"};
     var password1 = document.getElementById('newAccountPasswordMnemonic').value;
     var password2 = document.getElementById('newAccountPasswordMnemonicVerify').value;
-    var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
     if (password1 == password2 && password1.length > 0 && zxcvbn(password1).score >= 2) {
+      // It's important to show Notification before mnemonic generation, otherwise we would see alert first
+      new Notification("Save mnemonic", mnemonicNotification);
+      var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
       var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
       wallet.encrypt(password1, { scrypt: { N: 262144 } }).then(function(finalAccount) {
       finalAccountTmp = JSON.parse(finalAccount);
       account = finalAccountTmp.address;
       pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+      fs.writeFile(pathOfKey, finalAccount, 'utf-8');
+      alert(mnemonic); });
       this.clearNewAccountFieldsMnemonic();
       this.$.newMnemonicAccountDialog.close();
       this.$.createNewAccountDialog.close();
-      alert("Your mnemonic is:" + "\n\n" + mnemonic + "\n\n" + "Please store this safely in order to retrieve your account in case of any failure");
     } else {
       alert("Password does not match the confirm password, was empty or just too easy to guess");
       return false;
@@ -789,6 +795,12 @@ Polymer({
     document.getElementById('coinsAccount').value = "";
     document.getElementById('sendPasswordAccount').value = "";
     document.getElementById('senderAccount').value = "";
+  },
+  patchOverlay: function (e) {
+    // hack from: https://stackoverflow.com/a/31510980
+    if (e.target.withBackdrop) {
+      e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+    }
   }
 });
 
