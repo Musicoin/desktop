@@ -102,16 +102,16 @@ identicon-element {
   font-size: 38px;
 }
 
-#status {
+#introStatus {
   padding-top: 6px;
   font-family: 'Lato' sans-serif;
   font-weight: 400;
   display: flex;
   font-size: 20px;
   justify-content: center;
+  text-align: center;
   color: lightgrey;
   background: rgba(0,0,0,0.4);
-  
 }
 
 paper-progress {

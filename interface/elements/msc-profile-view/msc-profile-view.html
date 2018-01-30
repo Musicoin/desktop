@@ -114,7 +114,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="newAccountDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newAccountDialog">
       <p>Enter a password for the new account</p>
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
       <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
@@ -125,7 +125,7 @@
       </div>
     </paper-dialog>
     
-    <paper-dialog id="newMnemonicAccountDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newMnemonicAccountDialog">
       <p>Enter a password for the new mnemonic account</p>
       <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the phrase you will see on the next step in the safe place</p>
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
@@ -153,7 +153,7 @@
       </div>
     </paper-dialog>
     
-    <paper-dialog id="signMsgDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="signMsgDialog">
       <p>Here you can sign a message</p>
       <p>Write a message and enter password to unlock you account</p>
       <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
@@ -167,7 +167,7 @@
       </div>
     </paper-dialog>
     
-    <paper-dialog id="verifyMsgDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="verifyMsgDialog">
       <p>Here you can verify a message signed with signature</p>
       <p>Enter a signature, account address, and paste a message to verify</p>
       <paper-input id=signature label="Signature"></paper-input>
@@ -205,7 +205,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="unlockPrivateKeyDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="unlockPrivateKeyDialog">
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure no screencasting software is running!</p>
       <p>Enter password for your account to unlock it and show private key</p>
       <paper-input disabled id=sourceAccount label="Account" style="display: none;"></paper-input>
@@ -216,7 +216,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="createKeyFromPrivateKey">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromPrivateKey">
       <p>Enter your private key and new password to store your key in secure storage and access your account</p>
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
       <paper-input id=dummyKey type="password" label="Private Key"></paper-input>
@@ -227,7 +227,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="createKeyFromMnemonic">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromMnemonic">
       <p>Enter your mnemonic and new password to store your key in secure storage and access your account</p>
       <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
       <paper-input id=mnemonic label="Mnemonic" auto-validate pattern="[a-zA-Z\s]*" error-message="letters only!"></paper-input>
@@ -251,7 +251,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="approveRemoveAccountDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveRemoveAccountDialog">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
       <p style="font-size: 16px;">You want to remove <b>{{userAccount}}</b> with</p>
       <p style="text-align: center; font-weight: 900; font-size: 18px;">{{userBalance}}</p>
@@ -267,7 +267,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="approveSendDialog">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialog">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
         <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
@@ -281,7 +281,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="approveSendDialogAccount">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialogAccount">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
         <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
@@ -296,7 +296,7 @@
     </paper-dialog>
 
     <style>:host {--primary-text-color: grey;}</style>
-    <paper-dialog id="sendDialogMenu">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogMenu">
       <p>Enter the recipient address, the amount to send, and your password</p>
       <div class="autocomplete-wrapper">
       <paper-input id="sender" label="From Account"></paper-input>
@@ -313,7 +313,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="sendDialogFromAccount">
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogFromAccount">
       <p>Enter the recipient address, the amount to send, and your password</p>
       <img src={{userImage}} class="avatar" title={{userAccount}} style="width: 64px; display: block; margin: 0 auto;">
       <paper-input disabled id="senderAccount" label="From Account"></paper-input>

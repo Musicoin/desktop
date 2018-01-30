@@ -7,23 +7,25 @@
     <div class="flex-center mt80">Welcome to the Musicoin Desktop Wallet</div>
     <div class="flex-center mt20">First create new account or import your old account</div>
     <div class="buttons-style">
-      <paper-button raised on-tap="handleNewAccount" id="new-account">NEW ACCOUNT</paper-button>
+      <paper-button raised on-tap="handleMnemonicAccount" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
     </div>
-    <paper-dialog id="newAccountDialog">
-      <p>Enter a password for the new account.  Please note that there is no way to recover this password later.</p>
-      <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
-      <paper-input id=newAccountPasswordVerify type="password" label="Re Enter Password"></paper-input>
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newMnemonicAccountDialog">
+      <p>Enter a password for the new mnemonic account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the phrase you will see on the next step in the safe place</p>
+      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
+      <paper-input id=newAccountPasswordMnemonicIntro type="password" label="Password"></paper-input>
+      <paper-input id=newAccountPasswordMnemonicVerifyIntro type="password" label="Re Enter Password"></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
-        <paper-button autofocus on-tap="createNewAccount">Ok</paper-button>
+        <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">Cancel</paper-button>
+        <paper-button autofocus on-tap="createNewMnemonicAccount">OK</paper-button>
       </div>
     </paper-dialog>
     <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
     <div class="intro" hidden$="{{_hideIntroStatus()}}">
     <div id="backup" style="display: none;">
-    <div id="status">{{txStatus}}</div>
+    <div id="introStatus"></div>
     <div class="flex-center mt20">Next time you can use <div>&nbsp;</div>
     <iron-icon id="backup" icon="icons:backup"></iron-icon> <div>&nbsp;</div>to backup your account
     </div>

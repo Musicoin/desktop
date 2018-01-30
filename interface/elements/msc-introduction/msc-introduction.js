@@ -4,6 +4,8 @@ var path = require('path');
 var Finder = require('fs-finder');
 var os = require('os');
 var platform = os.platform();
+var ethers = require('ethers');
+var zxcvbn = require('zxcvbn');
 
 if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
   var introduction = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\introduction.intro';
@@ -23,7 +25,6 @@ Polymer({
   properties: {
     accounts: String,
     username: String,
-    txStatus: String,
     nodeId: String,
     locale: Object,
     chainVersion: String,
@@ -82,7 +83,7 @@ Polymer({
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("win32")) {
-        var pathOfKey = process.env.APPDATA + 'Musicoin\\keystore\\' + path.basename(filePath);
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("darwin")) {
         var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/' + path.basename(filePath);
       } else if (platform.includes("linux")) { //linux
@@ -94,36 +95,63 @@ Polymer({
       });
   });
   },
-  handleNewAccount: function() {
-    this.$.newAccountDialog.open();
+  handleMnemonicAccount: function() {
+    this.$.newMnemonicAccountDialog.open();
   },
-  createNewAccount: function(e) {
-    var v1 = this.$.newAccountPassword.value;
-    var v2 = this.$.newAccountPasswordVerify.value;
-    if (v1 == v2) {
-      mscIntf.accountModule.createAccount(this.$.newAccountPassword.value)
-        .then(status => this.txStatus = "Created account: " + status)
-        .then(account => document.querySelector("msc-introduction").backupAccount(account.slice(19)))
-        .then(icon => document.getElementById('backup').style.display = 'block')
-        .catch(err => this.txStatus = "Failed to create account: " + err);
-      this.clearNewAccountFields();
-      this.$.newAccountDialog.close();
+  createNewMnemonicAccount: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/UTC--';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/UTC--';
+      }
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var mnemonicNotification = {
+        icon: iconPath,
+        body: "Please save the phrase (mnemonic) in the safe place in order to retrieve your account in case of any failure"};
+    var password1 = document.getElementById('newAccountPasswordMnemonic').value;
+    var password2 = document.getElementById('newAccountPasswordMnemonicVerify').value;
+    if (password1 == password2 && password1.length > 0 && zxcvbn(password1).score >= 2) {
+      // It's important to show Notification before mnemonic generation, otherwise we would see alert first
+      new Notification("Save mnemonic", mnemonicNotification);
+      var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
+      var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+      wallet.encrypt(password1, { scrypt: { N: 262144 } }).then(function(finalAccount) {
+      finalAccountTmp = JSON.parse(finalAccount);
+      account = finalAccountTmp.address;
+      pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+      fs.writeFile(pathOfKey, finalAccount, 'utf-8');
+      document.querySelector("msc-introduction").backupAccount(account);
+      document.getElementById('backup').style.display = 'block';
+      document.getElementById('introStatus').textContent = "";
+      document.getElementById('introStatus').textContent = "Created account: " + "0x" + account; });
+      this.clearNewAccountFieldsMnemonic();
+      this.$.newMnemonicAccountDialog.close();
+      alert(mnemonic);
     } else {
-      alert("Passwords do not match!");
+      alert("Password does not match the confirm password, was empty or just too easy to guess");
       return false;
     }
-
   },
-  clearNewAccountFields: function() {
-    this.$.newAccountPasswordVerify.value = "";
-    this.$.newAccountPassword.value = "";
+  clearNewAccountFieldsMnemonic: function() {
+    document.getElementById('newAccountPasswordMnemonicIntro').value = "";
+    document.getElementById('newAccountPasswordMnemonicVerifyIntro').value = "";
+  },
+  patchOverlay: function (e) {
+    // hack from: https://stackoverflow.com/a/31510980
+    if (e.target.withBackdrop) {
+      e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+    }
   },
   backupAccount: function(account) {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     document.getElementById('fileDialogBackup').click();
     var firstAlert = {
         icon: iconPath,
-        body: "Select directory to backup new created account."};
+        body: "Select directory to backup new created account"};
     new Notification("Select directory", firstAlert);
     document.querySelector('#fileDialogBackup').addEventListener("change", function() {
     var tmpPath = this.value;
