@@ -364,7 +364,7 @@ Polymer({
     for(var i = 0; i< obj['nodes'].length; i++) {
       remoteNodes.push(obj['nodes'][i]);
     }
-    console.log(remoteNodes);
+    //console.log(remoteNodes);
     mscIntf.accountModule.getNodeId()
       .then(result => {
         this.nodeId = result;
@@ -471,22 +471,24 @@ Polymer({
       }
     var privateKey = (document.getElementById('dummyKey').value).replace(/\s+/g, '');
     var password = document.getElementById('dummyPassword').value;
-    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length > 0 && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62) {
+    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length > 0 && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62 && privateKey != password) {
       var wallet = new ethers.Wallet(privateKey);
       wallet.encrypt(password, { scrypt: { N: 262144 } }).then(function(finalAccount) {
         finalAccountTmp = JSON.parse(finalAccount);
         account = finalAccountTmp.address;
-        pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+	accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+        pathOfKey = pathOfKey + accountName;
         fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
         document.getElementById('dummyKey').value = "";
         document.getElementById('dummyPassword').value = "";
         this.$.importAnyDialog.close();
-      } else if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey != undefined && privateKey.length <= 64 && privateKey.length >= 60) {
+      } else if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length <= 64 && privateKey.length >= 60 && privateKey != password) {
         var wallet = new ethers.Wallet("0x" + privateKey);
         wallet.encrypt(password).then(function(finalAccount) {
           finalAccountTmp = JSON.parse(finalAccount);
-          account = finalAccountTmp.address.slice(2);
-          pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+          account = finalAccountTmp.address;
+          accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+          pathOfKey = pathOfKey + accountName;
           fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
         document.getElementById('dummyKey').value = "";
         document.getElementById('dummyPassword').value = "";
@@ -499,6 +501,10 @@ Polymer({
         document.getElementById('dummyKey').value = "";
         document.getElementById('dummyPassword').value = "";
         alert("Password too easy to guess");
+      } else if (privateKey = password) {
+        document.getElementById('dummyKey').value = "";
+        document.getElementById('dummyPassword').value = "";
+        alert("Using same password as private key is a bad idea");
       } else {
         document.getElementById('dummyKey').value = "";
         document.getElementById('dummyPassword').value = "";
@@ -525,7 +531,8 @@ Polymer({
       wallet.encrypt(password, { scrypt: { N: 262144 } }).then(function(finalAccount) {
       finalAccountTmp = JSON.parse(finalAccount);
       account = finalAccountTmp.address;
-      pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+      accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+      pathOfKey = pathOfKey + accountName;
       fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
       document.getElementById('mnemonic').value = "";
       document.getElementById('mnemonicPassword').value = "";
@@ -571,7 +578,9 @@ Polymer({
       wallet.encrypt(password1, { scrypt: { N: 262144 } }).then(function(finalAccount) {
       finalAccountTmp = JSON.parse(finalAccount);
       account = finalAccountTmp.address;
-      pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+      // finalAccountTmp["x-ethers"].gethFilename works only vs mnemonic creation, so kinda useless
+      accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+      pathOfKey = pathOfKey + accountName;
       fs.writeFile(pathOfKey, finalAccount, 'utf-8');
       alert(mnemonic); });
       this.clearNewAccountFieldsMnemonic();
