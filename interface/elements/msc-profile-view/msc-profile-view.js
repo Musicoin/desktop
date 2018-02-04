@@ -7,8 +7,7 @@ var jayson = require('jayson');
 var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
-var CoinMarketCap = require("coinmarketcap-api");
-var market = new CoinMarketCap();
+var rp = require('request-promise-native');
 var nwin = gui.Window.get();
 var blockies = require('ethereum-blockies');
 var ethers = require('ethers');
@@ -625,11 +624,12 @@ Polymer({
     this.$.showAccountDetailsDialog.close();
   },
   getMarketValue: function() {
-    market.getTicker({ limit: 1, currency: 'musicoin' })
+    var CoinMarketCapUrl = "https://api.coinmarketcap.com/v1/ticker/musicoin/?limit=1";
+    rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(usd => this.musicUsd = usd[0].price_usd)
       .catch(error => console.log(error));
-    market.getTicker({ limit: 1, currency: 'musicoin' })
+    rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(btc => this.musicBtc = btc[0].price_btc)
       .catch(error => console.log(error));
