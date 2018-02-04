@@ -112,8 +112,8 @@ Polymer({
     var mnemonicNotification = {
         icon: iconPath,
         body: "Please save the phrase (mnemonic) in the safe place in order to retrieve your account in case of any failure"};
-    var password1 = document.getElementById('newAccountPasswordMnemonic').value;
-    var password2 = document.getElementById('newAccountPasswordMnemonicVerify').value;
+    var password1 = document.getElementById('newAccountPasswordMnemonicIntro').value;
+    var password2 = document.getElementById('newAccountPasswordMnemonicVerifyIntro').value;
     if (password1 == password2 && password1.length > 0 && zxcvbn(password1).score >= 2) {
       // It's important to show Notification before mnemonic generation, otherwise we would see alert first
       new Notification("Save mnemonic", mnemonicNotification);
@@ -122,7 +122,8 @@ Polymer({
       wallet.encrypt(password1, { scrypt: { N: 262144 } }).then(function(finalAccount) {
       finalAccountTmp = JSON.parse(finalAccount);
       account = finalAccountTmp.address;
-      pathOfKey = (pathOfKey + new Date().toISOString() + '--' + account).split(':').join('-');
+      accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+      pathOfKey = pathOfKey + accountName;
       fs.writeFile(pathOfKey, finalAccount, 'utf-8');
       document.querySelector("msc-introduction").backupAccount(account);
       document.getElementById('backup').style.display = 'block';
