@@ -197,10 +197,15 @@ Polymer({
       });
   },
   backupAccount: function(e) {
-    var account = e.model.account.address.slice(2);
-    document.getElementById('fileDialogBackup').click();
-    document.querySelector('#fileDialogBackup').addEventListener("change", function() {
+    var account = e.model.account.address;
+    document.getElementById('fileDialogBackup-' + account).click();
+    document.querySelector('#fileDialogBackup-' + account).addEventListener("change", function() {
     var tmpPath = this.value;
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {
+       icon: iconPath,
+       body: "You need to KNOW password for every account to unlock it." +
+       " You can locate your account in: \n" + tmpPath + " directory."};
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
@@ -210,28 +215,24 @@ Polymer({
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
-    Finder.in(pathOfKey).findFiles(account, function(pathOfAccount) {
-    var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    fs.copy(String(pathOfAccount), filePath, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
-      var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-      var alert = {
-        icon: iconPath,
-        body: "You need to KNOW password for every account to unlock it." +
-        " You can locate your account in: \n" + tmpPath + " directory."};
+      pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
+      var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
+      fs.copy(String(pathOfAccount), filePath);
+      document.getElementById('fileDialogBackup-' + account).value = "";
+      // Fires double notifications, when same account selected again
       new Notification("Backup in " + tmpPath, alert);
-      var win = nw.Window.get();
-      win.reloadIgnoringCache();
-      });
   });
   },
   backupAccountFromDialog: function() {
     var account = document.getElementById('AccountDialog').textContent;
-    document.getElementById('fileDialogBackup').click();
-    document.querySelector('#fileDialogBackup').addEventListener("change", function() {
+    document.getElementById('fileDialogBackupAccount-' + account).click();
+    document.querySelector('#fileDialogBackupAccount-' + account).addEventListener("change", function() {
     var tmpPath = this.value;
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {
+       icon: iconPath,
+       body: "You need to KNOW password for every account to unlock it." +
+       " You can locate your account in: \n" + tmpPath + " directory."};
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
@@ -241,21 +242,12 @@ Polymer({
       } else if (platform.includes("linux")) { //linux
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
       }
-    Finder.in(pathOfKey).findFiles(account.slice(2), function(pathOfAccount) {
+    pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    fs.copy(String(pathOfAccount), filePath, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
-      var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-      var alert = {
-        icon: iconPath,
-        body: "You need to KNOW password for every account to unlock it." +
-        " You can locate your account in: \n" + tmpPath + " directory."};
-      new Notification("Backup in " + tmpPath, alert);
-      var win = nw.Window.get();
-      win.reloadIgnoringCache();
-      });
+    fs.copy(String(pathOfAccount), filePath);
+    document.getElementById('fileDialogBackupAccount-' + account).value = "";
+    // Fires double notifications, when same account selected again
+    new Notification("Backup in " + tmpPath, alert);
   });
   },
   showExplorerWindow: function(e) {
@@ -290,9 +282,8 @@ Polymer({
     if (!_.includes(arr, val)) {
     arr.unshift(val);
     } else {
-    //_.remove(arr, item => item === val);
+    _.union(arr, [val]);
     }
-    console.log(arr);
   },
   maxWindow: function() {
     if ( nwin.width > 1000 ) {
@@ -413,8 +404,17 @@ Polymer({
       this.clearNewAccountFields();
       this.$.newAccountDialog.close();
       this.$.createNewAccountDialog.close();
+    } else if (v1 != v2) {
+        this.clearNewAccountFields();
+        alert("Password does not match the confirm password");
+    } else if (v1 == v2 && v1.length == 0) {
+        this.clearNewAccountFields();
+        alert("Password was empty!");
+    } else if (zxcvbn(v1).score < 2) {
+        this.clearNewAccountFields();
+        alert("Password too easy to guess");
     } else {
-      alert("Password does not match the confirm password, was empty or just too easy to guess");
+      this.clearNewAccountFields();
       return false;
     }
   },
@@ -441,8 +441,7 @@ Polymer({
     ethers.Wallet.fromEncryptedWallet(accountFile, password)
       .then(wallet => alert(wallet.privateKey))
       .catch(err => alert(err));
-    document.getElementById('sourceAccount').value = "";
-    document.getElementById('unlockAccount').value = "";
+    this.clearPrivateKey();
   },
   clearPrivateKey: function() {
     document.getElementById('sourceAccount').value = "";
@@ -478,8 +477,7 @@ Polymer({
 	accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
         pathOfKey = pathOfKey + accountName;
         fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+        this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length <= 64 && privateKey.length >= 60 && privateKey != password) {
         var wallet = new ethers.Wallet("0x" + privateKey);
@@ -489,24 +487,19 @@ Polymer({
           accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
           pathOfKey = pathOfKey + accountName;
           fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+        this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length = 0) {
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+          this.clearKeyFromPrivateKey();
         alert("Password was empty");
       } else if (zxcvbn(password).score < 2) {
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+          this.clearKeyFromPrivateKey();
         alert("Password too easy to guess");
       } else if (privateKey = password) {
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+          this.clearKeyFromPrivateKey();
         alert("Using same password as private key is a bad idea");
       } else {
-        document.getElementById('dummyKey').value = "";
-        document.getElementById('dummyPassword').value = "";
+        this.clearKeyFromPrivateKey();
         alert("Incorrect private key provided");
       }
   },
@@ -525,7 +518,7 @@ Polymer({
       }
     var password = document.getElementById('mnemonicPassword').value;
     var mnemonic = (document.getElementById('mnemonic').value).toLowerCase();
-    if (password.length > 0 && zxcvbn(password).score >= 2 ) {
+    if (password.length > 0 && password.length < 65 && zxcvbn(password).score >= 2) {
       var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
       wallet.encrypt(password, { scrypt: { N: 262144 } }).then(function(finalAccount) {
       finalAccountTmp = JSON.parse(finalAccount);
@@ -533,14 +526,20 @@ Polymer({
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
       fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
-      document.getElementById('mnemonic').value = "";
-      document.getElementById('mnemonicPassword').value = "";
+      this.clearKeyFromMnemonic();
       this.$.importAnyDialog.close();
+    } else if (password.length = 0) {
+        this.clearKeyFromMnemonic();
+        alert("Password was empty!");
+    } else if (password.length > 64) {
+        this.clearKeyFromMnemonic();
+        alert("We can't use password longer more than 64 bytes, due bug in scrypt-js\nIn case you want more stronger password, consider using \n<Create Account> instead of <Create Mnemonic Account>\nYou can find full description here:\n https://github.com/ricmoo/scrypt-js/issues/11");
+    } else if (zxcvbn(password).score < 2) {
+        this.clearKeyFromMnemonic();
+        alert("Password too easy to guess");
     } else {
-      document.getElementById('mnemonic').value = "";
-      document.getElementById('mnemonicPassword').value = "";
-      alert("Password was empty or just too easy to guess");
-      return false;
+        this.clearKeyFromMnemonic();
+        return false;
     }
   },
   clearKeyFromMnemonic: function() {
@@ -569,7 +568,7 @@ Polymer({
         body: "Please save the phrase (mnemonic) in the safe place in order to retrieve your account in case of any failure"};
     var password1 = document.getElementById('newAccountPasswordMnemonic').value;
     var password2 = document.getElementById('newAccountPasswordMnemonicVerify').value;
-    if (password1 == password2 && password1.length > 0 && zxcvbn(password1).score >= 2) {
+    if (password1 == password2 && password1.length > 0 && password1.length < 65 && zxcvbn(password1).score >= 2) {
       // It's important to show Notification before mnemonic generation, otherwise we would see alert first
       new Notification("Save mnemonic", mnemonicNotification);
       var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
@@ -585,9 +584,21 @@ Polymer({
       this.clearNewAccountFieldsMnemonic();
       this.$.newMnemonicAccountDialog.close();
       this.$.createNewAccountDialog.close();
+    } else if (password1 != password2) {
+        this.clearNewAccountFieldsMnemonic();
+        alert("Password does not match the confirm password");
+    } else if (password1 == password2 && password1.length == 0) {
+        this.clearNewAccountFieldsMnemonic();
+        alert("Password was empty!");
+    } else if (password1 == password2 && password1.length > 64) {
+        this.clearNewAccountFieldsMnemonic();
+        alert("We can't use password longer more than 64 bytes, due bug in scrypt-js\nIn case you want more stronger password, consider using \n<Create Account> instead of <Create Mnemonic Account>\nYou can find full description here:\n https://github.com/ricmoo/scrypt-js/issues/11");
+    } else if (password1 == password2 && zxcvbn(password1).score < 2) {
+        this.clearNewAccountFieldsMnemonic();
+        alert("Password too easy to guess");
     } else {
-      alert("Password does not match the confirm password, was empty or just too easy to guess");
-      return false;
+        this.clearNewAccountFieldsMnemonic();
+        return false;
     }
   },
   approveRemoveAccount: function() {
@@ -628,11 +639,11 @@ Polymer({
     rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(usd => this.musicUsd = usd[0].price_usd)
-      .catch(error => console.log(error));
+      .catch(error => this.musicUsd = "API Connection Failed");
     rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(btc => this.musicBtc = btc[0].price_btc)
-      .catch(error => console.log(error));
+      .catch(error => this.musicBtc = "API Connection Failed");
   },
   marketRates: function() {
     document.querySelector("msc-profile-view").getMarketValue();
@@ -668,6 +679,10 @@ Polymer({
     this.userAccount = account;
     this.$.signMsgDialog.open()
   },
+  signMsgFromMenu: function() {
+    this.getAccounts = mscIntf.accountModule.getAccounts();
+    this.$.signMsgDialogFromMenu.open()
+  },
   signMsgAction: function() {
     var account = document.getElementById('signMsgAccount').value;
     var password = document.getElementById('signPassword').value;
@@ -687,10 +702,34 @@ Polymer({
     if (msg.length > 0) {
       ethers.Wallet.fromEncryptedWallet(accountFile, password).then(function(wallet) {
       alert(wallet.signMessage(msg)); });
-      document.getElementById('signMsgAccount').value = "";
-      document.getElementById('signPassword').value = "";
-      document.getElementById('signMsg').value = "";
+      this.clearSignMsg();
       this.$.signMsgDialog.close();
+    } else {
+      alert("You want to sign empty message!");
+      return false;
+    }
+  },
+  signMsgActionMenu: function() {
+    var account = document.getElementById('signMsgAccountMenu').value;
+    var password = document.getElementById('signPasswordMenu').value;
+    var msg = document.getElementById('signMsgMenu').value;
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
+    pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
+    var accountFile = JSON.stringify(JSON.parse(fs.readFileSync((String(pathOfAccount)), 'utf-8')));
+    if (msg.length > 0) {
+      ethers.Wallet.fromEncryptedWallet(accountFile, password).then(function(wallet) {
+      alert(wallet.signMessage(msg)); });
+      this.clearSignMsgMenu();
+      this.$.signMsgDialogFromMenu.close();
     } else {
       alert("You want to sign empty message");
       return false;
@@ -703,21 +742,24 @@ Polymer({
     var signature = document.getElementById('signature').value;
     var msgToVerify = document.getElementById('verifyMsg').value;
     var account = document.getElementById('accountVerify').value;
-    console.log(account.length);
     if (msgToVerify.length > 0 && account.includes("0x") && account.length >= 38 && signature.includes("0x")) {
       var address = ethers.Wallet.verifyMessage(msgToVerify, signature);
       if (address = account) {
       alert("Message was signed with correct account: " + address);
-      document.getElementById('signature').value = "";
-      document.getElementById('verifyMsg').value = "";
-      document.getElementById('accountVerify').value = "";
+      this.clearVerifyMsg();
       this.$.verifyMsgDialog.close();
       } else {
-      alert("Invalid message signature!");
+          alert("Invalid message signature!");
       }
+    } else if (msgToVerify.length == 0) {
+        alert("Empty message was provided");
+    } else if (account.length < 38) {
+        document.getElementById('accountVerify').value = "";
+        alert("Invalid account was provided");
     } else {
-      alert("Incorrect details provided:\nPossible reasons: Empty message, not valid account or invalid signature provided");
-      return false;
+       this.clearVerifyMsg();
+       alert("Incorrect details provided(possible reasons):\nNot valid account\nInvalid signature provided");
+       return false;
     }
   },
   setCustomCoinbase: function() {
@@ -778,7 +820,12 @@ Polymer({
     document.getElementById('signPassword').value = "";
     document.getElementById('signMsg').value = "";
   },
-  clearverifyMsg: function() {
+  clearSignMsgMenu: function() {
+    document.getElementById('signMsgAccountMenu').value = "";
+    document.getElementById('signPasswordMenu').value = "";
+    document.getElementById('signMsgMenu').value = "";
+  },
+  clearVerifyMsg: function() {
     document.getElementById('signature').value = "";
     document.getElementById('verifyMsg').value = "";
     document.getElementById('accountVerify').value = "";
@@ -822,6 +869,9 @@ Polymer({
     account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
+    account.append(new nw.MenuItem({ type: 'separator' }));
+    account.append(new nw.MenuItem({ label: 'Sign', key: 's', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").signMsgFromMenu(); } }));
+    account.append(new nw.MenuItem({ label: 'Verify Message', key: 'v', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").verifyMsg(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
     account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
@@ -914,13 +964,14 @@ Polymer({
     ntpClient.getNetworkTime("pool.ntp.org", 123, function(err, date) {
     //console.log("  System time  :" + new Date());
     //console.log("  Network time :" + date);
-    var nDate = date.setSeconds(0,0);
-    var sDate = (new Date()).setSeconds(0,0);
+    var nDate = date.getTime();
+    var sDate = new Date().getTime();
 
     if(err) {
         console.error(err);
         return;
-    } else if (nDate != sDate) {
+    // Lazy check, detect only difference ~ 2 minutes
+    } else if (nDate - sDate > 90000 || nDate - sDate < -90000) {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
         icon: iconPath,
