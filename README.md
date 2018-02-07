@@ -1,6 +1,7 @@
-# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.70-%23ffff00.svg)
+# Musicoin Desktop ![Version Info](https://img.shields.io/badge/version-0.80-%23ffff00.svg)
 
 The official Musicoin Wallet
+P.S: Further bug reports were addressed on master
 
 # Running on Ubuntu (for Window/Mac, just download, unzip and run up Musicoin-wallet)
 
