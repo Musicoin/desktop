@@ -12,5 +12,3 @@ build/
 bin/
 config/config.ext.js
 .DS_Store
-package-lock.json
-bootnodes.json.org
