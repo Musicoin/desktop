@@ -5,7 +5,8 @@
   <link rel="import" type="css" href="msc-element-general.css">
   <template>
 
-    <div id="background" style="background-image:url('/interface/images/wallpaper/concert2.jpg'); opacity: 1 !important"></div>
+    <div id="background" style="background-image:url('/interface/images/wallpaper/concert1.jpg'); opacity: 1"></div>
+    <div id="background2" style="background-image:url('/interface/images/wallpaper/concert2.jpg'); opacity: 1"></div>
 
     <!-- msc-chain-status></msc-chain-status -->
     <app-drawer-layout fullbleed>
@@ -30,7 +31,7 @@
         <msc-profile-view></msc-profile-view>
       </app-header-layout>
     </app-drawer-layout>
-    <msc-simple-login-view hidden$="{{hideSyncWindow}}"></msc-simple-login-view>
+    <msc-introduction hidden$="{{hideIntroWindow}}"></msc-introduction>
     <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
     <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
   </template>

@@ -25,7 +25,6 @@
 .name-area {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
   justify-content: space-around;
   align-items: center;
 }
@@ -38,10 +37,23 @@
   line-height: 1;
 }
 
-.account {
-  color: var(--msc-subtle-text-color);
-  font-family: 'Ubuntu' monospace;
-  font-size: 22px;
+.account-address {
+  font-size: 14px;
+  font-family: monospace;
+  margin-left: 85px;
+  position: absolute;
+  margin-top: 18px;
+  color: #393a3c;
+}
+
+.account-music, .account-btc, .account-usd {
+  font-family: monospace;
+  font-size: 14px;
+  margin-top: 35px;
+  margin-left: 20%;
+  position: absolute;
+  color: #393a3c;
+  font-weight: 700;
 }
 
 .user-message {
@@ -158,6 +170,12 @@ table {
   cursor: pointer;
 }
 
+.avatar {
+  cursor: pointer;
+  margin-right: 90%;
+}
+
+
 .flex-right {
   display: flex;
   justify-content: flex-end;
@@ -171,6 +189,15 @@ table {
 .flex-between {
   display: flex;
   justify-content: space-between;
+}
+
+.flex-top {
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 98%;
+  justify-content: center;
+  z-index: 1000;
 }
 
 paper-button {
@@ -191,18 +218,20 @@ table {
   color: red;
 }
 
+#accounts {
+  margin-top: 8px;
+}
+
 #row1 {
   position: absolute;
   left: 5%;
 }
 
 #tableheader {
-  height: 50px;
-  font-size: 14px;
-  background: #2C2C2C;
+  font-size: 15px;
   font-family: 'Lato' sans-serif;
-  font-weight: 900;
-  border: 2px #2C2C2C solid;
+  font-weight: 700;
+  background-color: #f2c455 !important;
 }
 
 .top-buttons {
@@ -216,6 +245,7 @@ table {
   border-radius: 5px;
   position: absolute;
   right: 1.5%;
+  padding-top: 10px;
 }
 
 #new-account {
@@ -228,19 +258,23 @@ table {
   color: #302d38;
 }
 
-#key-backup {
-  background: orange;
+#private-key {
+  background: #dc4576;
   color: #302d38;
 }
 
-#add-peers {
-  font-family: 'Lato' sans-serif;
-  font-weight: 900 !important;
-  font-size: 13px;
-  border-radius: 5px;
+#mnemonic-phrase {
+  background: #5bdc89;
+  color: #302d38;
+}
 
+#approve-remove {
+  background: #da7c45;
+  color: #302d38;
+}
 
-  background: rgba(255,255,255,0.6);
+#send-funds {
+  background: #f19ff7;
   color: #302d38;
 }
 
@@ -252,27 +286,13 @@ table {
   visibility: hidden;
 }
 
-#row6 {
-  position: relative;
-  top: 15%;
-  left: -85vw !important;
-  font-family: 'Lato', sans-serif !important;
-  font-weight: 900 !important;
-  font-size: 15px;
-  color: #fcd345;
-}
-
 .sync-status {
   font-family: 'Lato', sans-serif !important;
   font-weight: 900 !important;
 }
 
 #data1 {
-  font-family: 'Lato', sans-serif !important;
   color: #393a3c;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  height: 50px;
 }
 
 table {
@@ -282,7 +302,7 @@ table {
 
 th, td {
   text-align: center;
-  padding: 8px;
+  padding: 6px;
 }
 
 tr:nth-child(odd){
@@ -290,4 +310,37 @@ tr:nth-child(odd){
 }
 tr:nth-child(even) {
   background-color: #eaebef !important;
+}
+
+.tab button {
+  background-color: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: 'Lato' sans-serif;
+  font-size: 18px;
+  font-weight: 700 !important;
+  border: 1px solid #f2c455;
+}
+
+.tab button:hover {
+  background-color: #f2bcf7;
+}
+
+.tab button.active {
+  background-color: #f2c455;
+}
+
+.tabcontent {
+  display: none;
+}
+
+#mPlayer {
+ position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
 }

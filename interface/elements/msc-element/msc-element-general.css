@@ -10,7 +10,7 @@
   --msc-primary-background-color: transparent;
   --primary-text-color: white;
   --msc-subtle-text-color: #aaa;
-  --msc-footer-height: 24px;
+  --msc-footer-height: 0px;
   display: block;
 }
 msc-profile-view {
@@ -245,7 +245,7 @@ h3[disabled] {
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-msc-simple-login-view {
+msc-introduction {
     z-index: 3;
     position: fixed;
     top: 0;
@@ -291,14 +291,4 @@ msc-simple-login-view {
     position: absolute;
     background-size: cover;
     overflow: hidden;
-}
-
-msc-chain-status {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    left: 0px;
-    z-index: 1;
-    justify-content: flex-end;
-    height: var(--msc-footer-height);
 }

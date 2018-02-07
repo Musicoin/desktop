@@ -9,4 +9,6 @@ node_modules/*
 .atomignore
 hub/ether.settings.js
 build/
+bin/
 config/config.ext.js
+.DS_Store

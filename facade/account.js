@@ -17,7 +17,6 @@ module.exports = function(web3Connector) {
     setCoinbase: function(address) {
       return web3Connector.setCoinbase(address);
     },
-
     getBalance: function(account) {
       return web3Connector.getUserBalanceInMusicoin(account);
     },

@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 var Web3 = require('web3');
 var request = require("request");
+var blockies = require('ethereum-blockies');
 
 function Web3Connector(chainConfig, mschub, connectionCallback) {
   this.web3 = new Web3();
@@ -164,7 +165,10 @@ Web3Connector.prototype.getAccountDetails = function(account, _coinbase) {
     .then((balance) => {
       return {
         address: account,
+        avatar: blockies.create({ seed:account, size: 8, scale: 16, color: '#f2c455', bgcolor: '#fff'}).toDataURL(),
         displayBalance: this.mchub.clientUtils.formatBalance(balance),
+        displayBalanceUsd: this.mchub.clientUtils.formatBalanceUsd(balance),
+        displayBalanceBtc: this.mchub.clientUtils.formatBalanceBtc(balance),
         balance: balance,
         isCoinbase: account == coinbase
       }
