@@ -1,12 +1,13 @@
-# Musicoin Wallet![Version Info](https://img.shields.io/badge/version-1.0-61008A.svg?style=flat-square&colorA=FFD000&colorB=27053E&label=Musicoin-Wallet)
+# Musicoin Wallet ![Version Info](https://img.shields.io/badge/version-1.0-61008A.svg?style=flat-square&colorA=FFD000&colorB=27053E&label=Musicoin-Wallet)
 
 The official Musicoin Desktop Wallet
 
 ## Nightly Builds
 
-Nightly builds for all supported Operating Systems can be found over at [builder](https://builder.musicoin.org)
+Nightly builds for all supported Operating Systems can be found over at [builder.musicoin.org](https://builder.musicoin.org/)
 
 Supported Operating systems:
+
 1. Windows 10 - 32, 64 bit
 2. macOS - 64 bit
 3. Linux - 32, 64 bit
@@ -14,8 +15,9 @@ Supported Operating systems:
 
 ## Getting started
 
-Prerequisites: Node, npm
-1. Install nwjs `npm install nw`
+Prerequisites: Node.js, npm
+
+1. Install nwjs: `npm install nw`
 2. `npm install`
 3. `npm install bower`
 4. `cd interface/ ; bower install ; cd ..`
@@ -34,7 +36,7 @@ Pull Requests and Bug Reports for common issues via GitHub are most welcome.
 
 ## Bounty program
 
-Specific Issues are ear marked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
+Specific Issues are earmarked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
 
 ## License
 
