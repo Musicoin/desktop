@@ -1,8 +1,6 @@
 <dom-module id="msc-profile-view">
   <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="import" type="css" href="msc-profile-view.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <template>
   <div class="tab flex-top">
   <button class="tablinks" onclick="activeTabs(event, 'wallet')" id="defaultOpen">Wallet</button>
@@ -20,7 +18,6 @@
       <paper-button raised on-tap="createNewAccountDialog" id="new-account">NEW ACCOUNT</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
       <paper-button raised on-tap="importAny" id="old-wallet">IMPORT ACCOUNT</paper-button>
-      <paper-button raised on-tap="verifyMsg" id="verify-msg">VERIFY MESSAGE</paper-button>
       <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
     </div>
 
@@ -44,7 +41,7 @@
               <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
               <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 0px;"></iron-icon>
               <iron-icon icon="icons:text-format" class=clickable title="Sign" on-tap="signMsg" style="left: 20px;"></iron-icon>
-              <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
+              <input id=fileDialogBackup-[[account.address]] type="file" nwdirectory style="display: none;">
             </td>
             <td class="td-button" style="justify-content: center;">
               <img src="/interface/images/icons/musicoin.svg" class="clickable" title="Display Balance In MUSIC" style="width:24px; margin-left: 12px;" on-tap="displayBalanceInMusic">
@@ -91,7 +88,7 @@
       <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <p style="text-align: center;">Show Private Key:
       <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
-      <input id="fileDialogBackup" type="file" nwdirectory style="display: none;">
+      <input id=fileDialogBackupAccount-[[account.address]] type="file" nwdirectory style="display: none;">
       <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
       <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">REMOVE</paper-button>
       <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button>
@@ -174,7 +171,7 @@
       <paper-input id=accountVerify label="Account"></paper-input>
       <paper-textarea style="display: block; width: 400px;" id=verifyMsg label="Message To Verify"></paper-textarea>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearverifyMsg">Cancel</paper-button>
+        <paper-button dialog-dismiss on-tap="clearVerifyMsg">Cancel</paper-button>
         <paper-button autofocus on-tap="verifyMsgAction">Verify</paper-button>
       </div>
     </paper-dialog>
@@ -310,6 +307,24 @@
       <div class="buttons">
         <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
         <paper-button dialog-confirm autofocus on-tap="approveSend">OK</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="signMsgDialogFromMenu">
+      <p>Here you can sign a message</p>
+      <p>Write a message and enter password to unlock you account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
+      <paper-textarea style="display: block; width: 400px;" id=signMsgMenu label="Message To Sign"></paper-textarea>
+      <div class="autocomplete-wrapper">
+      <paper-input id="signMsgAccountMenu" label="Account"></paper-input>
+      <paper-autocomplete-suggestions
+      for="signMsgAccountMenu"
+      source="[[getAccounts]]"></paper-autocomplete-suggestions>
+      </div>
+      <paper-input id=signPasswordMenu type="password" label="Password"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearSignMsgMenu">Cancel</paper-button>
+        <paper-button autofocus on-tap="signMsgActionMenu">Sign</paper-button>
       </div>
     </paper-dialog>
 
