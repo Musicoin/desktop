@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-wallet",
-  "version": "1.0",
+  "version": "1.0.0",
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
