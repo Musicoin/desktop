@@ -1,4 +1,3 @@
-var ntpClient = require('ntp-client');
 Polymer({
   is: 'msc-main-status',
   properties: {
@@ -16,7 +15,7 @@ Polymer({
     return this.syncStatus && this.syncStatus.syncing;
   },
   _computeIsSyncingText: function() {
-    return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "%" : "";
+    return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "% complete": "";
 
   },
   _computeIsMining: function() {
@@ -28,12 +27,12 @@ Polymer({
     return "social:people";
   },
   _formatBlockNumber: function() {
-    if (!this.syncStatus || !this.syncStatus.currentBlock) return "0";
+    if (!this.syncStatus || !this.syncStatus.currentBlock) return "";
     return this.syncStatus.currentBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _formatHighBlockNumber: function() {
-    if (!this.syncStatus || !this.syncStatus.highestBlock) return "0";
-    return this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (!this.syncStatus || !this.syncStatus.highestBlock) return "";
+    return "/" + this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
   _computeMiningTooltip: function() {
     return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";
@@ -50,8 +49,9 @@ Polymer({
     return this.formatHashRate(this.syncStatus.hashrate);
   },
   _computeTimeSinceLastBlockMessage: function() {
+    //console.log(this.syncStatus);
     if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
-    return this._timeSince(this.syncStatus.mostRecentBlockTime);
+    return "Last Block: " + this._timeSince(this.syncStatus.mostRecentBlockTime);
   },
   formatHashRate: function(value) {
     const lookup = ["h/s", "kh/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s"];
@@ -62,48 +62,42 @@ Polymer({
   formatNumber: function(number, decimals) {
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
-  _timeSince: function(syncDate) {
+  _timeSince: function(date) {
+    const seconds = Math.floor((Date.now() - date) / 1000);
+    const intervals = [{
+        value: 60,
+        unit: "m"
+      },
+      {
+        value: 60,
+        unit: "h"
+      },
+      {
+        value: 24,
+        unit: "d"
+      },
+      {
+        value: 30,
+        unit: "mon"
+      },
+      {
+        value: 12,
+        unit: "yr"
+      },
+    ]
+    let unit = "s";
+    let value = seconds;
+    for (let i = 0; i < intervals.length; i++) {
+      const interval = intervals[i];
+      if (value > interval.value) {
+        unit = interval.unit;
+        value = value / interval.value;
+      } else {
+        break;
+      }
+    }
 
-    ntpClient.getNetworkTime("time.nist.gov", 123, function(err, date) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      const seconds = Math.floor((date.getTime() - syncDate) / 1000);
-      const intervals = [{
-          value: 60,
-          unit: "m"
-        },
-        {
-          value: 60,
-          unit: "h"
-        },
-        {
-          value: 24,
-          unit: "d"
-        },
-        {
-          value: 30,
-          unit: "mon"
-        },
-        {
-          value: 12,
-          unit: "yr"
-        },
-      ]
-      let unit = "s";
-      let value = seconds;
-      for (let i = 0; i < intervals.length; i++) {
-        const interval = intervals[i];
-        if (value > interval.value) {
-          unit = interval.unit;
-          value = value / interval.value;
-        } else {
-          break;
-        }
-      }
-      const rounded = Math.round(value);
-      return `${rounded}${unit}`;
-    });
+    const rounded = Math.round(value);
+    return `${rounded}${unit}`;
   }
 });
