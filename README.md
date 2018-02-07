@@ -4,7 +4,13 @@ The official Musicoin Desktop Wallet
 
 ## Nightly Builds
 
-Nightly builds for all supported Operating Systems can be found over at [builder](builder.musicoin.org)
+Nightly builds for all supported Operating Systems can be found over at [builder](https://builder.musicoin.org)
+
+Supported Operating systems:
+1. Windows 10 - 32, 64 bit
+2. macOS - 64 bit
+3. Linux - 32, 64 bit
+4. Windows Legacy (XP, 7) - 32, 64 bit
 
 ## Getting started
 
@@ -28,7 +34,7 @@ Pull Requests and Bug Reports for common issues via GitHub are most welcome.
 
 ## Bounty program
 
-Specific Issues are ear marked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at BOUNTY.md.
+Specific Issues are ear marked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
 
 ## License
 
