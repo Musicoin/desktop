@@ -7,11 +7,10 @@ The official Musicoin Desktop Wallet
 Nightly builds for all supported Operating Systems can be found over at [builder.musicoin.org](https://builder.musicoin.org/)
 
 Supported Operating systems:
-
-1. Windows 10 - 32, 64 bit
-2. macOS - 64 bit
-3. Linux - 32, 64 bit
-4. Windows Legacy (XP, 7) - 32, 64 bit
+1. Windows 7 and later - [64 bit](https://builder.musicoin.org/windows-x64.exe), [32bit](https://builder.musicoin.org/windows-x32.exe)
+2. macOS - [64 bit](https://builder.musicoin.org/mac-x64.zip)
+3. Linux - [64 bit](https://builder.musicoin.org/linux-x64.tar.xz), [32bit](https://builder.musicoin.org/linux-x32.tar.xz)
+4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
 
