@@ -77,15 +77,18 @@ Polymer({
     return false;
   },
   addExistingAccount: function() {
+    document.getElementById('backup').style.display = 'none';
+    document.getElementById('introStatus').textContent = "";
+    document.getElementById('fileDialogIntro').value = "";
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {
         icon: iconPath,
         body: "Select account in UTC/JSON format." +
         " In case you need to import mnemonic or private key, select <Open My wallet> and <Import Account> after introduction screen"};
-    document.getElementById('fileDialog').click();
+    document.getElementById('fileDialogIntro').click();
     new Notification("Select file in UTC/JSON format", alert);
-    document.querySelector('#fileDialog').addEventListener("change", function() {
-    var filePath = this.value;
+    document.querySelector('#fileDialogIntro').addEventListener("change", function() {
+    var filePath = document.getElementById('fileDialogIntro').value;
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\' + path.basename(filePath);
       } else if (platform.includes("win32")) {
@@ -96,8 +99,11 @@ Polymer({
         var pathOfKey = process.env.HOME + '/.musicoin/keystore/' + path.basename(filePath);
       }
     fs.copy(filePath, pathOfKey, function(error) {
+      accountFile = JSON.parse(fs.readFileSync(pathOfKey, 'utf-8'));
       if (error) return console.error(error);
-       console.log('File was copied!')
+       accountFile = JSON.parse(fs.readFileSync(pathOfKey, 'utf-8'));
+       document.getElementById('backup').style.display = 'block';
+       document.getElementById('introStatus').textContent = "Imported account: " + "0x" + accountFile.address;
       });
   });
   },
