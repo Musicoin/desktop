@@ -12,6 +12,8 @@ var nwin = gui.Window.get();
 var blockies = require('ethereum-blockies');
 var ethers = require('ethers');
 var zxcvbn = require('zxcvbn');
+var QRCode = require('qrcode');
+var jsQR = require("jsqr");
 Polymer({
   is: 'msc-profile-view',
   properties: {
@@ -20,6 +22,7 @@ Polymer({
     userImage: String,
     userImageFrom: String,
     userImageRecipient: String,
+    paperImage: String,
     userAccount: String,
     recipientAccount: String,
     userBalance: String,
@@ -249,6 +252,89 @@ Polymer({
     // Fires double notifications, when same account selected again
     new Notification("Backup in " + tmpPath, alert);
   });
+  },
+  paperWallet: function() {
+    this.$.showAccountDetailsDialog.close();
+    document.querySelector("msc-profile-view").createQRCode();
+    var account = document.getElementById('AccountDialog').textContent;
+    this.userAccount = account;
+    this.$.paperWalletDialog.open();
+  },
+  createQRCode: function() {
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    var account = document.getElementById('AccountDialog').textContent;
+    pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
+    QRCode.toDataURL((fs.readFileSync((String(pathOfAccount)), {encoding: 'utf-8'})), {errorCorrectionLevel: 'H'})
+      .then(result => this.paperImage = result)
+      .catch(error => console.log(error));
+  },
+  exportQRCode: function() {
+    var account = document.getElementById('AccountDialog').textContent;
+    var paperImage = document.getElementById('paper-wallet').src;
+    document.getElementById('fileDialogPaper-' + account).click();
+    document.querySelector('#fileDialogPaper-' + account).addEventListener("change", function() {
+    var tmpPath = document.getElementById('fileDialogPaper-' + account).value;
+    var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+    var alert = {
+       icon: iconPath,
+       body: "As we make QR code from the UTC/JSON file." +
+       " You still need a password to access account"};
+    var imgName  = ('UTC--' + new Date().toISOString() + '--' + account).split(':').join('-');
+    var base64Data = paperImage.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+    var filePath = "";
+    var filePath = tmpPath + '/' + imgName + '.png';
+    fs.writeFile(filePath, base64Data, {encoding: 'base64'});
+    new Notification("QR Code Backup in " + tmpPath, alert);
+    document.getElementById('fileDialogPaper-' + account).value = "";
+  });
+  this.$.paperWalletDialog.close();
+  },
+  clearPaperWallet: function() {
+    document.getElementById('paper-wallet').src = "";
+  },
+  paperWalletImport: function() {
+    this.$.paperWalletImportDialog.open();
+    this.$.importAnyDialog.close();
+  },
+  decodeQRCode: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\UTC--';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/UTC--';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/UTC--';
+      }
+    png = new (require('pngjs').PNG)();
+    document.getElementById('fileDialogPaperImport').click();
+    document.querySelector('#fileDialogPaperImport').addEventListener("change", function() {
+    var PaperWallet = document.getElementById('fileDialogPaperImport').value;
+    png.parse(fs.readFileSync(PaperWallet), function(err, decodedPng) {
+    if(err) {
+      alert("Incorrect PNG file.");
+      //console.log(err);
+    }
+    var code = jsQR(decodedPng.data, decodedPng.width, decodedPng.height);
+    var wallet = JSON.parse(code.data);
+    var accountName  = (new Date().toISOString() + '--' + wallet.address).split(':').join('-');
+    pathOfKey = pathOfKey + accountName;
+    fs.writeFile(pathOfKey, code.data, 'utf-8');
+    document.getElementById('fileDialogPaperImport').value = "";
+   });
+ });
+  this.$.paperWalletImportDialog.close();
+  },
+  clearPaperWalletImport: function() {
+    document.getElementById('fileDialogPaperImport').value = "";
   },
   showExplorerWindow: function(e) {
     gui.Window.open('https://explorer.musicoin.org/account/' + e.model.account.address,{position: 'center', width: 1000, height: 600});

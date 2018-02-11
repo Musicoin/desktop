@@ -278,6 +278,16 @@ table {
   color: #302d38;
 }
 
+#save-paper {
+  background: #5ab73b;
+  color: #302d38;
+}
+
+#import-paper {
+  background: #e19863;
+  color: #302d38;
+}
+
 #addPeerDialog {
   font-size: 18px;
 }

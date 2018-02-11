@@ -78,7 +78,7 @@
       </div>
     </paper-dialog>
 
-    <paper-dialog id="showAccountDetailsDialog">
+    <paper-dialog id="showAccountDetailsDialog" style="max-height: 550px;">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
@@ -88,6 +88,8 @@
       <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <p style="text-align: center;">Show Private Key:
       <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">Greate Paper Wallet:
+      <iron-icon icon="icons:picture-in-picture" class=clickable title="Create Paper Wallet" on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
       <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
       <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">REMOVE</paper-button>
@@ -139,11 +141,13 @@
       <p><b>Import account</b> is recommended and used for accounts in <b>UTC/JSON</b> format</p>
       <p><b>Import private key</b> used to import your <b>PRIVATE KEY</b> and automatically convert it in <b>UTC/JSON</b> format</p>
       <p><b>Mnemonic</b> used to import or generate new <b>mnemonic</b> and automatically convert it in <b>UTC/JSON</b> format</p>
+      <p><b>Paper wallet</b> used to import <b>QR codes</b> as PNG image made from <b>UTC/JSON</b> accounts</p>
       <div class="buttons-style top-buttons" style="position: unset;">
         <input id="fileDialog" type="file" style="display: none;">
         <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
         <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">IMPORT PRIVATE KEY</paper-button>
         <paper-button raised on-tap="createKeyFromMnemonic" id="mnemonic-phrase">MNEMONIC</paper-button>
+        <paper-button raised on-tap="paperWalletImport" id="import-paper">PAPER WALLET</paper-button>
       </div>
       <div class="buttons">
         <paper-button dialog-dismiss>OK</paper-button>
@@ -261,6 +265,36 @@
       <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearApproveRemoveAccount">Cancel</paper-button>
       <paper-button dialog-confirm autofocus on-tap="removeAccount" style="color: red;">Remove your account</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="paperWalletDialog" style="top:5%; max-height: unset;">
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">Please save a QR code</p>
+      <img src={{paperImage}} id="paper-wallet" style="display: block; margin: 0 auto; width: 128px"</p>
+      <div class="buttons-style top-buttons" style="position: unset; margin-left: 33%; margin-top: 5px;">
+        <paper-button raised on-tap="exportQRCode" id="save-paper">SAVE</paper-button>
+        <input id=fileDialogPaper-{{userAccount}} type="file" accept=".png" nwdirectory style="display: none;">
+      </div>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Warning!</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">As we make QR code from the UTC/JSON file</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">You still need a password to access account</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss on-tap="clearPaperWallet">OK</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="paperWalletImportDialog">
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">Select PNG image to import</p>
+      <div class="buttons-style top-buttons" style="position: unset; margin-left: 27%; margin-top: 5px;">
+        <paper-button raised on-tap="decodeQRCode" id="import-paper">IMPORT</paper-button>
+        <input id=fileDialogPaperImport type="file" accept=".png" style="display: none;">
+      </div>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Warning!</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">We accept only PNG images</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Make sure QR code is visible</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Recommended image size < 1 MB</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss on-tap="clearPaperWalletImport">OK</paper-button>
       </div>
     </paper-dialog>
 
