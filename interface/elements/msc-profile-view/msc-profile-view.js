@@ -320,7 +320,8 @@ Polymer({
     var PaperWallet = document.getElementById('fileDialogPaperImport').value;
     png.parse(fs.readFileSync(PaperWallet), function(err, decodedPng) {
     if(err) {
-      //console.error(err);
+      alert("Incorrect PNG file.");
+      //console.log(err);
     }
     var code = jsQR(decodedPng.data, decodedPng.width, decodedPng.height);
     var wallet = JSON.parse(code.data);
