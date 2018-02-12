@@ -23,9 +23,9 @@ var configFolderHome = musicoinRoot + '/config';
 if (!fs.existsSync(musicoinRoot)) fs.mkdirSync(musicoinRoot);
 if (!fs.existsSync(appData)) fs.mkdirSync(appData);
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
-if (!fs.existsSync(pathOfNodes)) fs.copy(process.cwd() + '/bootnodes.json', pathOfNodes);
+if (!fs.existsSync(pathOfNodes)) fs.copySync(process.cwd() + '/bootnodes.json', pathOfNodes);
 if (!fs.existsSync(pathOfNodesSm)) fs.copy(process.cwd() + '/bootnodes.json.org', pathOfNodesSm);
-if (!fs.existsSync(configFolderHome)) fs.copy(configFolder, configFolderHome);
+if (!fs.existsSync(configFolderHome)) fs.copySync(configFolder, configFolderHome);
 
 /* console - convenience console emulation to output messages to stdout */
 const console = require('./console.log.js')(logDir);
@@ -46,7 +46,7 @@ var settings;
 try {
   settings = require(musicoinRoot + '/config/config.ext.js');
 } catch (e) {
-  settings = require('../config/config.std.js');
+  settings = require(musicoinRoot + '/config/config.std.js');
 }
 
 /* Run startup actions (currently, start geth and ipfs if they aren't already started) */
