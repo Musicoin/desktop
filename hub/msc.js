@@ -27,6 +27,11 @@ if (!fs.existsSync(pathOfNodes)) fs.copySync(process.cwd() + '/bootnodes.json', 
 if (!fs.existsSync(pathOfNodesSm)) fs.copy(process.cwd() + '/bootnodes.json.org', pathOfNodesSm);
 if (!fs.existsSync(configFolderHome)) fs.copySync(configFolder, configFolderHome);
 
+if (fs.existsSync(musicoinRoot + '/chaindata')) fs.remove(musicoinRoot + '/chaindata');
+if (fs.existsSync(musicoinRoot + '/dapp')) fs.remove(musicoinRoot + '/dapp');
+if (fs.existsSync(musicoinRoot + '/nodekey')) fs.remove(musicoinRoot + '/nodekey');
+if (fs.existsSync(musicoinRoot + '/nodes')) fs.remove(musicoinRoot + '/nodes');
+
 /* console - convenience console emulation to output messages to stdout */
 const console = require('./console.log.js')(logDir);
 console.log(`process.platform: ${process.platform}`);
