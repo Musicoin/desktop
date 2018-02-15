@@ -1,5 +1,7 @@
 # Musicoin Wallet ![Version Info](https://img.shields.io/badge/version-1.0-61008A.svg?style=flat-square&colorA=FFD000&colorB=27053E&label=Musicoin-Wallet)
 
+(This branch has been freezed towards [release-1.0](https://github.com/Musicoin/desktop/releases/tag/1.0). All future updates will be strictly on future release branches)
+
 The official Musicoin Desktop Wallet
 
 ## Nightly Builds
