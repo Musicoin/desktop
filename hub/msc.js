@@ -19,6 +19,7 @@ var configFolder = process.cwd() + '/config';
 var pathOfNodes = musicoinRoot + '/bootnodes.json';
 var pathOfNodesSm = musicoinRoot + '/bootnodes.json.org';
 var configFolderHome = musicoinRoot + '/config';
+var settings = musicoinRoot + '/config/settings.js';
 
 if (!fs.existsSync(musicoinRoot)) fs.mkdirSync(musicoinRoot);
 if (!fs.existsSync(appData)) fs.mkdirSync(appData);
@@ -26,6 +27,7 @@ if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
 if (!fs.existsSync(pathOfNodes)) fs.copySync(process.cwd() + '/bootnodes.json', pathOfNodes);
 if (!fs.existsSync(pathOfNodesSm)) fs.copy(process.cwd() + '/bootnodes.json.org', pathOfNodesSm);
 if (!fs.existsSync(configFolderHome)) fs.copySync(configFolder, configFolderHome);
+if (!fs.existsSync(settings)) fs.copySync(configFolder + '/settings.js', settings);
 
 if (fs.existsSync(musicoinRoot + '/chaindata')) fs.remove(musicoinRoot + '/chaindata');
 if (fs.existsSync(musicoinRoot + '/dapp')) fs.remove(musicoinRoot + '/dapp');
@@ -37,9 +39,6 @@ const console = require('./console.log.js')(logDir);
 console.log(`process.platform: ${process.platform}`);
 console.log(`process.env.APPDATA: ${process.env.APPDATA}`);
 console.log(`process.env.HOME: ${process.env.HOME}`);
-
-/* locale is a set of strings to be fed to app depending on language chosen */
-const locale = require('./locale.js');
 
 /* observables init array together with init fn */
 /* crypto for pwd ops */
@@ -67,12 +66,9 @@ var mschub = {
 var PropertyChangeSupport = require('./pcs.js');
 var pcs = new PropertyChangeSupport(mschub);
 
-pcs.addObservable('lang', 'en');
 pcs.addObservable('selectedPage', '');
 pcs.addObservable('hideIntroWindow', false);
 pcs.addObservable('chainVersion', settings.chain.name);
-pcs.addObservable('locale', locale[mschub.lang]);
-
 var pcsFinData = new PropertyChangeSupport(mschub.financialData);
 pcsFinData.addObservable('accounts', []);
 pcsFinData.addObservable('userBalance', 0);
