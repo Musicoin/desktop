@@ -135,7 +135,7 @@ Polymer({
       account = finalAccountTmp.address;
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8');
+      fs.writeFileSync(pathOfKey, finalAccount, 'utf-8');
       alert(mnemonic);
       document.querySelector("msc-introduction").backupAccount(pathOfKey);
       document.getElementById('backup').style.display = 'block';
@@ -195,7 +195,7 @@ Polymer({
     document.querySelector('#fileDialogBackupIntro').addEventListener("change", function() {
     var tmpPath = this.value;
     var filePath = tmpPath + '/' + path.basename(String(accountPath));
-    fs.copy(String(accountPath), filePath);
+    fs.copySync(String(accountPath), filePath);
       var alert = {
         icon: iconPath,
         body: document.querySelector("msc-introduction").echo('profileJS_backupWallet_Notification_body_1') +

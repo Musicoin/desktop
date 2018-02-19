@@ -289,7 +289,7 @@ Polymer({
     var base64Data = paperImage.replace(/^data:([A-Za-z-+/]+);base64,/, '');
     var filePath = "";
     var filePath = tmpPath + '/' + imgName + '.png';
-    fs.writeFile(filePath, base64Data, {encoding: 'base64'});
+    fs.writeFileSync(filePath, base64Data, {encoding: 'base64'});
     new Notification(document.querySelector("msc-profile-view").echo('profileJS_exportQRCode_Notification') + tmpPath, alert);
     document.getElementById('fileDialogPaper-' + account).value = "";
   });
@@ -325,7 +325,7 @@ Polymer({
     var wallet = JSON.parse(code.data);
     var accountName  = (new Date().toISOString() + '--' + wallet.address).split(':').join('-');
     pathOfKey = pathOfKey + accountName;
-    fs.writeFile(pathOfKey, code.data, 'utf-8');
+    fs.writeFileSync(pathOfKey, code.data, 'utf-8');
     document.getElementById('fileDialogPaperImport').value = "";
    });
  });
@@ -358,7 +358,7 @@ Polymer({
     var aPeers = JSON.parse(JSON.stringify(response.result));
     for(var i = 0; i < aPeers.length; i++) {
     document.querySelector("msc-profile-view").addOrRemove(bootnodes.nodes, "enode://" + aPeers[i].id + "@" + aPeers[i].network.remoteAddress);
-    fs.writeFile(pathOfNodes, JSON.stringify(bootnodes, null, 4), 'utf-8');
+    fs.writeFileSync(pathOfNodes, JSON.stringify(bootnodes, null, 4), 'utf-8');
     }
     });
   },
@@ -560,7 +560,7 @@ Polymer({
         account = finalAccountTmp.address;
         accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
         pathOfKey = pathOfKey + accountName;
-        fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+        fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
         this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length <= 64 && privateKey.length >= 60 && privateKey != password) {
@@ -570,7 +570,7 @@ Polymer({
           account = finalAccountTmp.address;
           accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
           pathOfKey = pathOfKey + accountName;
-          fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+          fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
         this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length = 0) {
@@ -612,7 +612,7 @@ Polymer({
       account = finalAccountTmp.address;
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+      fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
       this.clearKeyFromMnemonic();
       this.$.importAnyDialog.close();
     } else if (password.length = 0) {
@@ -666,7 +666,7 @@ Polymer({
       // finalAccountTmp["x-ethers"].gethFilename works only vs mnemonic creation, so kinda useless
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8');
+      fs.writeFileSync(pathOfKey, finalAccount, 'utf-8');
       alert(mnemonic); });
       this.clearNewAccountFieldsMnemonic();
       this.$.newMnemonicAccountDialog.close();
