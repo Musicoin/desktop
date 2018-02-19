@@ -218,7 +218,7 @@ Polymer({
       }
       pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
       var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-      fs.copy(String(pathOfAccount), filePath);
+      fs.copySync(String(pathOfAccount), filePath);
       document.getElementById('fileDialogBackup-' + account).value = "";
       // Fires double notifications, when same account selected again
       new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupAccount_Notification') + tmpPath, alert);
@@ -245,7 +245,7 @@ Polymer({
       }
     pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    fs.copy(String(pathOfAccount), filePath);
+    fs.copySync(String(pathOfAccount), filePath);
     document.getElementById('fileDialogBackupAccount-' + account).value = "";
     // Fires double notifications, when same account selected again
     new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupAccount_Notification') + tmpPath, alert);
