@@ -15,7 +15,7 @@ Polymer({
     return this.syncStatus && this.syncStatus.syncing;
   },
   _computeIsSyncingText: function() {
-    return (this.syncStatus && this.syncStatus.syncing) ? "Sync " + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + "% complete": "";
+    return (this.syncStatus && this.syncStatus.syncing) ? document.querySelector("msc-introduction").echo('mainStatusJS_sync') + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + document.querySelector("msc-introduction").echo('mainStatusJS_sync_percent'): "";
 
   },
   _computeIsMining: function() {
@@ -34,9 +34,6 @@ Polymer({
     if (!this.syncStatus || !this.syncStatus.highestBlock) return "";
     return "/" + this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
-  _computeMiningTooltip: function() {
-    return this._computeIsMining() ? "Mining, click to stop" : "Not mining, click to start";
-  },
   toggleMiningState: function() {
     if (this._computeIsMining()) {
       mscIntf.accountModule.stopMining();
@@ -51,7 +48,7 @@ Polymer({
   _computeTimeSinceLastBlockMessage: function() {
     //console.log(this.syncStatus);
     if (!this.syncStatus || !this.syncStatus.mostRecentBlockTime) return "";
-    return "Last Block: " + this._timeSince(this.syncStatus.mostRecentBlockTime);
+    return document.querySelector("msc-introduction").echo('mainStatusJS_last_block') + this._timeSince(this.syncStatus.mostRecentBlockTime);
   },
   formatHashRate: function(value) {
     const lookup = ["h/s", "kh/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s"];
@@ -61,6 +58,21 @@ Polymer({
   },
   formatNumber: function(number, decimals) {
     return number.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  },
+  echo: function(phrase) {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var settings = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("win32")) {
+        var settings = process.env.APPDATA + '\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("darwin")) {
+        var settings = process.env.HOME + '/Library/Musicoin/config/settings.js';
+      } else if (platform.includes("linux")) { //linux
+        var settings = process.env.HOME + '/.musicoin/config/settings.js';
+      }
+    var locales = process.cwd() + '/interface/styles/locales';
+    lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
+    var y18n = require('y18n')({ updateFiles: false, directory: locales, locale: lang.locale, fallbackToLanguage: "en" });
+    return y18n.__(phrase + "");
   },
   _timeSince: function(date) {
     const seconds = Math.floor((Date.now() - date) / 1000);
