@@ -238,6 +238,21 @@
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       </div>
     </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="changeDataDirDialog">
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir')}}</p>
+      <div class="buttons-style top-buttons" style="position: unset; margin-left: 38%; margin-top: 5px;">
+        <paper-button raised on-tap="changeDataDir" id="data-dir">{{echo('profileViewHtml_Btn_LOCATION')}}</paper-button>
+        <div id="oldDataDir" style="display: none;"></div>
+        <input id="fileDialogDataDir" type="file" nwdirectory style="display: none;">
+      </div>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir_warning1')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir_warning2')}}</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
+      </div>
+    </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveRemoveAccountDialog">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">

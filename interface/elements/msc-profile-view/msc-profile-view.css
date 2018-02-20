@@ -288,6 +288,11 @@ table {
   color: #302d38;
 }
 
+#data-dir {
+  background: #e16378db;
+  color: #302d38;
+}
+
 #addPeerDialog {
   font-size: 18px;
 }
