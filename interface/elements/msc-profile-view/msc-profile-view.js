@@ -101,23 +101,18 @@ Polymer({
   },
   gmcOverwriteCache: function(size) {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-        var defaultCache = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
-        var newCache =  process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\' + 'config.' + size + '.js';
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
       } else if (platform.includes("win32")) {
-        var defaultCache = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
-        var newCache =  process.env.APPDATA + '\\Musicoin\\config\\' + 'config.' + size + '.js';
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
       } else if (platform.includes("darwin")) {
-        var defaultCache = process.env.HOME + '/Library/Musicoin/config/config.std.js';
-        var newCache =  process.env.HOME + '/Library/Musicoin/config/' + 'config.' + size + '.js';
-      } else if (platform.includes("linux")) {  //linux
-        var defaultCache = process.env.HOME + '/.musicoin/config/config.std.js';
-        var newCache =  process.env.HOME + '/.musicoin/config/' + 'config.' + size + '.js';
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
       }
-
-    fs.copy(newCache, defaultCache, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
+    gmcSettings = require(gmcSettingsFile);
+    gmcSettings.chain.args.push('--cache=' + size);
+    delete gmcSettings.chain.absolutePath;
+    fs.writeFileSync(gmcSettingsFile, "module.exports = " + JSON.stringify(gmcSettings, null, 2));
   },
   gmcOverwriteCacheDialog: function() {
       this.$.gmcOverwriteCache.open();
@@ -854,6 +849,66 @@ Polymer({
       mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
     }
   },
+  changeDataDirDialog: function() {
+    this.$.changeDataDirDialog.open();
+  },
+  changeDataDir: function() {    
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("win32")) {
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("darwin")) {
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcDefaultLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+      } else if (platform.includes("win32")) {
+        var gmcDefaultLocation = process.env.APPDATA + '\\Musicoin'
+      } else if (platform.includes("darwin")) {
+        var gmcDefaultLocation = process.env.HOME + '/Library/Musicoin';
+      } else if (platform.includes("linux")) { //linux
+        var gmcDefaultLocation = process.env.HOME + '/.musicoin';
+      }
+    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');    
+    document.getElementById('fileDialogDataDir').click();
+    document.querySelector('#fileDialogDataDir').addEventListener("change", function() {
+    gmcSettings = require(gmcSettingsFile);
+    var filePath = document.getElementById('fileDialogDataDir').value + '/gmc';
+    if (platform.includes("win32")) {
+        var taskKill = require('child_process');
+        taskKill.exec('taskkill /PID ' + String(gmcPid) + ' /T /F');
+      } else {
+        var killAll = require('child_process');
+        killAll.exec('killall -15 gmc');
+      }
+    gmcSettings.chain.args = gmcSettings.chain.args.filter(function(e) { return e !== '--keystore=' + pathOfKey });
+    args = gmcSettings.chain.args;
+    var dataDirOldLocation = gmcDefaultLocation;
+    args.forEach(function(a){if (a.indexOf('--datadir=')>-1) document.getElementById('oldDataDir').textContent = a.slice(10)});
+    delete gmcSettings.chain.absolutePath;
+    if (document.getElementById('oldDataDir').textContent != "") dataDirOldLocation = document.getElementById('oldDataDir').textContent;
+    gmcSettings.chain.args = gmcSettings.chain.args.filter(function(e) { return e !==  '--datadir=' + dataDirOldLocation });
+    gmcSettings.chain.args.push('--datadir=' + filePath);
+    gmcSettings.chain.args.push('--keystore=' + pathOfKey);
+    fs.moveSync(dataDirOldLocation + '/gmc', filePath);
+      fs.writeFileSync(gmcSettingsFile, "module.exports = " + JSON.stringify(gmcSettings, null, 2));
+      alert(document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert1') + filePath + "\n" + document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert2'));
+      document.getElementById('fileDialogDataDir').value = "";
+      document.getElementById('oldDataDir').textContent = "";
+      this.$.changeDataDirDialog.close();
+    });
+  },
   sendCoins: function() {
     this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
@@ -966,7 +1021,7 @@ Polymer({
       }
     lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
     lang.locale = locale;
-    fs.writeFileSync(settings, JSON.stringify(lang));
+    fs.writeFileSync(settings, JSON.stringify(lang, null, 2));
     nwin.reloadIgnoringCache();
   },
   patchOverlay: function (e) {
@@ -1008,6 +1063,7 @@ Polymer({
     let mPools = echo('profileJS_menu_Mining_Pools');
     let enLang = echo('profileJS_menu_Lang_Eng');
     let ruLang = echo('profileJS_menu_Lang_Ru');
+    let changeDataDir = echo('profileJS_menu_DataDir');
     
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
     account.append(new nw.MenuItem({ label: importAccount, key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
@@ -1066,6 +1122,7 @@ Polymer({
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
+    advanced.append(new nw.MenuItem({ label: changeDataDir, click: function() { document.querySelector("msc-profile-view").changeDataDirDialog(); } }));
     advanced.append(new nw.MenuItem({ label: gmcCache, click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
     advanced.append(new nw.MenuItem({ label: oldNodes, click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
     menu.append(new nw.MenuItem({label: lAdvanced, submenu: advanced }));
