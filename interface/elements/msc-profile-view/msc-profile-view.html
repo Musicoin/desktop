@@ -313,6 +313,16 @@
         <paper-button dialog-confirm autofocus on-tap="sendCoins">{{echo('profileViewHtml_Confirm')}}</paper-button>
       </div>
     </paper-dialog>
+    
+    <paper-dialog id="spanishLangDialog">
+      <div class="buttons-style top-buttons" style="position: unset;">
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      </div>
+    </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialogAccount">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">

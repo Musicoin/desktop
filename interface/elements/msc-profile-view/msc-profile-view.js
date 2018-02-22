@@ -1024,6 +1024,9 @@ Polymer({
     fs.writeFileSync(settings, JSON.stringify(lang, null, 2));
     nwin.reloadIgnoringCache();
   },
+  spanishLang: function() {
+    this.$.spanishLangDialog.open();
+  },
   patchOverlay: function (e) {
     // hack from: https://stackoverflow.com/a/31510980
     if (e.target.withBackdrop) {
@@ -1063,6 +1066,7 @@ Polymer({
     let mPools = echo('profileJS_menu_Mining_Pools');
     let enLang = echo('profileJS_menu_Lang_Eng');
     let ruLang = echo('profileJS_menu_Lang_Ru');
+    let esLang = echo('profileJS_menu_Lang_Es');
     let changeDataDir = echo('profileJS_menu_DataDir');
     
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
@@ -1119,6 +1123,7 @@ Polymer({
     var advanced = new nw.Menu();
     advanced.append(new nw.MenuItem({ label: enLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("en"); } }));
     advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
+    advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
