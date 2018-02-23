@@ -118,7 +118,7 @@
     "profileViewHtml_to_process": "a procesar",
     "profileViewHtml_datadir": "Por favor seleccione una nueva ubicación para mover el directorio gmc con el contenido de la cadena de bloques",
     "profileViewHtml_datadir_warning1": "Por favor espere al mensaje con las intrucciones tras haber seleccionado la nueva ubicación",
-    "profileViewHtml_datadir_warning2": "A veces, la operacion puede demorar hasta 1 hora, dependiendo del tamaño de la cadena de bloques y la velocidad de lectura/escritura",
+    "profileViewHtml_datadir_warning2": "A veces, la operacion puede demorar hasta 1 hora, dependiendo del tamaño de la cadena de bloques y su velocidad de lectura/escritura",
     "profileViewHtml_datadir_alert1": "Cadena de bloques movida correctamente en",
     "profileViewHtml_datadir_alert2": "Ahora puede reiniciar su cartera",
     "profileViewHtml_es_es": "Español (España)",
