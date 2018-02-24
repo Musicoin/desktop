@@ -4,6 +4,20 @@ function noOp() {};
 
 const child_process = require('child_process');
 var fs = require('fs');
+var os = require('os');
+var platform = os.platform();
+
+if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+  var musicoinRoot = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+} else if (platform.includes("win32")) {
+  var musicoinRoot = process.env.APPDATA + '\\Musicoin';
+  var configFolderHome = musicoinRoot + '\\config';
+} else if (platform.includes("darwin")) {
+  var musicoinRoot = process.env.HOME + '/Library/Musicoin';
+  var configFolderHome = musicoinRoot + '/config';
+} else if (platform.includes("linux")) { //linux
+  var musicoinRoot = process.env.HOME + "/.musicoin";
+}
 
 function Startup(logger, appDataDir) {
   this.logger = logger;
@@ -22,6 +36,7 @@ Startup.prototype.execAndKillOnShutdown = function(name, absolutePath, command, 
   }
   var child = child_process.spawn(command, args, {cwd: absolutePath});
   logger.log("Started " + name + ": pid=" + child.pid);
+    fs.writeFileSync(musicoinRoot + '/config/gmc.pid', child.pid);
   child.stdout.on('data', function(data) {
     logger.log(name + " stdout: " + data);
   });

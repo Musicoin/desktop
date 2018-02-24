@@ -3,8 +3,8 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <template>
   <div class="tab flex-top">
-  <button class="tablinks" onclick="activeTabs(event, 'wallet')" id="defaultOpen">Wallet</button>
-  <button class="tablinks" onclick="activeTabs(event, 'pMusic')">Play Music</button>
+  <button class="tablinks" onclick="activeTabs(event, 'wallet')" id="defaultOpen">{{echo('profileViewHtml_Tab_Wallet')}}</button>
+  <button class="tablinks" onclick="activeTabs(event, 'pMusic')">{{echo('profileViewHtml_Tab_Play_Music')}}</button>
   <button class="tablinks" id="mute" on-tap="muteAudio"><img src="/interface/images/icons/audio-volume.svg"></button>
   <button class="tablinks" id="unmute" on-tap="unmuteAudio" style="display: none;"><img src="/interface/images/icons/audio-volume-muted.svg"></button>
   <button class="tablinks" id="maximize" on-tap="maxWindow"><img src="/interface/images/icons/maximize.svg"></button>
@@ -15,39 +15,39 @@
     <img src="/interface/images/logon.svg" style="width: 210px; position: absolute; top: 30px; left: 30px;"></div>
     <msc-main-status></msc-main-status>
     <div class="buttons-style top-buttons">
-      <paper-button raised on-tap="createNewAccountDialog" id="new-account">NEW ACCOUNT</paper-button>
+      <paper-button raised on-tap="createNewAccountDialog" id="new-account">{{echo('profileViewHtml_Btn_NEW_ACCOUNT')}}</paper-button>
       <input id="fileDialog" type="file" style="display: none;">
-      <paper-button raised on-tap="importAny" id="old-wallet">IMPORT ACCOUNT</paper-button>
-      <paper-button raised on-tap="showSendDialog" id="send-funds">SEND FUNDS</paper-button>
+      <paper-button raised on-tap="importAny" id="old-wallet">{{echo('profileViewHtml_Btn_IMPORT_ACCOUNT')}}</paper-button>
+      <paper-button raised on-tap="showSendDialog" id="send-funds">{{echo('profileViewHtml_Btn_SEND_FUNDS')}}</paper-button>
     </div>
 
     <div id="accounts">
       <table>
         <tr id="tableheader">
-          <th style="width: 50%; color:#302d38;">ACCOUNT</th>
-          <th style="background-color: #fff; color:#302d38;">ACTIONS</th>
-          <th style="background-color: #f0a0f7; color:#302d38;">BALANCE IN</th>
+          <th style="width: 50%; color:#302d38;">{{echo('profileViewHtml_Table_ACCOUNT')}}</th>
+          <th style="background-color: #fff; color:#302d38;">{{echo('profileViewHtml_Table_ACTIONS')}}</th>
+          <th style="background-color: #f0a0f7; color:#302d38;">{{echo('profileViewHtml_Table_BALANCE_IN')}}</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
           <tr id="data1">
             <td class="account">
               <div class="account-address">[[account.address]]</div>
-              <div class="account-music" id=[[account.address]] title="[[account.balance]]">Balance: [[account.displayBalance]] MUSIC</div>
-              <div class="account-btc" style="display: none;" title="[[account.balance]]">Balance: [[account.displayBalanceBtc]]</div>
-              <div class="account-usd" style="display: none;" title="[[account.balance]]">Balance: [[account.displayBalanceUsd]]</div>
+              <div class="account-music" id=[[account.address]] title="[[account.balance]]">{{echo('profileViewHtml_Balance')}}: [[account.displayBalance]] MUSIC</div>
+              <div class="account-btc" style="display: none;" title="[[account.balance]]">{{echo('profileViewHtml_Balance')}}: [[account.displayBalanceBtc]]</div>
+              <div class="account-usd" style="display: none;" title="[[account.balance]]">{{echo('profileViewHtml_Balance')}}: [[account.displayBalanceUsd]]</div>
               <img src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails">
             </td>
             <td class="td-button">
-              <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
-              <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccount" style="left: 0px;"></iron-icon>
-              <iron-icon icon="icons:text-format" class=clickable title="Sign" on-tap="signMsg" style="left: 20px;"></iron-icon>
+              <iron-icon icon="icons:explore" class=clickable title={{echo('profileViewHtml_Show_Account_In_Explorer')}} on-tap="showExplorerWindow" style="left: -20px;"></iron-icon>
+              <iron-icon icon="icons:backup" class=clickable title={{echo('profileViewHtml_Backup_Account')}} on-tap="backupAccount" style="left: 0px;"></iron-icon>
+              <iron-icon icon="icons:text-format" class=clickable title={{echo('profileViewHtml_Sign')}} on-tap="signMsg" style="left: 20px;"></iron-icon>
               <input id=fileDialogBackup-[[account.address]] type="file" nwdirectory style="display: none;">
             </td>
             <td class="td-button" style="justify-content: center;">
-              <img src="/interface/images/icons/musicoin.svg" class="clickable" title="Display Balance In MUSIC" style="width:24px; margin-left: 12px;" on-tap="displayBalanceInMusic">
-              <img src="/interface/images/icons/bitcoin.png" class="clickable" title="Display Balance In BTC" style="width:24px; margin-left: 12px;" on-tap="displayBalanceInBtc">
-              <img src="/interface/images/icons/dollar.png" class="clickable" title="Display Balance In USD"  style="width:24px; margin-left: 12px;" on-tap="displayBalanceInUsd">
-              <img src="/interface/images/icons/mark.png" class="clickable" title="Market Conversion Rates" style="width:24px; margin-left: 12px;" on-tap="marketRates">
+              <img src="/interface/images/icons/musicoin.svg" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_MUSIC')}} style="width:24px; margin-left: 12px;" on-tap="displayBalanceInMusic">
+              <img src="/interface/images/icons/bitcoin.png" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_BTC')}} style="width:24px; margin-left: 12px;" on-tap="displayBalanceInBtc">
+              <img src="/interface/images/icons/dollar.png" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_USD')}}  style="width:24px; margin-left: 12px;" on-tap="displayBalanceInUsd">
+              <img src="/interface/images/icons/mark.png" class="clickable" title={{echo('profileViewHtml_Market_Conversion_Rates')}} style="width:24px; margin-left: 12px;" on-tap="marketRates">
             </td>
           </tr>
         </template>
@@ -69,12 +69,12 @@
     </div>
 
     <paper-dialog id="marketRatesDialog">
-      <p>Current rates (for 1 MUSIC):</p>
+      <p>{{echo('profileViewHtml_Current_rates_for_1_MUSIC')}}</p>
       <p>BTC: {{musicBtc}}</p>
       <p>USD: {{musicUsd}}</p>
-      <p>* We use CoinMarketCap API to display conversion rates, real exhange rates could be slightly different.</p>
+      <p>{{echo('profileViewHtml_We_use_CoinMarketCap_API')}}</p>
       <div class="buttons">
-      <paper-button dialog-dismiss>OK</paper-button>
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
 
@@ -82,219 +82,221 @@
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
-      <p style="text-align: center;">Show Account In Explorer:
-      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
-      <p style="text-align: center;">Backup Account:
-      <iron-icon icon="icons:backup" class=clickable title="Backup Account" on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
-      <p style="text-align: center;">Show Private Key:
-      <iron-icon icon="icons:lock-open" class=clickable title="Show Private Key" on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
-      <p style="text-align: center;">Greate Paper Wallet:
-      <iron-icon icon="icons:picture-in-picture" class=clickable title="Create Paper Wallet" on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
+      <iron-icon icon="icons:explore" class=clickable title={{echo('profileViewHtml_Show_Account_In_Explorer')}} on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">{{echo('profileViewHtml_Backup_Account')}}:
+      <iron-icon icon="icons:backup" class=clickable title={{echo('profileViewHtml_Backup_Account')}} on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">{{echo('profileViewHtml_Show_Private_Key')}}:
+      <iron-icon icon="icons:lock-open" class=clickable title={{echo('profileViewHtml_Show_Private_Key')}} on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center;">{{echo('profileViewHtml_Create_Paper_Wallet')}}:
+      <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo('profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
       <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
-      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">REMOVE</paper-button>
-      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">SEND FUNDS</paper-button>
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
+      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
       </div>
       <div class="buttons">
-      <paper-button dialog-dismiss>OK</paper-button>
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog id="createNewAccountDialog">
-      <p>Here you can create a new account</p>
-      <p><b>Create mnemonic account</b> is recommended and used to create account that could be restored with <b>mnemonic</b></p>
-      <p><b>Create account</b> used to create account that could be restored with <b>password</b> only</p>
+      <p>{{echo('profileViewHtml_Here_you_can')}}</p>
+      <p><b>{{echo('profileViewHtml_Create_mnemonic_account')}}</b> {{echo('profileViewHtml_Create_mnemonic_account_is')}} <b>{{echo('profileViewHtml_mnemonic')}}</b></p>
+      <p><b>{{echo('profileViewHtml_Create_account')}}</b> {{echo('profileViewHtml_used_to_create')}} <b>{{echo('profileViewHtml_password')}}</b> {{echo('profileViewHtml_only')}}</p>
       <div class="buttons-style top-buttons" style="position: unset;">
-        <paper-button raised on-tap="handleMnemonicAccount" id="mnemonic-phrase">CREATE MNEMONIC ACCOUNT</paper-button>
-        <paper-button raised on-tap="handleNewAccount" id="new-account">CREATE ACCOUNT</paper-button>
+        <paper-button raised on-tap="handleMnemonicAccount" id="mnemonic-phrase">{{echo('profileViewHtml_Btn_CREATE_MNEMONIC_ACCOUNT')}}</paper-button>
+        <paper-button raised on-tap="handleNewAccount" id="new-account">{{echo('profileViewHtml_Btn_CREATE_ACCOUNT')}}</paper-button>
       </div>
       <div class="buttons">
-        <paper-button dialog-dismiss>OK</paper-button>
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newAccountDialog">
-      <p>Enter a password for the new account</p>
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
-      <paper-input id=newAccountPassword type="password" label="Password"></paper-input>
-      <paper-input id=newAccountPasswordVerify type="password" label="Re Enter Password"></paper-input>
+      <p>{{echo('profileViewHtml_enter_a_password')}}</p>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember')}}</p>
+      <paper-input id=newAccountPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
+      <paper-input id=newAccountPasswordVerify type="password" label={{echo('profileViewHtml_Label_Re_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearNewAccountFields">Cancel</paper-button>
-        <paper-button autofocus on-tap="createNewAccount">OK</paper-button>
+        <paper-button dialog-dismiss on-tap="clearNewAccountFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="createNewAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newMnemonicAccountDialog">
-      <p>Enter a password for the new mnemonic account</p>
-      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the phrase you will see on the next step in the safe place</p>
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
-      <paper-input id=newAccountPasswordMnemonic type="password" label="Password"></paper-input>
-      <paper-input id=newAccountPasswordMnemonicVerify type="password" label="Re Enter Password"></paper-input>
+      <p>{{echo('profileViewHtml_enter_a_password_mnemonic')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_pls_save_phrase')}}</p>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember_mnemonic')}}</p>
+      <paper-input id=newAccountPasswordMnemonic type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
+      <paper-input id=newAccountPasswordMnemonicVerify type="password" label={{echo('profileViewHtml_Label_Re_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">Cancel</paper-button>
-        <paper-button autofocus on-tap="createNewMnemonicAccount">OK</paper-button>
+        <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="createNewMnemonicAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog id="importAnyDialog">
-      <p>Here you can import your account</p>
-      <p><b>Import account</b> is recommended and used for accounts in <b>UTC/JSON</b> format</p>
-      <p><b>Import private key</b> used to import your <b>PRIVATE KEY</b> and automatically convert it in <b>UTC/JSON</b> format</p>
-      <p><b>Mnemonic</b> used to import or generate new <b>mnemonic</b> and automatically convert it in <b>UTC/JSON</b> format</p>
-      <p><b>Paper wallet</b> used to import <b>QR codes</b> as PNG image made from <b>UTC/JSON</b> accounts</p>
+      <p>{{echo('profileViewHtml_here_import')}}</p>
+      <p><b>{{echo('profileViewHtml_here_import_account_small')}}</b> {{echo('profileViewHtml_here_recommended_used')}} <b>{{echo('profileViewHtml_utc_json')}}</b> {{echo('profileViewHtml_format')}}</p>
+      <p><b>{{echo('profileViewHtml_Import_private_key')}}</b> {{echo('profileViewHtml_used_to_import_your')}} <b>{{echo('profileViewHtml_PRIVATE_KEY')}}</b> {{echo('profileViewHtml_and_automatically_convert')}} <b>{{echo('profileViewHtml_utc_json')}}</b> {{echo('profileViewHtml_format')}}</p>
+      <p><b>{{echo('profileViewHtml_mnemonics')}}</b> {{echo('profileViewHtml_used_to_import')}} <b>{{echo('profileViewHtml_mnemonic')}}</b> {{echo('profileViewHtml_and_automatically_converts')}} <b>{{echo('profileViewHtml_utc_json')}}</b> {{echo('profileViewHtml_format')}}</p>
+      <p><b>{{echo('profileViewHtml_Paper_wallet')}}</b> {{echo('profileViewHtml_used_to_import_your')}} <b>QR {{echo('profileViewHtml_codes')}}</b> {{echo('profileViewHtml_PNG')}} <b>{{echo('profileViewHtml_utc_json')}}</b> {{echo('profileViewHtml_accounts')}}</p>
       <div class="buttons-style top-buttons" style="position: unset;">
         <input id="fileDialog" type="file" style="display: none;">
-        <paper-button raised on-tap="addExistingAccount" id="old-wallet">IMPORT ACCOUNT</paper-button>
-        <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">IMPORT PRIVATE KEY</paper-button>
-        <paper-button raised on-tap="createKeyFromMnemonic" id="mnemonic-phrase">MNEMONIC</paper-button>
-        <paper-button raised on-tap="paperWalletImport" id="import-paper">PAPER WALLET</paper-button>
+        <paper-button raised on-tap="addExistingAccount" id="old-wallet">{{echo('profileViewHtml_Btn_IMPORT_ACCOUNT')}}</paper-button>
+        <paper-button raised on-tap="createKeyFromPrivateKey" id="private-key">{{echo('profileViewHtml_IMPORT_PRIVATE_KEY')}}</paper-button>
+        <paper-button raised on-tap="createKeyFromMnemonic" id="mnemonic-phrase">{{echo('profileViewHtml_MNEMONIC')}}</paper-button>
+        <paper-button raised on-tap="paperWalletImport" id="import-paper">{{echo('profileViewHtml_PAPER_WALLET')}}</paper-button>
       </div>
       <div class="buttons">
-        <paper-button dialog-dismiss>OK</paper-button>
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="signMsgDialog">
-      <p>Here you can sign a message</p>
-      <p>Write a message and enter password to unlock you account</p>
-      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
-      <p>You signing from <b>{{userAccount}}</b></p>
-      <paper-textarea style="display: block; width: 400px;" id=signMsg label="Message To Sign"></paper-textarea>
-      <paper-input disabled id=signMsgAccount label="Account" style="display: none;"></paper-input>
-      <paper-input id=signPassword type="password" label="Password"></paper-input>
+      <p>{{echo('profileViewHtml_sign_msg')}}</p>
+      <p>{{echo('profileViewHtml_Write_a_message')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_final_sign')}}</p>
+      <p>{{echo('profileViewHtml_sign_from')}} <b>{{userAccount}}</b></p>
+      <paper-textarea style="display: block; width: 400px;" id=signMsg label={{echo('profileViewHtml_Label_Message_To_Sign')}}></paper-textarea>
+      <paper-input disabled id=signMsgAccount label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+      <paper-input id=signPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSignMsg">Cancel</paper-button>
-        <paper-button autofocus on-tap="signMsgAction">Sign</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSignMsg">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="signMsgAction">{{echo('profileViewHtml_Btn_Sign')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="verifyMsgDialog">
-      <p>Here you can verify a message signed with signature</p>
-      <p>Enter a signature, account address, and paste a message to verify</p>
-      <paper-input id=signature label="Signature"></paper-input>
-      <paper-input id=accountVerify label="Account"></paper-input>
-      <paper-textarea style="display: block; width: 400px;" id=verifyMsg label="Message To Verify"></paper-textarea>
+      <p>{{echo('profileViewHtml_verify_a_message')}}</p>
+      <p>{{echo('profileViewHtml_sacpmtv')}}</p>
+      <paper-input id=signature label={{echo('profileViewHtml_Label_Signature')}}></paper-input>
+      <paper-input id=accountVerify label={{echo('profileViewHtml_Label_Account')}}></paper-input>
+      <paper-textarea style="display: block; width: 400px;" id=verifyMsg label={{echo('profileViewHtml_Label_Msg_Verify')}}></paper-textarea>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearVerifyMsg">Cancel</paper-button>
-        <paper-button autofocus on-tap="verifyMsgAction">Verify</paper-button>
+        <paper-button dialog-dismiss on-tap="clearVerifyMsg">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="verifyMsgAction">{{echo('profileViewHtml_Btn_verify')}}</paper-button>
       </div>
     </paper-dialog>
       
     <paper-dialog id="addPeerDialog">
-      <div>Paste one or more enodes separated by commas as follows:
+      <div>{{echo('profileViewHtml_enodes_paste')}}
         <br>enode://abcdefg@101.102.103.104:30303,
         <br>enode://zyxwvu@101.102.103.104:30303
       </div>
-      <iron-autogrow-textarea id=newPeerEnodeAddress label="enode address" style="height: 200px; width: 600px"></iron-autogrow-textarea>
+      <iron-autogrow-textarea id=newPeerEnodeAddress label={{echo('profileViewHtml_Label_Enodes')}} style="height: 200px; width: 600px"></iron-autogrow-textarea>
       <div class="buttons">
-        <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'>NODES LIST</paper-button>
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button autofocus on-tap="addPeers">Add Enode(s)</paper-button>
-      </div>
-    </paper-dialog>
-
-    <paper-dialog id="setCoinbaseDialog">
-      <p>Enter the Account Address</p>
-      <p>
-        <b class="warn">WARNING</b>: Make sure you have access to this account!  If you want to use one of the local
-        accounts as the account, cancel this dialog and check the account list column.
-      </p>
-      <paper-input id=customCoinbase label="address"></paper-input>
-      <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="setCustomCoinbase">OK</paper-button>
+        <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'>{{echo('profileViewHtml_Btn_NODES_LIST')}}</paper-button>
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="addPeers">{{echo('profileViewHtml_Btn_Add_Enode')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="unlockPrivateKeyDialog">
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure no screencasting software is running!</p>
-      <p>Enter password for your account to unlock it and show private key</p>
-      <paper-input disabled id=sourceAccount label="Account" style="display: none;"></paper-input>
-      <paper-input id=unlockAccount type="password" label="Password"></paper-input>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_screencasting')}}</p>
+      <p>{{echo('profileViewHtml_unlock_and_show')}}</p>
+      <paper-input disabled id=sourceAccount label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+      <paper-input id=unlockAccount type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearPrivateKey">Cancel</paper-button>
-      <paper-button dialog-confirm autofocus on-tap="showPrivateKey">Show Private key</paper-button>
+      <paper-button dialog-dismiss on-tap="clearPrivateKey">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="showPrivateKey">{{echo('profileViewHtml_Btn_show_private_key')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromPrivateKey">
-      <p>Enter your private key and new password to store your key in secure storage and access your account</p>
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your password!</p>
-      <paper-input id=dummyKey type="password" label="Private Key"></paper-input>
-      <paper-input id=dummyPassword type="password" label="Password"></paper-input>
+      <p>{{echo('profileViewHtml_private_key_password')}}</p>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember')}}</p>
+      <paper-input id=dummyKey type="password" label={{echo('profileViewHtml_Label_Private_Key')}}></paper-input>
+      <paper-input id=dummyPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearKeyFromPrivateKey">Cancel</paper-button>
-      <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">Access your account</paper-button>
+      <paper-button dialog-dismiss on-tap="clearKeyFromPrivateKey">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">{{echo('profileViewHtml_Btn_access_account')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromMnemonic">
-      <p>Enter your mnemonic and new password to store your key in secure storage and access your account</p>
-      <p style="font-weight: 900; font-size: 16px;">Warning: Make sure you remember your mnemonic and password!</p>
-      <paper-input id=mnemonic label="Mnemonic" auto-validate pattern="[a-zA-Z\s]*" error-message="letters only!"></paper-input>
-      <paper-input id=mnemonicPassword type="password" label="Password"></paper-input>
+      <p>{{echo('profileViewHtml_enter_mnemonic')}}</p>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_mnemonic')}}</p>
+      <paper-input id=mnemonic label={{echo('profileViewHtml_Label_Mnemonic')}} auto-validate pattern="[a-zA-Z\s]*" error-message={{echo('profileViewHtml_input_err')}}></paper-input>
+      <paper-input id=mnemonicPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearKeyFromMnemonic">Cancel</paper-button>
-      <paper-button dialog-confirm autofocus on-tap="createKeyFromMnemonicAction">Access your account</paper-button>
+      <paper-button dialog-dismiss on-tap="clearKeyFromMnemonic">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="createKeyFromMnemonicAction">{{echo('profileViewHtml_Btn_access_account')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog id="gmcOverwriteCache">
-      <p>Select Gmc (in memory) cache size</p>
+      <p>{{echo('profileViewHtml_make_gmc_cache_size')}}</p>
       <paper-radio-group selected="gmc-512">
-        <paper-radio-button name="gmc-512" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(512)>512MB (default) </paper-radio-button>
+        <paper-radio-button name="gmc-512" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(512)>512MB ({{echo('profileViewHtml_default')}}) </paper-radio-button>
         <paper-radio-button name="gmc-1024" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(1024)>1024MB </paper-radio-button>
         <paper-radio-button name="gmc-2048" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(2048)>2048MB </paper-radio-button>
         <paper-radio-button name="gmc-4096" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(4096)>4096MB </paper-radio-button>
       </paper-radio-group>
       <div class="buttons">
-      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="changeDataDirDialog">
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir')}}</p>
+      <div class="buttons-style top-buttons" style="position: unset; margin-left: 38%; margin-top: 5px;">
+        <paper-button raised on-tap="changeDataDir" id="data-dir">{{echo('profileViewHtml_Btn_LOCATION')}}</paper-button>
+        <div id="oldDataDir" style="display: none;"></div>
+        <input id="fileDialogDataDir" type="file" nwdirectory style="display: none;">
+      </div>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir_warning1')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_datadir_warning2')}}</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveRemoveAccountDialog">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
-      <p style="font-size: 16px;">You want to remove <b>{{userAccount}}</b> with</p>
+      <p style="font-size: 16px;">{{echo('profileViewHtml_want_remove')}} <b>{{userAccount}}</b> {{echo('profileViewHtml_with')}}</p>
       <p style="text-align: center; font-weight: 900; font-size: 18px;">{{userBalance}}</p>
-      <p style="font-size: 16px;">We also suggest you to check account balance in <b>Explorer</b>, before removal</p>
-      <p style="text-align: center;">Show Account In Explorer:
-      <iron-icon icon="icons:explore" class=clickable title="Show Account In Explorer" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
-      <p style="text-align: center; font-size: 16px;">You need to provide valid <b>password</b> to process</p>
-      <paper-input disabled id=sourceAccountRemove label="Account" style="display: none;"></paper-input>
-      <paper-input id=removePassword type="password" label="Password"></paper-input>
+      <p style="font-size: 16px;">{{echo('profileViewHtml_suggest_to_check')}} <b>Explorer</b>, {{echo('profileViewHtml_before_removal')}}</p>
+      <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
+      <iron-icon icon="icons:explore" class=clickable title="{{echo('profileViewHtml_Show_Account_In_Explorer')}}" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
+      <p style="text-align: center; font-size: 16px;">{{echo('profileViewHtml_provide_valid')}} <b>{{echo('profileViewHtml_password')}}</b> {{echo('profileViewHtml_to_process')}}</p>
+      <paper-input disabled id=sourceAccountRemove label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+      <paper-input id=removePassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearApproveRemoveAccount">Cancel</paper-button>
-      <paper-button dialog-confirm autofocus on-tap="removeAccount" style="color: red;">Remove your account</paper-button>
+      <paper-button dialog-dismiss on-tap="clearApproveRemoveAccount">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="removeAccount" style="color: red;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="paperWalletDialog" style="top:5%; max-height: unset;">
-      <p style="font-weight: 900; font-size: 16px; text-align: center;">Please save a QR code</p>
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">{{echo('profileViewHtml_QR')}}</p>
       <img src={{paperImage}} id="paper-wallet" style="display: block; margin: 0 auto; width: 128px"</p>
       <div class="buttons-style top-buttons" style="position: unset; margin-left: 33%; margin-top: 5px;">
-        <paper-button raised on-tap="exportQRCode" id="save-paper">SAVE</paper-button>
+        <paper-button raised on-tap="exportQRCode" id="save-paper">{{echo('profileViewHtml_Btn_SAVE')}}</paper-button>
         <input id=fileDialogPaper-{{userAccount}} type="file" accept=".png" nwdirectory style="display: none;">
       </div>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Warning!</p>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">As we make QR code from the UTC/JSON file</p>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">You still need a password to access account</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_AsWeMake')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_QRPassword')}}</p>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearPaperWallet">OK</paper-button>
+      <paper-button dialog-dismiss on-tap="clearPaperWallet">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="paperWalletImportDialog">
       <p style="font-weight: 900; font-size: 16px; text-align: center;">Select PNG image to import</p>
       <div class="buttons-style top-buttons" style="position: unset; margin-left: 27%; margin-top: 5px;">
-        <paper-button raised on-tap="decodeQRCode" id="import-paper">IMPORT</paper-button>
+        <paper-button raised on-tap="decodeQRCode" id="import-paper">{{echo('profileViewHtml_Btn_QRImport')}}</paper-button>
         <input id=fileDialogPaperImport type="file" accept=".png" style="display: none;">
       </div>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Warning!</p>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">We accept only PNG images</p>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Make sure QR code is visible</p>
-      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">Recommended image size < 1 MB</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_AcceptPNG')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_VisiblePNG')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_PNGsize')}} < 1 MB</p>
       <div class="buttons">
-      <paper-button dialog-dismiss on-tap="clearPaperWalletImport">OK</paper-button>
+      <paper-button dialog-dismiss on-tap="clearPaperWalletImport">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
 
@@ -304,11 +306,21 @@
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
         <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
         <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
-        <p>You are about to send <b>{{sendBalance}}</b> to <b>{{recipientAccount}}</b></p>
-      <p style="font-weight: 900; font-size: 18px;">Are you sure you want to do this?</p>
+        <p>{{echo('profileViewHtml_about_to_send')}} <b>{{sendBalance}}</b> {{echo('profileViewHtml_to')}} <b>{{recipientAccount}}</b></p>
+      <p style="font-weight: 900; font-size: 18px;">{{echo('profileViewHtml_are_you_sure')}}</p>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoins">Confirm</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoins">{{echo('profileViewHtml_Confirm')}}</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="spanishLangDialog">
+      <div class="buttons-style top-buttons" style="position: unset;">
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       </div>
     </paper-dialog>
 
@@ -318,60 +330,60 @@
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
         <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
         <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
-        <p>You are about to send <b>{{sendBalance}}</b> to <b>{{recipientAccount}}</b></p>
-      <p style="font-weight: 900; font-size: 18px;">Are you sure you want to do this?</p>
+        <p>{{echo('profileViewHtml_about_to_send')}} <b>{{sendBalance}}</b> {{echo('profileViewHtml_to')}} <b>{{recipientAccount}}</b></p>
+      <p style="font-weight: 900; font-size: 18px;">{{echo('profileViewHtml_are_you_sure')}}</p>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendAccountFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="sendCoinsFromAccount">Confirm</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendAccountFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="sendCoinsFromAccount">{{echo('profileViewHtml_Btn_Confirm')}}</paper-button>
       </div>
     </paper-dialog>
 
     <style>:host {--primary-text-color: grey;}</style>
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogMenu">
-      <p>Enter the recipient address, the amount to send, and your password</p>
+      <p>{{echo('profileViewHtml_recipient_address_send')}}</p>
       <div class="autocomplete-wrapper">
-      <paper-input id="sender" label="From Account"></paper-input>
+      <paper-input id="sender" label={{echo('profileViewHtml_Label_From_Account')}}></paper-input>
       <paper-autocomplete-suggestions
       for="sender"
       source="[[getAccounts]]"></paper-autocomplete-suggestions>
       </div>
-      <paper-input id="recipient" label="Recipient"></paper-input>
-      <paper-input id="coins" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id="sendPassword" type="password" label="Password"></paper-input>
+      <paper-input id="recipient" label={{echo('profileViewHtml_Label_Recipient')}}></paper-input>
+      <paper-input id="coins" label={{echo('profileViewHtml_Label_Amount_In')}}></paper-input>
+      <paper-input id="sendPassword" type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="approveSend">OK</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSend">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="signMsgDialogFromMenu">
-      <p>Here you can sign a message</p>
-      <p>Write a message and enter password to unlock you account</p>
-      <p style="font-weight: 900; color:red; font-size: 16px;">Warning: Please save the the final result (signature) you will see on the next stage</p>
-      <paper-textarea style="display: block; width: 400px;" id=signMsgMenu label="Message To Sign"></paper-textarea>
+      <p>{{echo('profileViewHtml_sign_msg')}}</p>
+      <p>{{echo('profileViewHtml_Write_a_message')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_final_sign')}}</p>
+      <paper-textarea style="display: block; width: 400px;" id=signMsgMenu label={{echo('profileViewHtml_Label_Msg_Sign')}}></paper-textarea>
       <div class="autocomplete-wrapper">
-      <paper-input id="signMsgAccountMenu" label="Account"></paper-input>
+      <paper-input id="signMsgAccountMenu" label={{echo('profileViewHtml_Label_Account')}}></paper-input>
       <paper-autocomplete-suggestions
       for="signMsgAccountMenu"
       source="[[getAccounts]]"></paper-autocomplete-suggestions>
       </div>
-      <paper-input id=signPasswordMenu type="password" label="Password"></paper-input>
+      <paper-input id=signPasswordMenu type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSignMsgMenu">Cancel</paper-button>
-        <paper-button autofocus on-tap="signMsgActionMenu">Sign</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSignMsgMenu">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="signMsgActionMenu">{{echo('profileViewHtml_Btn_Sign')}}</paper-button>
       </div>
     </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogFromAccount">
-      <p>Enter the recipient address, the amount to send, and your password</p>
+      <p>{{echo('profileViewHtml_recipient_address_send')}}</p>
       <img src={{userImage}} class="avatar" title={{userAccount}} style="width: 64px; display: block; margin: 0 auto;">
-      <paper-input disabled id="senderAccount" label="From Account"></paper-input>
-      <paper-input id="recipientAccount" label="Recipient"></paper-input>
-      <paper-input id="coinsAccount" label="Amount (in Musicoins)"></paper-input>
-      <paper-input id="sendPasswordAccount" type="password" label="Password"></paper-input>
+      <paper-input disabled id="senderAccount" label={{echo('profileViewHtml_Label_From_Account')}}></paper-input>
+      <paper-input id="recipientAccount" label={{echo('profileViewHtml_Label_Recipient')}}></paper-input>
+      <paper-input id="coinsAccount" label={{echo('profileViewHtml_Label_Amount_In')}}></paper-input>
+      <paper-input id="sendPasswordAccount" type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
       <div class="buttons">
-        <paper-button dialog-dismiss on-tap="clearSendAccountFields">Cancel</paper-button>
-        <paper-button dialog-confirm autofocus on-tap="approveSendAccount">OK</paper-button>
+        <paper-button dialog-dismiss on-tap="clearSendAccountFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button dialog-confirm autofocus on-tap="approveSendAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
     </div>
