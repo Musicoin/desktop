@@ -293,6 +293,16 @@ table {
   color: #302d38;
 }
 
+#es-es {
+  background: #FFC500;
+  color: #302d38;
+}
+
+#es-ar {
+  background: #75AEE0;
+  color: #302d38;
+}
+
 #addPeerDialog {
   font-size: 18px;
 }
