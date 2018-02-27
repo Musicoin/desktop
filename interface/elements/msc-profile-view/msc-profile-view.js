@@ -3,8 +3,6 @@ var fs = require('fs-extra');
 var path = require('path');
 var os = require('os');
 var Finder = require('fs-finder');
-var jayson = require('jayson');
-var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
 var rp = require('request-promise-native');
@@ -99,6 +97,59 @@ Polymer({
       new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification'), alert);
       gui.Shell.showItemInFolder(pathOfKey);
   },
+  showLogDir: function() {
+      if (platform.includes("win32")) {
+        var logsDir = process.env.APPDATA + '\\Musicoin\\wallet-ui\\logs';
+      } else if (platform.includes("darwin")) {
+        var logsDir = process.env.HOME + '/Library/Musicoin/wallet-ui/logs';
+      } else if (platform.includes("linux")) {  //linux
+        var logsDir = process.env.HOME + '/.musicoin/wallet-ui/logs';
+      }
+      gui.Shell.showItemInFolder(logsDir);
+  },
+  wipeBlockChainDataAction: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("win32")) {
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("darwin")) {
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var DefaultBlockChainLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\gmc';
+      } else if (platform.includes("win32")) {
+        var DefaultBlockChainLocation = process.env.APPDATA + '\\Musicoin\\gmc'
+      } else if (platform.includes("darwin")) {
+        var DefaultBlockChainLocation = process.env.HOME + '/Library/Musicoin/gmc';
+      } else if (platform.includes("linux")) { //linux
+        var DefaultBlockChainLocation = process.env.HOME + '/.musicoin/gmc';
+      }
+    if (platform.includes("win32")) {
+        var taskKill = require('child_process');
+        taskKill.exec('taskkill /PID ' + String(gmcPid) + ' /T /F');
+      } else {
+        var killAll = require('child_process');
+        killAll.exec('killall -15 gmc');
+      }
+    gmcSettings = require(gmcSettingsFile);
+    args = gmcSettings.chain.args;
+    args.forEach(function(a){if (a.indexOf('--datadir=')>-1) document.getElementById('BlockChainData').textContent = a.slice(10)});
+    if (document.getElementById('BlockChainData').textContent != "") {
+       directoryToRemove = document.getElementById('BlockChainData').textContent;
+    } else {
+       directoryToRemove = DefaultBlockChainLocation;
+    }
+    fs.removeSync(directoryToRemove);
+    alert(document.querySelector("msc-profile-view").echo('profileViewHtml_wipeBlockChain_finished') + "\n" + document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert2'));
+  },
+  wipeBlockChainDataConfirmDialog: function() {
+    this.$.wipeBlockChainDataDialogConfirm.open();
+  },
+  wipeBlockChainDataDialog: function() {
+    this.$.wipeBlockChainDataDialog.open();
+  },
   gmcOverwriteCache: function(size) {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
       var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
@@ -171,26 +222,6 @@ Polymer({
       this.$.senderAccount.value = document.getElementById('AccountDialog').textContent;
       this.$.sendDialogFromAccount.open();
     }
-  },
-  restoreDefaultNodeList: function() {
-      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-        var oldList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json.org';
-        var actualtList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
-      } else if (platform.includes("win32")) {
-        var oldList = process.env.APPDATA + '\\Musicoin\\bootnodes.json.org';
-        var actualtList = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
-      } else if (platform.includes("darwin")) {
-        var oldList = process.env.HOME + '/Library/Musicoin/bootnodes.json.org';
-        var actualtList = process.env.HOME + '/Library/Musicoin/bootnodes.json';
-      } else if (platform.includes("linux")) { //linux
-        var oldList = process.env.HOME + '/.musicoin/bootnodes.json.org';
-        var actualtList = process.env.HOME + '/.musicoin/bootnodes.json';
-      }
-
-    fs.copy(oldList, actualtList, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
   },
   backupAccount: function(e) {
     var account = e.model.account.address;
@@ -335,34 +366,6 @@ Polymer({
   showExplorerWindowFromDialog: function() {
     var account = document.getElementById('AccountDialog').textContent;
     gui.Window.open('https://explorer.musicoin.org/account/' + account,{position: 'center', width: 1000, height: 600});
-  },
-  activePeers: function() {
-    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-    var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
-    } else if (platform.includes("win32")) {
-    var pathOfNodes = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
-    } else if (platform.includes("darwin")) {
-    var pathOfNodes = process.env.HOME + '/Library/Musicoin/bootnodes.json';
-    } else if (platform.includes("linux")) { //linux
-    var pathOfNodes = process.env.HOME + '/.musicoin/bootnodes.json';
-    }
-    var bootnodes = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
-    var client = jayson.client.http('http://localhost:8545');
-    client.request('admin_peers', [], function(err, response) {
-      if(err) throw err;
-    var aPeers = JSON.parse(JSON.stringify(response.result));
-    for(var i = 0; i < aPeers.length; i++) {
-    document.querySelector("msc-profile-view").addOrRemove(bootnodes.nodes, "enode://" + aPeers[i].id + "@" + aPeers[i].network.remoteAddress);
-    fs.writeFileSync(pathOfNodes, JSON.stringify(bootnodes, null, 4), 'utf-8');
-    }
-    });
-  },
-  addOrRemove: function(arr, val) {
-    if (!_.includes(arr, val)) {
-    arr.unshift(val);
-    } else {
-    _.union(arr, [val]);
-    }
   },
   maxWindow: function() {
     if ( nwin.width > 1000 ) {
@@ -1058,7 +1061,6 @@ Polymer({
     let coinMarketCapCharts = echo('profileJS_menu_CoinMarketCap_Charts');
     let addPeers = echo('profileJS_menu_Add_Peers');
     let gmcCache = echo('profileJS_menu_Select_Gmc_cache');
-    let oldNodes = echo('profileJS_menu_Restore_Nodes');
     let gitHubIssue = echo('profileJS_menu_GitHub_Issue');
     let howItworks = echo('profileJS_menu_How_It_Works');
     let whitepaper = echo('profileJS_menu_Whitepaper');
@@ -1068,6 +1070,8 @@ Polymer({
     let ruLang = echo('profileJS_menu_Lang_Ru');
     let esLang = echo('profileJS_menu_Lang_Es');
     let changeDataDir = echo('profileJS_menu_DataDir');
+    let showLogDirectory = echo('profileJS_menu_logDir');
+    let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
     
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
     account.append(new nw.MenuItem({ label: importAccount, key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
@@ -1128,8 +1132,10 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: changeDataDir, click: function() { document.querySelector("msc-profile-view").changeDataDirDialog(); } }));
+    advanced.append(new nw.MenuItem({ label: removeGmcFolder, click: function() { document.querySelector("msc-profile-view").wipeBlockChainDataDialog(); } }));
+    advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: gmcCache, click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
-    advanced.append(new nw.MenuItem({ label: oldNodes, click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
+    advanced.append(new nw.MenuItem({ label: showLogDirectory, click: function() { document.querySelector("msc-profile-view").showLogDir(); } }));
     menu.append(new nw.MenuItem({label: lAdvanced, submenu: advanced }));
     var help = new nw.Menu();
     if (platform.includes("darwin")) {
@@ -1159,11 +1165,6 @@ Polymer({
     document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("defaultOpen").click();
     var quick = 1700;
-    var minutes = 2;
-    var interval = minutes * 60 * 1000;
-    setInterval(function() {
-      document.querySelector("msc-profile-view").activePeers();
-    }, interval);
     setInterval(function() {
       document.querySelector("msc-profile-view").webviewDetectChange();
     }, quick);

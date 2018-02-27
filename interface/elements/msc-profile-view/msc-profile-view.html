@@ -253,6 +253,27 @@
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
       </div>
     </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="wipeBlockChainDataDialog">
+      <div id="BlockChainData" style="display: none;"></div>
+      <p style="font-weight: 900; font-size: 16px; text-align: center;">{{echo('profileViewHtml_wipeBlockChain')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_wipeBlockChain_warning1')}}</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="wipeBlockChainDataConfirmDialog">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="wipeBlockChainDataDialogConfirm">
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_Warning')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_wipeBlockChain_warning1')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px; text-align: center;">{{echo('profileViewHtml_wipeBlockChain_warning2')}}</p>
+      <div class="buttons">
+      <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      <paper-button dialog-confirm autofocus on-tap="wipeBlockChainDataAction">{{echo('profileViewHtml_Btn_Confirm')}}</paper-button>
+      </div>
+    </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveRemoveAccountDialog">
       <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
