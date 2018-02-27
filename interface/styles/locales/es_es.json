@@ -126,7 +126,7 @@
     "profileViewHtml_wipeBlockChain": "Aquí puede eliminar los datos de la cadena de bloques, presione <OK> para continuar",
     "profileViewHtml_wipeBlockChain_warning1": "Esta acción eliminará todos los datos de la cadena de bloques",
     "profileViewHtml_wipeBlockChain_warning2": "Por favor espere a la alerta con las instrucciones luego de presionar <Confirmar>",
-    "profileViewHtml_wipeBlockChain_finished": "Datos de la cadena de bloques satisfactoriamente eliminado —> Datos de la cadena de bloques eliminados correctamente",
+    "profileViewHtml_wipeBlockChain_finished": "Datos de la cadena de bloques eliminados correctamente",
     "introductionHtml_Btn_open": "ABRIR MI CARTERA",
     "introductionHtml_Welcome_to": "Bienvenido a Musicoin Desktop Wallet",
     "introductionHtml_Create_an_account_or": "Cree una cuenta o importe una existente",
