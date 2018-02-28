@@ -3,7 +3,6 @@ module.exports = function(web3Connector) {
     createAccount: function(pwd) {
       return web3Connector.createAccount(pwd);
     },
-
     getAccounts: function() {
       return web3Connector.getAccounts()
     },
@@ -14,17 +13,8 @@ module.exports = function(web3Connector) {
     getNodeId: function() {
       return web3Connector.getNodeId();
     },
-    setCoinbase: function(address) {
-      return web3Connector.setCoinbase(address);
-    },
     getBalance: function(account) {
       return web3Connector.getUserBalanceInMusicoin(account);
-    },
-    startMining: function() {
-      return web3Connector.startMining();
-    },
-    stopMining: function() {
-      return web3Connector.stopMining();
     },
     addPeers: function(enode) {
       return web3Connector.addPeers(enode);

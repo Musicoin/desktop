@@ -6,6 +6,7 @@ var os = require('os');
 var platform = os.platform();
 var ethers = require('ethers');
 var zxcvbn = require('zxcvbn');
+var request = require("request");
 
 if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
   var introduction = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\introduction.intro';
@@ -44,10 +45,11 @@ Polymer({
       .to('chainVersion')
 
     setTimeout(function() {
-    var obj = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
+    document.querySelector("msc-introduction").preLoadNodes(function(loadNodes) {
+    nodesList = JSON.parse(loadNodes, 'utf-8');
     var remoteNodes = [];
-    for (var i = 0; i < obj['nodes'].length; i++) {
-      remoteNodes.push(obj['nodes'][i]);
+    for (var i = 0; i < nodesList['nodes'].length; i++) {
+      remoteNodes.push(nodesList['nodes'][i]);
     }
     //console.log(remoteNodes);
     mscIntf.accountModule.getNodeId()
@@ -61,7 +63,8 @@ Polymer({
       .delay(5000)
       .then(() => this.txStatus = "")
       .catch(err => this.txStatus = document.querySelector("msc-introduction").echo('profileJS_addPeers_failed_default_list') + err);
-    },20000);
+    });
+    },12000);
   },
   hideIntroWindow: function() {
     fs.writeFile(introduction, "Intro was created");
@@ -73,6 +76,20 @@ Polymer({
       return true;
     }
     return false;
+  },
+  preLoadNodes: function(cb) {
+        var url = 'https://raw.githubusercontent.com/cryptofuture/music-bootnodes/master/bootnodes.json';
+        request({
+        url: url,
+        timeout: 10000,
+        json: true
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            cb(JSON.stringify(body));
+        } else {
+            cb(fs.readFileSync(pathOfNodes, 'utf-8'));
+        }
+    });
   },
   addExistingAccount: function() {
     document.getElementById('backup').style.display = 'none';
