@@ -115,20 +115,8 @@ Web3Connector.prototype.addPeers = function (enodes) {
     return Promise.all(enodes.map(e => this.rpcCall("admin_addPeer", e)));
 };
 
-Web3Connector.prototype.startMining = function () {
-  return this.rpcCall("miner_start", []);
-};
-
-Web3Connector.prototype.stopMining = function () {
-  return this.rpcCall("miner_stop", []);
-};
-
 Web3Connector.prototype.getCoinbase = function () {
   return this.web3.eth.coinbase;
-};
-
-Web3Connector.prototype.setCoinbase = function (address) {
-  return this.rpcCall("miner_setEtherbase", [address]);
 };
 
 Web3Connector.prototype.getAccounts = function () {

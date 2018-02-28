@@ -39,11 +39,6 @@ Polymer({
   ready: function() {
     mscIntf.attach(this)
       .to('syncStatus')
-      .to('syncStatus', function(oldValue, newValue) {
-        if (newValue) {
-          this.$.isMining.checked = newValue.mining;
-        }
-      }.bind(this));
 
     mscIntf.financialData.attach(this)
       .to('accounts')
@@ -60,16 +55,6 @@ Polymer({
   },
   _updateUserName: function() {},
 
-  changeCoinbase: function(e) {
-    mscIntf.accountModule.setCoinbase(e.model.account.address);
-  },
-  toggleMiningState: function() {
-    if (this.$.isMining.checked) {
-      mscIntf.accountModule.startMining();
-    } else {
-      mscIntf.accountModule.stopMining();
-    }
-  },
   _computeCheckboxIcon: function(value) {
     return value ? "icons:check-box" : "icons:check-box-outline-blank";
   },
@@ -167,9 +152,6 @@ Polymer({
   },
   gmcOverwriteCacheDialog: function() {
       this.$.gmcOverwriteCache.open();
-  },
-  handleSetCustomCoinbase: function() {
-    this.$.setCoinbaseDialog.open();
   },
   importAny: function() {
     this.$.importAnyDialog.open();
@@ -845,11 +827,6 @@ Polymer({
        this.clearVerifyMsg();
        alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_incorrect details'));
        return false;
-    }
-  },
-  setCustomCoinbase: function() {
-    if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
-      mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
     }
   },
   changeDataDirDialog: function() {

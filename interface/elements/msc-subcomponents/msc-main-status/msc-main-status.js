@@ -18,9 +18,6 @@ Polymer({
     return (this.syncStatus && this.syncStatus.syncing) ? document.querySelector("msc-introduction").echo('mainStatusJS_sync') + ((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2) + document.querySelector("msc-introduction").echo('mainStatusJS_sync_percent'): "";
 
   },
-  _computeIsMining: function() {
-    return this.syncStatus && this.syncStatus.mining;
-  },
   _computePeerIcon: function() {
     if (!this.syncStatus || this.syncStatus.peers == 0) return "social:person-outline";
     if (this.syncStatus.peers == 1) return "social:person";
@@ -33,13 +30,6 @@ Polymer({
   _formatHighBlockNumber: function() {
     if (!this.syncStatus || !this.syncStatus.highestBlock) return "";
     return "/" + this.syncStatus.highestBlock.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  },
-  toggleMiningState: function() {
-    if (this._computeIsMining()) {
-      mscIntf.accountModule.stopMining();
-    } else {
-      mscIntf.accountModule.startMining();
-    }
   },
   _computeHashRate: function() {
     if (!this.syncStatus || !this.syncStatus.hashrate) return "";
