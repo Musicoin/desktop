@@ -29,6 +29,12 @@
     "request-promise-native": "^1.0.5",
     "web3": "^0.19.1",
     "y18n": "^4.0.0",
-    "zxcvbn": "^4.4.2"
-  }
+    "zxcvbn": "^4.4.2",
+    "snyk": "^1.69.10"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
