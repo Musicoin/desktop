@@ -890,23 +890,18 @@ Polymer({
     });
   },
   sendCoins: function() {
-    this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
       document.getElementById('recipient').value,
       document.getElementById('coins').value,
       document.getElementById('sender').value,
       document.getElementById('sendPassword').value
-    ).
-    then((tx) => {
-        this.txStatus = "Waiting for transaction " + tx;
-        return mscIntf.accountModule.waitForTransaction(tx);
-      })
-      .then(() => {
-        this.txStatus = "Success!";
-      })
-      .delay(5000)
-      .then(() => {
-        this.txStatus = "";
+    ).then((tx) => {
+       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+       var alert = {
+       icon: iconPath,
+       body: tx};
+        new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
+        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -914,23 +909,18 @@ Polymer({
     this.clearSendFields();
   },
   sendCoinsFromAccount: function() {
-    this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
       document.getElementById('recipientAccount').value,
       document.getElementById('coinsAccount').value,
       document.getElementById('senderAccount').value,
       document.getElementById('sendPasswordAccount').value
-    ).
-    then((tx) => {
-        this.txStatus = "Waiting for transaction " + tx;
-        return mscIntf.accountModule.waitForTransaction(tx);
-      })
-      .then(() => {
-        this.txStatus = "Success!";
-      })
-      .delay(5000)
-      .then(() => {
-        this.txStatus = "";
+    ).then((tx) => {
+       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+       var alert = {
+       icon: iconPath,
+       body: tx};
+        new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
+        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -1049,6 +1039,8 @@ Polymer({
     let changeDataDir = echo('profileJS_menu_DataDir');
     let showLogDirectory = echo('profileJS_menu_logDir');
     let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
+    let cnLang = echo('profileJS_menu_Lang_Cn');
+    let frLang = echo('profileJS_menu_Lang_Fr');
     
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
     account.append(new nw.MenuItem({ label: importAccount, key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
@@ -1105,6 +1097,8 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: enLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("en"); } }));
     advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
     advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
+    advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cn"); } }));
+    advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));

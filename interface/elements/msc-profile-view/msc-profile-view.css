@@ -360,6 +360,18 @@ tr:nth-child(even) {
   display: none;
 }
 
+#status {
+  padding-top: 6px;
+  font-family: 'Lato' sans-serif;
+  font-weight: 400;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+  color: lightgrey;
+  margin-top: -30px;
+}
+
 #mPlayer {
  position: absolute;
   top: 0;
