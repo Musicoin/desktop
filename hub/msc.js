@@ -23,6 +23,7 @@ var settings = musicoinRoot + '/config/settings.js';
 if (!fs.existsSync(musicoinRoot)) fs.mkdirSync(musicoinRoot);
 if (!fs.existsSync(appData)) fs.mkdirSync(appData);
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
+if (fs.existsSync(pathOfNodes)) fs.removeSync(pathOfNodes);
 if (!fs.existsSync(pathOfNodes)) fs.copySync(process.cwd() + '/bootnodes.json', pathOfNodes);
 if (!fs.existsSync(configFolderHome)) fs.copySync(configFolder, configFolderHome);
 if (!fs.existsSync(settings)) fs.copySync(configFolder + '/settings.js', settings);
