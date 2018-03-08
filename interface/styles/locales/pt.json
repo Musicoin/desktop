@@ -205,6 +205,10 @@
     "profileJS_menu_Lang_Es": "Alterar idioma: Espanhol",
     "profileJS_menu_Lang_Fr": "Alterar idioma: Francês",
     "profileJS_menu_Lang_Cn": "Alterar idioma: Chinês",
+    "profileJS_menu_Lang_Cnt": "Alterar idioma: Chinês(Tradicional)",
+    "profileJS_menu_Lang_Pt": "Alterar idioma: Português",
+    "profileJS_menu_Lang_Nl": "Alterar idioma: holandês",
+
     "profileJS_menu_DataDir": "Mover dados do blockchain",
     "profileJS_menu_logDir": "Abrir diretório de logs",
     "profileJS_menu_removeGmcFolder": "Limpe os dados do blockchain",
