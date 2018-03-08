@@ -1101,7 +1101,6 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
     advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
     advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cn"); } }));
-    advanced.append(new nw.MenuItem({ label: twLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("tw"); } }));
     advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
     advanced.append(new nw.MenuItem({ label: cntLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cnt"); } }));
     advanced.append(new nw.MenuItem({ label: nlLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("nl"); } }));
