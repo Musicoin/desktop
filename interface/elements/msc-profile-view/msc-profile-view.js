@@ -1040,6 +1040,7 @@ Polymer({
     let showLogDirectory = echo('profileJS_menu_logDir');
     let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
     let cnLang = echo('profileJS_menu_Lang_Cn');
+    let twLang = echo('profileJS_menu_Lang_Tw');
     let frLang = echo('profileJS_menu_Lang_Fr');
     
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
@@ -1098,6 +1099,7 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
     advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
     advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cn"); } }));
+    advanced.append(new nw.MenuItem({ label: twLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("tw"); } }));
     advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
