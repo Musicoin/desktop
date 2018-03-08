@@ -832,7 +832,7 @@ Polymer({
   changeDataDirDialog: function() {
     this.$.changeDataDirDialog.open();
   },
-  changeDataDir: function() {    
+  changeDataDir: function() {
     if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
       var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
       } else if (platform.includes("win32")) {
@@ -860,7 +860,7 @@ Polymer({
       } else if (platform.includes("linux")) { //linux
         var gmcDefaultLocation = process.env.HOME + '/.musicoin';
       }
-    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');    
+    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');
     document.getElementById('fileDialogDataDir').click();
     document.querySelector('#fileDialogDataDir').addEventListener("change", function() {
     gmcSettings = require(gmcSettingsFile);
@@ -1010,7 +1010,7 @@ Polymer({
       menu.createMacBuiltin('Musicoin-wallet',{hideEdit: true, hideWindow: true});
       } else {}
     var account = new nw.Menu();
-    
+
     let lAccount = echo('profileJS_menu_label_Account');
     let lExplorer = echo('profileJS_menu_label_Explorer');
     let lMarkets = echo('profileJS_menu_label_Markets');
@@ -1040,9 +1040,11 @@ Polymer({
     let showLogDirectory = echo('profileJS_menu_logDir');
     let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
     let cnLang = echo('profileJS_menu_Lang_Cn');
-    let twLang = echo('profileJS_menu_Lang_Tw');
+    let cntLang = echo('profileJS_menu_Lang_Cnt');
     let frLang = echo('profileJS_menu_Lang_Fr');
-    
+    let nlLang = echo('profileJS_menu_Lang_Nl');
+    let ptLang = echo('profileJS_menu_Lang_Pt');
+
     account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
     account.append(new nw.MenuItem({ label: importAccount, key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
@@ -1101,6 +1103,10 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cn"); } }));
     advanced.append(new nw.MenuItem({ label: twLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("tw"); } }));
     advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
+    advanced.append(new nw.MenuItem({ label: cntLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cnt"); } }));
+    advanced.append(new nw.MenuItem({ label: nlLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("nl"); } }));
+    advanced.append(new nw.MenuItem({ label: ptLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("pt"); } }));
+
     advanced.append(new nw.MenuItem({ type: 'separator' }));
     advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
     advanced.append(new nw.MenuItem({ type: 'separator' }));
