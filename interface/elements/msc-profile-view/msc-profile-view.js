@@ -111,6 +111,16 @@ Polymer({
       } else if (platform.includes("linux")) { //linux
         var DefaultBlockChainLocation = process.env.HOME + '/.musicoin/gmc';
       }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcDefaultLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+      } else if (platform.includes("win32")) {
+        var gmcDefaultLocation = process.env.APPDATA + '\\Musicoin'
+      } else if (platform.includes("darwin")) {
+        var gmcDefaultLocation = process.env.HOME + '/Library/Musicoin';
+      } else if (platform.includes("linux")) { //linux
+        var gmcDefaultLocation = process.env.HOME + '/.musicoin';
+      }
+    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');
     if (platform.includes("win32")) {
         var taskKill = require('child_process');
         taskKill.exec('taskkill /PID ' + String(gmcPid) + ' /T /F');
