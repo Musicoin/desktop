@@ -997,6 +997,9 @@ Polymer({
   spanishLang: function() {
     this.$.spanishLangDialog.open();
   },
+  chineseLang: function() {
+    this.$.chineseLangDialog.open();
+  },
   patchOverlay: function (e) {
     // hack from: https://stackoverflow.com/a/31510980
     if (e.target.withBackdrop) {
@@ -1040,7 +1043,6 @@ Polymer({
     let showLogDirectory = echo('profileJS_menu_logDir');
     let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
     let cnLang = echo('profileJS_menu_Lang_Cn');
-    let cntLang = echo('profileJS_menu_Lang_Cnt');
     let frLang = echo('profileJS_menu_Lang_Fr');
     let nlLang = echo('profileJS_menu_Lang_Nl');
     let ptLang = echo('profileJS_menu_Lang_Pt');
@@ -1100,9 +1102,8 @@ Polymer({
     advanced.append(new nw.MenuItem({ label: enLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("en"); } }));
     advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
     advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
-    advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cn"); } }));
+    advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").chineseLang(); } }));
     advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
-    advanced.append(new nw.MenuItem({ label: cntLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("cnt"); } }));
     advanced.append(new nw.MenuItem({ label: nlLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("nl"); } }));
     advanced.append(new nw.MenuItem({ label: ptLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("pt"); } }));
 

@@ -303,6 +303,16 @@ table {
   color: #302d38;
 }
 
+#cn {
+  background: #e05a47;
+  color: #302d38;
+}
+
+#cnt {
+  background: #dcba05;
+  color: #302d38;
+}
+
 #addPeerDialog {
   font-size: 18px;
 }
