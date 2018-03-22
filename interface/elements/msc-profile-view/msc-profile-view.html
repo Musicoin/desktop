@@ -335,6 +335,16 @@
       </div>
     </paper-dialog>
 
+    <paper-dialog id="chineseLangDialog">
+      <div class="buttons-style top-buttons" style="position: unset;">
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("cn") id="cn">{{echo('profileViewHtml_cn')}}</paper-button>
+        <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("cnt") id="cnt">{{echo('profileViewHtml_cnt')}}</paper-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+      </div>
+    </paper-dialog>
+
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialogAccount">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
         <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">

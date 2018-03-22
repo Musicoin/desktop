@@ -289,7 +289,7 @@ table {
 }
 
 #data-dir {
-  background: #e16378db;
+  background: #A16C6C;
   color: #302d38;
 }
 
@@ -300,6 +300,16 @@ table {
 
 #es-ar {
   background: #75AEE0;
+  color: #302d38;
+}
+
+#cn {
+  background: #e05a47;
+  color: #302d38;
+}
+
+#cnt {
+  background: #dcba05;
   color: #302d38;
 }
 
