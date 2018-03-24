@@ -288,6 +288,31 @@ table {
   color: #302d38;
 }
 
+#data-dir {
+  background: #A16C6C;
+  color: #302d38;
+}
+
+#es-es {
+  background: #FFC500;
+  color: #302d38;
+}
+
+#es-ar {
+  background: #75AEE0;
+  color: #302d38;
+}
+
+#cn {
+  background: #e05a47;
+  color: #302d38;
+}
+
+#cnt {
+  background: #dcba05;
+  color: #302d38;
+}
+
 #addPeerDialog {
   font-size: 18px;
 }
@@ -343,6 +368,18 @@ tr:nth-child(even) {
 
 .tabcontent {
   display: none;
+}
+
+#status {
+  padding-top: 6px;
+  font-family: 'Lato' sans-serif;
+  font-weight: 400;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+  color: lightgrey;
+  margin-top: -30px;
 }
 
 #mPlayer {

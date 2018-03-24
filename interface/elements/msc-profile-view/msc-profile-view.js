@@ -3,8 +3,6 @@ var fs = require('fs-extra');
 var path = require('path');
 var os = require('os');
 var Finder = require('fs-finder');
-var jayson = require('jayson');
-var _ = require('lodash');
 var ntpClient = require('ntp-client');
 var platform = os.platform();
 var rp = require('request-promise-native');
@@ -27,7 +25,6 @@ Polymer({
     recipientAccount: String,
     userBalance: String,
     sendBalance: String,
-    locale: Object,
     txStatus: String,
     musicUsd: String,
     musicBtc: String,
@@ -42,12 +39,6 @@ Polymer({
   ready: function() {
     mscIntf.attach(this)
       .to('syncStatus')
-      .to('locale')
-      .to('syncStatus', function(oldValue, newValue) {
-        if (newValue) {
-          this.$.isMining.checked = newValue.mining;
-        }
-      }.bind(this));
 
     mscIntf.financialData.attach(this)
       .to('accounts')
@@ -64,16 +55,6 @@ Polymer({
   },
   _updateUserName: function() {},
 
-  changeCoinbase: function(e) {
-    mscIntf.accountModule.setCoinbase(e.model.account.address);
-  },
-  toggleMiningState: function() {
-    if (this.$.isMining.checked) {
-      mscIntf.accountModule.startMining();
-    } else {
-      mscIntf.accountModule.stopMining();
-    }
-  },
   _computeCheckboxIcon: function(value) {
     return value ? "icons:check-box" : "icons:check-box-outline-blank";
   },
@@ -96,36 +77,91 @@ Polymer({
       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
         icon: iconPath,
-        body: "You need to KNOW password for every account to unlock it." +
-        " You can locate your accounts in: " + pathOfKey + " directory."};
-      new Notification("Please backup your accounts in a safe place", alert);
+        body: document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_1') +
+        document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_2') + pathOfKey + document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_3')};
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification'), alert);
       gui.Shell.showItemInFolder(pathOfKey);
+  },
+  showLogDir: function() {
+      if (platform.includes("win32")) {
+        var logsDir = process.env.APPDATA + '\\Musicoin\\wallet-ui\\logs';
+      } else if (platform.includes("darwin")) {
+        var logsDir = process.env.HOME + '/Library/Musicoin/wallet-ui/logs';
+      } else if (platform.includes("linux")) {  //linux
+        var logsDir = process.env.HOME + '/.musicoin/wallet-ui/logs';
+      }
+      gui.Shell.showItemInFolder(logsDir);
+  },
+  wipeBlockChainDataAction: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("win32")) {
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("darwin")) {
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var DefaultBlockChainLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\gmc';
+      } else if (platform.includes("win32")) {
+        var DefaultBlockChainLocation = process.env.APPDATA + '\\Musicoin\\gmc'
+      } else if (platform.includes("darwin")) {
+        var DefaultBlockChainLocation = process.env.HOME + '/Library/Musicoin/gmc';
+      } else if (platform.includes("linux")) { //linux
+        var DefaultBlockChainLocation = process.env.HOME + '/.musicoin/gmc';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcDefaultLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+      } else if (platform.includes("win32")) {
+        var gmcDefaultLocation = process.env.APPDATA + '\\Musicoin'
+      } else if (platform.includes("darwin")) {
+        var gmcDefaultLocation = process.env.HOME + '/Library/Musicoin';
+      } else if (platform.includes("linux")) { //linux
+        var gmcDefaultLocation = process.env.HOME + '/.musicoin';
+      }
+    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');
+    if (platform.includes("win32")) {
+        var taskKill = require('child_process');
+        taskKill.exec('taskkill /PID ' + String(gmcPid) + ' /T /F');
+      } else {
+        var killAll = require('child_process');
+        killAll.exec('killall -15 gmc');
+      }
+    gmcSettings = require(gmcSettingsFile);
+    args = gmcSettings.chain.args;
+    args.forEach(function(a){if (a.indexOf('--datadir=')>-1) document.getElementById('BlockChainData').textContent = a.slice(10)});
+    if (document.getElementById('BlockChainData').textContent != "") {
+       directoryToRemove = document.getElementById('BlockChainData').textContent;
+    } else {
+       directoryToRemove = DefaultBlockChainLocation;
+    }
+    fs.removeSync(directoryToRemove);
+    alert(document.querySelector("msc-profile-view").echo('profileViewHtml_wipeBlockChain_finished') + "\n" + document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert2'));
+  },
+  wipeBlockChainDataConfirmDialog: function() {
+    this.$.wipeBlockChainDataDialogConfirm.open();
+  },
+  wipeBlockChainDataDialog: function() {
+    this.$.wipeBlockChainDataDialog.open();
   },
   gmcOverwriteCache: function(size) {
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-        var defaultCache = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
-        var newCache =  process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\' + 'config.' + size + '.js';
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
       } else if (platform.includes("win32")) {
-        var defaultCache = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
-        var newCache =  process.env.APPDATA + '\\Musicoin\\config\\' + 'config.' + size + '.js';
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
       } else if (platform.includes("darwin")) {
-        var defaultCache = process.env.HOME + '/Library/Musicoin/config/config.std.js';
-        var newCache =  process.env.HOME + '/Library/Musicoin/config/' + 'config.' + size + '.js';
-      } else if (platform.includes("linux")) {  //linux
-        var defaultCache = process.env.HOME + '/.musicoin/config/config.std.js';
-        var newCache =  process.env.HOME + '/.musicoin/config/' + 'config.' + size + '.js';
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
       }
-
-    fs.copy(newCache, defaultCache, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
+    gmcSettings = require(gmcSettingsFile);
+    gmcSettings.chain.args.push('--cache=' + size);
+    delete gmcSettings.chain.absolutePath;
+    fs.writeFileSync(gmcSettingsFile, "module.exports = " + JSON.stringify(gmcSettings, null, 2));
   },
   gmcOverwriteCacheDialog: function() {
       this.$.gmcOverwriteCache.open();
-  },
-  handleSetCustomCoinbase: function() {
-    this.$.setCoinbaseDialog.open();
   },
   importAny: function() {
     this.$.importAnyDialog.open();
@@ -151,14 +187,14 @@ Polymer({
   },
   showSendDialog: function() {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
+    var alert = {icon: iconPath, body: document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_alert_body')};
     if (this.syncStatus.initialSyncEnded == true) {
       this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
     } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
-      new Notification("Send function locked", alert);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_Notification_1'), alert);
     } else if (this.syncStatus.currentBlock == undefined) {
-      new Notification("Gmc not started synchronization yet", alert);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_Notification_2'), alert);
     } else {
       this.getAccounts = mscIntf.accountModule.getAccounts();
       this.$.sendDialogMenu.open();
@@ -166,38 +202,18 @@ Polymer({
   },
   showSendDialogFromAccount: function() {
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
-    var alert = {icon: iconPath, body: "Send function locked until wallet is in sync."};
+    var alert = {icon: iconPath, body: document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_alert_body')};
     if (this.syncStatus.initialSyncEnded == true) {
       this.$.senderAccount.value = document.getElementById('AccountDialog').textContent;
       this.$.sendDialogFromAccount.open();
     } else if ((((100 * (this.syncStatus.currentBlock)) / (this.syncStatus.highestBlock)).toFixed(2)) < 98) {
-      new Notification("Send function locked", alert);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_Notification_1'), alert);
     } else if (this.syncStatus.currentBlock == undefined) {
-      new Notification("Gmc not started synchronization yet", alert);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_showSendDialog_Notification_2'), alert);
     } else {
       this.$.senderAccount.value = document.getElementById('AccountDialog').textContent;
       this.$.sendDialogFromAccount.open();
     }
-  },
-  restoreDefaultNodeList: function() {
-      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-        var oldList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json.org';
-        var actualtList = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
-      } else if (platform.includes("win32")) {
-        var oldList = process.env.APPDATA + '\\Musicoin\\bootnodes.json.org';
-        var actualtList = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
-      } else if (platform.includes("darwin")) {
-        var oldList = process.env.HOME + '/Library/Musicoin/bootnodes.json.org';
-        var actualtList = process.env.HOME + '/Library/Musicoin/bootnodes.json';
-      } else if (platform.includes("linux")) { //linux
-        var oldList = process.env.HOME + '/.musicoin/bootnodes.json.org';
-        var actualtList = process.env.HOME + '/.musicoin/bootnodes.json';
-      }
-
-    fs.copy(oldList, actualtList, function(error) {
-      if (error) return console.error(error);
-       console.log('File was copied!')
-      });
   },
   backupAccount: function(e) {
     var account = e.model.account.address;
@@ -207,8 +223,8 @@ Polymer({
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {
        icon: iconPath,
-       body: "You need to KNOW password for every account to unlock it." +
-       " You can locate your account in: \n" + tmpPath + " directory."};
+       body: document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_1') +
+       document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_2') + "\n" + tmpPath + document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_3')};
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
@@ -220,10 +236,10 @@ Polymer({
       }
       pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
       var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-      fs.copy(String(pathOfAccount), filePath);
+      fs.copySync(String(pathOfAccount), filePath);
       document.getElementById('fileDialogBackup-' + account).value = "";
       // Fires double notifications, when same account selected again
-      new Notification("Backup in " + tmpPath, alert);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupAccount_Notification') + tmpPath, alert);
   });
   },
   backupAccountFromDialog: function() {
@@ -234,8 +250,8 @@ Polymer({
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {
        icon: iconPath,
-       body: "You need to KNOW password for every account to unlock it." +
-       " You can locate your account in: \n" + tmpPath + " directory."};
+       body: document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_1') +
+       document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_2') +  "\n" + tmpPath + document.querySelector("msc-profile-view").echo('profileJS_backupWallet_Notification_body_3')};
       if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
         var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
       } else if (platform.includes("win32")) {
@@ -247,10 +263,10 @@ Polymer({
       }
     pathOfAccount = Finder.in(pathOfKey).findFiles(account.slice(2));
     var filePath = tmpPath + '/' + path.basename(String(pathOfAccount));
-    fs.copy(String(pathOfAccount), filePath);
+    fs.copySync(String(pathOfAccount), filePath);
     document.getElementById('fileDialogBackupAccount-' + account).value = "";
     // Fires double notifications, when same account selected again
-    new Notification("Backup in " + tmpPath, alert);
+    new Notification(document.querySelector("msc-profile-view").echo('profileJS_backupAccount_Notification') + tmpPath, alert);
   });
   },
   paperWallet: function() {
@@ -285,14 +301,14 @@ Polymer({
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var alert = {
        icon: iconPath,
-       body: "As we make QR code from the UTC/JSON file." +
-       " You still need a password to access account"};
+       body: document.querySelector("msc-profile-view").echo('profileJS_exportQRCode_body1') +
+       document.querySelector("msc-profile-view").echo('profileJS_exportQRCode_body2')};
     var imgName  = ('UTC--' + new Date().toISOString() + '--' + account).split(':').join('-');
     var base64Data = paperImage.replace(/^data:([A-Za-z-+/]+);base64,/, '');
     var filePath = "";
     var filePath = tmpPath + '/' + imgName + '.png';
-    fs.writeFile(filePath, base64Data, {encoding: 'base64'});
-    new Notification("QR Code Backup in " + tmpPath, alert);
+    fs.writeFileSync(filePath, base64Data, {encoding: 'base64'});
+    new Notification(document.querySelector("msc-profile-view").echo('profileJS_exportQRCode_Notification') + tmpPath, alert);
     document.getElementById('fileDialogPaper-' + account).value = "";
   });
   this.$.paperWalletDialog.close();
@@ -320,14 +336,14 @@ Polymer({
     var PaperWallet = document.getElementById('fileDialogPaperImport').value;
     png.parse(fs.readFileSync(PaperWallet), function(err, decodedPng) {
     if(err) {
-      alert("Incorrect PNG file.");
+      alert(document.querySelector("msc-profile-view").echo('profileJS_decodeQRCode_alert'));
       //console.log(err);
     }
     var code = jsQR(decodedPng.data, decodedPng.width, decodedPng.height);
     var wallet = JSON.parse(code.data);
     var accountName  = (new Date().toISOString() + '--' + wallet.address).split(':').join('-');
     pathOfKey = pathOfKey + accountName;
-    fs.writeFile(pathOfKey, code.data, 'utf-8');
+    fs.writeFileSync(pathOfKey, code.data, 'utf-8');
     document.getElementById('fileDialogPaperImport').value = "";
    });
  });
@@ -342,34 +358,6 @@ Polymer({
   showExplorerWindowFromDialog: function() {
     var account = document.getElementById('AccountDialog').textContent;
     gui.Window.open('https://explorer.musicoin.org/account/' + account,{position: 'center', width: 1000, height: 600});
-  },
-  activePeers: function() {
-    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
-    var pathOfNodes = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\bootnodes.json';
-    } else if (platform.includes("win32")) {
-    var pathOfNodes = process.env.APPDATA + '\\Musicoin\\bootnodes.json';
-    } else if (platform.includes("darwin")) {
-    var pathOfNodes = process.env.HOME + '/Library/Musicoin/bootnodes.json';
-    } else if (platform.includes("linux")) { //linux
-    var pathOfNodes = process.env.HOME + '/.musicoin/bootnodes.json';
-    }
-    var bootnodes = JSON.parse(fs.readFileSync(pathOfNodes, 'utf-8'));
-    var client = jayson.client.http('http://localhost:8545');
-    client.request('admin_peers', [], function(err, response) {
-      if(err) throw err;
-    var aPeers = JSON.parse(JSON.stringify(response.result));
-    for(var i = 0; i < aPeers.length; i++) {
-    document.querySelector("msc-profile-view").addOrRemove(bootnodes.nodes, "enode://" + aPeers[i].id + "@" + aPeers[i].network.remoteAddress);
-    fs.writeFile(pathOfNodes, JSON.stringify(bootnodes, null, 4), 'utf-8');
-    }
-    });
-  },
-  addOrRemove: function(arr, val) {
-    if (!_.includes(arr, val)) {
-    arr.unshift(val);
-    } else {
-    _.union(arr, [val]);
-    }
   },
   maxWindow: function() {
     if ( nwin.width > 1000 ) {
@@ -456,26 +444,26 @@ Polymer({
       var finArray = array.concat(remoteNodes);
       if (array.length > 0) {
         mscIntf.accountModule.addPeers(finArray)
-          .then(() => this.txStatus = "Connecting " + array.length + " peers along with default remote Nodes")
+          .then(() => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_connecting') + array.length + document.querySelector("msc-profile-view").echo('profileJS_addPeers_peers_along'))
           .delay(5000)
           .then(() => this.txStatus = "")
-          .catch(err => this.txStatus = "Failed to add peer: " + err);
+          .catch(err => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_failed') + err);
       } else {
         mscIntf.accountModule.addPeers(remoteNodes)
-          .then(() => this.txStatus = "Default list of remote nodes loaded")
+          .then(() => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_default_list'))
           .delay(5000)
           .then(() => this.txStatus = "")
-          .catch(err => this.txStatus = "Failed to load default list: " + err);
+          .catch(err => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_failed_default_list') + err);
       }
       this.$.addPeerDialog.close();
       return;
     } else {
-      this.txStatus = "No manual enodes provided. Loading default remote Node list";
+      this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_no_manual');
       mscIntf.accountModule.addPeers(remoteNodes)
-        .then(() => this.txStatus = "Default list of remote nodes loaded")
+        .then(() => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_default_list_loaded'))
         .delay(5000)
         .then(() => this.txStatus = "")
-        .catch(err => this.txStatus = "Failed to load default list: " + err);
+        .catch(err => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_addPeers_failed_default') + err);
       this.$.addPeerDialog.close();
       return;
     }
@@ -485,20 +473,20 @@ Polymer({
     var v2 = this.$.newAccountPasswordVerify.value;
     if (v1 == v2 && v1.length > 0 && zxcvbn(v1).score >= 2 ) {
       mscIntf.accountModule.createAccount(this.$.newAccountPassword.value)
-        .then(account => this.txStatus = "Created account: " + account)
-        .catch(err => this.txStatus = "Failed to create account: " + err);
+        .then(account => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_created_account') + account)
+        .catch(err => this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_failed') + err);
       this.clearNewAccountFields();
       this.$.newAccountDialog.close();
       this.$.createNewAccountDialog.close();
     } else if (v1 != v2) {
         this.clearNewAccountFields();
-        alert("Password does not match the confirm password");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_match_failed'));
     } else if (v1 == v2 && v1.length == 0) {
         this.clearNewAccountFields();
-        alert("Password was empty!");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_empty'));
     } else if (zxcvbn(v1).score < 2) {
         this.clearNewAccountFields();
-        alert("Password too easy to guess");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_easy_password'));
     } else {
       this.clearNewAccountFields();
       return false;
@@ -555,14 +543,14 @@ Polymer({
       }
     var privateKey = (document.getElementById('dummyKey').value).replace(/\s+/g, '');
     var password = document.getElementById('dummyPassword').value;
-    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length > 0 && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62 && privateKey != password) {
+    if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.includes("0x") && privateKey.length <= 66 && privateKey.length >= 62 && privateKey != password) {
       var wallet = new ethers.Wallet(privateKey);
       wallet.encrypt(password, { scrypt: { N: 262144 } }).then(function(finalAccount) {
         finalAccountTmp = JSON.parse(finalAccount);
         account = finalAccountTmp.address;
-	accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
+        accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
         pathOfKey = pathOfKey + accountName;
-        fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+        fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
         this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length > 0 && zxcvbn(password).score >= 2 && privateKey.length <= 64 && privateKey.length >= 60 && privateKey != password) {
@@ -572,21 +560,24 @@ Polymer({
           account = finalAccountTmp.address;
           accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
           pathOfKey = pathOfKey + accountName;
-          fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+          fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
         this.clearKeyFromPrivateKey();
         this.$.importAnyDialog.close();
       } else if (password.length = 0) {
           this.clearKeyFromPrivateKey();
-        alert("Password was empty");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_empty'));
       } else if (zxcvbn(password).score < 2) {
           this.clearKeyFromPrivateKey();
-        alert("Password too easy to guess");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_easy_password'));
       } else if (privateKey = password) {
           this.clearKeyFromPrivateKey();
-        alert("Using same password as private key is a bad idea");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createKeyFromPrivateKeyAction_same_password'));
+      } else if (privateKey.length < 62) {
+          this.clearKeyFromPrivateKey();
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createKeyFromPrivateKeyAction_incorrect_private_key'));
       } else {
         this.clearKeyFromPrivateKey();
-        alert("Incorrect private key provided");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createKeyFromPrivateKeyAction_incorrect_private_key'));
       }
   },
   createKeyFromMnemonic: function() {
@@ -611,18 +602,18 @@ Polymer({
       account = finalAccountTmp.address;
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8'); });
+      fs.writeFileSync(pathOfKey, finalAccount, 'utf-8'); });
       this.clearKeyFromMnemonic();
       this.$.importAnyDialog.close();
     } else if (password.length = 0) {
         this.clearKeyFromMnemonic();
-        alert("Password was empty!");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_empty'));
     } else if (password.length > 64) {
         this.clearKeyFromMnemonic();
-        alert("We can't use password longer more than 64 bytes, due bug in scrypt-js\nIn case you want more stronger password, consider using \n<Create Account> instead of <Create Mnemonic Account>\nYou can find full description here:\n https://github.com/ricmoo/scrypt-js/issues/11");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createKeyFromMnemonicAction_64_bytes'));
     } else if (zxcvbn(password).score < 2) {
         this.clearKeyFromMnemonic();
-        alert("Password too easy to guess");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_easy_password'));
     } else {
         this.clearKeyFromMnemonic();
         return false;
@@ -651,12 +642,12 @@ Polymer({
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
     var mnemonicNotification = {
         icon: iconPath,
-        body: "Please save the phrase (mnemonic) in the safe place in order to retrieve your account in case of any failure"};
+        body: document.querySelector("msc-profile-view").echo('profileJS_createNewMnemonicAccount_body')};
     var password1 = document.getElementById('newAccountPasswordMnemonic').value;
     var password2 = document.getElementById('newAccountPasswordMnemonicVerify').value;
     if (password1 == password2 && password1.length > 0 && password1.length < 65 && zxcvbn(password1).score >= 2) {
       // It's important to show Notification before mnemonic generation, otherwise we would see alert first
-      new Notification("Save mnemonic", mnemonicNotification);
+      new Notification(document.querySelector("msc-profile-view").echo('profileJS_createNewMnemonicAccount_Notification'), mnemonicNotification);
       var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
       var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
       wallet.encrypt(password1, { scrypt: { N: 262144 } }).then(function(finalAccount) {
@@ -665,23 +656,23 @@ Polymer({
       // finalAccountTmp["x-ethers"].gethFilename works only vs mnemonic creation, so kinda useless
       accountName = (new Date().toISOString() + '--' + account).split(':').join('-');
       pathOfKey = pathOfKey + accountName;
-      fs.writeFile(pathOfKey, finalAccount, 'utf-8');
+      fs.writeFileSync(pathOfKey, finalAccount, 'utf-8');
       alert(mnemonic); });
       this.clearNewAccountFieldsMnemonic();
       this.$.newMnemonicAccountDialog.close();
       this.$.createNewAccountDialog.close();
     } else if (password1 != password2) {
         this.clearNewAccountFieldsMnemonic();
-        alert("Password does not match the confirm password");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_match_failed'));
     } else if (password1 == password2 && password1.length == 0) {
         this.clearNewAccountFieldsMnemonic();
-        alert("Password was empty!");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_password_empty'));
     } else if (password1 == password2 && password1.length > 64) {
         this.clearNewAccountFieldsMnemonic();
-        alert("We can't use password longer more than 64 bytes, due bug in scrypt-js\nIn case you want more stronger password, consider using \n<Create Account> instead of <Create Mnemonic Account>\nYou can find full description here:\n https://github.com/ricmoo/scrypt-js/issues/11");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createKeyFromMnemonicAction_64_bytes'));
     } else if (password1 == password2 && zxcvbn(password1).score < 2) {
         this.clearNewAccountFieldsMnemonic();
-        alert("Password too easy to guess");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_createNewAccount_easy_password'));
     } else {
         this.clearNewAccountFieldsMnemonic();
         return false;
@@ -725,11 +716,11 @@ Polymer({
     rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(usd => this.musicUsd = usd[0].price_usd)
-      .catch(error => this.musicUsd = "API Connection Failed");
+      .catch(error => this.musicUsd = document.querySelector("msc-profile-view").echo('profileJS_getMarketValue_failed'));
     rp({url: CoinMarketCapUrl, json: true})
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(btc => this.musicBtc = btc[0].price_btc)
-      .catch(error => this.musicBtc = "API Connection Failed");
+      .catch(error => this.musicBtc = document.querySelector("msc-profile-view").echo('profileJS_getMarketValue_failed'));
   },
   marketRates: function() {
     document.querySelector("msc-profile-view").getMarketValue();
@@ -791,7 +782,7 @@ Polymer({
       this.clearSignMsg();
       this.$.signMsgDialog.close();
     } else {
-      alert("You want to sign empty message!");
+      alert(document.querySelector("msc-profile-view").echo('profileJS_signMsgAction_empty_msg'));
       return false;
     }
   },
@@ -817,7 +808,7 @@ Polymer({
       this.clearSignMsgMenu();
       this.$.signMsgDialogFromMenu.close();
     } else {
-      alert("You want to sign empty message");
+      alert(document.querySelector("msc-profile-view").echo('profileJS_signMsgAction_empty_msg'));
       return false;
     }
   },
@@ -831,46 +822,96 @@ Polymer({
     if (msgToVerify.length > 0 && account.includes("0x") && account.length >= 38 && signature.includes("0x")) {
       var address = ethers.Wallet.verifyMessage(msgToVerify, signature);
       if (address = account) {
-      alert("Message was signed with correct account: " + address);
+        alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_correct') + address);
       this.clearVerifyMsg();
       this.$.verifyMsgDialog.close();
       } else {
-          alert("Invalid message signature!");
+          alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_invalid'));
       }
     } else if (msgToVerify.length == 0) {
-        alert("Empty message was provided");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_empty_msg'));
     } else if (account.length < 38) {
         document.getElementById('accountVerify').value = "";
-        alert("Invalid account was provided");
+        alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_invalid_account'));
     } else {
        this.clearVerifyMsg();
-       alert("Incorrect details provided(possible reasons):\nNot valid account\nInvalid signature provided");
+       alert(document.querySelector("msc-profile-view").echo('profileJS_verifyMsgAction_incorrect details'));
        return false;
     }
   },
-  setCustomCoinbase: function() {
-    if (this.$.customCoinbase.value && this.$.customCoinbase.value.trim().length > 0) {
-      mscIntf.accountModule.setCoinbase(this.$.customCoinbase.value);
-    }
+  changeDataDirDialog: function() {
+    this.$.changeDataDirDialog.open();
+  },
+  changeDataDir: function() {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcSettingsFile = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("win32")) {
+        var gmcSettingsFile = process.env.APPDATA + '\\Musicoin\\config\\config.std.js';
+      } else if (platform.includes("darwin")) {
+        var gmcSettingsFile = process.env.HOME + '/Library/Musicoin/config/config.std.js';
+      } else if (platform.includes("linux")) { //linux
+        var gmcSettingsFile = process.env.HOME + '/.musicoin/config/config.std.js';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var pathOfKey = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\keystore\\';
+      } else if (platform.includes("win32")) {
+        var pathOfKey = process.env.APPDATA + '\\Musicoin\\keystore\\';
+      } else if (platform.includes("darwin")) {
+        var pathOfKey = process.env.HOME + '/Library/Musicoin/keystore/';
+      } else if (platform.includes("linux")) { //linux
+        var pathOfKey = process.env.HOME + '/.musicoin/keystore/';
+      }
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var gmcDefaultLocation = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';
+      } else if (platform.includes("win32")) {
+        var gmcDefaultLocation = process.env.APPDATA + '\\Musicoin'
+      } else if (platform.includes("darwin")) {
+        var gmcDefaultLocation = process.env.HOME + '/Library/Musicoin';
+      } else if (platform.includes("linux")) { //linux
+        var gmcDefaultLocation = process.env.HOME + '/.musicoin';
+      }
+    var gmcPid = fs.readFileSync(gmcDefaultLocation + '/config/gmc.pid');
+    document.getElementById('fileDialogDataDir').click();
+    document.querySelector('#fileDialogDataDir').addEventListener("change", function() {
+    gmcSettings = require(gmcSettingsFile);
+    var filePath = document.getElementById('fileDialogDataDir').value + '/gmc';
+    if (platform.includes("win32")) {
+        var taskKill = require('child_process');
+        taskKill.exec('taskkill /PID ' + String(gmcPid) + ' /T /F');
+      } else {
+        var killAll = require('child_process');
+        killAll.exec('killall -15 gmc');
+      }
+    gmcSettings.chain.args = gmcSettings.chain.args.filter(function(e) { return e !== '--keystore=' + pathOfKey });
+    args = gmcSettings.chain.args;
+    var dataDirOldLocation = gmcDefaultLocation;
+    args.forEach(function(a){if (a.indexOf('--datadir=')>-1) document.getElementById('oldDataDir').textContent = a.slice(10)});
+    delete gmcSettings.chain.absolutePath;
+    if (document.getElementById('oldDataDir').textContent != "") dataDirOldLocation = document.getElementById('oldDataDir').textContent;
+    gmcSettings.chain.args = gmcSettings.chain.args.filter(function(e) { return e !==  '--datadir=' + dataDirOldLocation });
+    gmcSettings.chain.args.push('--datadir=' + filePath);
+    gmcSettings.chain.args.push('--keystore=' + pathOfKey);
+    fs.moveSync(dataDirOldLocation + '/gmc', filePath);
+      fs.writeFileSync(gmcSettingsFile, "module.exports = " + JSON.stringify(gmcSettings, null, 2));
+      alert(document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert1') + filePath + "\n" + document.querySelector("msc-profile-view").echo('profileViewHtml_datadir_alert2'));
+      document.getElementById('fileDialogDataDir').value = "";
+      document.getElementById('oldDataDir').textContent = "";
+      this.$.changeDataDirDialog.close();
+    });
   },
   sendCoins: function() {
-    this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
       document.getElementById('recipient').value,
       document.getElementById('coins').value,
       document.getElementById('sender').value,
       document.getElementById('sendPassword').value
-    ).
-    then((tx) => {
-        this.txStatus = "Waiting for transaction " + tx;
-        return mscIntf.accountModule.waitForTransaction(tx);
-      })
-      .then(() => {
-        this.txStatus = "Success!";
-      })
-      .delay(5000)
-      .then(() => {
-        this.txStatus = "";
+    ).then((tx) => {
+       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+       var alert = {
+       icon: iconPath,
+       body: tx};
+        new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
+        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -878,23 +919,18 @@ Polymer({
     this.clearSendFields();
   },
   sendCoinsFromAccount: function() {
-    this.txStatus = "Sending coins...";
     mscIntf.accountModule.sendCoins(
       document.getElementById('recipientAccount').value,
       document.getElementById('coinsAccount').value,
       document.getElementById('senderAccount').value,
       document.getElementById('sendPasswordAccount').value
-    ).
-    then((tx) => {
-        this.txStatus = "Waiting for transaction " + tx;
-        return mscIntf.accountModule.waitForTransaction(tx);
-      })
-      .then(() => {
-        this.txStatus = "Success!";
-      })
-      .delay(5000)
-      .then(() => {
-        this.txStatus = "";
+    ).then((tx) => {
+       var iconPath = 'file://' + nw.__dirname + '/favicon.png';
+       var alert = {
+       icon: iconPath,
+       body: tx};
+        new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
+        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -938,6 +974,42 @@ Polymer({
     document.getElementById('sendPasswordAccount').value = "";
     document.getElementById('senderAccount').value = "";
   },
+  echo: function(phrase) {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var settings = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("win32")) {
+        var settings = process.env.APPDATA + '\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("darwin")) {
+        var settings = process.env.HOME + '/Library/Musicoin/config/settings.js';
+      } else if (platform.includes("linux")) { //linux
+        var settings = process.env.HOME + '/.musicoin/config/settings.js';
+      }
+    var locales = process.cwd() + '/interface/styles/locales';
+    lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
+    var y18n = require('y18n')({ updateFiles: false, directory: locales, locale: lang.locale, fallbackToLanguage: "en" });
+    return y18n.__(phrase + "");
+  },
+  changeLanguage: function(locale) {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var settings = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("win32")) {
+        var settings = process.env.APPDATA + '\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("darwin")) {
+        var settings = process.env.HOME + '/Library/Musicoin/config/settings.js';
+      } else if (platform.includes("linux")) { //linux
+        var settings = process.env.HOME + '/.musicoin/config/settings.js';
+      }
+    lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
+    lang.locale = locale;
+    fs.writeFileSync(settings, JSON.stringify(lang, null, 2));
+    nwin.reloadIgnoringCache();
+  },
+  spanishLang: function() {
+    this.$.spanishLangDialog.open();
+  },
+  chineseLang: function() {
+    this.$.chineseLangDialog.open();
+  },
   patchOverlay: function (e) {
     // hack from: https://stackoverflow.com/a/31510980
     if (e.target.withBackdrop) {
@@ -951,24 +1023,57 @@ Polymer({
       menu.createMacBuiltin('Musicoin-wallet',{hideEdit: true, hideWindow: true});
       } else {}
     var account = new nw.Menu();
-    account.append(new nw.MenuItem({ label: 'New Account', key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
-    account.append(new nw.MenuItem({ label: 'Import Account', key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
+
+    let lAccount = echo('profileJS_menu_label_Account');
+    let lExplorer = echo('profileJS_menu_label_Explorer');
+    let lMarkets = echo('profileJS_menu_label_Markets');
+    let lOfficial = echo('profileJS_menu_label_Official');
+    let lAdvanced = echo('profileJS_menu_label_Advanced');
+    let lHelp = echo('profileJS_menu_label_Help');
+    let newAccount = echo('profileJS_menu_New_Account');
+    let importAccount = echo('profileJS_menu_Import_Account');
+    let sendFunds = echo('profileJS_menu_Send_Funds');
+    let sign = echo('profileJS_menu_Sign');
+    let verifyMessage = echo('profileJS_menu_Verify_Message');
+    let openKeystore = echo('profileJS_menu_Open_Keystore');
+    let quit = echo('profileJS_menu_Quit');
+    let mExplorer = echo('profileJS_menu_Explorer');
+    let coinMarketCapCharts = echo('profileJS_menu_CoinMarketCap_Charts');
+    let addPeers = echo('profileJS_menu_Add_Peers');
+    let gmcCache = echo('profileJS_menu_Select_Gmc_cache');
+    let gitHubIssue = echo('profileJS_menu_GitHub_Issue');
+    let howItworks = echo('profileJS_menu_How_It_Works');
+    let whitepaper = echo('profileJS_menu_Whitepaper');
+    let faq = echo('profileJS_menu_FAQ');
+    let mPools = echo('profileJS_menu_Mining_Pools');
+    let enLang = echo('profileJS_menu_Lang_Eng');
+    let ruLang = echo('profileJS_menu_Lang_Ru');
+    let esLang = echo('profileJS_menu_Lang_Es');
+    let changeDataDir = echo('profileJS_menu_DataDir');
+    let showLogDirectory = echo('profileJS_menu_logDir');
+    let removeGmcFolder = echo('profileJS_menu_removeGmcFolder');
+    let cnLang = echo('profileJS_menu_Lang_Cn');
+    let frLang = echo('profileJS_menu_Lang_Fr');
+    let nlLang = echo('profileJS_menu_Lang_Nl');
+    let ptLang = echo('profileJS_menu_Lang_Pt');
+
+    account.append(new nw.MenuItem({ label: newAccount, key: 'n', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").createNewAccountDialog(); } }));
+    account.append(new nw.MenuItem({ label: importAccount, key: 'i', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").importAny(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Send Funds', key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
+    account.append(new nw.MenuItem({ label: sendFunds, key: 's', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").showSendDialog(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Sign', key: 's', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").signMsgFromMenu(); } }));
-    account.append(new nw.MenuItem({ label: 'Verify Message', key: 'v', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").verifyMsg(); } }));
+    account.append(new nw.MenuItem({ label: sign, key: 's', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").signMsgFromMenu(); } }));
+    account.append(new nw.MenuItem({ label: verifyMessage, key: 'v', modifiers: 'ctrl+cmd', click: function() { document.querySelector("msc-profile-view").verifyMsg(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Open Keystore (manual backup)', key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
+    account.append(new nw.MenuItem({ label: openKeystore, key: 'b', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").backupWallet(); } }));
     account.append(new nw.MenuItem({ type: 'separator' }));
-    account.append(new nw.MenuItem({ label: 'Quit', key: 'q', modifiers: 'ctrl', click: function() { require('process').exit(0); } }));
-    menu.append(new nw.MenuItem({label: 'Account', submenu: account }));
+    account.append(new nw.MenuItem({ label: quit, key: 'q', modifiers: 'ctrl', click: function() { require('process').exit(0); } }));
+    menu.append(new nw.MenuItem({label: lAccount, submenu: account }));
     var explorer = new nw.Menu();
-    explorer.append(new nw.MenuItem({ label: 'Open Explorer #1', key: 'e', modifiers: 'ctrl', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
-    explorer.append(new nw.MenuItem({ label: 'Open Explorer #2', key: 'e', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://orbiter.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
-    menu.append(new nw.MenuItem({label: 'Explorer', submenu: explorer }));
+    explorer.append(new nw.MenuItem({ label: mExplorer, key: 'e', modifiers: 'ctrl', click: function() { gui.Window.open('https://explorer.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
+    menu.append(new nw.MenuItem({label: lExplorer, submenu: explorer }));
     var markets = new nw.Menu();
-    markets.append(new nw.MenuItem({ label: 'CoinMarketCap Charts', key: 'm', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
+    markets.append(new nw.MenuItem({ label: coinMarketCapCharts, key: 'm', modifiers: 'ctrl+cmd', click: function() { gui.Window.open('https://coinmarketcap.com/currencies/musicoin/#charts',{position: 'center', width: 1000, height: 600}); } }));
     markets.append(new nw.MenuItem({ type: 'separator' }));
     if (platform.includes("darwin")) {
         markets.append(new nw.MenuItem({ label: 'Bittrex: MUSIC/BTC', click: function() { gui.Window.open('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC',{position: 'center', width: 1000, height: 600}); } }));
@@ -981,7 +1086,7 @@ Polymer({
         markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/LTC', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC'); } }));
         markets.append(new nw.MenuItem({ label: 'Cryptopia: MUSIC/DOGE', click: function() { gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE'); } }));
     }
-    menu.append(new nw.MenuItem({label: 'Markets', submenu: markets }));
+    menu.append(new nw.MenuItem({label: lMarkets, submenu: markets }));
     var official = new nw.Menu();
     official.append(new nw.MenuItem({ label: 'Musicoin', key: 'm', modifiers: 'ctrl', click: function() { gui.Window.open('https://www.musicoin.org/',{position: 'center', width: 1000, height: 600}); } }));
     official.append(new nw.MenuItem({ type: 'separator' }));
@@ -1002,46 +1107,53 @@ Polymer({
     }
     official.append(new nw.MenuItem({ type: 'separator' }));
     official.append(new nw.MenuItem({ label: 'GitHub', key: 'g', modifiers: 'ctrl', click: function() { gui.Window.open('https://github.com/Musicoin',{position: 'center', width: 1000, height: 600}); } }));
-    menu.append(new nw.MenuItem({label: 'Official', submenu: official }));
+    menu.append(new nw.MenuItem({label: lOfficial, submenu: official }));
     var advanced = new nw.Menu();
-    advanced.append(new nw.MenuItem({ label: 'Add Peers', key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
+    advanced.append(new nw.MenuItem({ label: enLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("en"); } }));
+    advanced.append(new nw.MenuItem({ label: ruLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("ru"); } }));
+    advanced.append(new nw.MenuItem({ label: esLang, click: function() { document.querySelector("msc-profile-view").spanishLang(); } }));
+    advanced.append(new nw.MenuItem({ label: cnLang, click: function() { document.querySelector("msc-profile-view").chineseLang(); } }));
+    advanced.append(new nw.MenuItem({ label: frLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("fr"); } }));
+    advanced.append(new nw.MenuItem({ label: nlLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("nl"); } }));
+    advanced.append(new nw.MenuItem({ label: ptLang, click: function() { document.querySelector("msc-profile-view").changeLanguage("pt"); } }));
+
     advanced.append(new nw.MenuItem({ type: 'separator' }));
-    advanced.append(new nw.MenuItem({ label: 'Select Gmc cache size', click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
-    advanced.append(new nw.MenuItem({ label: 'Restore default nodes list', click: function() { document.querySelector("msc-profile-view").restoreDefaultNodeList(); } }));
-    menu.append(new nw.MenuItem({label: 'Advanced', submenu: advanced }));
+    advanced.append(new nw.MenuItem({ label: addPeers, key: 'p', modifiers: 'ctrl', click: function() { document.querySelector("msc-profile-view").handleAddPeer(); } }));
+    advanced.append(new nw.MenuItem({ type: 'separator' }));
+    advanced.append(new nw.MenuItem({ label: changeDataDir, click: function() { document.querySelector("msc-profile-view").changeDataDirDialog(); } }));
+    advanced.append(new nw.MenuItem({ label: removeGmcFolder, click: function() { document.querySelector("msc-profile-view").wipeBlockChainDataDialog(); } }));
+    advanced.append(new nw.MenuItem({ type: 'separator' }));
+    advanced.append(new nw.MenuItem({ label: gmcCache, click: function() { document.querySelector("msc-profile-view").gmcOverwriteCacheDialog(); } }));
+    advanced.append(new nw.MenuItem({ label: showLogDirectory, click: function() { document.querySelector("msc-profile-view").showLogDir(); } }));
+    menu.append(new nw.MenuItem({label: lAdvanced, submenu: advanced }));
     var help = new nw.Menu();
     if (platform.includes("darwin")) {
-        help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Window.open('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
+        help.append(new nw.MenuItem({ label: gitHubIssue, click: function() { gui.Window.open('https://github.com/Musicoin/desktop/issues/new',{position: 'center', width: 1000, height: 600}); } })) ;
         help.append(new nw.MenuItem({ type: 'separator' }));
         help.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Window.open('https://discord.gg/gA8gjxC',{position: 'center', width: 1000, height: 600}); } }));
         help.append(new nw.MenuItem({ type: 'separator' }));
-        help.append(new nw.MenuItem({ label: 'How It Works', click: function() { gui.Window.open('https://www.musicoin.org/how-it-works',{position: 'center', width: 1000, height: 600}); } }));
-        help.append(new nw.MenuItem({ label: 'Whitepaper', click: function() { gui.Window.open('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b',{position: 'center', width: 1000, height: 600}); } }));
-        help.append(new nw.MenuItem({ label: 'FAQ', click: function() { gui.Window.open('https://www.musicoin.org/faq',{position: 'center', width: 1000, height: 600}); } }));
+        help.append(new nw.MenuItem({ label: howItworks, click: function() { gui.Window.open('https://www.musicoin.org/how-it-works',{position: 'center', width: 1000, height: 600}); } }));
+        help.append(new nw.MenuItem({ label: whitepaper, click: function() { gui.Window.open('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b',{position: 'center', width: 1000, height: 600}); } }));
+        help.append(new nw.MenuItem({ label: faq, click: function() { gui.Window.open('https://www.musicoin.org/faq',{position: 'center', width: 1000, height: 600}); } }));
         help.append(new nw.MenuItem({ type: 'separator' }));
-        help.append(new nw.MenuItem({ label: 'Mining Pools List', click: function() { gui.Window.open('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools',{position: 'center', width: 1000, height: 600}); } }));
+        help.append(new nw.MenuItem({ label: mPools, click: function() { gui.Window.open('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools',{position: 'center', width: 1000, height: 600}); } }));
       } else {
-        help.append(new nw.MenuItem({ label: 'New GitHub Issue', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/desktop/issues/new'); } })) ;
+        help.append(new nw.MenuItem({ label: gitHubIssue, click: function() { gui.Shell.openExternal('https://github.com/Musicoin/desktop/issues/new'); } })) ;
         help.append(new nw.MenuItem({ type: 'separator' }));
         help.append(new nw.MenuItem({ label: 'Discord', click: function() { gui.Shell.openExternal('https://discord.gg/gA8gjxC'); } }));
         help.append(new nw.MenuItem({ type: 'separator' }));
-        help.append(new nw.MenuItem({ label: 'How It Works', click: function() { gui.Shell.openExternal('https://www.musicoin.org/how-it-works'); } }));
-        help.append(new nw.MenuItem({ label: 'Whitepaper', click: function() { gui.Shell.openExternal('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b'); } }));
-        help.append(new nw.MenuItem({ label: 'FAQ', click: function() { gui.Shell.openExternal('https://www.musicoin.org/faq'); } }));
+        help.append(new nw.MenuItem({ label: howItworks, click: function() { gui.Shell.openExternal('https://www.musicoin.org/how-it-works'); } }));
+        help.append(new nw.MenuItem({ label: whitepaper, click: function() { gui.Shell.openExternal('https://medium.com/@musicoin/musicoin-project-white-paper-v2-0-6be5fd53191b'); } }));
+        help.append(new nw.MenuItem({ label: faq, click: function() { gui.Shell.openExternal('https://www.musicoin.org/faq'); } }));
         help.append(new nw.MenuItem({ type: 'separator' }));
-        help.append(new nw.MenuItem({ label: 'Mining Pools List', click: function() { gui.Shell.openExternal('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools'); } }));
+        help.append(new nw.MenuItem({ label: mPools, click: function() { gui.Shell.openExternal('https://github.com/Musicoin/go-musicoin/wiki/Mining-Pools'); } }));
     }
-    menu.append(new nw.MenuItem({label: 'Help', submenu: help }));
+    menu.append(new nw.MenuItem({label: lHelp, submenu: help }));
     nw.Window.get().menu = menu;
 
     document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("defaultOpen").click();
     var quick = 1700;
-    var minutes = 2;
-    var interval = minutes * 60 * 1000;
-    setInterval(function() {
-      document.querySelector("msc-profile-view").activePeers();
-    }, interval);
     setInterval(function() {
       document.querySelector("msc-profile-view").webviewDetectChange();
     }, quick);
@@ -1061,9 +1173,9 @@ Polymer({
     var iconPath = 'file://' + nw.__dirname + '/favicon.png';
       var alert = {
         icon: iconPath,
-        body: "Please enable network time synchronisation in system settings. \n" +
+        body: echo('profileJS_ntpClient_turn_sync') +
         (date.toString()).slice(0, -18) + " UTC +0"};
-      new Notification("System clock seems incorrect", alert);
+      new Notification(echo('profileJS_ntpClient_Notification'), alert);
     } else {}
     });
 
@@ -1079,4 +1191,20 @@ Polymer({
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+    }
+
+    function echo(phrase) {
+    if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+      var settings = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("win32")) {
+        var settings = process.env.APPDATA + '\\Musicoin\\config\\settings.js';
+      } else if (platform.includes("darwin")) {
+        var settings = process.env.HOME + '/Library/Musicoin/config/settings.js';
+      } else if (platform.includes("linux")) { //linux
+        var settings = process.env.HOME + '/.musicoin/config/settings.js';
+      }
+    var locales = process.cwd() + '/interface/styles/locales';
+    lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
+    var y18n = require('y18n')({ updateFiles: false, directory: locales, locale: lang.locale, fallbackToLanguage: "en" });
+    return y18n.__(phrase + "");
     }

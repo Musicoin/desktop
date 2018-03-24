@@ -79,15 +79,6 @@ a {
   cursor: pointer;
 }
 
-.mining-area {
-    color: white;
-    cursor: pointer;
-}
-
-.mining-area[mining] {
-  color: white;
-}
-
 .sync-area[syncing] {
     visibility: visible;
 }

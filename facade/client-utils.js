@@ -9,7 +9,7 @@ module.exports = function(web3Connector, logDir) {
       return logDir;
     },
     formatBalance: function(value) {
-      return value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return value;
     },
     formatBalanceUsd: function(value) {
       rp({url: CoinMarketCapUrl, json: true})

@@ -8,7 +8,7 @@ module.exports = {
     command: './gmc',
     args: [
       '--rpc',
-      '--rpcapi=admin,db,eth,net,web3,personal,miner',
+      '--rpcapi=admin,db,eth,net,web3,personal',
       '--rpcport', '8545',
       '--rpcaddr', '127.0.0.1',
       '--rpccorsdomain', 'localhost',
