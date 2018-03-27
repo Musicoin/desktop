@@ -1,4 +1,14 @@
-# Musicoin Wallet ![Version Info](https://img.shields.io/badge/version-1.0.1-61008A.svg?style=flat-square&colorA=FFD000&colorB=27053E&label=Musicoin-Wallet)
+
+[![GitHub release](https://img.shields.io/github/release/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases/latest)
+[![license](https://img.shields.io/github/license/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/blob/master/LICENSE)
+[![GitHub Release Date](https://img.shields.io/github/release-date/Musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
+[![Github All Releases](https://img.shields.io/github/downloads/Musicoin/desktop/total.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
+[![GitHub issues](https://img.shields.io/github/issues-raw/badges/shields.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) 
+![GitHub contributors](https://img.shields.io/github/contributors/Musicoin/desktop.svg?style=for-the-badge) 
+
+---
+
+# Musicoin Wallet 
 
 The official Musicoin Desktop Wallet
 
