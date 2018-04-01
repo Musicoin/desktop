@@ -33,9 +33,15 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect",
-    "test": "snyk test"
+    "snyk-protect": "snyk protect; cd interface; snyk protect",
+    "snyk-step": "yarn snyk-protect",
+    "build-interface": "cd interface && yarn && cd..",
+    "test-run": "nw .",
+    "package": "nwb nwbuild -o build; cd go-musicoin"
   },
-  "snyk": true
+  "snyk": true,
+  "devDependencies": {
+    "nw": "^0.29.3",
+    "nwjs-builder": "^1.14.0"
+  }
 }
