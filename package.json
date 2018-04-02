@@ -35,7 +35,8 @@
     "preinstall": "cd interface/ ; yarn ; cd ..",
     "install": "nwb nwbuild -o ./build",
     "postinstall": "git clone https://github.com/Musicoin/go-musicoin.git; yarn run build-gmc",
-    "build-gmc": "cd go-musicoin; build/env.sh go run build/ci.go install ../build/gmc; cd .."
+    "build-gmc": "cd go-musicoin; make gmc; cp ./build/bin/gmc ../build/",
+    "contribute": "echo 'Use git workflow for now. This will later be an easy way for beginners to help"
   },
   "snyk": true,
   "devDependencies": {
