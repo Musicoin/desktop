@@ -32,8 +32,10 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "preinstall": "snyk protect; yarn run prepare-interface",
-    "prepare-interface": "cd interface/ ; yarn run preinstall ; cd .. "
+    "preinstall": "cd interface/ ; yarn ; cd ..",
+    "install": "nwb nwbuild -o ./build",
+    "postinstall": "git clone https://github.com/Musicoin/go-musicoin.git; yarn run build-gmc",
+    "build-gmc": "cd go-musicoin; build/env.sh go run build/ci.go install ../build/gmc; cd .."
   },
   "snyk": true,
   "devDependencies": {
