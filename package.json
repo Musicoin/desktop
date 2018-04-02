@@ -32,8 +32,8 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "snyk-protect": "snyk protect",
-    "prepare-interface": "cd interface/ ; yarn prepare ; cd .. "
+    "preinstall": "snyk protect; yarn run prepare-interface",
+    "prepare-interface": "cd interface/ ; yarn run preinstall ; cd .. "
   },
   "snyk": true,
   "devDependencies": {
