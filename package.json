@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-wallet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
@@ -27,21 +27,19 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "snyk-protect": "snyk protect; cd interface; snyk protect",
-    "snyk-step": "yarn snyk-protect",
-    "build-interface": "cd interface && yarn && cd..",
-    "test-run": "nw .",
-    "package": "nwb nwbuild -o build; cd go-musicoin"
+    "snyk-protect": "snyk protect",
+    "prepare-interface": "cd interface/ ; yarn prepare ; cd .. "
   },
   "snyk": true,
   "devDependencies": {
     "nw": "^0.29.3",
-    "nwjs-builder": "^1.14.0"
+    "nwjs": "^1.4.4",
+    "nwjs-builder": "^1.14.0",
+    "snyk": "^1.70.3"
   }
 }
