@@ -29,14 +29,15 @@ Prerequisites: Node.js, npm
 1. Install nwjs: `npm install nw`
 2. `npm install`
 3. `npm install bower`
-4. `cd interface/ ; bower install ; cd ..`
+4. `npm run build:gmc`
 3. `nw .`
 
 ## Creating an executable/dmg/binary for your platform
 
 1. Install nwjs-builder: `npm install nwjs-builder -g`
 2. Package the app: `nwb nwbuild -v 0.27.4 -p <win64,osx64,linux64> -o <build_directory>`
-3. Download [go-musicoin](https://github.com/Musicoin/go-musicoin/releases) and place in `build/gmc/` inside the built package
+3. Download [go-musicoin](https://github.com/Musicoin/go-musicoin/releases) and place in `build/gmc/` inside the built package   
+(on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
 4. Run app
 
 ## Contributing
