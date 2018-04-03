@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-wallet",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
@@ -27,22 +27,21 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
+    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "preinstall": "cd interface/ ; yarn ; cd ..",
-    "install": "nwb nwbuild -o ./build",
-    "postinstall": "git clone https://github.com/Musicoin/go-musicoin.git; yarn run build-gmc",
-    "build-gmc": "cd go-musicoin; make gmc; cp ./build/bin/gmc ../build/",
-    "contribute": "echo 'Use git workflow for now. This will later be an easy way for beginners to help"
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect",
+    "test": "snyk test",
+    "interface": "cd interface && yarn && cd ..",
+    "build-gmc": "git clone https://github.com/Musicoin/go-musicoin.git && cd go-musicoin && make gmc",
+    "package": "yarn run interface && nwb nwbuild -o build && yarn run build-gmc && copy go-musicoin/build/bin/gmc ../build/"
   },
   "snyk": true,
   "devDependencies": {
-    "nw": "^0.29.3",
-    "nwjs": "^1.4.4",
-    "nwjs-builder": "^1.14.0",
-    "snyk": "^1.70.3"
+    "nwjs-builder": "^1.14.0"
   }
 }
