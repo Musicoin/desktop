@@ -26,10 +26,10 @@ Supported Operating systems:
 
 1. `git clone https://github.com/musicoin/desktop.git`
 2. `cd desktop && yarn run package`
-Make any changes you need.
+3. Make any changes you need.
 4. `yarn run package`
 Test your changes
-6. `yarn run contribution`
+5. `yarn run contribution`
 Follow the instructions and answer the questions.
 
 ## Bounty program
