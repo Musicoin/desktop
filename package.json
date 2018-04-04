@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "repository": { 
+    "type": "git", 
+    "url": "https://github.com/Musicoin/desktop.git" 
+  },
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
   "window": {
