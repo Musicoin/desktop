@@ -23,14 +23,32 @@ Supported Operating systems:
 4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
+Prerequisites: Node.js, yarn
 
+### Building/Installing Instructions
 1. `git clone https://github.com/musicoin/desktop.git`
-2. `cd desktop && yarn run package`
-3. Make any changes you need.
-4. `yarn run package`
-Test your changes
-5. `yarn run contribution`
-Follow the instructions and answer the questions.
+2. `yarn Start`
+3. Choose `Package App`
+4. Choose `Install App`
+4. You now have the cutting edge - for better or for worse.
+
+### Contributing
+1. `yarn Start`
+2. Choose to start a contribution.
+3. Make changes.
+4. `yarn Test`
+5. Repeat until satisfied.
+6. `yarn Contribute`
+7. Follow the menus.
+
+### Continuous Integration
+1. `npm install --global yarn`
+2. `git clone https://github.com/musicoin/desktop.git`
+3. `yarn StartCI`
+
+
+=======
+
 
 ## Bounty program
 
