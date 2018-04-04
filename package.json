@@ -5,6 +5,7 @@
   "private": true,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
+  "bugs": "https://github.com/Musicoin/desktop/issues",
   "window": {
     "frame": true,
     "toolbar": true,
