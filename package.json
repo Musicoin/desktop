@@ -38,13 +38,15 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "bower": "^1.8.4",
     "contributor": "^0.1.25",
+    "gw": "^1.0.0",
     "snyk": "^1.70.2"
   },
   "scripts": {
     "prepare": "yarn run snyk-protect",
     "contribute": "yarn install && contributor",
-    "preview": "yarn install && yarn test && gw .",
+    "preview": "yarn install && cd interface && bower install && cd .. && gw .",
     "snyk-protect": "snyk protect",
     "test": "snyk test"
   },
@@ -124,12 +126,12 @@
     },
     {
       "name": "Etaletai #13",
-      "email": null,
+      "email": "13@etaletai.com",
       "url": "https://github.com/etaletai13",
       "contributions": 4,
       "additions": 29,
       "deletions": 16,
-      "hireable": null
+      "hireable": false
     },
     {
       "name": "ooof",
