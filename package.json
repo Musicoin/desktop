@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "contributor": "^0.1.25",
     "ethereum-blockies": "github:ethereum/blockies",
     "ethers": "^3.0.7",
     "fs-extra": "^5.0.0",
@@ -34,17 +33,130 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
   },
+  "devDependencies": {
+    "contributor": "^0.1.25",
+    "snyk": "^1.70.2"
+  },
   "scripts": {
-    "prepare": "yarn run snyk-protect"
-    "contribute": "contributors",,
+    "prepare": "yarn run snyk-protect",
+    "contribute": "yarn install && contributor",
     "preview": "yarn install && yarn test && gw .",
     "snyk-protect": "snyk protect",
     "test": "snyk test"
   },
-  "snyk": true
+  "snyk": true,
+  "contributors": [
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/pedddro",
+      "contributions": 1,
+      "additions": 222,
+      "deletions": 0,
+      "hireable": true
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/xlnd47",
+      "contributions": 2,
+      "additions": 366,
+      "deletions": 144,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/XhmikosR",
+      "contributions": 9,
+      "additions": 14,
+      "deletions": 35,
+      "hireable": true
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/Teutone",
+      "contributions": 1,
+      "additions": 2,
+      "deletions": 1,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/Hibryda",
+      "contributions": 32,
+      "additions": 1021743,
+      "deletions": 864975,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/cryptofuture",
+      "contributions": 52,
+      "additions": 6358,
+      "deletions": 3152,
+      "hireable": true
+    },
+    {
+      "name": "Javier Mejias",
+      "email": null,
+      "url": "https://github.com/idontcar3",
+      "contributions": 5,
+      "additions": 752,
+      "deletions": 171,
+      "hireable": null
+    },
+    {
+      "name": "Im",
+      "email": null,
+      "url": "https://github.com/immartian",
+      "contributions": 21,
+      "additions": 133,
+      "deletions": 66,
+      "hireable": null
+    },
+    {
+      "name": "Etaletai #13",
+      "email": null,
+      "url": "https://github.com/etaletai13",
+      "contributions": 4,
+      "additions": 29,
+      "deletions": 16,
+      "hireable": null
+    },
+    {
+      "name": "ooof",
+      "email": null,
+      "url": "https://github.com/ooof",
+      "contributions": 1,
+      "additions": 222,
+      "deletions": 0,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/phiferd",
+      "contributions": 85,
+      "additions": 17381,
+      "deletions": 17608,
+      "hireable": null
+    },
+    {
+      "name": "Varunram Ganesh",
+      "email": null,
+      "url": "https://github.com/Varunram",
+      "contributions": 67,
+      "additions": 11998,
+      "deletions": 157398,
+      "hireable": null
+    }
+  ]
 }
