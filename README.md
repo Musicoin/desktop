@@ -24,21 +24,12 @@ Supported Operating systems:
 
 ## Getting started
 
-Prerequisites: Node.js, npm
+Prerequisites: Node.js, yarn
 
-1. Install nwjs: `npm install nw`
-2. `npm install`
-3. `npm install bower`
-4. `cd interface/ ; bower install ; cd ..`
-3. `nw .`
+1. `git clone https://github.com/Musicoin/desktop && cd desktop`
+2. `yarn prepare`
 
-## Creating an executable/dmg/binary for your platform
-
-1. Install nwjs-builder: `npm install nwjs-builder -g`
-2. Package the app: `nwb nwbuild -v 0.27.4 -p <win64,osx64,linux64> -o <build_directory>`
-3. Download [go-musicoin](https://github.com/Musicoin/go-musicoin/releases) and place in `build/gmc/` inside the built package   
-(on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
-4. Run app
+Test again using `yarn prepare` after making any changes.
 
 ## Contributing
 

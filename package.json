@@ -326,7 +326,6 @@
   },
   "devDependencies": {
     "bower": "^1.8.4",
-    "contributor": "^0.1.25",
     "nw": "~0.27",
     "nwjs-builder": "^1.14.0",
     "snyk": "^1.70.2"
@@ -336,122 +335,10 @@
     "prepare:interface": "cd interface && bower install && cd ..",
     "prepare:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
     "prepare": "yarn run prepare:interface && yarn run prepare:gmc && yarn run prepare:app",
-    "contribute": "contributor",
     "snyk-protect": "snyk protect",
-    "test": "nw .",
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), 'bower_components', 'junction') } catch (e) { }\""
   },
   "snyk": true,
-  "contributors": [
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/pedddro",
-      "contributions": 1,
-      "additions": 222,
-      "deletions": 0,
-      "hireable": true
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/xlnd47",
-      "contributions": 2,
-      "additions": 366,
-      "deletions": 144,
-      "hireable": null
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/XhmikosR",
-      "contributions": 9,
-      "additions": 14,
-      "deletions": 35,
-      "hireable": true
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/Teutone",
-      "contributions": 1,
-      "additions": 2,
-      "deletions": 1,
-      "hireable": null
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/Hibryda",
-      "contributions": 32,
-      "additions": 1021743,
-      "deletions": 864975,
-      "hireable": null
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/cryptofuture",
-      "contributions": 52,
-      "additions": 6358,
-      "deletions": 3152,
-      "hireable": true
-    },
-    {
-      "name": "Javier Mejias",
-      "email": null,
-      "url": "https://github.com/idontcar3",
-      "contributions": 5,
-      "additions": 752,
-      "deletions": 171,
-      "hireable": null
-    },
-    {
-      "name": "Im",
-      "email": null,
-      "url": "https://github.com/immartian",
-      "contributions": 21,
-      "additions": 133,
-      "deletions": 66,
-      "hireable": null
-    },
-    {
-      "name": "Etaletai #13",
-      "email": "13@etaletai.com",
-      "url": "https://github.com/etaletai13",
-      "contributions": 4,
-      "additions": 29,
-      "deletions": 16,
-      "hireable": false
-    },
-    {
-      "name": "ooof",
-      "email": null,
-      "url": "https://github.com/ooof",
-      "contributions": 1,
-      "additions": 222,
-      "deletions": 0,
-      "hireable": null
-    },
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/phiferd",
-      "contributions": 85,
-      "additions": 17381,
-      "deletions": 17608,
-      "hireable": null
-    },
-    {
-      "name": "Varunram Ganesh",
-      "email": null,
-      "url": "https://github.com/Varunram",
-      "contributions": 67,
-      "additions": 11998,
-      "deletions": 157398,
-      "hireable": null
-    }
-  ],
   "engines": {
     "yarn": ">= 1.0.0"
   }
