@@ -25,30 +25,10 @@ Supported Operating systems:
 ## Getting started
 Prerequisites: Node.js, yarn
 
-### Building/Installing Instructions
-1. `git clone https://github.com/musicoin/desktop.git`
-2. `yarn Start`
-3. Choose `Package App`
-4. Choose `Install App`
-4. You now have the cutting edge - for better or for worse.
+1. `git clone https://github.com/Musicoin/desktop && cd desktop`
+2. `yarn prepare`
 
-### Contributing
-1. `yarn Start`
-2. Choose to start a contribution.
-3. Make changes.
-4. `yarn Test`
-5. Repeat until satisfied.
-6. `yarn Contribute`
-7. Follow the menus.
-
-### Continuous Integration
-1. `npm install --global yarn`
-2. `git clone https://github.com/musicoin/desktop.git`
-3. `yarn StartCI`
-
-
-=======
-
+Test again using `yarn prepare` after making any changes.
 
 ## Bounty program
 
