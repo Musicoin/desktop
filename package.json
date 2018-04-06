@@ -21,6 +21,10 @@
     "plugin": true,
     "page-cache": true
   },
+  "devDependencies": {
+    "snyk": "^1.70.2",
+    "contributor"
+  }
   "dependencies": {
     "bluebird": "^3.5.1",
     "ethereum-blockies": "github:ethereum/blockies",
@@ -33,7 +37,6 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
@@ -41,6 +44,7 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
+    "contribute": "npm run contributor",
     "test": "snyk test"
   },
   "snyk": true
