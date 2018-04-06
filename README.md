@@ -23,7 +23,6 @@ Supported Operating systems:
 4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
-
 Prerequisites: Node.js, yarn
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
@@ -31,14 +30,6 @@ Prerequisites: Node.js, yarn
 
 Test again using `yarn prepare` after making any changes.
 
-## Contributing
-
-Pull Requests and Bug Reports for common issues via GitHub are most welcome.
-
 ## Bounty program
 
 Specific Issues are earmarked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
-
-## License
-
-MIT
