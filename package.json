@@ -1,6 +1,6 @@
 {
   "name": "Musicoin-wallet",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -184,17 +184,19 @@
   "devDependencies": {
     "bower": "^1.8.4",
     "contributor": "^0.1.25",
-    "gw": "^1.0.0",
+    "nw": "^1.0.0",
     "nwjs-builder": "^1.14.0",
     "snyk": "^1.70.2"
   },
   "scripts": {
-    "prepare": "yarn run snyk-protect",
+    "prepare:gmc": "rm -rf go-musicoin && git clone https://github.com/Musicoin/go-musicoin && cd go-musicoin && make gmc",
+    "prepare:interface": "cd interface && bower install && cd ..",
+    "prepare:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc  Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
+    "prepare": "yarn run prepare:interface && yarn run prepare:gmc && yarn run prepare:app",
     "contribute": "yarn install && contributor",
-    "preview": "yarn install && cd interface && bower install && cd .. && gw .",
     "snyk-protect": "snyk protect",
-    "test": "snyk test",
-    "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'bower_components', 'junction') } catch (e) { }\""
+    "test": "nw .",
+    "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), 'bower_components', 'junction') } catch (e) { }\""
   },
   "snyk": true,
   "contributors": [
