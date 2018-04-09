@@ -41,6 +41,7 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
+    "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc"
     "test": "snyk test"
   },
   "snyk": true
