@@ -29,7 +29,7 @@ Prerequisites: Node.js, npm
 1. Install nwjs: `npm install nw`
 2. `npm install`
 3. `npm install bower`
-4. `cd interface/ ; bower install ; cd ..`
+4. `npm run build:gmc`
 3. `nw .`
 
 ## Creating an executable/dmg/binary for your platform

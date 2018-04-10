@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": false,
-  "repository": { 
-    "type": "git", 
-    "url": "https://github.com/Musicoin/desktop.git" 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Musicoin/desktop.git"
   },
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
@@ -45,6 +45,7 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
+    "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc",
     "test": "snyk test"
   },
   "snyk": true
