@@ -41,7 +41,7 @@
     "nw": "^0.29.3",
     "nwjs-builder": "^1.14.0",
     "snyk": "^1.71.0"
-  }
+  },
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
