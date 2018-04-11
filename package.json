@@ -41,7 +41,8 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc",
+    "---------": "Using this sed hack to get gmc to build with 1.10 go.",
+    "build:gmc": "if [ -d go-musicoin ]; then rm -rf go-musicoin; fi && git clone https://github.com/musicoin/go-musicoin && cd gmc && sed -e s/1.7/1.10/g -i build/ci.go && make gmc"
     "test": "snyk test"
   },
   "snyk": true
