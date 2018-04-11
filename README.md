@@ -28,7 +28,14 @@ Prerequisites: Node.js, yarn
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
 2. `yarn prepare`
 
+
 Test again using `yarn prepare` after making any changes.
+
+
+## Contributing
+
+Pull Requests and Bug Reports for common issues via GitHub are most welcome.
+
 
 ## Bounty program
 

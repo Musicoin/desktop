@@ -334,9 +334,11 @@
     "prepare:gmc": "rm -rf go-musicoin && git clone https://github.com/Musicoin/go-musicoin && cd go-musicoin && make gmc",
     "prepare:interface": "cd interface && bower install && cd ..",
     "prepare:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
-    "prepare": "yarn run prepare:interface && yarn run prepare:gmc && yarn run prepare:app",
+    "prepare": "npm run snyk-protect && yarn run prepare:interface && yarn run prepare:gmc && yarn run prepare:app",
     "snyk-protect": "snyk protect",
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), 'bower_components', 'junction') } catch (e) { }\""
+    "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc",
+    "test": "snyk test"
   },
   "snyk": true,
   "engines": {
