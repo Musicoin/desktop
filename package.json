@@ -33,10 +33,14 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "nw": "^0.29.3",
+    "nwjs-builder": "^1.14.0",
+    "snyk": "^1.71.0"
   },
   "scripts": {
     "snyk-protect": "snyk protect",
