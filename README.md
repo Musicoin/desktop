@@ -26,11 +26,11 @@ Supported Operating systems:
 Prerequisites: Node.js, yarn
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
-2. `yarn prepare`
-
-
-Test again using `yarn prepare` after making any changes.
-
+2. `yarn`
+3. `npm run build:gmc`
+place in `build/gmc/` inside the built package   
+(on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
+4. `npm run nwb nwbuild -v 0.27.4 -p`
 
 ## Contributing
 

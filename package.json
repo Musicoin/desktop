@@ -310,15 +310,6 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "resize-observer-polyfill": "que-etc/resize-observer-polyfill#^1.5.0",
-    "sass-md-components": "ellipticaljs/sass-md-components#~1.2.2",
-    "sinon-chai": "domenic/sinon-chai#^2.7.0",
-    "sinon.js": "blittle/sinon.js#^1.14.1",
-    "stacky": "PolymerLabs/stacky#^1.3.0",
-    "sw-toolbox": "GoogleChrome/sw-toolbox#^3.1.1",
-    "test-fixture": "polymerelements/test-fixture#^1.0.0",
-    "web-animations-js": "web-animations/web-animations-js#^2.2.0",
-    "web-component-tester": "Polymer/web-component-tester#^4.0.0",
     "web3": "^0.20.6",
     "webcomponents.js": "webcomponents/webcomponentsjs#^0.7.24",
     "y18n": "^4.0.0",
@@ -328,20 +319,18 @@
     "bower": "^1.8.4",
     "nw": "~0.27",
     "nwjs-builder": "^1.14.0",
-    "snyk": "^1.70.2"
+    "snyk": "^1.71.0"
   },
   "scripts": {
-    "prepare:gmc": "rm -rf go-musicoin && git clone https://github.com/Musicoin/go-musicoin && cd go-musicoin && make gmc",
-    "prepare:interface": "cd interface && bower install && cd ..",
-    "prepare:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
-    "prepare": "npm run snyk-protect && yarn run prepare:interface && yarn run prepare:gmc && yarn run prepare:app",
-    "snyk-protect": "snyk protect",
-    "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), 'bower_components', 'junction') } catch (e) { }\""
+    "build:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
     "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc",
+    "build:interface": "cd interface && bower install && cd ..",
+    "protect": "snyk protect",
+    "postinstall": "yarn protect && node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), '@interface/bower_components', 'junction') } catch (e) { }\""
     "test": "snyk test"
   },
   "snyk": true,
   "engines": {
-    "yarn": ">= 1.0.0"
+    "node": "> 6.0.0"
   }
 }
