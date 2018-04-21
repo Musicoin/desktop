@@ -23,31 +23,20 @@ Supported Operating systems:
 4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
+Prerequisites: Node.js, yarn
 
-Prerequisites: Node.js, npm
-
-1. Install nwjs: `npm install nw`
-2. `npm install`
-3. `npm install bower`
-4. `npm run build:gmc`
-3. `nw .`
-
-## Creating an executable/dmg/binary for your platform
-
-1. Install nwjs-builder: `npm install nwjs-builder -g`
-2. Package the app: `nwb nwbuild -v 0.27.4 -p <win64,osx64,linux64> -o <build_directory>`
-3. Download [go-musicoin](https://github.com/Musicoin/go-musicoin/releases) and place in `build/gmc/` inside the built package   
+1. `git clone https://github.com/Musicoin/desktop && cd desktop`
+2. `yarn`
+3. `npm run build:gmc`
+place in `build/gmc/` inside the built package   
 (on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
-4. Run app
+4. `npm run nwb nwbuild -v 0.27.4 -p`
 
 ## Contributing
 
 Pull Requests and Bug Reports for common issues via GitHub are most welcome.
 
+
 ## Bounty program
 
 Specific Issues are earmarked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
-
-## License
-
-MIT
