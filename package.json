@@ -16,6 +16,7 @@
     "page-cache": true
   },
   "dependencies": {
+    "@musicoin/gmc": "github:etaletai13/gmc",
     "bluebird": "^3.5.1",
     "ethereum-blockies": "github:ethereum/blockies",
     "ethers": "^3.0.7",
@@ -32,10 +33,19 @@
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
   },
+  "devDependencies": {
+    "bower": "^1.8.4",
+    "nwjs-builder": "^1.14.0",
+    "snyk": "^1.71.0"
+  },
   "scripts": {
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect",
+    "build:app": "rm -rf Musicoin** && nwb nwbuild",
+    "build:interface": "cd interface && bower install && cd ..",
+    "postinstall": "mkdir -p bin/gmc && cp node_modules/\\@musicoin/gmc/bin/gmc bin/gmc/ && yarn build:interface && yarn build:app",
     "test": "snyk test"
   },
-  "snyk": true
+  "snyk": true,
+  "engines": {
+    "node": "> 6.0.0"
+  }
 }
