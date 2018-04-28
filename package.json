@@ -1,9 +1,15 @@
 {
   "name": "Musicoin-wallet",
-  "version": "1.0.0",
-  "private": true,
+  "version": "1.5.0",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Musicoin/desktop.git"
+  },
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
+  "bugs": "https://github.com/Musicoin/desktop/issues",
   "window": {
     "frame": true,
     "toolbar": true,
@@ -28,7 +34,6 @@
     "qrcode": "^1.2.0",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
-    "snyk": "^1.70.2",
     "web3": "^0.20.6",
     "y18n": "^4.0.0",
     "zxcvbn": "^4.4.2"
