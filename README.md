@@ -3,7 +3,6 @@
 [![license](https://img.shields.io/github/license/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/blob/master/LICENSE)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
 [![Github All Releases](https://img.shields.io/github/downloads/Musicoin/desktop/total.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
-[![GitHub issues](https://img.shields.io/github/issues-raw/badges/shields.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) 
 ![GitHub contributors](https://img.shields.io/github/contributors/Musicoin/desktop.svg?style=for-the-badge) 
 
 ---
