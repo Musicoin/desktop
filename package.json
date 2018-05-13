@@ -1,8 +1,8 @@
 {
-  "name": "Musicoin-wallet",
+  "name": "musicoin-wallet",
   "version": "1.5.0",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/Musicoin/desktop.git"
@@ -21,37 +21,42 @@
     "plugin": true,
     "page-cache": true
   },
-  "dependencies": {
-    "@musicoin/gmc": "github:etaletai13/gmc",
-    "bluebird": "^3.5.1",
-    "ethereum-blockies": "github:ethereum/blockies",
-    "ethers": "^3.0.7",
-    "fs-extra": "^5.0.0",
-    "fs-finder": "^1.8.1",
-    "jsqr": "^1.0.4",
-    "ntp-client": "^0.5.3",
-    "pngjs": "^3.3.2",
-    "qrcode": "^1.2.0",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "web3": "^0.20.6",
-    "y18n": "^4.0.0",
-    "zxcvbn": "^4.4.2"
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.5.0"
   },
-  "devDependencies": {
-    "bower": "^1.8.4",
-    "nwjs-builder": "^1.14.0",
-    "snyk": "^1.71.0"
+  "dependencies": {
+    "bluebird": "3.5.1",
+    "ethereum-blockies": "github:ethereum/blockies",
+    "ethers": "3.0.7",
+    "fs-extra": "5.0.0",
+    "fs-finder": "1.8.1",
+    "jsqr": "1.0.4",
+    "ntp-client": "0.5.3",
+    "nwjs-builder": "1.14.0",
+    "pngjs": "3.3.2",
+    "qrcode": "1.2.0",
+    "request": "2.85.0",
+    "request-promise-native": "1.0.5",
+    "web3": "github:etaletai13/web3.js",
+    "y18n": "4.0.0",
+    "zxcvbn": "4.4.2"
   },
   "scripts": {
-    "build:app": "rm -rf Musicoin** && nwb nwbuild && cp go-musicoin/build/bin/gmc Musicoin-wallet-osx-x64/Musicoin-wallet.app/Contents/Resources/app.nw/",
-    "build:interface": "cd interface && bower install && cd ..",
-    "protect": "snyk protect",
-    "postinstall": "yarn protect && mkdir -p bin/gmc && cp node_modules/\\@musicoin/gmc/bin/gmc bin/gmc/ && yarn build:interface && yarn build:app",
-    "test": "snyk test"
+    "build:nw": "yarn nwb nwbuild .",
+    "cleanup:gmc": "rm -rf bin && mkdir -p bin/gmc",
+    "cleanup:interface": "rm -rf interface/",
+    "postinstal": "yarn copy:gmc && yarn copy:interface && yarn prepare:interface",
+    "prepare:interface": "cd interface && ../node_modules/.bin/polymer install && rm -f package.json",
+    "copy:gmc": "yarn cleanup:gmc && cp node_modules/.bin/gmc bin/gmc/",
+    "copy:interface": "yarn cleanup:interface && cp -R node_modules/interface .",
+    "test:gmc": "./bin/gmc/gmc version && echo \"gmc works\"",
+    "test:nw": "yarn nwb nwbuild --run .",
+    "rem:json": "rm -f interface/package.json"
   },
-  "snyk": true,
-  "engines": {
-    "node": "> 6.0.0"
+  "devDependencies": {
+    "gmc": "github:etaletai13/gmc",
+    "interface": "github:etaletai13/interface",
+    "polymer-cli": "1.7.1"
   }
 }
