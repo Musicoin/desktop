@@ -43,9 +43,10 @@
     "zxcvbn": "4.4.2"
   },
   "scripts": {
+    "build:nw": "yarn nwb nwbuild .",
     "cleanup:gmc": "rm -rf bin && mkdir -p bin/gmc",
     "cleanup:interface": "rm -rf interface/",
-    "prepare": "yarn copy:gmc && yarn copy:interface && yarn prepare:interface",
+    "postinstal": "yarn copy:gmc && yarn copy:interface && yarn prepare:interface",
     "prepare:interface": "cd interface && ../node_modules/.bin/polymer install && rm -f package.json",
     "copy:gmc": "yarn cleanup:gmc && cp node_modules/.bin/gmc bin/gmc/",
     "copy:interface": "yarn cleanup:interface && cp -R node_modules/interface .",
