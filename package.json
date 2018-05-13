@@ -1,0 +1,61 @@
+{
+  "name": "musicoin-wallet",
+  "version": "1.5.0",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Musicoin/desktop.git"
+  },
+  "node-main": "./hub/msc.js",
+  "main": "./interface/index.html",
+  "bugs": "https://github.com/Musicoin/desktop/issues",
+  "window": {
+    "frame": true,
+    "toolbar": true,
+    "position": "center",
+    "width": 1000,
+    "height": 600
+  },
+  "webkit": {
+    "plugin": true,
+    "page-cache": true
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.5.0"
+  },
+  "dependencies": {
+    "bluebird": "3.5.1",
+    "ethereum-blockies": "github:ethereum/blockies",
+    "ethers": "3.0.7",
+    "fs-extra": "5.0.0",
+    "fs-finder": "1.8.1",
+    "jsqr": "1.0.4",
+    "ntp-client": "0.5.3",
+    "nwjs-builder": "1.14.0",
+    "pngjs": "3.3.2",
+    "qrcode": "1.2.0",
+    "request": "2.85.0",
+    "request-promise-native": "1.0.5",
+    "web3": "github:etaletai13/web3.js",
+    "y18n": "4.0.0",
+    "zxcvbn": "4.4.2"
+  },
+  "scripts": {
+    "cleanup:gmc": "rm -rf bin && mkdir -p bin/gmc",
+    "cleanup:interface": "rm -rf interface/",
+    "prepare": "yarn copy:gmc && yarn copy:interface && yarn prepare:interface",
+    "prepare:interface": "cd interface && ../node_modules/.bin/polymer install && rm -f package.json",
+    "copy:gmc": "yarn cleanup:gmc && cp node_modules/.bin/gmc bin/gmc/",
+    "copy:interface": "yarn cleanup:interface && cp -R node_modules/interface .",
+    "test:gmc": "./bin/gmc/gmc version && echo \"gmc works\"",
+    "test:nw": "yarn nwb nwbuild --run .",
+    "rem:json": "rm -f interface/package.json"
+  },
+  "devDependencies": {
+    "gmc": "github:etaletai13/gmc",
+    "interface": "github:etaletai13/interface",
+    "polymer-cli": "1.7.1"
+  }
+}
