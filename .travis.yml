@@ -1,0 +1,13 @@
+os:
+  - osx
+osx_image: xcode9.3
+language: node_js
+yarn:
+  - "1.6.0"
+cache:
+  - yarn
+node_js:
+  - "8.0.0"
+before_install:
+  - brew update
+  - brew install wine
