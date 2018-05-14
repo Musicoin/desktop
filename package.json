@@ -43,20 +43,20 @@
     "zxcvbn": "4.4.2"
   },
   "scripts": {
-    "build:nw": "yarn nwb nwbuild .",
-    "cleanup:gmc": "rm -rf bin && mkdir -p bin/gmc",
-    "cleanup:interface": "rm -rf interface/ && mkdir -p interface/",
-    "postinstal": "yarn copy:gmc && cleanup:interface && yarn copy:interface && yarn prepare:interface",
-    "prepare:interface": "cd interface && ../node_modules/.bin/polymer install && yarn rem:json",
-    "copy:gmc": "yarn cleanup:gmc && cp node_modules/.bin/gmc bin/gmc/",
-    "copy:interface": "yarn cleanup:interface && cp -R node_modules/interface .",
-    "test:gmc": "./bin/gmc/gmc version && echo \"gmc works\"",
-    "test:nw": "yarn nwb nwbuild --run .",
-    "rem:json": "rm -f interface/package.json"
+    "preinstall": "yarn clean",
+    "clean": "(rm -rf interface/*) & (rm -f bin/gmc/*)",
+    "copy": "(cp -R node_modules/interface .) & ( cp node_modules/gmc/bin/gmc bin/gmc/)",
+    "postinstall": "yarn copy && yarn test-gmc && yarn build",
+    "build": "yarn build-interface && yarn test-interface",
+    "build-interface": "cd interface && ../node_modules/.bin/polymer install --quiet",
+    "test-gmc": "bin/gmc/gmc version",
+    "test-interface": "ls interface | grep bower_components",
+    "start": "yarn nwb nwbuild --run .",
+    "test": "echo 'Still needs unit tests.'"
   },
   "devDependencies": {
-    "gmc": "github:etaletai13/gmc",
     "interface": "github:etaletai13/interface",
+    "gmc": "github:etaletai13/gmc",
     "polymer-cli": "1.7.1"
   }
 }
