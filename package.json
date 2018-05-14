@@ -3,6 +3,7 @@
   "installationMethod": "unknown",
   "version": "1.5.0",
   "license": "MIT",
+  "preferGlobal": false,
   "private": true,
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "jsqr": "1.0.4",
     "ntp-client": "0.5.3",
     "nwjs-builder": "1.14.0",
+    "package.json": "^2.0.1",
     "pngjs": "3.3.2",
     "qrcode": "1.2.0",
     "request": "2.85.0",
@@ -56,8 +58,8 @@
     "test": "echo 'Still needs unit tests.'"
   },
   "devDependencies": {
-    "interface": "github:etaletai13/interface",
     "gmc": "github:etaletai13/gmc",
+    "interface": "github:etaletai13/interface",
     "polymer-cli": "1.7.1"
   }
 }
