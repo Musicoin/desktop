@@ -326,7 +326,7 @@
     "build:gmc": "git clone https://github.com/musicoin/go-musicoin gmc && cd gmc && make gmc",
     "build:interface": "cd interface && bower install && cd ..",
     "protect": "snyk protect",
-    "postinstall": "yarn protect && node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), '@interface/bower_components', 'junction') } catch (e) { }\""
+    "postinstall": "yarn protect && node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@interface/bower_components'), '@interface/bower_components', 'junction') } catch (e) { }\"",
     "test": "snyk test"
   },
   "snyk": true,
