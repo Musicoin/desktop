@@ -1,5 +1,11 @@
-version: 1.5.0
-matrix:
-fast_finish: true
-pull_requests:
-  do_not_increment_build_number: true
+platform:
+  - x86
+  - x64
+install:
+  # Get the latest stable version of Node 0.STABLE.latest
+  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
+  # Typical npm stuff.
+  - npm install yarn
+  - yarn
+build:
+  - yarn dist
