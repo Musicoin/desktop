@@ -23,14 +23,11 @@ Supported Operating systems:
 4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
-Prerequisites: Node.js, yarn
+Prerequisites: node >=8.0.0, yarn >=1.6.0
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
 2. `yarn`
-3. `npm run build:gmc`
-place in `build/gmc/` inside the built package   
-(on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
-4. `npm run nwb nwbuild -v 0.27.4 -p`
+3. `yarn test`
 
 ## Contributing
 
