@@ -1,0 +1,11 @@
+os: osx
+osx_image: xcode9.3
+cache:
+  yarn:
+    - true
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.6.0
+  - export PATH="$HOME/.yarn/bin:$PATH"
+language: node_js
+node_js: 10.0.0
+yarn: 1.6.0
