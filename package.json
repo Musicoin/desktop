@@ -1,65 +1,79 @@
 {
   "name": "musicoin-wallet",
-  "installationMethod": "unknown",
   "version": "1.5.0",
   "license": "MIT",
-  "preferGlobal": false,
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Musicoin/desktop.git"
-  },
+  "private": false,
   "node-main": "./hub/msc.js",
   "main": "./interface/index.html",
-  "bugs": "https://github.com/Musicoin/desktop/issues",
   "window": {
-    "frame": true,
-    "toolbar": true,
-    "position": "center",
+    "title": "Musicoin Desktop",
+    "icon": "./favicon.png",
     "width": 1000,
-    "height": 600
+    "min_width": 1000,
+    "height": 600,
+    "min_height": 600,
+    "resizeable": true
   },
   "webkit": {
     "plugin": true,
     "page-cache": true
   },
+  "build": {
+    "appId": "org.musicoin.app.desktop",
+    "nwVersion": "stable",
+    "nwFlavor": "normal",
+    "output": "dist",
+    "exlcude": [
+      "./*.md",
+      "./local",
+      "./node_modules/bower",
+      "./node_modules/interface",
+      "./node_modules/musicoin-daemon",
+      "./node_modules/nw",
+      "./node_modules/nwjs-builder"
+    ],
+    "ffmpegIntegration": true,
+    "strippedProperties": [
+      "build"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Musicoin/desktop.git"
+  },
+  "bugs": "https://github.com/Musicoin/desktop/issues",
+  "dependencies": {
+    "bluebird": "~3.5.1",
+    "bower": "~1.8.4",
+    "ethereum-blockies": "github:ethereum/blockies",
+    "ethers": "~3.0.17",
+    "fs-extra": "~5.0.0",
+    "fs-finder": "~1.8.1",
+    "interface": "github:movingelectrons/interface",
+    "jsqr": "~1.0.4",
+    "musicoin-daemon": "github:etaletai13/gmc",
+    "ntp-client": "~0.5.3",
+    "nwjs-builder": "~1.14.0",
+    "pngjs": "~3.3.2",
+    "qrcode": "~1.2.0",
+    "request": "~2.85.0",
+    "request-promise-native": "~1.0.5",
+    "web3": "github:etaletai13/web3.js",
+    "y18n": "~4.0.0",
+    "zxcvbn": "~4.4.2"
+  },
   "engines": {
     "node": ">=8.0.0",
-    "yarn": ">=1.5.0"
-  },
-  "dependencies": {
-    "bluebird": "3.5.1",
-    "ethereum-blockies": "github:ethereum/blockies",
-    "ethers": "3.0.7",
-    "fs-extra": "5.0.0",
-    "fs-finder": "1.8.1",
-    "jsqr": "1.0.4",
-    "ntp-client": "0.5.3",
-    "nwjs-builder": "1.14.0",
-    "package.json": "^2.0.1",
-    "pngjs": "3.3.2",
-    "qrcode": "1.2.0",
-    "request": "2.85.0",
-    "request-promise-native": "1.0.5",
-    "web3": "github:etaletai13/web3.js",
-    "y18n": "4.0.0",
-    "zxcvbn": "4.4.2"
+    "yarn": ">=1.6.0"
   },
   "scripts": {
-    "preinstall": "yarn clean",
-    "clean": "(rm -rf interface/*) & (rm -f bin/gmc/*)",
-    "copy": "(cp -R node_modules/interface .) & ( cp node_modules/gmc/bin/gmc bin/gmc/)",
-    "postinstall": "yarn copy && yarn test-gmc && yarn build",
-    "build": "yarn build-interface && yarn test-interface",
-    "build-interface": "cd interface && ../node_modules/.bin/polymer install --quiet",
-    "test-gmc": "bin/gmc/gmc version",
-    "test-interface": "ls interface | grep bower_components",
-    "start": "yarn nwb nwbuild --run .",
-    "test": "echo 'Still needs unit tests.'"
-  },
-  "devDependencies": {
-    "gmc": "github:etaletai13/gmc",
-    "interface": "github:etaletai13/interface",
-    "polymer-cli": "1.7.1"
+    "ux-build": "cd ./interface && ../node_modules/.bin/bower install && rm -f ./package.json",
+    "ux-copy": "mv ./node_modules/interface ./interface",
+    "gmc-copy": "mkdir -p ./bin/gmc && mv ./node_modules/musicoin-daemon/bin/gmc* ./bin/gmc/",
+    "preinstall": "rm -rf ./bin ./dist ./interface ./node_modules",
+    "postinstall": "yarn gmc-copy && yarn ux-copy && yarn ux-build",
+    "test": "rm -rf dist && ./node_modules/.bin/nwb nwbuild -v 0.30.0 --with-ffmpeg ./ -o dist/",
+    "debug": "./node_modules/.bin/nwb nwbuild -v 0.30.0 -r ./",
+    "dist": "yarn test && mv musicoin* dist"
   }
 }
