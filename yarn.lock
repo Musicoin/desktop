@@ -74,6 +74,12 @@ async@^2.0.0:
   dependencies:
     lodash "^4.14.0"
 
+async@^2.1.4:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
+  dependencies:
+    lodash "^4.17.10"
+
 async@~0.2.9:
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
@@ -157,7 +163,20 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bower@~1.8.4:
+bower-installer@1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/bower-installer/-/bower-installer-1.3.6.tgz#cf7839b65421d2b270ab22c74fc858a55e3a1370"
+  dependencies:
+    async "^2.1.4"
+    bower "^1.8.0"
+    colors "^1.1.2"
+    glob "^7.1.1"
+    lodash "^4.17.2"
+    mkdirp "^0.5.1"
+    node-fs "~0.1.7"
+    nopt "^3.0.6"
+
+bower@^1.8.0, bower@~1.8.4:
   version "1.8.4"
   resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.4.tgz#e7876a076deb8137f7d06525dc5e8c66db82f28a"
 
@@ -259,6 +278,10 @@ co@^4.6.0:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+
+colors@^1.1.2:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.0.tgz#5f20c9fef6945cb1134260aab33bfbdc8295e04e"
 
 combined-stream@1.0.6, combined-stream@~1.0.5:
   version "1.0.6"
@@ -527,7 +550,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -612,9 +635,11 @@ inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-"interface@github:movingelectrons/interface":
+"interface@github:musicoin/desktop-interface":
   version "1.5.0"
-  resolved "https://codeload.github.com/movingelectrons/interface/tar.gz/36bda0e692af763ee73ea56cf2cbaad5f307dc48"
+  resolved "https://codeload.github.com/musicoin/desktop-interface/tar.gz/1435db5960427670d77535f51105509596e07909"
+  dependencies:
+    bower-installer "1.3.6"
 
 invert-kv@^1.0.0:
   version "1.0.0"
@@ -771,7 +796,7 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.13.1, lodash@^4.14.0, lodash@^4.8.0:
+lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.8.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -864,15 +889,19 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-"musicoin-daemon@github:etaletai13/gmc":
+"musicoin-daemon@github:musicoin/gmc-node-modules":
   version "1.5.1"
-  resolved "https://codeload.github.com/etaletai13/gmc/tar.gz/981badd03ae39a8499eb0e24262c60e73c7345a2"
+  resolved "https://codeload.github.com/musicoin/gmc-node-modules/tar.gz/1fd590de35f19fa98b659e4d197ad2620ecce6f9"
 
 node-async-flow@^1.2.1, node-async-flow@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/node-async-flow/-/node-async-flow-1.3.1.tgz#0871fcea2ae23dfd0f2e9fd13442438a6d530e06"
   dependencies:
     chalk "^1.1.3"
+
+node-fs@~0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/node-fs/-/node-fs-0.1.7.tgz#32323cccb46c9fbf0fc11812d45021cc31d325bb"
 
 node-resourcehacker@^1.0.0:
   version "1.2.1"
@@ -881,7 +910,7 @@ node-resourcehacker@^1.0.0:
     decompress-zip "^0.3.0"
     nugget "^2.0.0"
 
-nopt@^3.0.1:
+nopt@^3.0.1, nopt@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
   dependencies:
@@ -1602,9 +1631,9 @@ walkdir@^0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/walkdir/-/walkdir-0.0.11.tgz#a16d025eb931bd03b52f308caed0f40fcebe9532"
 
-"web3@github:etaletai13/web3.js":
+"web3@github:musicoin/web3.js":
   version "0.20.6"
-  resolved "https://codeload.github.com/etaletai13/web3.js/tar.gz/e6f49c7c156d05d94d2f80d9ce578ec5c0200462"
+  resolved "https://codeload.github.com/musicoin/web3.js/tar.gz/e6f49c7c156d05d94d2f80d9ce578ec5c0200462"
   dependencies:
     bignumber.js "github:frozeman/bignumber.js-nolookahead"
     crypto-js "^3.1.4"

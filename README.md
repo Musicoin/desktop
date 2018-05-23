@@ -1,14 +1,10 @@
-
 [![GitHub release](https://img.shields.io/github/release/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases/latest)
 [![license](https://img.shields.io/github/license/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/blob/master/LICENSE)
-[![GitHub Release Date](https://img.shields.io/github/release-date/Musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
 [![Github All Releases](https://img.shields.io/github/downloads/Musicoin/desktop/total.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases) 
-[![GitHub issues](https://img.shields.io/github/issues-raw/badges/shields.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) 
-![GitHub contributors](https://img.shields.io/github/contributors/Musicoin/desktop.svg?style=for-the-badge) 
 
 ---
 
-# Musicoin Wallet 
+# Musicoin Wallet
 
 The official Musicoin Desktop Wallet
 
@@ -36,6 +32,10 @@ place in `build/gmc/` inside the built package
 
 Pull Requests and Bug Reports for common issues via GitHub are most welcome.
 
+The Wallet repo makes use of the following submodules:
+1. UI module can be found at https://github.com/Musicoin/desktop-interface
+2. `go-musicoin` npm package can be found at https://github.com/Musicoin/gmc-node-modules
+3. For any web3 issues, checkout our web3 fork at https://github.com/Musicoin/web3.js
 
 ## Bounty program
 
