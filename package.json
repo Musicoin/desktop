@@ -20,7 +20,7 @@
   },
   "build": {
     "appId": "org.musicoin.app.desktop",
-    "nwVersion": "stable",
+    "nwVersion": "0.31.0",
     "nwFlavor": "normal",
     "output": "dist",
     "exlcude": [
@@ -69,8 +69,8 @@
     "gmc-copy": "mkdir -p ./bin/gmc && cp -r ./node_modules/musicoin-daemon/bin/gmc* ./bin/gmc/",
     "preinstall": "rm -rf ./interface ./bin",
     "postinstall": "yarn gmc-copy && yarn ux-copy",
-    "test": "rm -rf dist && ./node_modules/.bin/nwb nwbuild -v 0.30.0 --with-ffmpeg ./ -o dist/",
-    "debug": "./node_modules/.bin/nwb nwbuild -v 0.30.0 -r ./"
+    "test": "rm -rf dist && ./node_modules/.bin/nwb nwbuild ./",
+    "debug": "./node_modules/.bin/nwb nwbuild -r ./"
   }
 }
 
