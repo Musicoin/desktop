@@ -1,5 +1,6 @@
 {
   "name": "musicoin-wallet",
+  "description": "Official Musicoin desktop application.",
   "version": "1.5.0",
   "license": "MIT",
   "private": false,
@@ -7,7 +8,6 @@
   "main": "./interface/index.html",
   "window": {
     "title": "Musicoin Desktop",
-    "icon": "./favicon.png",
     "width": 1000,
     "min_width": 1000,
     "height": 600,
@@ -20,22 +20,17 @@
   },
   "build": {
     "appId": "org.musicoin.app.desktop",
-    "nwVersion": "stable",
+    "nwVersion": "0.30.5",
     "nwFlavor": "normal",
-    "output": "dist",
-    "exlcude": [
-      "./*.md",
-      "./local",
-      "./node_modules/bower",
-      "./node_modules/interface",
-      "./node_modules/musicoin-daemon",
-      "./node_modules/nw",
-      "./node_modules/nwjs-builder"
-    ],
+    "output": "./dist",
     "ffmpegIntegration": true,
-    "strippedProperties": [
-      "build"
-    ]
+    "targets": [
+      "zip","nsis7z"
+    ],
+    "mac": {
+      "displayName": "Musicoin Desktop",
+      "copyright": "Musicoin"
+    }
   },
   "repository": {
     "type": "git",
@@ -44,36 +39,37 @@
   "bugs": "https://github.com/Musicoin/desktop/issues",
   "dependencies": {
     "bluebird": "~3.5.1",
-    "bower": "~1.8.4",
     "ethereum-blockies": "github:ethereum/blockies",
     "ethers": "~3.0.17",
-    "fs-extra": "~5.0.0",
+    "fs-extra": "~6.0.1",
     "fs-finder": "~1.8.1",
-    "interface": "github:musicoin/desktop-interface",
     "jsqr": "~1.0.4",
-    "musicoin-daemon": "github:musicoin/gmc-node-modules",
-    "ntp-client": "~0.5.3",
-    "nwjs-builder": "~1.14.0",
+    "ntp-client": "",
     "pngjs": "~3.3.2",
     "qrcode": "~1.2.0",
-    "request": "~2.85.0",
+    "request": "~2.87.0",
     "request-promise-native": "~1.0.5",
-    "web3": "github:musicoin/web3.js",
+    "web3": "github:Musicoin/web3.js",
     "y18n": "~4.0.0",
     "zxcvbn": "~4.4.2"
   },
-  "engines": {
-    "node": ">=8.0.0",
-    "yarn": ">=1.6.0"
-  },
   "scripts": {
-    "ux-build": "cd ./interface && ../node_modules/.bin/bower install && rm -f ./package.json",
-    "ux-copy": "mv ./node_modules/interface ./interface",
-    "gmc-copy": "mkdir -p ./bin/gmc && mv ./node_modules/musicoin-daemon/bin/gmc* ./bin/gmc/",
-    "preinstall": "rm -rf ./bin ./dist ./interface ./node_modules",
-    "postinstall": "yarn gmc-copy && yarn ux-copy && yarn ux-build",
-    "test": "rm -rf dist && ./node_modules/.bin/nwb nwbuild -v 0.30.0 --with-ffmpeg ./ -o dist/",
-    "debug": "./node_modules/.bin/nwb nwbuild -v 0.30.0 -r ./",
-    "dist": "yarn test && mv musicoin* dist"
+    "build-all": "yarn build-x64 && yarn build-x86",
+    "build-x86": "yarn run build -lw --x86 --concurrent ./",
+    "build-x64": "yarn run build -mlw --x64 --concurrent ./",
+    "cleanup": "rm -rf node_modules",
+    "copy-gmc": "mkdir -p ./bin/gmc && cp -r ./node_modules/musicoin-daemon/bin/* ./bin/gmc/",
+    "copy-ux": "cp -r ./node_modules/interface ./interface",
+    "debug": "yarn run run ./",
+    "prepare": "rm -rf {./interface/package.json,./interface/node_modules}",
+    "postinstall": "(yarn copy-gmc & yarn copy-ux)",
+    "preinstall": "rm -rf {./bin,./dist,./interface}",
+    "test": "ls -a dist/"
+  },
+  "devDependencies": {
+    "7zip-bin-mac": "~1.0.1",
+    "@morhaus/nwjs-builder-phoenix": "~1.15.0",
+    "interface": "github:Musicoin/desktop-interface#staging",
+    "musicoin-daemon": "github:Musicoin/gmc-node-modules"
   }
 }

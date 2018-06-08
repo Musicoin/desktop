@@ -19,14 +19,25 @@ Supported Operating systems:
 4. Windows XP and older - [32bit](https://builder.musicoin.org/windows-x32-legacy.exe), [64 bit](https://builder.musicoin.org/windows-x64-legacy.exe)
 
 ## Getting started
-Prerequisites: Node.js, yarn
+Prerequisites: 
+- node >=8.0.0
+- yarn >=1.7.0
+- optionally wine for windows builds on mac or linux
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
-2. `yarn`
-3. `npm run build:gmc`
-place in `build/gmc/` inside the built package   
-(on MacOS place it in `Musicoin-wallet.app/Contents/Resources/app.nw/bin/gmc/` )
-4. `npm run nwb nwbuild -v 0.27.4 -p`
+2. `yarn --link-duplicates`
+3. `yarn debug` - This will run in SDK mode for development.
+4. `yarn build-all`
+      -or-
+   `yarn build-x86`
+      -or-
+   `yarn build-x64`
+   To build all of the packages, for windows, mac, and linux. This is meant for teting or development and releasing.
+5. `yarn run build -m --x64 ./` - This will build for MacOS x64. -m, -l, or -w determine the os and kind of app.
+
+## Testing new interface builds
+
+Open your package.json file in this repository after cloning, and find the line depending upon the interface private module. You can change this to another branch of the interface module; writing in `github:Musicoin/desktop-interface#dev` for the build on the `dev` branch; or `github:movingelectrons/desktop-interface` for an alternative repo entirely.
 
 ## Contributing
 
