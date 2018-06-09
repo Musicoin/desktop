@@ -23,9 +23,18 @@
     "nwVersion": "0.30.5",
     "nwFlavor": "normal",
     "output": "./dist",
+    "nwVersion": "0.31.0",
+    "nwFlavor": "normal",
+    "output": "dist",
+    "exclude": [
+      "./*.md",
+      "./local",
+      "./node_modules/nw",
+      "./node_modules/nwjs-builder"
+    ],
     "ffmpegIntegration": true,
     "targets": [
-      "zip","nsis7z"
+      "zip", "nsis7z"
     ],
     "mac": {
       "displayName": "Musicoin Desktop",
@@ -44,7 +53,8 @@
     "fs-extra": "~6.0.1",
     "fs-finder": "~1.8.1",
     "jsqr": "~1.0.4",
-    "ntp-client": "",
+    "ntp-client": "~0.5.3",
+    "nwjs-builder": "~1.14.0",
     "pngjs": "~3.3.2",
     "qrcode": "~1.2.0",
     "request": "~2.87.0",
@@ -69,7 +79,11 @@
   "devDependencies": {
     "7zip-bin-mac": "~1.0.1",
     "@morhaus/nwjs-builder-phoenix": "~1.15.0",
-    "interface": "github:Musicoin/desktop-interface#staging",
+    "interface": "github:Musicoin/desktop-interface",
     "musicoin-daemon": "github:Musicoin/gmc-node-modules"
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.6.0"
   }
 }
