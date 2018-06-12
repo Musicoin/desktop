@@ -1,11 +1,31 @@
 os: osx
 osx_image: xcode9.3
-cache:
-  yarn:
-    - true
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.6.0
-  - export PATH="$HOME/.yarn/bin:$PATH"
 language: node_js
-node_js: 10.0.0
-yarn: 1.6.0
+yarn: 1.7.0
+node_js: 8.0.0
+go: 1.10.0
+before_install:
+- brew install wine
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
+- export PATH="$HOME/.yarn/bin:$PATH"
+install:
+- yarn --link-duplicates
+- travis_wait 10 yarn run build -l --x64 --x86 --concurrent ./ && echo 'Linux x86 & x64'
+- travis_wait 10 yarn run build -w --x64 --x86 --concurrent ./ && echo 'Windows x86 & x64'
+after_install:
+- travis_wait 20 yarn run build -m --x86 --concurrent ./ && echo 'Mac x64'
+- echo '√'
+before_deploy:
+- git config --local user.name "etaletai13"
+- git config --local user.email "13@gmail.com"
+- git tag "1.5.0-$(date +'%Y%m%d')"
+deploy:
+  provider: releases
+  api_key:
+    secure: m4Z0nyVG5fo9qTJaR3PE4Auwf+8k4hBXRzHiC810klSU+FUvG9WeuJH+kIlLtb+/jqKRpmmRU4A7EHQZfkr2/gUGnfNgnGuu6geGA+7NEgwYpHpJz7i8b2EjEhvQi97JATgO/GamFW97Eem/pXLBK5spfblth1rs26w1bnzIfFpvNXI5vGkIlQ4oOLdIE2pNzrQNtr/6VHWOwVizi2TQewupYLHH1Xr+wA4FJFocFtHFB2dKy3a3YjUu4mWh9UjsHiDAcMZF+57ibRXubgKW/nAJuy21N7g9ptfcCSwxKwTq3kaMUcb7i1f9JK4ozW0sG+KdRZF29sMEY60xwuAiY+gyd0aWI03vvK8pOg5siEyHdomLlwygmdPIJiHujJxYFeoFM/vOulRmw1q3h7e6lJqALI0UFDzEuIJR168PlL5VM0xlKM0BueHHtxpHuNzT5P8Oaf4+udU4a++o1/Amlc+QLiss+9EMuVLKBhv5Jvde0r1rmU14A3ugucpTIV2o8DiJ+wNAzqPi725WcoGc7GOP/DIFsACaa7QuamLLLF5IaE6P8AU1/crCO8qYRKHxHsrEQ8hI5ZTNyGoOIk+PuWNUfzIC0vLPA4JIIyj+oZyof4vjR+fzyiWK1BwCKAhtoIVIhDC5SSY+bk1zKbpuWh7QBK/DmHpMnJVONs+IN+o=
+  file:
+  - dist/*.zip
+  - dist\*.exe
+  skip_cleanup: true
+  on:
+    tags: true
