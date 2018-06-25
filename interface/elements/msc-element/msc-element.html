@@ -1,0 +1,58 @@
+<!-- <script src="web3-connector.js"></script>
+<script src="musicoin-connector.js"></script> -->
+
+<dom-module id="msc-element">
+  <link rel="import" type="css" href="msc-element-general.css">
+  <template>
+
+    <div id="background"></div>
+    <div id="background2"></div>
+
+    <!-- msc-chain-status></msc-chain-status -->
+    <app-drawer-layout fullbleed>
+      <!-- Drawer content -->
+        <!--<app-drawer>-->
+          <!--<msc-simple-user-badge></msc-simple-user-badge>-->
+          <!--<paper-menu id="mainMenu" selected="{{selectedPage}}" class="drawer-menu" attr-for-selected="menu-name">-->
+            <!--<h3 disabled class="drawer-menu-label"></h3>-->
+            <!--<h3 disabled class="drawer-menu-label"></h3>-->
+            <!--<paper-item menu-name="myp">-->
+              <!--<iron-icon icon="icons:account-box" class="menu-icon"></iron-icon>-->
+              <!--[[locale.navMenu.items.myProfile]]-->
+            <!--</paper-item>-->
+            <!--<paper-item menu-name="history">-->
+              <!--<iron-icon icon="icons:receipt" class="menu-icon"></iron-icon>-->
+              <!--[[locale.navMenu.items.history]]-->
+            <!--</paper-item>-->
+          <!--</paper-menu>-->
+        <!--</app-drawer>-->
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+        <msc-profile-view></msc-profile-view>
+      </app-header-layout>
+    </app-drawer-layout>
+    <msc-introduction hidden$="{{hideIntroWindow}}"></msc-introduction>
+    <paper-toast id="successToast" text="Payment complete" alwaysOnTop="true"></paper-toast>
+    <paper-toast id="failureToast" text="Payment failed!" alwaysOnTop="true"></paper-toast>
+  </template>
+
+  <script src="msc-element.js"></script>
+  <script>
+    function setupDebugLogging() {
+      var fs = require('fs');
+      var util = require('util');
+      var os = require('os');
+      var logDir = mscIntf.clientUtils.getLogDir();
+      var logFile = fs.createWriteStream(logDir + '/client.txt', { flags: 'a' }); //'w' to truncate file every time process starts
+      var logStdout = process.stdout;
+      var old = console.log;
+      console.log = function () {
+        old(arguments[0]);
+        logFile.write(util.format.apply(null, arguments) + '\n');
+        logStdout.write(util.format.apply(null, arguments) + '\n');
+      }
+      console.error = console.log;
+    }
+    setupDebugLogging();
+  </script>
+</dom-module>

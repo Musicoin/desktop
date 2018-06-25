@@ -1,0 +1,38 @@
+<dom-module id="msc-introduction">
+  <link rel="import" type="css" href="msc-introduction.css">
+  <template>
+    <div id="background">
+    <div class="flex-center title" style="margin-top: 60px"><img src="/interface/images/logon.svg" width="256" style="margin-right: 20px"></div>
+    <div class="flex-center mt80">{{echo('introductionHtml_Welcome_to')}}</div>
+    <div class="flex-center mt20">{{echo('introductionHtml_Create_an_account_or')}}</div>
+    <div class="buttons-style">
+      <paper-button raised on-tap="handleMnemonicAccount" id="new-account">{{echo('profileViewHtml_Btn_NEW_ACCOUNT')}}</paper-button>
+      <input id="fileDialogIntro" type="file" style="display: none;">
+      <paper-button raised on-tap="addExistingAccount" id="old-wallet">{{echo('profileViewHtml_Btn_IMPORT_ACCOUNT')}}</paper-button>
+    </div>
+    <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newMnemonicAccountDialog">
+      <p>{{echo('profileViewHtml_enter_a_password_mnemonic')}}</p>
+      <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_pls_save_phrase')}}</p>
+      <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember_mnemonic')}}</p>
+      <paper-input id=newAccountPasswordMnemonicIntro type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
+      <paper-input id=newAccountPasswordMnemonicVerifyIntro type="password" label={{echo('profileViewHtml_Label_Re_Password')}}></paper-input>
+      <div class="buttons">
+        <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
+        <paper-button autofocus on-tap="createNewMnemonicAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
+      </div>
+    </paper-dialog>
+    <input id="fileDialogBackupIntro" type="file" nwdirectory style="display: none;">
+    <div class="intro" hidden$="{{_hideIntroStatus()}}">
+    <div id="backup" style="display: none;">
+    <div id="introStatus"></div>
+    <div class="flex-center mt20">{{echo('introductionHtml_Next_time')}} <div>&nbsp;</div>
+    <iron-icon id="backup" icon="icons:backup"></iron-icon> <div>&nbsp;</div>{{echo('introductionHtml_to_backup_your')}}
+    </div>
+    </div>
+    <div class="buttons-style">
+      <paper-button raised on-tap="hideIntroWindow" id="continue">{{echo('introductionHtml_Btn_open')}}</paper-button>
+    </div>
+    </div>
+  </template>
+  <script src="msc-introduction.js"></script>
+</dom-module>

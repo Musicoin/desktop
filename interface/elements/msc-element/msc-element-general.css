@@ -1,0 +1,294 @@
+:host {
+  --msc-primary-color: #4285f4;
+  --msc-highlight-color: #2176bd;
+  --msc-opaque-background: #2e2e2e;
+  --msc-secondary-background-color: transparent;
+  --msc-background-hightlight: rgba(255,255,255,0.05);
+  --msc-background-lowlight: rgba(0,0,0,0.05);
+  --msc-background-light-lowlight: rgba(0,0,0,0.02);
+  --msc-background-deep-lowlight: rgba(0,0,0,0.3);
+  --msc-primary-background-color: transparent;
+  --primary-text-color: white;
+  --msc-subtle-text-color: #aaa;
+  --msc-footer-height: 0px;
+  display: block;
+}
+msc-profile-view {
+  display: none;
+  background-color: var(--msc-secondary-background-color);
+}
+app-drawer {
+    --app-drawer-width:256px;
+}
+:host[selected-page="myp"] msc-profile-view,
+:host[selected-page="history"] msc-tx-view,
+:host[selected-page="wal"] msc-wallet-view {
+  display: block;
+}
+
+
+body {
+  background-color: var(--msc-primary-background-color);
+}
+
+app-header {
+  background-color: var(--msc-primary-background-color);
+  padding-left: 12px;
+  height: 48px;
+}
+
+.outer-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-list {
+  margin: 5px 10px;
+}
+
+/* I don't see any better way to include a foot */
+app-header-layout::shadow #contentContainer {
+    margin-bottom: var(--msc-footer-height);
+}
+
+app-header-layout {
+    background-color: var(--msc-secondary-background-color);
+}
+
+app-drawer {
+    --app-drawer-content-container: {
+        background-color: var(--msc-background-light-lowlight);
+    }
+}
+
+app-toolbar {
+  justify-content: space-between;
+  padding: 0 0;
+  height: 48px;
+}
+
+msc-audio-player {
+  flex-grow: 1;
+  font-size: small;
+}
+
+h3 {
+  padding: 0 16px;
+  font-weight: lighter;
+  font-variant-caps: all-petite-caps;
+  -webkit-margin-after: 0;
+}
+
+paper-item {
+    --dark-divider-opacity: 0;
+    --paper-item: {
+        border-radius: 5px;
+        font-weight: lighter;
+        margin-left: 5px;
+        margin-right: 10px;
+    };
+    --paper-item-focused-before: {
+        opacity: 0;
+    };
+    cursor: pointer;
+}
+
+paper-menu {
+    --paper-menu-background-color: tranparent;
+
+    --paper-menu-selected-item: {
+        background-color: var(--msc-background-deep-lowlight);
+        font-weight: lighter;
+    };
+
+    --paper-menu-focused-item: {
+        background-color: var(--msc-background-deep-lowlight);
+        font-weight: lighter;
+    };
+
+    --paper-item-focused: {
+        background-color: var(--msc-background-deep-lowlight);
+        font-weight: lighter;
+    };
+
+    --paper-item-selected: {
+        background-color: var(--msc-background-deep-lowlight);
+        font-weight: lighter;
+    };
+
+    --paper-menu-focused-item-after: {
+        opacity: 0;
+    }
+}
+
+.drawer-list paper-item {
+  display: block;
+  padding: 0 16px;
+  text-decoration: none;
+  line-height: 25px;
+  font-weight: lighter;
+}
+
+paper-item {
+  min-height: 25px;
+}
+
+iron-pages {
+  height: 100%
+}
+
+.iron-selected {
+    color: #eee;
+    background-color: rgba(0,0,0,0.1);
+    font-weight: lighter;
+}
+
+.drawer-list a.iron-selected {
+  color: #eee;
+  font-weight: lighter;
+}
+
+paper-progress.audio-progress {
+  --paper-progress-active-color: var(--msc-highlight-color);
+  --paper-progress-secondary-color: var(--paper-light-blue-100);
+  width: 100%;
+}
+
+#player {
+  width: 100%;
+}
+
+.action-button {
+  width: 3em;
+  height: 3em;
+  --paper-icon-button-ink-color: var(--msc-highlight-color);
+}
+
+.play-icon {
+  icon: "av:play-arrow";
+}
+
+.pause-icon {
+  icon: "av:pause";
+}
+
+
+
+paper-toast {
+  position: fixed;
+  right: 2em;
+  left: 2em;
+  text-align: right;
+}
+
+
+#detailButton {
+  width: 2em;
+  height: 2em;
+}
+
+.detailView {
+  position: fixed;
+  top: 64px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 3;
+  padding: 2em;
+  display: none;
+  color: whitesmoke;
+}
+
+.detailView > h1 {
+  font-weight: 300;
+  margin: 0px;
+}
+
+.track-detail-image {
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 1em;
+  left: 1em;
+  width: 25%;
+  height: 25%;
+}
+
+.track-detail-close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  --paper-fab-background: var(--msc-highlight-color);
+}
+
+#miniImage {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.drawer-menu-label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+h3[disabled] {
+    text-transform: uppercase;
+    padding: 0 16px;
+    pointer-events: none;
+    margin: 8px 14px 8px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+msc-introduction {
+    z-index: 3;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.menu-icon {
+    margin: 5px 10px;
+}
+
+.notification {
+    min-width: 11px;
+    background-color: #00a321;
+    border: 2px solid hsla(0,0%,81%,1);
+    border-radius: 9px;
+    position: absolute;
+    right: 25px;
+    text-align: center;
+    color: white;
+    top: 6px;
+    padding: 0px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+#background {
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-size: cover;
+    overflow: hidden;
+}

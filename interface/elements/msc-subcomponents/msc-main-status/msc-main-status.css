@@ -1,0 +1,14 @@
+
+#bottom_status_elements{
+  padding-bottom: 35px;
+}
+
+.mainStatus {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#peers, .syncStatus {
+  margin-left: 20px;
+}
+

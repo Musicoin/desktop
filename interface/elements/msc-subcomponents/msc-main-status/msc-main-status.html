@@ -1,0 +1,23 @@
+<dom-module id="msc-main-status">
+  <link rel="import" type="css" href="msc-main-status.css">
+  <template>
+    <div id="bottom_status_elements" class="container">
+      <div class="mainStatus blocks">
+        <div id="lastBlock" class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}}{{echo('mainStatusHtml_since_last_block')}}">
+          {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+        </div>
+        <div id="peers" class="item-area" title="{{syncStatus.peers2}} {{echo('mainStatusHtml_peers')}}">
+          {{echo('mainStatusHtml_connected_to')}}
+          {{syncStatus.peers}} {{echo('mainStatusHtml_peers')}}
+        </div>
+        <div class="syncStatus">
+          <div id="syncing" class="item-area sync-area" title={{echo('mainStatusHtml_syncing')}} syncing$="{{_computeIsSyncing(syncStatus)}}">
+            {{_computeIsSyncingText(syncStatus)}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </template>
+  <script src="msc-main-status.js"></script>
+</dom-module>
