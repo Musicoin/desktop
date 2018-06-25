@@ -118,7 +118,7 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
 
-async@^2.0.0, async@^2.1.4:
+async@^2.0.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
   dependencies:
@@ -202,23 +202,6 @@ bluebird@^3.5.0, bluebird@~3.5.1:
 bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
-
-bower-installer@~1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/bower-installer/-/bower-installer-1.3.6.tgz#cf7839b65421d2b270ab22c74fc858a55e3a1370"
-  dependencies:
-    async "^2.1.4"
-    bower "^1.8.0"
-    colors "^1.1.2"
-    glob "^7.1.1"
-    lodash "^4.17.2"
-    mkdirp "^0.5.1"
-    node-fs "~0.1.7"
-    nopt "^3.0.6"
-
-bower@^1.8.0:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.4.tgz#e7876a076deb8137f7d06525dc5e8c66db82f28a"
 
 brace-expansion@^1.0.0, brace-expansion@^1.1.7:
   version "1.1.11"
@@ -330,10 +313,6 @@ code-point-at@^1.0.0:
 colors@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
-
-colors@^1.1.2:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.0.tgz#5f20c9fef6945cb1134260aab33bfbdc8295e04e"
 
 combined-stream@1.0.6, combined-stream@~1.0.5:
   version "1.0.6"
@@ -620,7 +599,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -705,12 +684,6 @@ inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
 inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
-
-"interface@github:Musicoin/desktop-interface":
-  version "1.5.1"
-  resolved "https://codeload.github.com/Musicoin/desktop-interface/tar.gz/cfc1ef159791b81d7ee7c500e37c4a6ee32bf805"
-  dependencies:
-    bower-installer "~1.3.6"
 
 invert-kv@^1.0.0:
   version "1.0.0"
@@ -873,7 +846,7 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.8.0:
+lodash@^4.13.1, lodash@^4.17.10, lodash@^4.8.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -982,10 +955,6 @@ node-async-flow@^1.2.1, node-async-flow@^1.3.0:
   dependencies:
     chalk "^1.1.3"
 
-node-fs@~0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/node-fs/-/node-fs-0.1.7.tgz#32323cccb46c9fbf0fc11812d45021cc31d325bb"
-
 node-resourcehacker@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/node-resourcehacker/-/node-resourcehacker-1.2.1.tgz#e4fdf37b3a4403212652c723f6537a08c0fad901"
@@ -993,7 +962,7 @@ node-resourcehacker@^1.0.0:
     decompress-zip "^0.3.0"
     nugget "^2.0.0"
 
-nopt@^3.0.1, nopt@^3.0.6:
+nopt@^3.0.1:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
   dependencies:

@@ -10,7 +10,7 @@ The official Musicoin Desktop Wallet
 
 Nightly builds for all supported Operating Systems can be found over at [builder.musicoin.org](https://builder.musicoin.org/)
 
-Supported Operating systems: 
+Supported Operating systems:
 1. Windows 7 and later - [64 bit](https://builder.musicoin.org/windows-x64.exe), [32bit](https://builder.musicoin.org/windows-x32.exe)
 2. macOS - [64 bit](https://builder.musicoin.org/mac-x64.zip)
 3. Linux - [64 bit](https://builder.musicoin.org/linux-x64.tar.xz), [32bit](https://builder.musicoin.org/linux-x32.tar.xz)
@@ -22,11 +22,20 @@ Prerequisites:
 - yarn >=1.7.0
 - optionally wine for windows builds on mac or linux
 
-## Getting Started
+## Build Release version
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
-2. `yarn build`
-3. `nw .`
+2. `yarn`
+3. `cd interface ; yarn; cd ..`
+4. `nw .`
+
+## Build Alpha version
+
+1. `git clone https://github.com/Musicoin/desktop && cd desktop`
+2. Delete `package.json`
+3. Rename `package-alpha.json` to `package.json`
+4. `yarn`
+5. `nw .`
 
 ## Packaging the app
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`

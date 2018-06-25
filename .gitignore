@@ -4,3 +4,4 @@ build/
 bin/
 interface/bower_components
 package-lock.json
+yarn.lock

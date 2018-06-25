@@ -20,6 +20,9 @@
   },
   "build": {
     "appId": "org.musicoin.app.desktop",
+    "nwVersion": "0.30.5",
+    "nwFlavor": "normal",
+    "output": "./dist",
     "nwVersion": "0.31.0",
     "nwFlavor": "normal",
     "output": "dist",
@@ -31,8 +34,7 @@
     ],
     "ffmpegIntegration": true,
     "targets": [
-      "zip",
-      "nsis7z"
+      "zip", "nsis7z"
     ],
     "mac": {
       "displayName": "Musicoin Desktop",
@@ -67,14 +69,17 @@
     "build-x64": "yarn run build -mlw --x64 --concurrent ./",
     "cleanup": "rm -rf node_modules",
     "copy-gmc": "mkdir -p ./bin/gmc && cp -r ./node_modules/musicoin-daemon/bin/* ./bin/gmc/",
+    "copy-ux": "cp -r ./node_modules/interface ./interface",
     "debug": "yarn run run ./",
-    "postinstall": "(yarn copy-gmc)",
-    "preinstall": "rm -rf {./bin,./dist}",
+    "prepare": "rm -rf {./interface/package.json,./interface/node_modules}",
+    "postinstall": "(yarn copy-gmc & yarn copy-ux)",
+    "preinstall": "rm -rf {./bin,./dist,./interface}",
     "test": "ls -a dist/"
   },
   "devDependencies": {
     "7zip-bin-mac": "~1.0.1",
     "@morhaus/nwjs-builder-phoenix": "~1.15.0",
+    "interface": "github:Musicoin/desktop-interface",
     "musicoin-daemon": "github:Musicoin/gmc-node-modules"
   },
   "engines": {
