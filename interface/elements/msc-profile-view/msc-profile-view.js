@@ -166,6 +166,12 @@ Polymer({
   importAny: function() {
     this.$.importAnyDialog.open();
   },
+  copyAddress: function(e) {
+    var account = e.model.account.address;
+    var clipboard = gui.Clipboard.get();
+    clipboard.set(account, 'text');
+    alert("Copied wallet address: " + account);
+  },
   addExistingAccount: function() {
     document.getElementById('fileDialog').click();
     document.querySelector('#fileDialog').addEventListener("change", function() {
@@ -316,6 +322,45 @@ Polymer({
   clearPaperWallet: function() {
     document.getElementById('paper-wallet').src = "";
   },
+  webviewGetCookies: function() {
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var myCookies = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\myCookies';
+      } else if (platform.includes("win32")) {
+        var myCookies = process.env.APPDATA + '\\Musicoin\\myCookies';
+      } else if (platform.includes("darwin")) {
+        var myCookies = process.env.HOME + '/Library/Musicoin/myCookies';
+      } else if (platform.includes("linux")) {  //linux
+        var myCookies = process.env.HOME + '/.musicoin/myCookies';
+      }
+    var webview = document.getElementById('mPlayer');
+    nwin.cookies.getAll({url:"https://musicoin.org/", storeId:webview.getCookieStoreId(), name:"musicoin-session"}, cookies => fs.writeFile(myCookies, JSON.stringify(cookies, null, 4), 'utf-8'));
+  },
+  webviewSetCookies: function() {
+      if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
+        var myCookies = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin\\myCookies';
+      } else if (platform.includes("win32")) {
+        var myCookies = process.env.APPDATA + '\\Musicoin\\myCookies';
+      } else if (platform.includes("darwin")) {
+        var myCookies = process.env.HOME + '/Library/Musicoin/myCookies';
+      } else if (platform.includes("linux")) {  //linux
+        var myCookies = process.env.HOME + '/.musicoin/myCookies';
+      }
+    var webview = document.getElementById('mPlayer');
+    if (!fs.existsSync(myCookies)) {
+      document.querySelector("msc-profile-view").webviewGetCookies();
+    } else {
+        var myCookiesObj = JSON.parse(fs.readFileSync(myCookies, 'utf-8'));
+        nwin.cookies.set({
+            "url": "https://musicoin.org",
+            storeId:webview.getCookieStoreId(),
+            "domain": ".musicoin.org",
+            "expirationDate": myCookiesObj[0].expirationDate,
+            "name": "musicoin-session",
+            "sameSite": "no_restriction",
+            "value": myCookiesObj[0].value
+        });
+    }
+},
   paperWalletImport: function() {
     this.$.paperWalletImportDialog.open();
     this.$.importAnyDialog.close();
@@ -911,7 +956,7 @@ Polymer({
        icon: iconPath,
        body: tx};
         new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
-        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
+        this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1') + "\n" + "txid:" + "\n" + tx;
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -930,7 +975,7 @@ Polymer({
        icon: iconPath,
        body: tx};
         new Notification(document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1'), alert);
-        gui.Window.open('https://explorer.musicoin.org/tx/' + tx,{position: 'center', width: 1000, height: 600});
+        this.txStatus = document.querySelector("msc-profile-view").echo('profileJS_sendCoins_Notification_body_1') + "\n" + "txid:" + "\n" + tx;
       })
       .catch((err) => {
         this.txStatus = "Failed to send: " + err;
@@ -1153,6 +1198,7 @@ Polymer({
 
     document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("defaultOpen").click();
+    document.querySelector("msc-profile-view").webviewSetCookies();
     var quick = 1700;
     setInterval(function() {
       document.querySelector("msc-profile-view").webviewDetectChange();
@@ -1191,6 +1237,14 @@ Polymer({
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+    }
+    
+    function activeTabsSpecial() {
+      activeTabs(event, 'pMusic'); 
+      document.querySelector("msc-profile-view").webviewSetCookies(); 
+      document.querySelector("msc-profile-view").webviewGetCookies();
+      var webview = document.getElementById('mPlayer');
+      webview.reload();
     }
 
     function echo(phrase) {

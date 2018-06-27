@@ -47,29 +47,32 @@
   "dependencies": {
     "bluebird": "~3.5.1",
     "ethereum-blockies": "github:ethereum/blockies",
-    "ethers": "~3.0.17",
+    "ethers": "~3.0.24",
     "fs-extra": "~6.0.1",
     "fs-finder": "~1.8.1",
     "jsqr": "~1.0.4",
     "ntp-client": "~0.5.3",
-    "nwjs-builder": "~1.14.0",
-    "pngjs": "~3.3.2",
+    "pngjs": "~3.3.3",
     "qrcode": "~1.2.0",
     "request": "~2.87.0",
     "request-promise-native": "~1.0.5",
     "web3": "github:Musicoin/web3.js",
     "y18n": "~4.0.0",
-    "zxcvbn": "~4.4.2"
+    "zxcvbn": "~4.4.2",
+    "snyk": "^1.85.0"
   },
   "scripts": {
     "build-all": "yarn build-x64 && yarn build-x86",
     "build-x86": "yarn run build -lw --x86 --concurrent ./",
     "build-x64": "yarn run build -mlw --x64 --concurrent ./",
     "debug": "yarn run run ./",
-    "postinstall": "cd interface && bower install"
+    "postinstall": "cd interface && bower install",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "engines": {
     "node": ">=4.0.0",
     "yarn": ">=1.6.0"
-  }
+  },
+  "snyk": true
 }

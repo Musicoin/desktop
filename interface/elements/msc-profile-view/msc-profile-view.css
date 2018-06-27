@@ -59,6 +59,7 @@ h2{
   width: 78%;
   float: right;
   padding-left: 25px;
+  padding-bottom: 60px;
 }
 
 .avatar {
@@ -70,6 +71,7 @@ h2{
   font-size: 14px;
   color: #b0b1b3;
   padding-left:10px;
+  margin: 0 auto;
 }
 
 .account-bal{
@@ -123,8 +125,7 @@ table.border_bottom tr {
 }
 
 table.border_bottom td{
-  padding-bottom: 10px;
-  padding-top: 16px;
+  padding-top: 4px;
 }
 
 p.account-address{
@@ -133,14 +134,12 @@ p.account-address{
 
 img.copy-icon{
   position: relative;
-  top: 12px;
-  width: 14px;
   left: 7px;
 }
 
 #footer_left{
-  position: absolute;
   bottom: 30px;
+  padding-top: 20px;
 }
 
 #footer_left, #footer_right{
@@ -202,10 +201,12 @@ h2.more_accts{
 #bal_in_sel_wrapper{
   float:right;
 }
+
 span.bal_in_sel_dd_text{
   position: relative;
   top: -3px;
 }
+
 #bal_in_txt{
   float:left;
   color: #5d5f63;
@@ -214,16 +215,19 @@ span.bal_in_sel_dd_text{
   top: 12px;
   left: 7px;
 }
+
 #bal_in_sel{
   float:right;
   padding-top:10px;
   width:auto;
   height:auto;
 }
+
 #bal_in_sel img{
   width:18px;
   margin-left: 6px;
 }
+
 #bal_in_sel {
   position: relative;
   width: 100px;
@@ -234,6 +238,7 @@ span.bal_in_sel_dd_text{
   font-weight: bold;
   color: #FAFAFA;
 }
+
 #bal_in_sel:after {
   content: "";
   width: 0;
@@ -246,6 +251,7 @@ span.bal_in_sel_dd_text{
   border-style: solid;
   border-color: #8aa8bd transparent;
 }
+
 #bal_in_sel .dropdown {
   position: absolute;
   top: 140%;
@@ -265,6 +271,7 @@ span.bal_in_sel_dd_text{
   z-index: 1;
   pointer-events: none;
 }
+
 #bal_in_sel .dropdown:after {
   content: "";
   width: 0;
@@ -276,6 +283,7 @@ span.bal_in_sel_dd_text{
   border-style: solid;
   border-color: #fff transparent;
 }
+
 #bal_in_sel .dropdown:before {
   content: "";
   width: 0;
@@ -287,6 +295,7 @@ span.bal_in_sel_dd_text{
   border-style: solid;
   border-color: rgba(0,0,0,0.1) transparent;
 }
+
 #bal_in_sel .dropdown li {
   display: block;
   padding: 10px;
@@ -296,21 +305,31 @@ span.bal_in_sel_dd_text{
   box-shadow: inset 0 1px 0 rgba(255,255,255,1);
   transition: all 0.3s ease-out;
 }
+
 #bal_in_sel .dropdown li i {
   float: right;
   color: inherit;
 }
+
 #bal_in_sel .dropdown li:first-of-type {
   border-radius: 7px 7px 0 0;
 }
+
 #bal_in_sel .dropdown li:last-of-type {
   border: none;
   border-radius: 0 0 7px 7px;
 }
+
 /* Hover state */
 #bal_in_sel .dropdown li:hover {
   background: #f3f8f8;
 }
+
+.right {
+  float: right;
+  padding: 0 4px 4px 0;
+}
+
 /* Active state */
 #bal_in_sel.active .dropdown {
   opacity: 1;
@@ -555,6 +574,10 @@ tr[coinbase] {
 
 .flex-top {
   display: flex;
+  position: absolute;
+  top: 0;
+  width: 98%;
+  justify-content: center;
   z-index: 1000;
 }
 
@@ -581,6 +604,15 @@ paper-dialog {
   font-weight: 900 !important;
   font-size: 13px;
   border-radius: 5px;
+}
+
+.buttons-style-old {
+  font-weight: 900 !important;
+  font-size: 13px;
+  border-radius: 5px;
+  position: absolute;
+  right: 1.5%;
+  padding-top: 10px;
 }
 
 #new-account {
@@ -660,8 +692,40 @@ paper-dialog {
   font-weight: 900 !important;
 }
 
+.tab button {
+  background-color: #272a30;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 18px;
+  font-weight: 700 !important;
+  border: 1px solid #f2c455;
+}
+
+.tab button:hover {
+  background-color: #737373;
+}
+
+.tab button.active {
+  background-color: #272a30;
+}
+
 .tabcontent {
   display: none;
+}
+
+#status {
+  padding-top: 6px;
+  font-weight: 400;
+  font-size: 16px;
+  justify-content: center;
+  text-align: center;
+  color: lightgrey;
+  word-wrap: break-word;
+}
+
+.top-buttons {
+  top: 35px;
 }
 
 #mPlayer {
