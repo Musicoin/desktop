@@ -3,19 +3,33 @@
   <link rel="import" type="css" href="msc-profile-view.css">
 	<script type="text/javascript" src="../../scripts/jquery.min.js"></script>
   <template>
+    <div class="tab flex-top">
+      <button onclick="activeTabs(event, 'wallet')" id="defaultOpen">
+        <img src="/interface/images/icons/wallet.png" />
+        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Wallet')}}</span>
+      </button>
+      <button onclick="activeTabsSpecial()">
+        <img src="/interface/images/icons/play_music.png" />
+        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
+      </button>
+      <button class="tablinks" id="mute" on-tap="muteAudio">
+      <img src="/interface/images/icons/audio-volume.svg">
+      </button>
+      <button class="tablinks" id="unmute" on-tap="unmuteAudio" style="display: none;">
+      <img src="/interface/images/icons/audio-volume-muted.svg">
+      </button>
+      <button class="tablinks" id="maximize" on-tap="maxWindow">
+      <img src="/interface/images/icons/maximize.svg">
+      </button>
+      <button class="tablinks" id="unmaximize" on-tap="maxWindow" style="display: none;">
+      <img src="/interface/images/icons/unmaximize.svg">
+      </button>
+    </div>
   <div id="wallet" class="tabcontent">
     <div id="left_col" class="buttons-style">
       <div class="flex-center title">
         <img id="image_banner" src="/interface/images/logon.svg" height="100px">
       </div>
-      <button onclick="activeTabs(event, 'wallet')" id="defaultOpen">
-        <img src="/interface/images/icons/wallet.png" />
-        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Wallet')}}</span>
-      </button>
-      <button onclick="activeTabs(event, 'pMusic')">
-        <img src="/interface/images/icons/play_music.png" />
-        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
-      </button>
       <div id="footer_left">
         <div id="left_footer_buttons">
           <button class="tablinks" id="mute" on-tap="muteAudio">
@@ -30,11 +44,12 @@
           <button class="tablinks" id="unmaximize" on-tap="maxWindow" style="display: none;">
             <img src="/interface/images/icons/unmaximize.svg">
           </button>
+          <msc-main-status></msc-main-status>
+          <div id="status">{{txStatus}}</div>
         </div>
       </div>
     </div>
     <div id="right_col">
-      <div id="wallet_text"><h2>{{echo('profileViewHtml_Tab_Wallet')}}</h2></div>
       <div id="bal_in_sel_wrapper">
         <span id="bal_in_txt">{{echo('profileViewHtml_Table_Balance_in')}}:</span>
         <div id="bal_in_sel">
@@ -75,8 +90,8 @@
           <tr>
             <td class="td_acc">
               <img src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails" />
+              <img class="copy-icon clickable right" src="/interface/images/icons/copy.png" title="{{echo('profileViewHtml_Btn_Copy_Account')}}" on-tap="copyAddress" />
               <p class="account-address">[[account.address]]</p>
-              <img class="copy-icon clickable" src="/interface/images/icons/copy.png" title="{{echo('profileViewHtml_Btn_Copy_Account')}}" on-tap="" />
             </td>
             <td class="account-bal th_bal">
               <p>
@@ -88,8 +103,6 @@
             <td class="account-act th_act">
               <p class="account-act-p">
               <div class="flexbox_typ">
-                <!-- span class="text-icon clickable">&#43;</span -->
-                <span class="text-icon clickable">&minus;</span>
                 <div class="wrapper-dropdown">
                   <span class="text-icon">&#8942;</span>
                   <ul class="dropdown">
@@ -126,7 +139,6 @@
       </div>
       <div id="more_accounts">
       <center>
-        <h2 class="more_accts">Need more accounts?</h2>
         <paper-button raised on-tap="createNewAccountDialog" id="new-account">
           {{echo('profileViewHtml_Btn_NEW_ACCOUNT')}}
         </paper-button>
@@ -139,9 +151,7 @@
         </paper-button>
       </center>
       </div>
-      <div id="footer_right">
-        {{txStatus}} <msc-main-status></msc-main-status>
-      </div>
+      <div id="footer_right"></div>
     </div>
   </div>
 
@@ -156,7 +166,7 @@
     </paper-dialog>
 
     <paper-dialog id="showAccountDetailsDialog" style="max-height: 550px;">
-      <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px">
+      <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px; margin-left: 32%;">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
       <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
@@ -168,8 +178,8 @@
       <p style="text-align: center;">{{echo('profileViewHtml_Create_Paper_Wallet')}}:
       <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo('profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
-      <div class="buttons-style top-buttons" style="display: block; margin: 0 auto;">
-      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 63%;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
+      <div class="buttons-style-old top-buttons" style="display: block; margin: 0 auto;">
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 73%;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
       <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
       </div>
       <div class="buttons">
@@ -400,9 +410,9 @@
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialog">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
-        <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
+        <img src={{userImageFrom}} title={{userAccount}} style="width: 96px">
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
-        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
+        <img src={{userImageRecipient}} title={{recipientAccount}} style="width: 96px"></div>
         <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
         <p>{{echo('profileViewHtml_about_to_send')}} <b>{{sendBalance}}</b> {{echo('profileViewHtml_to')}} <b>{{recipientAccount}}</b></p>
       <p style="font-weight: 900; font-size: 18px;">{{echo('profileViewHtml_are_you_sure')}}</p>
@@ -434,9 +444,9 @@
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="approveSendDialogAccount">
       <div style="display: block; white-space: nowrap; width: 0px; margin-left: 120px;">
-        <img src={{userImageFrom}} class="avatar" title={{userAccount}} style="width: 96px">
+        <img src={{userImageFrom}} title={{userAccount}} style="width: 96px">
         <img src="/interface/images/icons/arrow.svg" style="width: 96px;">
-        <img src={{userImageRecipient}} class="avatar" title={{recipientAccount}} style="width: 96px"></div>
+        <img src={{userImageRecipient}} title={{recipientAccount}} style="width: 96px"></div>
         <p style="display: block; margin: 0 auto; padding-top: 10px; font-weight: 900; font-size: 24px; text-align: center;">{{sendBalance}}</p>
         <p>{{echo('profileViewHtml_about_to_send')}} <b>{{sendBalance}}</b> {{echo('profileViewHtml_to')}} <b>{{recipientAccount}}</b></p>
       <p style="font-weight: 900; font-size: 18px;">{{echo('profileViewHtml_are_you_sure')}}</p>
