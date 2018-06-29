@@ -6,6 +6,8 @@ The official Musicoin Desktop Wallet
 [![license](https://img.shields.io/github/license/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/blob/master/LICENSE)
 [![Github All Releases](https://img.shields.io/github/downloads/Musicoin/desktop/total.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases)
 
+![Musicoin Wallet 1.5](1.5.png)
+
 ## Nightly Builds
 
 Nightly builds for all supported Operating Systems can be found over at [builder.musicoin.org](https://builder.musicoin.org/)
@@ -46,12 +48,12 @@ Prerequisites:
    `yarn build-x86`
       -or-
    `yarn build-x64`
-   To build all of the packages, for windows, mac, and linux. This is meant for testing or development and releasing.
-5. `yarn run build -m --x64 ./` - This will build for MacOS x64. -m, -l, or -w determine the os and kind of app.
+   to build all packages for windows, mac, and linux. This is meant for testing or development and packaging.
+5. `yarn run build -m --x64 ./` - for packaging MacOS x64. `-m`, `-l`, or `-w` determines the os and architecture.
 
 ## Testing new interface builds
 
-This repo contains the UI modules in accordance with the last release version. To make changes, edit the files at `interface/` and issue a PR to the [desktop-interface]([desktop-interface](https://github.com/Musicoin/desktop-interface) repo. Please note that PRs towards interface changes will not be accepted on this repo.
+This repo contains the UI modules in accordance with the last release version. To suggest changes, edit the files at `interface/` and issue a PR to the [desktop-interface]([desktop-interface](https://github.com/Musicoin/desktop-interface) repo. Please note that PRs towards interface changes will not be accepted here.
 
 ## Contributing
 
@@ -64,4 +66,8 @@ The Wallet repo makes use of the following submodules:
 
 ## Bounty program
 
-Specific Issues are earmarked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](BOUNTY.md).
+Specific Issues are earmarked for bounty and carry a bounty label with them. More information regarding the bounty program can be found over at [BOUNTY](docs/BOUNTY.md).
+
+## License
+
+MIT

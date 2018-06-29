@@ -49,6 +49,7 @@ app-header {
 /* I don't see any better way to include a foot */
 app-header-layout::shadow #contentContainer {
     margin-bottom: var(--msc-footer-height);
+    background: black !important;
 }
 
 app-header-layout {

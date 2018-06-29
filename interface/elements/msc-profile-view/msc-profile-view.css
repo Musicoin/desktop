@@ -10,7 +10,7 @@
 }
 
 *{
-  font-family: 'Lato', sans-serif;
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
 h2{
@@ -20,14 +20,6 @@ h2{
 #left_col, #right_col{
   overflow: hidden;
   padding: 5px;
-}
-
-#left_col{
-  background-color: #272a30;
-  width: 13%;
-  float: left;
-  padding-left: 25px;
-  padding-right: 20px;
 }
 
 #image_banner{
@@ -55,11 +47,16 @@ h2{
 }
 
 #right_col{
-  background-color: #2b2e34;
-  width: 78%;
-  float: right;
-  padding-left: 25px;
-  padding-bottom: 60px;
+  color: black;
+  margin-left: 10px;
+  background: url('../../images/bg.jpg') no-repeat center center fixed;
+  /*Photo courtest: Louise Hill on Unsplash */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  padding: 70px 20px 20px 20px;
 }
 
 .avatar {
@@ -69,7 +66,7 @@ h2{
 
 .account-address {
   font-size: 14px;
-  color: #b0b1b3;
+  color: #D8DBDF;
   padding-left:10px;
   margin: 0 auto;
 }
@@ -100,12 +97,12 @@ h2{
 
 .account-music, .account-btc, .account-usd {
   font-size: 14px;
-  color: #b0b1b3;
+  color: #D8DBDF;
   font-weight: bold;
 }
 
 table.border_bottom {
-  color: #5d5f63;
+  color: white;
   font-size: 12px;
   font-weight: 700;
   width:100%;
@@ -209,7 +206,7 @@ span.bal_in_sel_dd_text{
 
 #bal_in_txt{
   float:left;
-  color: #5d5f63;
+  color: white;
   font-size: 12px;
   position: relative;
   top: 12px;
@@ -237,19 +234,6 @@ span.bal_in_sel_dd_text{
   outline: none;
   font-weight: bold;
   color: #FAFAFA;
-}
-
-#bal_in_sel:after {
-  content: "";
-  width: 0;
-  height: 0;
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  margin-top: -3px;
-  border-width: 6px 6px 0 6px;
-  border-style: solid;
-  border-color: #8aa8bd transparent;
 }
 
 #bal_in_sel .dropdown {
@@ -588,7 +572,12 @@ tr[coinbase] {
 }
 
 paper-dialog {
-  background-color: rgb(36, 36, 36);
+  background-color: black !important;
+  opacity: 0.9;
+}
+
+.paper-dialog-0 .buttons {
+  color: white !important;
 }
 
 .warn {
@@ -616,13 +605,9 @@ paper-dialog {
 }
 
 #new-account {
-  background: #fad644;
-  color: #302d38;
 }
 
 #old-wallet {
-  background: #fff;
-  color: #302d38;
 }
 
 #private-key {
@@ -636,13 +621,9 @@ paper-dialog {
 }
 
 #approve-remove {
-  background: #da7c45;
-  color: #302d38;
 }
 
 #send-funds {
-  background: #f19ff7;
-  color: #302d38;
 }
 
 #save-paper {
@@ -680,7 +661,7 @@ paper-dialog {
   color: #302d38;
 }
 
-#addPeerDialog { 
+#addPeerDialog {
   font-size: 18px;
 }
 
@@ -736,4 +717,36 @@ paper-dialog {
   left: 0;
   width:100%;
   height:100%;
+}
+
+.spl-button {
+  border-radius: 4px;
+  text-transform: uppercase;
+  padding: 0 26px;
+  min-height: 3em;
+  display: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  transition: all 200ms ease-in-out;
+  font-size: 12px;
+  line-height: 1;
+  margin-left: 24px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.spl-button:hover,
+.spl-button:focus {
+  background-color: #fff ;
+  color: #171717 !important;
+}
+
+a {
+  color: white;
+}
+
+.wrapper-dropdown.msc-profile-view .dropdown.msc-profile-view {
+  background: : black !important;
+  color: #D8DBDF;
 }
