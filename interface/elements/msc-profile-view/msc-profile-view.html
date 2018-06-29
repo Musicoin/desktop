@@ -1,111 +1,113 @@
 <dom-module id="msc-profile-view">
   <link rel="import" type="css" href="../../styles/shared-styles.html">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="import" type="css" href="msc-profile-view.css">
 	<script type="text/javascript" src="../../scripts/jquery.min.js"></script>
   <template>
-    <div class="tab flex-top">
-      <button onclick="activeTabs(event, 'wallet')" id="defaultOpen">
-        <img src="/interface/images/icons/wallet.png" />
-        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Wallet')}}</span>
-      </button>
-      <button onclick="activeTabsSpecial()">
-        <img src="/interface/images/icons/play_music.png" />
-        <span class="left_col_btn_txt">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
-      </button>
-      <button class="tablinks" id="mute" on-tap="muteAudio">
-      <img src="/interface/images/icons/audio-volume.svg">
-      </button>
-      <button class="tablinks" id="unmute" on-tap="unmuteAudio" style="display: none;">
-      <img src="/interface/images/icons/audio-volume-muted.svg">
-      </button>
-      <button class="tablinks" id="maximize" on-tap="maxWindow">
-      <img src="/interface/images/icons/maximize.svg">
-      </button>
-      <button class="tablinks" id="unmaximize" on-tap="maxWindow" style="display: none;">
-      <img src="/interface/images/icons/unmaximize.svg">
-      </button>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="msc-main-status.js"></script>
+    <nav class="navbar fixed-top" style="background: black; opacity: 0.8">
+      <div>
+      <img src="/interface/images/logon.svg" height="40px">
+      <a id="defaultOpen" onclick="activeTabs(event, 'wallet')"
+        class="navbar-brand spl-button" href="#"
+        style="text-decoration: none !important;"
+        >
+        &nbsp;Wallet
+      </a>
     </div>
-  <div id="wallet" class="tabcontent">
-    <div id="left_col" class="buttons-style">
-      <div class="flex-center title">
-        <img id="image_banner" src="/interface/images/logon.svg" height="100px">
-      </div>
-      <div id="footer_left">
-        <div id="left_footer_buttons">
-          <button class="tablinks" id="mute" on-tap="muteAudio">
-            <img src="/interface/images/icons/audio-volume.svg">
-          </button>
-          <button class="tablinks" id="unmute" on-tap="unmuteAudio" style="display: none;">
-            <img src="/interface/images/icons/audio-volume-muted.svg">
-          </button>
-          <button class="tablinks" id="maximize" on-tap="maxWindow">
-            <img src="/interface/images/icons/maximize.svg">
-          </button>
-          <button class="tablinks" id="unmaximize" on-tap="maxWindow" style="display: none;">
-            <img src="/interface/images/icons/unmaximize.svg">
-          </button>
-          <msc-main-status></msc-main-status>
-          <div id="status">{{txStatus}}</div>
+      <div class="mainStatus blocks"  style="position: relative ; top: 12px; color: white">
+        <div id="lastBlock" style="display: inline-block;margin-right: 20px;margin-left: 20px;" class="item-area time-area" title="{{_computeTimeSinceLastBlockMessage(syncStatus)}}{{echo('mainStatusHtml_since_last_block')}}">
+          {{_computeTimeSinceLastBlockMessage(syncStatus)}}
+        </div>
+        <div id="peers" style="display: inline-block; margin-right: 20px" class="item-area" title="{{syncStatus.peers2}} {{echo('mainStatusHtml_peers')}}">
+          {{echo('mainStatusHtml_connected_to')}}
+          {{syncStatus.peers}} {{echo('mainStatusHtml_peers')}}
+        </div>
+        <div class="syncStatus">
+          <div id="syncing" style="display: inline-block;" class="item-area sync-area" title={{echo('mainStatusHtml_syncing')}} syncing$="{{_computeIsSyncing(syncStatus)}}">
+            {{_computeIsSyncingText(syncStatus)}}
+          </div>
         </div>
       </div>
+      <div style="width: 250px;">
+        <button class="tablinks" style="border: 1px white; display: inline-block;background: none;; width: 50px; position: relative ; top: 5px;" id="mute" on-tap="muteAudio">
+        <img src="/interface/images/icons/audio-volume.svg">
+        </button>
+
+        <button class="tablinks" style="border: 1px white; display: none ;background: none; width: 50px; position: relative ; top: 5px;" id="unmute" on-tap="unmuteAudio">
+        <img src="/interface/images/icons/audio-volume-muted.svg">
+        </button>
+
+        <button class="tablinks" style="border: 1px white; display: inline-block;background: none; width: 50px; position: relative ; top: 5px;margin-right: 10px;" id="maximize" on-tap="maxWindow">
+        <img src="/interface/images/icons/maximize.svg">
+        </button>
+
+        <button class="tablinks" style="border: 1px white; display: none ;background: none;; width: 50px; position: relative ; top: 5px; margin-right: 10px;" id="unmaximize" on-tap="maxWindow">
+        <img src="/interface/images/icons/minimize.svg">
+        </button>
+
+        <span onclick="activeTabsSpecial()" class="left_col_btn_txt spl-button" style="width: 130px; position:relative; margin-left: 0px; top: 4px">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
     </div>
+    </nav>
+  <div id="wallet" class="tabcontent">
     <div id="right_col">
       <div id="bal_in_sel_wrapper">
-        <span id="bal_in_txt">{{echo('profileViewHtml_Table_Balance_in')}}:</span>
+        <span id="bal_in_txt" style="position: relative ; top: 15px">{{echo('profileViewHtml_Table_Balance_in')}}:</span>
         <div id="bal_in_sel">
 	        <span>
             <img src="/interface/images/icons/musicoin.svg" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_MUSIC')}} />
-            <span class="bal_in_sel_dd_text">{{echo('profileViewHtml_DD_MUSIC')}}</span>
+            <span class="bal_in_sel_dd_text" style="position: relative ; top: 2px">{{echo('profileViewHtml_DD_MUSIC')}}</span>
           </span>
 	        <ul class="dropdown">
 		        <li>
               <span on-tap="displayBalanceInBtc">
                 <img src="/interface/images/icons/bitcoin.png" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_BTC')}} />
-                <span class="bal_in_sel_dd_text">{{echo('profileViewHtml_DD_BTC')}}</span>
+                <span class="bal_in_sel_dd_text" style="position: relative ; top: 2px">{{echo('profileViewHtml_DD_BTC')}}</span>
               </span>
             </li>
 		        <li>
               <span on-tap="displayBalanceInUsd">
                 <img src="/interface/images/icons/dollar.png" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_USD')}} />
-                <span class="bal_in_sel_dd_text">{{echo('profileViewHtml_DD_USD')}}</span>
+                <span class="bal_in_sel_dd_text" style="position: relative ; top: 2px">{{echo('profileViewHtml_DD_USD')}}</span>
               </span>
             </li>
 		        <li>
               <span on-tap="displayBalanceInMusic">
                 <img src="/interface/images/icons/musicoin.svg" class="clickable" title={{echo('profileViewHtml_Display_Balance_In_MUSIC')}} />
-                <span class="bal_in_sel_dd_text">{{echo('profileViewHtml_DD_MUSIC')}}</span>
+                <span class="bal_in_sel_dd_text" style="position: relative ; top: 2px">{{echo('profileViewHtml_DD_MUSIC')}}</span>
               </span>
             </li>
 	        </ul>
         </div>
       </div>
-      <div id="mid_right_col" class="clearfix">
+      <div id="mid_right_col" class="clearfix" style="padding-top: 15px">
       <table class="acct border_bottom">
-        <tr>
-          <th class="th_acc">{{echo('profileViewHtml_Table_ACCOUNT')}}</th>
-          <th class="th_bal">{{echo('profileViewHtml_Table_BALANCE_IN')}}</th>
-          <th class="th_act">{{echo('profileViewHtml_Table_ACTIONS')}}</th>
+        <tr class="row">
+          <th class="th_acc col-6" style="text-align: center;">{{echo('profileViewHtml_Table_ACCOUNT')}}</th>
+          <th class="th_bal col-3" style="text-align: center; position: relative ; left: 30px">{{echo('profileViewHtml_Table_BALANCE_IN')}}</th>
+          <th class="th_act col-2" style="text-align: center;">{{echo('profileViewHtml_Table_ACTIONS')}}</th>
         </tr>
         <template is="dom-repeat" items="[[accounts]]" as="account">
-          <tr>
-            <td class="td_acc">
-              <img src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails" />
-              <img class="copy-icon clickable right" src="/interface/images/icons/copy.png" title="{{echo('profileViewHtml_Btn_Copy_Account')}}" on-tap="copyAddress" />
-              <p class="account-address">[[account.address]]</p>
+          <tr class="row">
+            <td class="td_acc col-6">
+              <img style="position: relative; top: 10px;" src=[[account.avatar]] title=[[account.address]] class="avatar" width="48" on-tap="showAccountDetails" />
+              <img style="position: relative;top: 22px;"class="copy-icon clickable right" src="/interface/images/icons/copy.png" title="{{echo('profileViewHtml_Btn_Copy_Account')}}" on-tap="copyAddress" />
+              <p class="account-address" style="top: 20px;width: 380px; text-transform: uppercase; position: relative;">[[account.address]]</p>
             </td>
-            <td class="account-bal th_bal">
+            <td class="account-bal th_bal col-3">
               <p>
-                <div class="account-music" id=[[account.address]] title="[[account.balance]]"> [[account.displayBalance]] MC</div>
-                <div class="account-btc" style="display: none;" title="[[account.balance]]"> [[account.displayBalanceBtc]]</div>
-                <div class="account-usd" style="display: none;" title="[[account.balance]]"> [[account.displayBalanceUsd]]</div>
+                <div style="text-align: center"class="account-music" id=[[account.address]] title="[[account.balance]]"> [[account.displayBalance]] MC</div>
+                <div style="text-align: center; display: none;"class="account-btc" title="[[account.balance]]"> [[account.displayBalanceBtc]]</div>
+                <div style="text-align: center; display: none;"class="account-usd" title="[[account.balance]]"> [[account.displayBalanceUsd]]</div>
               </p>
             </td>
-            <td class="account-act th_act">
+            <td class="account-act th_act col-2" style="position: relative; left: 40px">
               <p class="account-act-p">
               <div class="flexbox_typ">
                 <div class="wrapper-dropdown">
                   <span class="text-icon">&#8942;</span>
-                  <ul class="dropdown">
+                  <ul class="dropdown" style="width: 155px;">
                     <li on-tap="backupAccount">
                       <span>
                         <iron-icon icon="icons:backup" class="clickable" title={{echo('profileViewHtml_Backup_Account')}}>
@@ -139,19 +141,18 @@
       </div>
       <div id="more_accounts">
       <center>
-        <paper-button raised on-tap="createNewAccountDialog" id="new-account">
+        <paper-button class="spl-button" style="color:white"raised on-tap="createNewAccountDialog" id="new-account">
           {{echo('profileViewHtml_Btn_NEW_ACCOUNT')}}
         </paper-button>
         <input id="fileDialog" type="file" style="display: none;" />
-        <paper-button raised on-tap="importAny" id="old-wallet">
+        <paper-button class="spl-button" raised on-tap="importAny" id="old-wallet" style="color:white">
           {{echo('profileViewHtml_Btn_IMPORT_ACCOUNT')}}
         </paper-button>
-        <paper-button raised on-tap="showSendDialog" id="send-funds">
+        <paper-button style="color:white" class="spl-button" raised on-tap="showSendDialog" id="send-funds">
           {{echo('profileViewHtml_Btn_SEND_FUNDS')}}
         </paper-button>
       </center>
       </div>
-      <div id="footer_right"></div>
     </div>
   </div>
 
@@ -166,7 +167,7 @@
     </paper-dialog>
 
     <paper-dialog id="showAccountDetailsDialog" style="max-height: 550px;">
-      <img src={{userImage}} class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px; margin-left: 32%;">
+      <img src={{userImage}} style="position: relative; left: 10px;left: 135px; height: 64px; bottom: 10px"class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px; margin-left: 32%;">
       <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
       <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
@@ -179,8 +180,8 @@
       <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo('profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
       <div class="buttons-style-old top-buttons" style="display: block; margin: 0 auto;">
-      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 73%;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
-      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 25%; bottom: 20px" class="spl-button">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
+      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds" class="spl-button" style="position: relative; bottom: 20px;">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
       </div>
       <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
@@ -300,7 +301,7 @@
       <paper-button dialog-dismiss on-tap="clearKeyFromPrivateKey">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">{{echo('profileViewHtml_Btn_access_account')}}</paper-button>
       </div>
-    </paper-dialog> 
+    </paper-dialog>
 
     <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromMnemonic">
       <p>{{echo('profileViewHtml_enter_mnemonic')}}</p>

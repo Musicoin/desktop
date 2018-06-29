@@ -119,7 +119,8 @@ paper-progress {
 }
 
 paper-dialog {
-  background-color: rgb(36, 36, 36);
+  background-color: black !important;
+  opacity: 0.9 !important;
 }
 
 paper-button {
@@ -153,4 +154,3 @@ paper-button {
   color: #302d38;
   font-size: 24px;
 }
-
