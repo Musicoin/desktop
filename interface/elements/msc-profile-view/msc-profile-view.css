@@ -10,7 +10,7 @@
 }
 
 *{
-  font-family: 'Lato', sans-serif;
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
 h2{
@@ -744,4 +744,9 @@ paper-dialog {
 
 a {
   color: white;
+}
+
+.wrapper-dropdown.msc-profile-view .dropdown.msc-profile-view {
+  background: : black !important;
+  color: #D8DBDF;
 }

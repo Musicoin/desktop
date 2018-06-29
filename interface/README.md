@@ -15,4 +15,4 @@ Default UX Module for [Musicoin Desktop Client](https://github.com/Musicoin/desk
 At this point the desktop client should popup and run.  From here on out you should be able to run 'yarn debug' to see the desktop client in action.
 
 ## Screenshot
-![https://srandd.com/wp-content/uploads/2018/06/Screenshot-from-2018-06-22-21-58-53.png](https://srandd.com/wp-content/uploads/2018/06/Screenshot-from-2018-06-22-21-58-53.png)
+![Musicoin Wallet 1.5](1.5.png)

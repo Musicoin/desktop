@@ -1,6 +1,7 @@
 <dom-module id="msc-profile-view">
   <link rel="import" type="css" href="../../styles/shared-styles.html">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link rel="import" type="css" href="msc-profile-view.css">
 	<script type="text/javascript" src="../../scripts/jquery.min.js"></script>
   <template>
@@ -30,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div style="width: 250px;">
+      <div style="width: 240px;">
         <button class="tablinks" style="border: 1px white; display: inline-block;background: none;; width: 50px; position: relative ; top: 5px;" id="mute" on-tap="muteAudio">
         <img src="/interface/images/icons/audio-volume.svg">
         </button>
@@ -47,7 +48,7 @@
         <img src="/interface/images/icons/minimize.svg">
         </button>
 
-        <span onclick="activeTabsSpecial()" class="left_col_btn_txt spl-button" style="width: 130px; position:relative; margin-left: 0px; top: 4px">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
+        <span onclick="activeTabsSpecial()" class="left_col_btn_txt spl-button" style="width: 120px; position:relative; margin-left: 0px; top: 4px">{{echo('profileViewHtml_Tab_Play_Music')}}</span>
     </div>
     </nav>
   <div id="wallet" class="tabcontent">
@@ -107,7 +108,7 @@
               <div class="flexbox_typ">
                 <div class="wrapper-dropdown">
                   <span class="text-icon">&#8942;</span>
-                  <ul class="dropdown" style="width: 155px;">
+                  <ul class="dropdown" style="width: 160px; background: black">
                     <li on-tap="backupAccount">
                       <span>
                         <iron-icon icon="icons:backup" class="clickable" title={{echo('profileViewHtml_Backup_Account')}}>
@@ -168,7 +169,7 @@
 
     <paper-dialog id="showAccountDetailsDialog" style="max-height: 550px;">
       <img src={{userImage}} style="position: relative; left: 10px;left: 135px; height: 64px; bottom: 10px"class="avatar" title={{userAccount}} style="display: block; margin: 0 auto; padding-top: 20px; width: 96px; margin-left: 32%;">
-      <p style="font-family: monospace; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
+      <p style="text-transform: uppercase; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
       <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
       <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
       <iron-icon icon="icons:explore" class=clickable title={{echo('profileViewHtml_Show_Account_In_Explorer')}} on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
@@ -180,8 +181,8 @@
       <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo('profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon></p>
       <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
       <div class="buttons-style-old top-buttons" style="display: block; margin: 0 auto;">
-      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 25%; bottom: 20px" class="spl-button">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
-      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds" class="spl-button" style="position: relative; bottom: 20px;">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 25%; bottom: 20px;" class="spl-button">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
+      <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds" class="spl-button" style="position: relative;  left: 10px; bottom: 20px;">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
       </div>
       <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_OK')}}</paper-button>
