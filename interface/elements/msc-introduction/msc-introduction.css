@@ -111,7 +111,7 @@ identicon-element {
   justify-content: center;
   text-align: center;
   color: lightgrey;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 paper-progress {
