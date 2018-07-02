@@ -215,6 +215,8 @@
   "profileJS_menu_Lang_Cn": "Verander taal: Chinees",
   "profileJS_menu_Lang_Pt": "Verander taal: Portugees",
   "profileJS_menu_Lang_Nl": "Verander taal: Nederlands",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileJS_menu_DataDir": "Verplaats blockchain-gegevens",
   "profileJS_menu_logDir": "Open de logs-map",
   "profileJS_menu_removeGmcFolder": "Wis blockchain-gegevens",

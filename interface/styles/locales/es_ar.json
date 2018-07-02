@@ -222,6 +222,8 @@
   "profileJS_menu_Lang_Fr": "Cambiar idioma: Francés",
   "profileJS_menu_Lang_Pt": "Cambiar idioma: Portugués",
   "profileJS_menu_Lang_Nl": "Cambiar idioma: Neerlandés",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileJS_ntpClient_turn_sync": "Por favor habilite el servicio de sincronización del reloj en la sección de configuración. \n",
   "profileJS_ntpClient_Notification": "El reloj del sistema parece incorrecto",
   "mainStatusHtml_since_last_block": " desde el último bloque",

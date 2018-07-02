@@ -217,6 +217,8 @@
   "profileJS_menu_Lang_Cn": "Changer de langue: Chinois",
   "profileJS_menu_Lang_Pt": "Changer de langue: Portugais",
   "profileJS_menu_Lang_Nl": "Changer de langue: Néerlandais",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileJS_menu_DataDir": "Déplacer les données de blockchain",
   "profileJS_menu_logDir": "Ouvrir le répertoire de logs",
   "profileJS_menu_removeGmcFolder": "Supprimer les données de blockchain",
