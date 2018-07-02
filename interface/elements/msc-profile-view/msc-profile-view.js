@@ -1401,6 +1401,9 @@ let cnLang = echo('profileJS_menu_Lang_Cn');
 let frLang = echo('profileJS_menu_Lang_Fr');
 let nlLang = echo('profileJS_menu_Lang_Nl');
 let ptLang = echo('profileJS_menu_Lang_Pt');
+let trLang = echo('profileJS_menu_Lang_Tr');
+let grLang = echo('profileJS_menu_Lang_Gr');
+
 
 account.append(new nw.MenuItem({
   label: newAccount,
@@ -1762,6 +1765,18 @@ advanced.append(new nw.MenuItem({
   label: ptLang,
   click: function() {
     document.querySelector("msc-profile-view").changeLanguage("pt");
+  }
+}));
+advanced.append(new nw.MenuItem({
+  label: trLang,
+  click: function() {
+    document.querySelector("msc-profile-view").changeLanguage("tr");
+  }
+}));
+advanced.append(new nw.MenuItem({
+  label: grLang,
+  click: function() {
+    document.querySelector("msc-profile-view").changeLanguage("gr");
   }
 }));
 

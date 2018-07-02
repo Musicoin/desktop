@@ -225,6 +225,8 @@
   "profileViewHtml_es_ar": "西班牙（阿根廷）",
   "profileViewHtml_cn": "簡體中文",
   "profileViewHtml_cnt": "正體中文（台灣）",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileViewHtml_wipeBlockChain": "在這裡您可以刪除區塊鏈資料：按 <OK> 繼續",
   "profileViewHtml_wipeBlockChain_warning1": "此動作將刪除所有區塊鏈資料",
   "profileViewHtml_wipeBlockChain_warning2": "按 <確認> 後，請等待提示和指示",

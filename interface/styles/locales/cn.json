@@ -223,6 +223,8 @@
   "profileViewHtml_es_ar": "西班牙（阿根廷）",
   "profileViewHtml_cn": "中文（英语）",
   "profileViewHtml_cnt": "中文（繁体）",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileViewHtml_wipeBlockChain": "在这里您可以擦除区块链数据：按 <OK> 继续",
   "profileViewHtml_wipeBlockChain_warning1": "此操作将删除所有区块链数据",
   "profileViewHtml_wipeBlockChain_warning2": "按 <确认> 后，请等待提示和指示",

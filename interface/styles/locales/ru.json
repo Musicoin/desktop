@@ -218,6 +218,8 @@
   "profileJS_menu_Lang_Cn": "Сменить язык: Китайский",
   "profileJS_menu_Lang_Pt": "Сменить язык: Португальский",
   "profileJS_menu_Lang_Nl": "Сменить язык: Нидерландский",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileJS_menu_DataDir": "Переместить блокчейн данные",
   "profileJS_menu_logDir": "Показать директорию с логами",
   "profileJS_menu_removeGmcFolder": "Удалить директорию с данными блокчейн",

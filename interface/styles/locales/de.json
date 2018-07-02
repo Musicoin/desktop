@@ -209,6 +209,8 @@
   "profileJS_menu_Lang_Cn": "Sprache ‰ndern: Chinesisch",
   "profileJS_menu_Lang_Pt": "Sprache ‰ndern: Portugiesisch",
   "profileJS_menu_Lang_Nl": "Sprache ‰ndern: Niederl‰ndisch",
+  "profileJS_menu_Lang_Tr": "Change language: Turkish",
+  "profileJS_menu_Lang_Gr": "Change language: Greek",
   "profileJS_menu_DataDir": "Blockchain-Daten verschieben",
   "profileJS_menu_logDir": "Log Ordner ˆffnen",
   "profileJS_menu_removeGmcFolder": "Blockchain-Daten lˆschen",
