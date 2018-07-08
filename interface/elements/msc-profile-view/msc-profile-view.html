@@ -5,10 +5,13 @@
   <link rel="import" type="css" href="msc-profile-view.css">
   <script type="text/javascript" src="../../scripts/jquery.min.js"></script>
   <template>
+    <nav id="navcool1" class="navbar fixed-top" style="width: 100px">
+      <img onclick="toggleNavbar()" src="/interface/images/logon.svg" height="40px" style="cursor: pointer">
+    </nav>
     <script src="msc-main-status.js"></script>
-      <nav id="navcool" class="navbar fixed-top" style="opacity: 0.8; background:black">
+      <nav id="navcool" class="navbar fixed-top hidden" style="opacity: 0.8; background:black">
       <div>
-        <img src="/interface/images/logon.svg" height="40px">
+        <img onclick="toggleNavbar()" src="/interface/images/logon.svg" height="40px" style="cursor: pointer">
         <a id="defaultOpen" onclick="activeTabs(event, 'wallet')"
           class="navbar-brand spl-button" href="#"
           style="text-decoration: none !important;"
@@ -171,16 +174,16 @@
     <p style="text-transform: uppercase; font-weight: bold;" id="AccountDialog">{{userAccount}}</p>
     <p style="text-align: center; font-weight: bold;">{{userBalance}}</p>
     <p style="text-align: center;">{{echo('profileViewHtml_Show_Account_In_Explorer')}}:
-      <iron-icon icon="icons:explore" class=clickable title={{echo( 'profileViewHtml_Show_Account_In_Explorer')}} on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
+      <iron-icon icon="icons:explore" class=clickable title={{echo('profileViewHtml_Show_Account_In_Explorer')}} on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
     </p>
     <p style="text-align: center;">{{echo('profileViewHtml_Backup_Account')}}:
-      <iron-icon icon="icons:backup" class=clickable title={{echo( 'profileViewHtml_Backup_Account')}} on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
+      <iron-icon icon="icons:backup" class=clickable title={{echo('profileViewHtml_Backup_Account')}} on-tap="backupAccountFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
     </p>
     <p style="text-align: center;">{{echo('profileViewHtml_Show_Private_Key')}}:
-      <iron-icon icon="icons:lock-open" class=clickable title={{echo( 'profileViewHtml_Show_Private_Key')}} on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
+      <iron-icon icon="icons:lock-open" class=clickable title={{echo('profileViewHtml_Show_Private_Key')}} on-tap="unlockPrivateKeyFromAccount" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
     </p>
     <p style="text-align: center;">{{echo('profileViewHtml_Create_Paper_Wallet')}}:
-      <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo( 'profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
+      <iron-icon icon="icons:picture-in-picture" class=clickable title={{echo('profileViewHtml_Create_Paper_Wallet')}} on-tap="paperWallet" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
     </p>
     <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
     <div class="buttons-style-old top-buttons" style="display: block; margin: 0 auto;">
@@ -208,8 +211,8 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="newAccountDialog">
     <p>{{echo('profileViewHtml_enter_a_password')}}</p>
     <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember')}}</p>
-    <paper-input id=newAccountPassword type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
-    <paper-input id=newAccountPasswordVerify type="password" label={{echo( 'profileViewHtml_Label_Re_Password')}}></paper-input>
+    <paper-input id=newAccountPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id=newAccountPasswordVerify type="password" label={{echo('profileViewHtml_Label_Re_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearNewAccountFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button autofocus on-tap="createNewAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
@@ -220,8 +223,8 @@
     <p>{{echo('profileViewHtml_enter_a_password_mnemonic')}}</p>
     <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_pls_save_phrase')}}</p>
     <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember_mnemonic')}}</p>
-    <paper-input id=newAccountPasswordMnemonic type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
-    <paper-input id=newAccountPasswordMnemonicVerify type="password" label={{echo( 'profileViewHtml_Label_Re_Password')}}></paper-input>
+    <paper-input id=newAccountPasswordMnemonic type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id=newAccountPasswordMnemonicVerify type="password" label={{echo('profileViewHtml_Label_Re_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearNewAccountFieldsMnemonic">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button autofocus on-tap="createNewMnemonicAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
@@ -251,9 +254,9 @@
     <p>{{echo('profileViewHtml_Write_a_message')}}</p>
     <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_final_sign')}}</p>
     <p>{{echo('profileViewHtml_sign_from')}} <b>{{userAccount}}</b></p>
-    <paper-textarea style="display: block; width: 400px;" id=signMsg label={{echo( 'profileViewHtml_Label_Message_To_Sign')}}></paper-textarea>
-    <paper-input disabled id=signMsgAccount label={{echo( 'profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
-    <paper-input id=signPassword type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-textarea style="display: block; width: 400px;" id=signMsg label={{echo('profileViewHtml_Label_Message_To_Sign')}}></paper-textarea>
+    <paper-input disabled id=signMsgAccount label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+    <paper-input id=signPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearSignMsg">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button autofocus on-tap="signMsgAction">{{echo('profileViewHtml_Btn_Sign')}}</paper-button>
@@ -263,9 +266,9 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="verifyMsgDialog">
     <p>{{echo('profileViewHtml_verify_a_message')}}</p>
     <p>{{echo('profileViewHtml_sacpmtv')}}</p>
-    <paper-input id=signature label={{echo( 'profileViewHtml_Label_Signature')}}></paper-input>
-    <paper-input id=accountVerify label={{echo( 'profileViewHtml_Label_Account')}}></paper-input>
-    <paper-textarea style="display: block; width: 400px;" id=verifyMsg label={{echo( 'profileViewHtml_Label_Msg_Verify')}}></paper-textarea>
+    <paper-input id=signature label={{echo('profileViewHtml_Label_Signature')}}></paper-input>
+    <paper-input id=accountVerify label={{echo('profileViewHtml_Label_Account')}}></paper-input>
+    <paper-textarea style="display: block; width: 400px;" id=verifyMsg label={{echo('profileViewHtml_Label_Msg_Verify')}}></paper-textarea>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearVerifyMsg">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button autofocus on-tap="verifyMsgAction">{{echo('profileViewHtml_Btn_verify')}}</paper-button>
@@ -277,7 +280,7 @@
       <br>enode://abcdefg@101.102.103.104:30303,
       <br>enode://zyxwvu@101.102.103.104:30303
     </div>
-    <iron-autogrow-textarea id=newPeerEnodeAddress label={{echo( 'profileViewHtml_Label_Enodes')}} style="height: 200px; width: 600px"></iron-autogrow-textarea>
+    <iron-autogrow-textarea id=newPeerEnodeAddress label={{echo('profileViewHtml_Label_Enodes')}} style="height: 200px; width: 600px"></iron-autogrow-textarea>
     <div class="buttons">
       <paper-button onclick='gui.Shell.openExternal("https://github.com/Musicoin/desktop/wiki/Default-Enodes-list")'>{{echo('profileViewHtml_Btn_NODES_LIST')}}</paper-button>
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
@@ -288,8 +291,8 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="unlockPrivateKeyDialog">
     <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_screencasting')}}</p>
     <p>{{echo('profileViewHtml_unlock_and_show')}}</p>
-    <paper-input disabled id=sourceAccount label={{echo( 'profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
-    <paper-input id=unlockAccount type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input disabled id=sourceAccount label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+    <paper-input id=unlockAccount type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearPrivateKey">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="showPrivateKey">{{echo('profileViewHtml_Btn_show_private_key')}}</paper-button>
@@ -299,8 +302,8 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromPrivateKey">
     <p>{{echo('profileViewHtml_private_key_password')}}</p>
     <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_remember')}}</p>
-    <paper-input id=dummyKey type="password" label={{echo( 'profileViewHtml_Label_Private_Key')}}></paper-input>
-    <paper-input id=dummyPassword type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id=dummyKey type="password" label={{echo('profileViewHtml_Label_Private_Key')}}></paper-input>
+    <paper-input id=dummyPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearKeyFromPrivateKey">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="createKeyFromPrivateKeyAction">{{echo('profileViewHtml_Btn_access_account')}}</paper-button>
@@ -310,8 +313,8 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="createKeyFromMnemonic">
     <p>{{echo('profileViewHtml_enter_mnemonic')}}</p>
     <p style="font-weight: 900; font-size: 16px;">{{echo('profileViewHtml_make_sure_mnemonic')}}</p>
-    <paper-input id=mnemonic label={{echo( 'profileViewHtml_Label_Mnemonic')}} auto-validate pattern="[a-zA-Z\s]*" error-message={{echo( 'profileViewHtml_input_err')}}></paper-input>
-    <paper-input id=mnemonicPassword type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id=mnemonic label={{echo('profileViewHtml_Label_Mnemonic')}} auto-validate pattern="[a-zA-Z\s]*" error-message={{echo('profileViewHtml_input_err')}}></paper-input>
+    <paper-input id=mnemonicPassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearKeyFromMnemonic">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="createKeyFromMnemonicAction">{{echo('profileViewHtml_Btn_access_account')}}</paper-button>
@@ -376,8 +379,8 @@
       <iron-icon icon="icons:explore" class=clickable title="{{echo('profileViewHtml_Show_Account_In_Explorer')}}" on-tap="showExplorerWindowFromDialog" style="display: block; margin: 0 auto; color: #cccccc; padding-top: 6px;"></iron-icon>
     </p>
     <p style="text-align: center; font-size: 16px;">{{echo('profileViewHtml_provide_valid')}} <b>{{echo('profileViewHtml_password')}}</b> {{echo('profileViewHtml_to_process')}}</p>
-    <paper-input disabled id=sourceAccountRemove label={{echo( 'profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
-    <paper-input id=removePassword type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input disabled id=sourceAccountRemove label={{echo('profileViewHtml_Label_Account')}} style="display: none;"></paper-input>
+    <paper-input id=removePassword type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearApproveRemoveAccount">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="removeAccount" style="color: red;">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
@@ -471,12 +474,12 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogMenu">
     <p>{{echo('profileViewHtml_recipient_address_send')}}</p>
     <div class="autocomplete-wrapper">
-      <paper-input id="sender" label={{echo( 'profileViewHtml_Label_From_Account')}}></paper-input>
+      <paper-input id="sender" label={{echo('profileViewHtml_Label_From_Account')}}></paper-input>
       <paper-autocomplete-suggestions for="sender" source="[[getAccounts]]"></paper-autocomplete-suggestions>
     </div>
-    <paper-input id="recipient" label={{echo( 'profileViewHtml_Label_Recipient')}}></paper-input>
-    <paper-input id="coins" label={{echo( 'profileViewHtml_Label_Amount_In')}}></paper-input>
-    <paper-input id="sendPassword" type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id="recipient" label={{echo('profileViewHtml_Label_Recipient')}}></paper-input>
+    <paper-input id="coins" label={{echo('profileViewHtml_Label_Amount_In')}}></paper-input>
+    <paper-input id="sendPassword" type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearSendFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="approveSend">{{echo('profileViewHtml_Btn_OK')}}</paper-button>
@@ -487,12 +490,12 @@
     <p>{{echo('profileViewHtml_sign_msg')}}</p>
     <p>{{echo('profileViewHtml_Write_a_message')}}</p>
     <p style="font-weight: 900; color:red; font-size: 16px;">{{echo('profileViewHtml_final_sign')}}</p>
-    <paper-textarea style="display: block; width: 400px;" id=signMsgMenu label={{echo( 'profileViewHtml_Label_Msg_Sign')}}></paper-textarea>
+    <paper-textarea style="display: block; width: 400px;" id=signMsgMenu label={{echo('profileViewHtml_Label_Msg_Sign')}}></paper-textarea>
     <div class="autocomplete-wrapper">
-      <paper-input id="signMsgAccountMenu" label={{echo( 'profileViewHtml_Label_Account')}}></paper-input>
+      <paper-input id="signMsgAccountMenu" label={{echo('profileViewHtml_Label_Account')}}></paper-input>
       <paper-autocomplete-suggestions for="signMsgAccountMenu" source="[[getAccounts]]"></paper-autocomplete-suggestions>
     </div>
-    <paper-input id=signPasswordMenu type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input id=signPasswordMenu type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearSignMsgMenu">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button autofocus on-tap="signMsgActionMenu">{{echo('profileViewHtml_Btn_Sign')}}</paper-button>
@@ -502,10 +505,10 @@
   <paper-dialog modal on-iron-overlay-opened="patchOverlay" id="sendDialogFromAccount">
     <p>{{echo('profileViewHtml_recipient_address_send')}}</p>
     <img src={{userImage}} class="avatar" title={{userAccount}} style="width: 64px; display: block; margin: 0 auto;">
-    <paper-input disabled id="senderAccount" label={{echo( 'profileViewHtml_Label_From_Account')}}></paper-input>
-    <paper-input id="recipientAccount" label={{echo( 'profileViewHtml_Label_Recipient')}}></paper-input>
-    <paper-input id="coinsAccount" label={{echo( 'profileViewHtml_Label_Amount_In')}}></paper-input>
-    <paper-input id="sendPasswordAccount" type="password" label={{echo( 'profileViewHtml_Label_Password')}}></paper-input>
+    <paper-input disabled id="senderAccount" label={{echo('profileViewHtml_Label_From_Account')}}></paper-input>
+    <paper-input id="recipientAccount" label={{echo('profileViewHtml_Label_Recipient')}}></paper-input>
+    <paper-input id="coinsAccount" label={{echo('profileViewHtml_Label_Amount_In')}}></paper-input>
+    <paper-input id="sendPasswordAccount" type="password" label={{echo('profileViewHtml_Label_Password')}}></paper-input>
     <div class="buttons">
       <paper-button dialog-dismiss on-tap="clearSendAccountFields">{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
       <paper-button dialog-confirm autofocus on-tap="approveSendAccount">{{echo('profileViewHtml_Btn_OK')}}</paper-button>

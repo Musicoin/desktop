@@ -1983,6 +1983,10 @@ ntpClient.getNetworkTime("pool.ntp.org", 123, function(err, date) {
   } else {}
 });
 
+function toggleNavbar() {
+  $("#navcool").toggleClass('hidden');
+  $("#navcool1").toggleClass('hidden');
+}
 function activeTabs(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
