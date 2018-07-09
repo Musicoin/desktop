@@ -22,7 +22,7 @@ Supported Operating systems:
 Prerequisites:
 - node >=8.0.0
 - yarn >=1.7.0
-- optionally wine for windows builds on mac or linux
+- Wine for windows builds on non Windows systems
 
 ## Build Release version
 
@@ -53,7 +53,7 @@ Prerequisites:
 
 ## Testing new interface builds
 
-This repo contains the UI modules in accordance with the last release version. To suggest changes, edit the files at `interface/` and issue a PR to the [desktop-interface]([desktop-interface](https://github.com/Musicoin/desktop-interface) repo. Please note that PRs towards interface changes will not be accepted here.
+This repo contains UI modules in accordance with the last release version. To suggest changes, edit the files at `interface/` and issue a PR to the [desktop-interface](https://github.com/Musicoin/desktop-interface) repo.
 
 ## Contributing
 
