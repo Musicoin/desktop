@@ -1,3 +1,13 @@
+# Musicoin Desktop Wallet 1.5
+
+Changes in this version:
+
+1. Brand New UI
+
+2. Available in 11 languages - Chinese, Chinese (Traditional), German, English, Spanish (Arg), Spanish (Esp), French, Greek, Dutch, Portuguese, Russian and Turkish
+
+3. Bug fixes
+
 # Musicoin Desktop Wallet 1.0
 
 ### Sleek new UI:
