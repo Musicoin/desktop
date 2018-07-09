@@ -60,7 +60,7 @@ identicon-element {
   position: absolute;
   background-size: cover;
   overflow: hidden;
-  background-image: url('/interface/images/wallpaper/concert2.jpg');
+  background: black;
   opacity: 1 !important;
   background-size: cover;
 }

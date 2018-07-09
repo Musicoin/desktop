@@ -96,7 +96,7 @@ Polymer({
     } else if (platform.includes("linux")) { //linux
       var settings = process.env.HOME + '/.musicoin/config/settings.js';
     }
-    var locales = process.cwd() + '/interface/styles/locales';
+    var locales = process.cwd() + '/interface/locales';
     lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
     var y18n = require('y18n')({
       updateFiles: false,
@@ -1313,7 +1313,7 @@ Polymer({
     } else if (platform.includes("linux")) { //linux
       var settings = process.env.HOME + '/.musicoin/config/settings.js';
     }
-    var locales = process.cwd() + '/interface/styles/locales';
+    var locales = process.cwd() + '/interface/locales';
     lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
     var y18n = require('y18n')({
       updateFiles: false,
@@ -1987,6 +1987,7 @@ function toggleNavbar() {
   $("#navcool").toggleClass('hidden');
   $("#navcool1").toggleClass('hidden');
 }
+
 function activeTabs(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -2019,7 +2020,7 @@ function echo(phrase) {
   } else if (platform.includes("linux")) { //linux
     var settings = process.env.HOME + '/.musicoin/config/settings.js';
   }
-  var locales = process.cwd() + '/interface/styles/locales';
+  var locales = process.cwd() + '/interface/locales';
   lang = JSON.parse(fs.readFileSync(settings, 'utf-8'));
   var y18n = require('y18n')({
     updateFiles: false,

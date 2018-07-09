@@ -8,7 +8,6 @@
     <nav id="navcool1" class="navbar fixed-top" style="width: 100px">
       <img onclick="toggleNavbar()" src="/interface/images/logon.svg" height="40px" style="cursor: pointer">
     </nav>
-    <script src="msc-main-status.js"></script>
       <nav id="navcool" class="navbar fixed-top hidden" style="opacity: 0.8; background:black">
       <div>
         <img onclick="toggleNavbar()" src="/interface/images/logon.svg" height="40px" style="cursor: pointer">
@@ -324,10 +323,10 @@
   <paper-dialog id="gmcOverwriteCache">
     <p>{{echo('profileViewHtml_make_gmc_cache_size')}}</p>
     <paper-radio-group selected="gmc-512">
-      <paper-radio-button name="gmc-512" onclick=document.querySelector( "msc-profile-view").gmcOverwriteCache(512)>512MB ({{echo('profileViewHtml_default')}}) </paper-radio-button>
-      <paper-radio-button name="gmc-1024" onclick=document.querySelector( "msc-profile-view").gmcOverwriteCache(1024)>1024MB </paper-radio-button>
-      <paper-radio-button name="gmc-2048" onclick=document.querySelector( "msc-profile-view").gmcOverwriteCache(2048)>2048MB </paper-radio-button>
-      <paper-radio-button name="gmc-4096" onclick=document.querySelector( "msc-profile-view").gmcOverwriteCache(4096)>4096MB </paper-radio-button>
+      <paper-radio-button name="gmc-512" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(512)>512MB ({{echo('profileViewHtml_default')}}) </paper-radio-button>
+      <paper-radio-button name="gmc-1024" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(1024)>1024MB </paper-radio-button>
+      <paper-radio-button name="gmc-2048" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(2048)>2048MB </paper-radio-button>
+      <paper-radio-button name="gmc-4096" onclick=document.querySelector("msc-profile-view").gmcOverwriteCache(4096)>4096MB </paper-radio-button>
     </paper-radio-group>
     <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
@@ -434,8 +433,8 @@
 
   <paper-dialog id="spanishLangDialog">
     <div class="buttons-style top-buttons" style="position: unset;">
-      <paper-button raised onclick=document.querySelector( "msc-profile-view").changeLanguage( "es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
-      <paper-button raised onclick=document.querySelector( "msc-profile-view").changeLanguage( "es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
     </div>
     <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
@@ -444,8 +443,8 @@
 
   <paper-dialog id="chineseLangDialog">
     <div class="buttons-style top-buttons" style="position: unset;">
-      <paper-button raised onclick=document.querySelector( "msc-profile-view").changeLanguage( "cn") id="cn">{{echo('profileViewHtml_cn')}}</paper-button>
-      <paper-button raised onclick=document.querySelector( "msc-profile-view").changeLanguage( "cnt") id="cnt">{{echo('profileViewHtml_cnt')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "cn") id="cn">{{echo('profileViewHtml_cn')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "cnt") id="cnt">{{echo('profileViewHtml_cnt')}}</paper-button>
     </div>
     <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
