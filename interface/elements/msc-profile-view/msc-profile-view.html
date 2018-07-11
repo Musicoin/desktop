@@ -186,7 +186,7 @@
     </p>
     <input id=fileDialogBackupAccount-{{userAccount}} type="file" nwdirectory style="display: none;">
     <div class="buttons-style-old top-buttons" style="display: block; margin: 0 auto;">
-      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: 25%; bottom: 20px;" class="spl-button">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
+      <paper-button raised on-tap="approveRemoveAccount" id="approve-remove" style="right: {{echo('profileViewHackStyle1')}}; bottom: 20px;" class="spl-button">{{echo('profileViewHtml_Btn_REMOVE')}}</paper-button>
       <paper-button raised on-tap="showSendDialogFromAccount" id="send-funds" class="spl-button" style="position: relative;  left: 10px; bottom: 20px;">{{echo('profileViewHtml_Btn_SEND_FUNDS_SMALL')}}</paper-button>
     </div>
     <div class="buttons">
@@ -433,8 +433,8 @@
 
   <paper-dialog id="spanishLangDialog">
     <div class="buttons-style top-buttons" style="position: unset;">
-      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
-      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_es") id="es-es">{{echo('profileViewHtml_es_es')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("es_ar") id="es-ar">{{echo('profileViewHtml_es_ar')}}</paper-button>
     </div>
     <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>
@@ -443,8 +443,8 @@
 
   <paper-dialog id="chineseLangDialog">
     <div class="buttons-style top-buttons" style="position: unset;">
-      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "cn") id="cn">{{echo('profileViewHtml_cn')}}</paper-button>
-      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage( "cnt") id="cnt">{{echo('profileViewHtml_cnt')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("cn") id="cn">{{echo('profileViewHtml_cn')}}</paper-button>
+      <paper-button raised onclick=document.querySelector("msc-profile-view").changeLanguage("cnt") id="cnt">{{echo('profileViewHtml_cnt')}}</paper-button>
     </div>
     <div class="buttons">
       <paper-button dialog-dismiss>{{echo('profileViewHtml_Btn_Cancel')}}</paper-button>

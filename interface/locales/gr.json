@@ -1,5 +1,6 @@
 {
   "profileViewHtml_Btn_Copy_Account": "Αντιγραφή στο Πρόχειρο",
+  "profileViewHackStyle1": "15%",
   "profileViewHtml_Table_Account": "Διεύθυνση",
   "profileViewHtml_Table_Actions": "Ενέργειες",
   "profileViewHtml_Table_Balance": "Υπόλοιπο",
@@ -14,7 +15,7 @@
   "profileViewHtml_Btn_IMPORT_ACCOUNT": "Εισαγωγή λογαριασμού",
   "profileViewHtml_Btn_SEND_FUNDS": "Αποστολή χρημάτων",
   "profileViewHtml_Btn_REMOVE": "Αφαίρεση",
-  "profileViewHtml_Btn_SEND_FUNDS_SMALL": "Αποστολή χρημάτων",
+  "profileViewHtml_Btn_SEND_FUNDS_SMALL": "Αποστολή χρη.",
   "profileViewHtml_Btn_Sign": "Υπογραφή",
   "profileViewHtml_Btn_Cancel": "Ακύρωση",
   "profileViewHtml_Btn_verify": "Επαλήθευση",
