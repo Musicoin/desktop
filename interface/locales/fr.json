@@ -1,5 +1,6 @@
 {
   "profileViewHtml_Btn_Copy_Account": "Copy to Clipboard",
+  "profileViewHackStyle1": "60px",
   "profileViewHtml_Table_Account": "Account",
   "profileViewHtml_Table_Actions": "Actions",
   "profileViewHtml_Table_Balance": "Balance",
@@ -14,7 +15,7 @@
   "profileViewHtml_Btn_IMPORT_ACCOUNT": "IMPORTER UN COMPTE",
   "profileViewHtml_Btn_SEND_FUNDS": "ENVOYER DES FONDS",
   "profileViewHtml_Btn_REMOVE": "ENLEVER",
-  "profileViewHtml_Btn_SEND_FUNDS_SMALL": "ENVOYER DES FONDS",
+  "profileViewHtml_Btn_SEND_FUNDS_SMALL": "ENV. DES FONDS",
   "profileViewHtml_Btn_Sign": "Signer",
   "profileViewHtml_Btn_Cancel": "Annuler",
   "profileViewHtml_Btn_verify": "Vérifier",
