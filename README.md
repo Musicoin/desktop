@@ -6,6 +6,8 @@ The official Musicoin Desktop Wallet
 [![license](https://img.shields.io/github/license/musicoin/desktop.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/blob/master/LICENSE)
 [![Github All Releases](https://img.shields.io/github/downloads/Musicoin/desktop/total.svg?style=for-the-badge)](https://github.com/Musicoin/desktop/releases)
 
+Nightly builds over at https://builder.musicoin.org
+
 ![Musicoin Wallet 1.5](1.5.png)
 
 ## Nightly Builds
