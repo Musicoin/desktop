@@ -12,6 +12,7 @@ var ethers = require('ethers');
 var zxcvbn = require('zxcvbn');
 var QRCode = require('qrcode');
 var jsQR = require("jsqr");
+var dpath = "m/44'/60'/0'/0/0"; // defined according to SLIP-044
 
 Polymer({
   is: 'msc-profile-view',
@@ -844,7 +845,8 @@ Polymer({
     var password = document.getElementById('mnemonicPassword').value;
     var mnemonic = (document.getElementById('mnemonic').value).toLowerCase();
     if (password.length > 0 && password.length < 65 && zxcvbn(password).score >= 2) {
-      var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+      var wallet = new ethers.Wallet.fromMnemonic(mnemonic, dpath);
+      // from Musicoin Wallet v1.5, all wallets will follow SLIP-044
       wallet.encrypt(password, {
         scrypt: {
           N: 262144
@@ -907,7 +909,7 @@ Polymer({
       // It's important to show Notification before mnemonic generation, otherwise we would see alert first
       new Notification(document.querySelector("msc-profile-view").echo('profileJS_createNewMnemonicAccount_Notification'), mnemonicNotification);
       var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
-      var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+      var wallet = new ethers.Wallet.fromMnemonic(mnemonic, dpath);
       wallet.encrypt(password1, {
         scrypt: {
           N: 262144
@@ -980,6 +982,7 @@ Polymer({
     ethers.Wallet.fromEncryptedWallet(accountFile, password).then(function(wallet) {
       if (wallet.address = account) fs.unlinkSync((String(pathOfAccount)));
     }).catch(function(err) {
+      console.log("Expected bug");
       alert(err);
     });
     document.getElementById('sourceAccountRemove').value = "";
