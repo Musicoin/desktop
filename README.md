@@ -8,7 +8,7 @@ The official Musicoin Desktop Wallet
 
 Nightly builds over at https://builder.musicoin.org
 
-![Musicoin Wallet 1.5](1.5.png)
+![Musicoin Wallet](1.5.png)
 
 ## Nightly Builds
 

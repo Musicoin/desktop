@@ -1,6 +1,9 @@
+
 var fs = require('fs-extra');
 var os = require('os');
+
 var platform = os.platform();
+
 
 if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
   var musicoinRoot = process.env.APPDATA.slice(0,-17) + '\\AppData\\Roaming\\Musicoin';

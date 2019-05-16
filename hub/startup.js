@@ -3,6 +3,8 @@
 function noOp() {};
 
 const child_process = require('child_process');
+const crypto = require('crypto');
+
 var fs = require('fs');
 var os = require('os');
 var platform = os.platform();
@@ -85,8 +87,19 @@ Startup.prototype.initCommand = function(commandObj) {
 Startup.prototype.injectPathVariables = function(p) {
   p = p.split("{appdata}").join(this.appDataDir);
   p = p.split("{process.cwd}").join(process.cwd());
+  p = p.split("{rndNodeID}").join(crypto.randomBytes(3).toString('hex'));
+
   return p;
 };
+
+Startup.prototype.randomID = function (){
+  crypto.randomBytes(4, (err, buf) => {
+    if (err) throw err;
+    console.log(`A random Node ID(${buf.length} byt): ${buf.toString('hex')}`);
+    return buf.toString('hex');
+
+  });
+}
 
 Startup.prototype.onShutdown = function(callback) {
   // attach user callback to the process event emitter
