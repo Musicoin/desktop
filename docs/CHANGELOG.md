@@ -1,4 +1,4 @@
-# Musicoin Desktop Wallet 1.5
+# Musicoin Desktop Wallet 1.7
 
 Changes in this version:
 

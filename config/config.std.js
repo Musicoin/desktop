@@ -1,3 +1,5 @@
+
+
 module.exports = {
   startup: {
     chain: true,
@@ -9,11 +11,13 @@ module.exports = {
     args: [
       '--rpc',
       '--rpcapi=admin,db,eth,net,web3,personal',
-      '--rpcport', '8545',
+      '--rpcport', '8585',
       '--rpcaddr', '127.0.0.1',
       '--rpccorsdomain', 'localhost',
       '--fast',
-      '--cache=512'],
-    rpcServer: 'http://localhost:8545'
+      '--port', '30333',
+      '--cache=512',
+      '--ethstats={rndNodeID}:musicstatsbypirl@stats.musicoin.org'],
+    rpcServer: 'http://localhost:8585'
   }
 }
