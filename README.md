@@ -25,6 +25,7 @@ Prerequisites:
 - node >=8.0.0
 - yarn >=1.7.0
 - Wine for windows builds on non Windows systems
+- upgrade nw.js with `npm install -g nw` (in case there's errors, run with `--unsafe-perm=true --allow-root` flags)
 
 ## Build Release version
 
