@@ -1516,39 +1516,9 @@ markets.append(new nw.MenuItem({
 }));
 if (platform.includes("darwin")) {
   markets.append(new nw.MenuItem({
-    label: 'Bittrex: MUSIC/BTC',
+    label: 'Dove Wallet: MUSIC/BTC',
     click: function() {
-      gui.Window.open('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC', {
-        position: 'center',
-        width: 1000,
-        height: 600
-      });
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/BTC',
-    click: function() {
-      gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_BTC', {
-        position: 'center',
-        width: 1000,
-        height: 600
-      });
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/LTC',
-    click: function() {
-      gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC', {
-        position: 'center',
-        width: 1000,
-        height: 600
-      });
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/DOGE',
-    click: function() {
-      gui.Window.open('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE', {
+      gui.Window.open('https://dovewallet.com/trade/spot/music-btc', {
         position: 'center',
         width: 1000,
         height: 600
@@ -1557,27 +1527,9 @@ if (platform.includes("darwin")) {
   }));
 } else {
   markets.append(new nw.MenuItem({
-    label: 'Bittrex: MUSIC/BTC',
+    label: 'Dove Wallet: MUSIC/BTC',
     click: function() {
-      gui.Shell.openExternal('https://bittrex.com/Market/Index?MarketName=BTC-MUSIC');
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/BTC',
-    click: function() {
-      gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_BTC');
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/LTC',
-    click: function() {
-      gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_LTC');
-    }
-  }));
-  markets.append(new nw.MenuItem({
-    label: 'Cryptopia: MUSIC/DOGE',
-    click: function() {
-      gui.Shell.openExternal('https://www.cryptopia.co.nz/Exchange?market=MUSIC_DOGE');
+      gui.Shell.openExternal('https://dovewallet.com/trade/spot/music-btc');
     }
   }));
 }
