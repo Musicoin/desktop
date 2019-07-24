@@ -24,6 +24,7 @@ Supported Operating systems:
 Prerequisites:
 - node >=8.0.0
 - yarn >=1.7.0
+- bower
 - Wine for windows builds on non Windows systems
 - upgrade nw.js with `npm install -g nw` (in case there's EACCESS errors, run with `--unsafe-perm=true --allow-root` flags)
 
@@ -37,8 +38,8 @@ Prerequisites:
 ## Build Alpha version
 
 1. `git clone https://github.com/Musicoin/desktop && cd desktop`
-2. Delete `package.json`
-3. Rename `package-alpha.json` to `package.json`
+2. `rm package.json` (remove `package.json`) 
+3. `mv package-alpha.json package.json` (rename `package-alpha.json` to `package.json`)
 4. `yarn`
 5. `nw .`
 
@@ -51,7 +52,7 @@ Prerequisites:
    `yarn build-x86`
       -or-
    `yarn build-x64`
-   to build all packages for windows, mac, and linux. This is meant for testing or development and packaging.
+   to build all packages for Windows, macOS, and Linux. This is meant for testing or development and packaging.
 5. `yarn run build -m --x64 ./` - for packaging MacOS x64. `-m`, `-l`, or `-w` determines the os and architecture.
 
 ## Testing new interface builds
