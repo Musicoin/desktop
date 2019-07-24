@@ -1525,12 +1525,28 @@ if (platform.includes("darwin")) {
       });
     }
   }));
+  markets.append(new nw.MenuItem({
+    label: 'Exchange Assets: MUSIC/BTC',
+    click: function() {
+      gui.Window.open('https://exchange-assets.com/en/?market=music_btc', {
+        position: 'center',
+        width: 1000,
+        height: 600
+      });      
+    }
+  }));
 } else {
   markets.append(new nw.MenuItem({
     label: 'Dove Wallet: MUSIC/BTC',
     click: function() {
       gui.Shell.openExternal('https://dovewallet.com/trade/spot/music-btc');
     }
+   })); 
+  markets.append(new nw.MenuItem({
+    label: 'Exchange Assets: MUSIC/BTC',
+    click: function() {
+      gui.Shell.openExternal('https://exchange-assets.com/en/?market=music_btc');
+    }                                 
   }));
 }
 menu.append(new nw.MenuItem({
