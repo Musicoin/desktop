@@ -7,6 +7,7 @@ var platform = os.platform();
 var ethers = require('ethers');
 var zxcvbn = require('zxcvbn');
 var request = require("request");
+var dpath = "m/44'/60'/0'/0/0"; // defined according to SLIP-044
 
 if (process.env.APPDATA != undefined && process.env.APPDATA.includes("Settings")) { //hack for XP
   var introduction = process.env.APPDATA.slice(0, -17) + '\\AppData\\Roaming\\Musicoin\\introduction.intro';
@@ -148,7 +149,7 @@ Polymer({
       // It's important to show Notification before mnemonic generation, otherwise we would see alert first
       new Notification(document.querySelector("msc-introduction").echo('profileJS_createNewMnemonicAccount_Notification'), mnemonicNotification);
       var mnemonic = ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
-      var wallet = new ethers.Wallet.fromMnemonic(mnemonic);
+      var wallet = new ethers.Wallet.fromMnemonic(mnemonic, dpath);
       wallet.encrypt(password1, {
         scrypt: {
           N: 262144
